@@ -1,0 +1,6 @@
+// 1.21.1	2025-05-19T17:00:03.1543812	Loot Tables
+b870863f524c2d1e8dbfb3988d9418390bc2b064 data/legendary_relics/loot_table/modifier/chests/ancient_fragment_add.json
+ff78d2b0f1881e908edd49f041e32cb7c5662f1b data/legendary_relics/loot_table/modifier/chests/ancient_fragment_add_high_chance.json
+0f700713cfb78e11e9efe7c6109072dbfbca7ccb data/legendary_relics/loot_table/modifier/chests/desert_pyramid.json
+fa5fe1883f788f1ceacc347301ec3966288f771f data/legendary_relics/loot_table/modifier/chests/simple_dungeon.json
+a0ea0427bacebdc2cbb0968e4afcbc8bed6b2533 data/legendary_relics/loot_table/modifier/chests/village/village_weaponsmith.json

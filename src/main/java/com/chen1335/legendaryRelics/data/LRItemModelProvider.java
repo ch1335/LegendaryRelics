@@ -1,0 +1,24 @@
+package com.chen1335.legendaryRelics.data;
+
+import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.LegendaryRelics;
+import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+public class LRItemModelProvider extends ItemModelProvider {
+    public LRItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, LegendaryRelics.MODID, existingFileHelper);
+    }
+
+    @Override
+    protected void registerModels() {
+        basicItem(LRItems.SACRED_TALISMAN.asItem());
+        basicItem(LRItems.AGGLOMERATION_MALICE.asItem());
+        basicItem(LRItems.SHIELD_REGENERATOR.asItem());
+        basicItem(LRItems.HARDENED_RING.asItem());
+        basicItem(LRItems.ANCIENT_FRAGMENT.asItem());
+        basicItem(LRItems.DARK_STEEL_CLAW.asItem());
+
+    }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:obsidian"
+    },
+    "B": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "minecraft:iron_ingot"
+    },
+    "E": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "CAC",
+    "BEB",
+    "CAC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:shield_regenerator"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.chen1335.legendaryRelics.mixins.main",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "CommonHooksMixin",
+    "CurioAttributeModifierEventInvoker",
+    "EnchantedCountIncreaseFunctionMixin",
+    "LootItemRandomChanceWithEnchantedBonusConditionMixin"
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
+}
