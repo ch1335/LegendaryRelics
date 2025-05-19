@@ -57,6 +57,8 @@ public class DarkSteelClaw extends Item implements ICurioItem, LRCurioHelper {
                     DAMAGE_ADD.toRawComponent()
             ).withColor(0xaeaeae));
         }
+
+        tooltipComponents.add(Component.translatable("legendary_relics.items.skill.cannot_be_tacked").withColor(5592405));
     }
 
     @Override

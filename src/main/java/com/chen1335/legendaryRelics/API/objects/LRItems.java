@@ -1,6 +1,8 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.items.armor.BlackDragonChestPlate;
+import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.curios.*;
 import com.chen1335.legendaryRelics.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
@@ -20,6 +22,9 @@ public class LRItems {
 
     public static final DeferredItem<DarkSteelClaw> DARK_STEEL_CLAW = ITEM_DEFERRED_REGISTER.register("dark_steel_claw", DarkSteelClaw::new);
 
+    public static final DeferredItem<BlackDragonHelmet> BLACK_DRAGON_HELMET = ITEM_DEFERRED_REGISTER.register("black_dragon_helmet", BlackDragonHelmet::new);
+
+    public static final DeferredItem<BlackDragonChestPlate> BLACK_DRAGON_CHEST_PLATE = ITEM_DEFERRED_REGISTER.register("black_dragon_chestplate", BlackDragonChestPlate::new);
 
     public static final DeferredItem<DarkGoldForgingTool> DARK_GOLD_FORGING_TOOL = ITEM_DEFERRED_REGISTER.register("dark_gold_forging_tool", DarkGoldForgingTool::new);
 

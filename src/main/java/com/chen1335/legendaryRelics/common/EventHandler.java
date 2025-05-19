@@ -1,14 +1,12 @@
 package com.chen1335.legendaryRelics.common;
 
-import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
-import com.chen1335.legendaryRelics.API.objects.LRItems;
-import com.chen1335.legendaryRelics.API.objects.LRRarities;
-import com.chen1335.legendaryRelics.API.objects.LRShieldType;
+import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.items.curios.AgglomerationMalice;
 import com.chen1335.legendaryRelics.items.curios.HardenedRing;
 import com.chen1335.legendaryRelics.items.curios.SacredTalisman;
+import com.chen1335.legendaryRelics.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
 import com.chen1335.legendaryRelics.mixins.main.CurioAttributeModifierEventInvoker;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
@@ -111,22 +109,28 @@ public class EventHandler {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void ItemAttributeModifierEvent(ItemAttributeModifierEvent event) {
             ItemStack itemStack = event.getItemStack();
-            if (itemStack.getRarity() == LRRarities.DARK_GOLD.getValue()) {
-                List<ItemAttributeModifiers.Entry> old = new ArrayList<>(event.getModifiers());
-                for (ItemAttributeModifiers.Entry modifier : old) {
-                    boolean isNeutral = false;
-                    float i = DarkGoldForgingTool.DARK_GOLD_BOOST.getValue(CalculatorArg.emptyArg());
-                    if (modifier.attribute().value().sentiment == Attribute.Sentiment.NEUTRAL) {
-                        isNeutral = true;
-                    } else if (modifier.attribute().value().sentiment == Attribute.Sentiment.POSITIVE && modifier.modifier().amount() < 0) {
-                        i = -i;
-                    } else if (modifier.attribute().value().sentiment == Attribute.Sentiment.NEGATIVE && modifier.modifier().amount() > 0) {
-                        i = -i;
-                    }
 
-                    if (!isNeutral) {
-                        event.addModifier(modifier.attribute(), new AttributeModifier(LegendaryRelics.id("dark_gold_improve_" + modifier.slot().getSerializedName()), i * modifier.modifier().amount(), AttributeModifier.Operation.ADD_VALUE), modifier.slot());
-                    }
+            float i = 0;
+            if (itemStack.getRarity() == LRRarities.DARK_GOLD.getValue()) {
+                i += DarkGoldForgingTool.DARK_GOLD_BOOST.getValue(CalculatorArg.emptyArg());
+            }
+            if (itemStack.getOrDefault(LRDataComponentTypes.ANCIENT_FRAGMENT_UPDATED, false)) {
+                i += AncientFragment.ANCIENT_FRAGMENT_BOOST.getValue(CalculatorArg.emptyArg());
+            }
+
+            List<ItemAttributeModifiers.Entry> old = new ArrayList<>(event.getModifiers());
+            for (ItemAttributeModifiers.Entry modifier : old) {
+                boolean isNeutral = false;
+                if (modifier.attribute().value().sentiment == Attribute.Sentiment.NEUTRAL) {
+                    isNeutral = true;
+                } else if (modifier.attribute().value().sentiment == Attribute.Sentiment.POSITIVE && modifier.modifier().amount() < 0) {
+                    i = 0;
+                } else if (modifier.attribute().value().sentiment == Attribute.Sentiment.NEGATIVE && modifier.modifier().amount() > 0) {
+                    i = 0;
+                }
+
+                if (!isNeutral && i != 0) {
+                    event.addModifier(modifier.attribute(), new AttributeModifier(LegendaryRelics.id("dark_gold_improve_" + modifier.slot().getSerializedName()), i * modifier.modifier().amount(), AttributeModifier.Operation.ADD_VALUE), modifier.slot());
                 }
             }
         }
@@ -135,23 +139,29 @@ public class EventHandler {
         public static void CurioAttributeModifierEvent(CurioAttributeModifierEvent event) {
             CurioAttributeModifierEventInvoker invoker = (CurioAttributeModifierEventInvoker) event;
             ItemStack itemStack = event.getItemStack();
+            float i = 0;
             if (itemStack.getRarity() == LRRarities.DARK_GOLD.getValue()) {
-                Multimap<Holder<Attribute>, AttributeModifier> old = ImmutableMultimap.copyOf(invoker.lr$getModifiableMap());
-                for (Map.Entry<Holder<Attribute>, AttributeModifier> entry : old.entries()) {
-                    Holder<Attribute> attributeHolder = entry.getKey();
-                    AttributeModifier modifier = entry.getValue();
-                    boolean isNeutral = false;
-                    float i = DarkGoldForgingTool.DARK_GOLD_BOOST.getValue(CalculatorArg.emptyArg());
-                    if (attributeHolder.value().sentiment == Attribute.Sentiment.NEUTRAL) {
-                        isNeutral = true;
-                    } else if (attributeHolder.value().sentiment == Attribute.Sentiment.POSITIVE && modifier.amount() < 0) {
-                        i = -i;
-                    } else if (attributeHolder.value().sentiment == Attribute.Sentiment.NEGATIVE && modifier.amount() > 0) {
-                        i = -i;
-                    }
-                    if (!isNeutral) {
-                        event.addModifier(attributeHolder, new AttributeModifier(LegendaryRelics.id("dark_gold_improve_" + event.getSlotContext().identifier() + "_" + event.getSlotContext().index()), i * modifier.amount(), AttributeModifier.Operation.ADD_VALUE));
-                    }
+                i += DarkGoldForgingTool.DARK_GOLD_BOOST.getValue(CalculatorArg.emptyArg());
+            }
+            if (itemStack.getOrDefault(LRDataComponentTypes.ANCIENT_FRAGMENT_UPDATED, false)) {
+                i += AncientFragment.ANCIENT_FRAGMENT_BOOST.getValue(CalculatorArg.emptyArg());
+            }
+
+            Multimap<Holder<Attribute>, AttributeModifier> old = ImmutableMultimap.copyOf(invoker.lr$getModifiableMap());
+            for (Map.Entry<Holder<Attribute>, AttributeModifier> entry : old.entries()) {
+                Holder<Attribute> attributeHolder = entry.getKey();
+                AttributeModifier modifier = entry.getValue();
+                boolean isNeutral = false;
+                if (attributeHolder.value().sentiment == Attribute.Sentiment.NEUTRAL) {
+                    isNeutral = true;
+                } else if (attributeHolder.value().sentiment == Attribute.Sentiment.POSITIVE && modifier.amount() < 0) {
+                    i = 0;
+                } else if (attributeHolder.value().sentiment == Attribute.Sentiment.NEGATIVE && modifier.amount() > 0) {
+                    i = 0;
+                }
+                if (!isNeutral && i != 0) {
+                    event.removeModifier(attributeHolder, modifier);
+                    event.addModifier(attributeHolder, new AttributeModifier(modifier.id(), (1 + i) * modifier.amount(), modifier.operation()));
                 }
             }
         }
@@ -159,10 +169,16 @@ public class EventHandler {
         @SubscribeEvent
         public static void AnvilUpdateEvent(AnvilUpdateEvent event) {
             ItemStack input = event.getLeft().copy();
-            if (event.getLeft().getCount() == 1 && event.getRight().is(LRItems.DARK_GOLD_FORGING_TOOL)) {
+            if (event.getLeft().getCount() == 1 && event.getRight().is(LRItems.DARK_GOLD_FORGING_TOOL) && input.getRarity() != LRRarities.DARK_GOLD.getValue()) {
                 input.set(DataComponents.RARITY, LRRarities.DARK_GOLD.getValue());
                 event.setOutput(input);
                 event.setCost(30);
+                event.setMaterialCost(1);
+            } else if (event.getLeft().getCount() == 1 && event.getRight().is(LRItems.ANCIENT_FRAGMENT) && !input.getOrDefault(LRDataComponentTypes.ANCIENT_FRAGMENT_UPDATED, false)) {
+                input.set(LRDataComponentTypes.ANCIENT_FRAGMENT_UPDATED, true);
+                event.setOutput(input);
+                event.setCost(10);
+                event.setMaterialCost(1);
             }
         }
     }

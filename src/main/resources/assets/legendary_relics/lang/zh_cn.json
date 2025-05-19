@@ -1,6 +1,7 @@
 {
   "itemGroup.legendary_relics": "传说遗物",
   "legendary_relics.cooldown": "冷却:%ss",
+  "legendary_relics.items.skill.cannot_be_tacked": "该效果多个饰品不能叠加",
   "item.legendary_relics.sacred_talisman": "神圣护符",
   "item.legendary_relics.sacred_talisman.skill": "受到伤害后，如果你的生命值低于%s，那么为你提供%s的护盾，持续%s秒。",
   "item.legendary_relics.sacred_talisman.skill.1": "受到来自亡灵生物的伤害降低%s。",
@@ -18,7 +19,8 @@
   "item.legendary_relics.dark_gold_forging_tool.desc.4": "将此物品在铁砧上与其他物品结合。",
   "item.legendary_relics.hardened_ring": "硬化指环",
   "item.legendary_relics.hardened_ring.skill": "受到伤害后，获得%s护甲，持续%s秒，这个效果有%s秒冷却时间。",
-  "item.legendary_relics.ancient_fragment": "传说碎片",
+  "item.legendary_relics.ancient_fragment": "远古碎片",
+  "item.legendary_relics.ancient_fragment.desc": "可以在铁砧上与物品结合，使物品的部分属性加成提高%s。",
   "item.legendary_relics.dark_steel_claw": "暗钢利爪",
   "item.legendary_relics.dark_steel_claw.skill": "你的攻击造成额外%s伤害"
 }

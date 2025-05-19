@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics;
 
-import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
-import com.chen1335.legendaryRelics.API.objects.LRItems;
-import com.chen1335.legendaryRelics.API.objects.LRShieldType;
+import com.chen1335.legendaryRelics.API.objects.*;
+import com.chen1335.legendaryRelics.client.ClientExtensionsRegister;
+import com.chen1335.legendaryRelics.client.EntityRendererRegister;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -37,10 +37,19 @@ public class LegendaryRelics {
         LRItems.ITEM_DEFERRED_REGISTER.register(modEventBus);
         LRShieldType.SHIELD_TYPE_DEFERRED_REGISTER.register(modEventBus);
         LRAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
+        LRDataComponentTypes.DATA_COMPONENTS.register(modEventBus);
+        LRArmorMaterials.ARMOR_MATERIAL_DEFERRED_REGISTER.register(modEventBus);
+        modEventBus.addListener(ClientExtensionsRegister::register);
+        modEventBus.addListener(EntityRendererRegister::registerLayerDefinitions);
+        modEventBus.addListener(EntityRendererRegister::addLayers);
     }
 
 
     public static ResourceLocation id(String string) {
         return ResourceLocation.fromNamespaceAndPath(MODID, string);
+    }
+
+    public static void clientInit(){
+
     }
 }

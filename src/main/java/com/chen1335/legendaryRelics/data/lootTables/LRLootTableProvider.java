@@ -43,6 +43,8 @@ public class LRLootTableProvider extends LootTableProvider {
 
         public static final ResourceKey<LootTable> ANCIENT_FRAGMENT_ADD_HIGH_CHANCE = registerModifier("chests/ancient_fragment_add_high_chance");
 
+        public static final ResourceKey<LootTable> DARK_STEEL_CLAW = registerModifier("chests/dark_steel_claw");
+
         public LootTableModifier(HolderLookup.Provider provider) {
             this.provider = provider;
         }
@@ -89,6 +91,14 @@ public class LRLootTableProvider extends LootTableProvider {
                             LootPool.lootPool().setRolls(new ConstantValue(1))
                                     .add(EmptyLootItem.emptyItem().setWeight(20))
                                     .add(LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT).setWeight(10))
+                    )
+            );
+
+            output.accept(DARK_STEEL_CLAW,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(30))
+                                    .add(LootItem.lootTableItem(LRItems.DARK_STEEL_CLAW).setWeight(10))
                     )
             );
         }

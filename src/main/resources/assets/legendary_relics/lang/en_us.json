@@ -1,6 +1,7 @@
 {
   "itemGroup.legendary_relics": "Legendary Relics",
   "legendary_relics.cooldown": "cooldown:%ss",
+  "legendary_relics.items.skill.cannot_be_tacked": "Multiple curios cannot be stacked for this effect",
   "item.legendary_relics.sacred_talisman": "Sacred Talisman",
   "item.legendary_relics.sacred_talisman.skill": "After being injured, if your health is below %s, a shield of %s will be provided for you,lasts for %s seconds",
   "item.legendary_relics.sacred_talisman.skill.1": "Reduce damage from undead creatures by %s",
@@ -19,6 +20,7 @@
   "item.legendary_relics.hardened_ring": "Hardened Ring",
   "item.legendary_relics.hardened_ring.skill": "After receiving damage, gain %s armor for %s seconds, which has a cooldown of %s seconds.",
   "item.legendary_relics.ancient_fragment": "Ancient Fragment",
+  "item.legendary_relics.ancient_fragment.desc": "Can be combined with item on an anvil. Increase the bonus of some attributes of the item by %s",
   "item.legendary_relics.dark_steel_claw": "Dark Steel Claw",
   "item.legendary_relics.dark_steel_claw.skill": "Your attack deals an additional %s damage"
 }

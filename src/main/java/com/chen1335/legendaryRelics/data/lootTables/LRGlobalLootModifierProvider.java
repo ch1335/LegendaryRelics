@@ -47,6 +47,10 @@ public class LRGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 BuiltInLootTables.END_CITY_TREASURE.location(),
                 BuiltInLootTables.BASTION_TREASURE.location()
         );
+
+        addModifiers("dark_steel_claw", LRLootTableProvider.LootTableModifier.DARK_STEEL_CLAW.location(),
+                BuiltInLootTables.ANCIENT_CITY.location(),
+                BuiltInLootTables.ANCIENT_CITY_ICE_BOX.location());
     }
 
     private void simpleAdd(ResourceLocation resourceLocation) {
