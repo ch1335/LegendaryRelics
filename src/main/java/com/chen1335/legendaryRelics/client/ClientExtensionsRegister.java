@@ -8,7 +8,9 @@ public class ClientExtensionsRegister {
     public static void register(RegisterClientExtensionsEvent event) {
         event.registerItem(new BlackDragonArmorExtension(),
                 LRItems.BLACK_DRAGON_HELMET,
-                LRItems.BLACK_DRAGON_CHEST_PLATE
+                LRItems.BLACK_DRAGON_CHEST_PLATE,
+                LRItems.BLACK_DRAGON_LEGGINGS,
+                LRItems.BLACK_DRAGON_BOOTS
         );
     }
 

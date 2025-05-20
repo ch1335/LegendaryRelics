@@ -21,15 +21,15 @@ public class LRArmorMaterials {
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIAL_DEFERRED_REGISTER = DeferredRegister.create(Registries.ARMOR_MATERIAL, LegendaryRelics.MODID);
 
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> BLACK_DRAGON = register("black_dragon", Util.make(new EnumMap<>(ArmorItem.Type.class), p_323380_ -> {
-                p_323380_.put(ArmorItem.Type.BOOTS, 5);
+                p_323380_.put(ArmorItem.Type.BOOTS, 6);
                 p_323380_.put(ArmorItem.Type.LEGGINGS, 8);
                 p_323380_.put(ArmorItem.Type.CHESTPLATE, 10);
-                p_323380_.put(ArmorItem.Type.HELMET, 5);
+                p_323380_.put(ArmorItem.Type.HELMET, 6);
                 p_323380_.put(ArmorItem.Type.BODY, 12);
             }), 20,
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            2.0F,
-            0.0F,
+            5.0F,
+            0.1F,
             () -> Ingredient.EMPTY
     );
 

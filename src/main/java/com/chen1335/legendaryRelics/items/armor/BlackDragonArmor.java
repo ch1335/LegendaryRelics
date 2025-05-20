@@ -15,11 +15,16 @@ public class BlackDragonArmor extends ArmorItem {
     private static final ResourceLocation BlackDragonArmorTexture = LegendaryRelics.id("textures/armor/black_dragon.png");
 
     public BlackDragonArmor(Holder<ArmorMaterial> material, Type type, Properties properties) {
-        super(material, type, properties);
+        super(material, type, properties.stacksTo(1));
     }
 
     @Override
     public @Nullable ResourceLocation getArmorTexture(@NotNull ItemStack stack, @NotNull Entity entity, @NotNull EquipmentSlot slot, ArmorMaterial.@NotNull Layer layer, boolean innerModel) {
         return BlackDragonArmorTexture;
+    }
+
+    @Override
+    public boolean isDamageable(@NotNull ItemStack stack) {
+        return false;
     }
 }
