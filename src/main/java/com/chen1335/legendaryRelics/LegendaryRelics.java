@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.client.ClientExtensionsRegister;
 import com.chen1335.legendaryRelics.client.EntityRendererRegister;
+import com.chen1335.legendaryRelics.client.LegendaryTooltipsHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -11,7 +12,9 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
@@ -42,6 +45,7 @@ public class LegendaryRelics {
         modEventBus.addListener(ClientExtensionsRegister::register);
         modEventBus.addListener(EntityRendererRegister::registerLayerDefinitions);
         modEventBus.addListener(EntityRendererRegister::addLayers);
+        modEventBus.addListener(this::clientInit);
     }
 
 
@@ -49,7 +53,9 @@ public class LegendaryRelics {
         return ResourceLocation.fromNamespaceAndPath(MODID, string);
     }
 
-    public static void clientInit(){
-
+    public void clientInit(FMLClientSetupEvent event) {
+        if (ModList.get().isLoaded("legendarytooltips")) {
+            LegendaryTooltipsHandler.init();
+        }
     }
 }

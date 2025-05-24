@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.API.objects.LRItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.CuriosConstants;
@@ -19,19 +20,44 @@ public class LRItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(CuriosConstants.Tags.CHARM)
                 .add(
-                        LRItems.SACRED_TALISMAN.asItem(),
                         LRItems.AGGLOMERATION_MALICE.asItem(),
-                        LRItems.SHIELD_REGENERATOR.asItem()
+                        LRItems.SHIELD_REGENERATOR.asItem(),
+                        LRItems.NETHER_TALISMAN.asItem(),
+                        LRItems.PURGATORY_TALISMAN.asItem()
                 );
 
         tag(CuriosConstants.Tags.RING)
                 .add(
-                        LRItems.HARDENED_RING.asItem()
+                        LRItems.HARDENED_RING.asItem(),
+                        LRItems.THE_ORE_COLLECTORS_RING.asItem(),
+                        LRItems.LAVA_RING.asItem(),
+                        LRItems.NETHER_RING.asItem()
                 );
+
         tag(CuriosConstants.Tags.HANDS)
                 .add(
                         LRItems.DARK_STEEL_CLAW.asItem()
                 );
 
+        tag(ItemTags.HEAD_ARMOR).add(
+                LRItems.BLACK_DRAGON_HELMET.value()
+        );
+
+        tag(CuriosConstants.Tags.NECKLACE).add(
+                LRItems.SACRED_TALISMAN.asItem(),
+                LRItems.PERSEVERANCE_NECKLACE.asItem(),
+                LRItems.HEALING_TALISMAN.asItem()
+        );
+        tag(ItemTags.CHEST_ARMOR).add(
+                LRItems.BLACK_DRAGON_CHEST_PLATE.value()
+        );
+
+        tag(ItemTags.LEG_ARMOR).add(
+                LRItems.BLACK_DRAGON_LEGGINGS.value()
+        );
+
+        tag(ItemTags.FOOT_ARMOR).add(
+                LRItems.BLACK_DRAGON_BOOTS.value()
+        );
     }
 }

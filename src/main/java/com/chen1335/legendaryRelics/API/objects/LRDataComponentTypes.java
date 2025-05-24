@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.dataComponentTypes.CollectedMinerals;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -12,4 +13,7 @@ public class LRDataComponentTypes {
     public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.DataComponents.createDataComponents(Registries.DATA_COMPONENT_TYPE, LegendaryRelics.MODID);
 
     public static DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> ANCIENT_FRAGMENT_UPDATED = DATA_COMPONENTS.register("ancient_fragment_updated", () -> DataComponentType.<Boolean>builder().networkSynchronized(ByteBufCodecs.BOOL).persistent(Codec.BOOL).build());
+
+    public static DeferredHolder<DataComponentType<?>, DataComponentType<CollectedMinerals>> COLLECTED_MINERALS = DATA_COMPONENTS.register("collected_minerals", () -> DataComponentType.<CollectedMinerals>builder().networkSynchronized(CollectedMinerals.STREAM_CODEC).persistent(CollectedMinerals.CODEC).build());
+
 }

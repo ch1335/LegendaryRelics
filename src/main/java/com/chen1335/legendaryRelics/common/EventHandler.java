@@ -1,27 +1,31 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.legendaryRelics.API.LRCurio;
+import com.chen1335.legendaryRelics.API.LRCurioHelper;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.items.curios.AgglomerationMalice;
-import com.chen1335.legendaryRelics.items.curios.HardenedRing;
-import com.chen1335.legendaryRelics.items.curios.SacredTalisman;
+import com.chen1335.legendaryRelics.dataComponentTypes.CollectedMinerals;
+import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
+import com.chen1335.legendaryRelics.items.armor.BlackDragonChestPlate;
+import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
+import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
 import com.chen1335.legendaryRelics.mixins.main.CurioAttributeModifierEventInvoker;
-import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -30,10 +34,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
+import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +49,78 @@ public class EventHandler {
     @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.GAME)
     public static class Game {
         @SubscribeEvent
-        public static void EntityTickPre(EntityTickEvent.Pre pre) {
-            if (pre.getEntity() instanceof LivingEntity living && living.hasData(LRAttachmentTypes.ENTITY_DATA)) {
-                living.getData(LRAttachmentTypes.ENTITY_DATA).tick(living);
+        public static void countOres(BlockEvent.BreakEvent event) {
+            LRItems.THE_ORE_COLLECTORS_RING.get().runIfEquippedThis(event.getPlayer(), (itemStack, calculatorArg) -> CollectedMinerals.checkAndAdd(itemStack, event.getState().getBlock()));
+        }
+
+        @SubscribeEvent
+        public static void heal(LivingHealEvent event) {
+            LRCurioHelper.runForeachCurio(event.getEntity(), (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingHealEvent(event, calculatorArg, itemStack));
+
+            CalculatorArg arg = CalculatorArg.emptyArg();
+            CalculatorArg.ArgType.THIS_ENTITY.putArg(arg, event.getEntity());
+            LRItems.BLACK_DRAGON_LEGGINGS.get().runIfEquippedThis(event.getEntity(), arg, (itemStack, arg1) -> event.setAmount(event.getAmount() * (1 + BlackDragonLeggings.HEAL_INCREASE.getValue(arg1))));
+        }
+
+        @SubscribeEvent
+        public static void MobEffectEvent$Added(MobEffectEvent.Added event) {
+            ItemStack headArmor = event.getEntity().getItemBySlot(EquipmentSlot.HEAD);
+            if (headArmor.getItem() == LRItems.BLACK_DRAGON_HELMET.get()) {
+                CalculatorArg arg = CalculatorArg.emptyArg();
+                CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, headArmor);
+                MobEffectInstance effectInstance = event.getEffectInstance();
+                if (effectInstance != null) {
+                    if (effectInstance.getEffect().value().getCategory() != MobEffectCategory.HARMFUL) {
+                        effectInstance.duration = (int) (effectInstance.duration * BlackDragonHelmet.GOOD_EFFECT_TIME_MULTIPLIER.getValue(arg));
+                    } else {
+                        effectInstance.duration = (int) (effectInstance.duration * BlackDragonHelmet.BAD_EFFECT_TIME_MULTIPLIER.getValue(arg));
+                    }
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
+            CalculatorArg args = new CalculatorArg();
+            LivingEntity livingEntity = event.getEntity();
+            CalculatorArg.ArgType.THIS_ENTITY.putArg(args, livingEntity);
+            if (!(event.getFrom().getItem() == event.getTo().getItem()) && (event.getFrom().getItem() instanceof BlackDragonArmor || event.getTo().getItem() instanceof BlackDragonArmor)) {
+                float multiplier = BlackDragonArmorSetEffect.ATTRIBUTE_MULTIPLIER.getValue(args);
+                if (BlackDragonArmorSetEffect.BLACK_ARMOR_COUNT_GETTER.getValue(args) == 0) {
+                    multiplier = 0;
+                }
+                for (AttributeInstance value : livingEntity.getAttributes().supplier.instances.values()) {
+                    AttributeInstance instance = livingEntity.getAttribute(value.getAttribute());
+                    if (instance != null && instance.getAttribute().value().sentiment == Attribute.Sentiment.POSITIVE) {
+                        instance.removeModifier(BlackDragonArmorSetEffect.BLACK_DRAGON_ATTRIBUTE_MULTIPLIER);
+                        if (multiplier > 0) {
+                            instance.addPermanentModifier(new AttributeModifier(BlackDragonArmorSetEffect.BLACK_DRAGON_ATTRIBUTE_MULTIPLIER, multiplier, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                        }
+                    }
+                }
+            }
+        }
+
+
+        @SubscribeEvent
+        public static void EntityTickPre(EntityTickEvent.Pre event) {
+            if (event.getEntity() instanceof LivingEntity living) {
+                CalculatorArg args = new CalculatorArg();
+                CalculatorArg.ArgType.THIS_ENTITY.putArg(args, living);
+                if (living.hasData(LRAttachmentTypes.ENTITY_DATA)) {
+                    living.getData(LRAttachmentTypes.ENTITY_DATA).tick(living);
+                }
+                if (!living.level().isClientSide && living.level().getGameTime() % 10 == 0 && living.getHealth() < living.getMaxHealth()) {
+                    float healthRegain = BlackDragonArmorSetEffect.HEALTH_REGAIN.getValue(args);
+                    if (BlackDragonArmorSetEffect.BLACK_ARMOR_COUNT_GETTER.getValue(args) == 0) {
+                        healthRegain = 0;
+                    }
+                    living.heal(healthRegain / 10);
+                }
+                if (!living.level().isClientSide) {
+                    LRCurioHelper.runForeachCurio(living, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleTickEvent(event, calculatorArg, itemStack,living));
+
+                }
             }
         }
 
@@ -59,49 +134,34 @@ public class EventHandler {
             CalculatorArg args = new CalculatorArg();
             LivingEntity entity = event.getEntity();
             CalculatorArg.ArgType.THIS_ENTITY.putArg(args, entity);
-            if (entity instanceof Player player) {
-                if (player.getHealth() <= player.getMaxHealth() * SacredTalisman.MAX_HEALTH_PERCENTAGE.getValue(args) && LRItems.SACRED_TALISMAN.get().isEquippedThis(player) && !player.getCooldowns().isOnCooldown(LRItems.SACRED_TALISMAN.get())) {
-                    ShieldAPI.addCommonTimeLimitedShield(player, SacredTalisman.SHIELD_AMOUNT.getValue(args), (int) (SacredTalisman.SHIELD_LAST_TIME.getValue(args) * 20));
-                    if (player.isDeadOrDying()) {
-                        player.setHealth(1);
-                    }
-                    player.getCooldowns().addCooldown(LRItems.SACRED_TALISMAN.get(), 120 * 20);
-                }
-
-                if (LRItems.HARDENED_RING.get().isEquippedThis(player) && !player.getCooldowns().isOnCooldown(LRItems.HARDENED_RING.get())) {
-                    player.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
-                            .addAttributeModifier(
-                                    player,
-                                    Attributes.ARMOR,
-                                    new AttributeModifier(
-                                            LegendaryRelics.id("hardened_ring_armor"),
-                                            HardenedRing.ARMOR_AMOUNT.getValue(args),
-                                            AttributeModifier.Operation.ADD_VALUE
-                                    ),
-                                    HardenedRing.TIME_KEEP.getInt(args) * 20
-                            );
-
-                    player.getCooldowns().addCooldown(LRItems.HARDENED_RING.get(), HardenedRing.COOLDOWN.getInt(args) * 20);
-                }
-            }
-
+            LRCurioHelper.runForeachCurio(entity, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingDamageEventLowest(event, calculatorArg, itemStack));
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
+        public static void LivingIncomingDamageEventLowest(LivingIncomingDamageEvent event) {
             CalculatorArg args = new CalculatorArg();
             LivingEntity entity = event.getEntity();
             CalculatorArg.ArgType.THIS_ENTITY.putArg(args, entity);
-            SacredTalisman sacredTalisman = LRItems.SACRED_TALISMAN.get();
-            if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-                if (attacker instanceof Mob) {
-                    if (((Mob) attacker).getSpawnType() == MobSpawnType.SPAWNER && LRItems.AGGLOMERATION_MALICE.value().isEquippedThis(event.getEntity())) {
-                        event.setAmount(event.getAmount() * AgglomerationMalice.DAMAGE_MULTIPLIER.getValue(args));
-                    }
+            LRCurioHelper.runForeachCurio(entity, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingIncomingDamageEventLowest(event, calculatorArg, itemStack));
+            for (ItemStack armorSlot : entity.getArmorSlots()) {
+                if (armorSlot.getItem() instanceof BlackDragonArmor blackDragonArmor) {
+                    CalculatorArg args1 = args.copy();
+                    CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(args1, armorSlot);
+                    blackDragonArmor.handleDamageReduce(event, args1, armorSlot);
                 }
+            }
+        }
 
-                if (attacker.getType().is(EntityTypeTags.UNDEAD) && sacredTalisman.isEquippedThis(event.getEntity())) {
-                    event.setAmount(event.getAmount() * (1 - SacredTalisman.UNDEAD_REDUCE.getValue(args)));
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void LivingIncomingDamageEventHighest(LivingIncomingDamageEvent event) {
+            LivingEntity entity = event.getEntity();
+            LRCurioHelper.runForeachCurio(entity, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingIncomingDamageEventHighest(event, calculatorArg, itemStack));
+            if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+                LRCurioHelper.runForeachCurio(attacker, (lrCurio, calculatorArg, itemStack) -> lrCurio.onAttack(event, calculatorArg, itemStack, attacker));
+                if (attacker instanceof Player playerAttacker) {
+                    CalculatorArg args = new CalculatorArg();
+                    CalculatorArg.ArgType.THIS_ENTITY.putArg(args, attacker);
+                    LRItems.BLACK_DRAGON_CHEST_PLATE.get().runIfEquippedThis(attacker, args, (itemStack, newArgs) -> BlackDragonChestPlate.handleAttack(event, playerAttacker, newArgs, itemStack));
                 }
             }
         }
@@ -180,6 +240,23 @@ public class EventHandler {
                 event.setCost(10);
                 event.setMaterialCost(1);
             }
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void EntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
+            if (!event.isCanceled() && event.getEntity() instanceof LivingEntity living) {
+                LRCurioHelper.runForeachCurio(living, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleEntityTravelToDimensionEvent(event, calculatorArg, itemStack, living));
+            }
+        }
+
+        @SubscribeEvent
+        public static void CurioChangeEvent(CurioChangeEvent event) {
+            if (event.getFrom().getItem() instanceof LRCurio lrCurio) {
+                CalculatorArg arg = CalculatorArg.emptyArg();
+                CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, event.getFrom());
+                lrCurio.handleCurioChangeEvent(event, arg, event.getFrom(), event.getEntity());
+            }
+            LRCurioHelper.runForeachCurio(event.getEntity(), (lrCurio, calculatorArg, itemStack) -> lrCurio.handleCurioChangeEvent(event, calculatorArg, itemStack, event.getEntity()));
         }
     }
 }

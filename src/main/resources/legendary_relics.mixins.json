@@ -9,6 +9,7 @@
     "LootItemRandomChanceWithEnchantedBonusConditionMixin"
   ],
   "client": [
+    "HumanoidArmorLayerMixin"
   ],
   "minVersion": "0.8"
 }

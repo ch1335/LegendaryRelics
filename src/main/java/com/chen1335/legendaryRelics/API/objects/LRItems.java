@@ -6,8 +6,7 @@ import com.chen1335.legendaryRelics.items.armor.BlackDragonChestPlate;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.curios.*;
-import com.chen1335.legendaryRelics.items.misc.AncientFragment;
-import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
+import com.chen1335.legendaryRelics.items.misc.*;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -35,5 +34,26 @@ public class LRItems {
     public static final DeferredItem<DarkGoldForgingTool> DARK_GOLD_FORGING_TOOL = ITEM_DEFERRED_REGISTER.register("dark_gold_forging_tool", DarkGoldForgingTool::new);
 
     public static final DeferredItem<AncientFragment> ANCIENT_FRAGMENT = ITEM_DEFERRED_REGISTER.register("ancient_fragment", AncientFragment::new);
+
+    public static final DeferredItem<TheOreCollectorsRing> THE_ORE_COLLECTORS_RING = ITEM_DEFERRED_REGISTER.register("the_ore_collectors_ring", TheOreCollectorsRing::new);
+
+    public static final DeferredItem<LavaRing> LAVA_RING = ITEM_DEFERRED_REGISTER.register("lava_ring", LavaRing::new);
+
+    public static final DeferredItem<NetherRing> NETHER_RING = ITEM_DEFERRED_REGISTER.register("nether_ring", NetherRing::new);
+
+    public static final DeferredItem<NetherTalisman> NETHER_TALISMAN = ITEM_DEFERRED_REGISTER.register("nether_talisman", NetherTalisman::new);
+
+    public static final DeferredItem<PurgatoryTalisman> PURGATORY_TALISMAN = ITEM_DEFERRED_REGISTER.register("purgatory_talisman", PurgatoryTalisman::new);
+
+    public static final DeferredItem<HealingTalisman> HEALING_TALISMAN = ITEM_DEFERRED_REGISTER.register("healing_talisman", HealingTalisman::new);
+
+    public static final DeferredItem<PerseveranceNecklace> PERSEVERANCE_NECKLACE = ITEM_DEFERRED_REGISTER.register("perseverance_necklace", PerseveranceNecklace::new);
+
+    public static final DeferredItem<DragonScale> DRAGON_SCALE = ITEM_DEFERRED_REGISTER.register("dragon_scale", DragonScale::new);
+
+    public static final DeferredItem<DarkGoldFragment> DARK_GOLD_FRAGMENT = ITEM_DEFERRED_REGISTER.register("dark_gold_fragment", DarkGoldFragment::new);
+
+    public static final DeferredItem<DarkGold> DARK_GOLD = ITEM_DEFERRED_REGISTER.register("dark_gold", DarkGold::new);
+
 
 }

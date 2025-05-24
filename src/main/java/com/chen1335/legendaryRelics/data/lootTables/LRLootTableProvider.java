@@ -14,6 +14,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.jetbrains.annotations.NotNull;
@@ -45,12 +46,64 @@ public class LRLootTableProvider extends LootTableProvider {
 
         public static final ResourceKey<LootTable> DARK_STEEL_CLAW = registerModifier("chests/dark_steel_claw");
 
+        public static final ResourceKey<LootTable> THE_ORE_COLLECTORS_RING = registerModifier("chests/the_ore_collectors_ring");
+
+        public static final ResourceKey<LootTable> LAVA_RING = registerModifier("chests/lava_ring");
+
+        public static final ResourceKey<LootTable> NETHER_RING = registerModifier("chests/nether_ring");
+
+        public static final ResourceKey<LootTable> NETHER_TALISMAN = registerModifier("chests/nether_talisman");
+
+        public static final ResourceKey<LootTable> HEALING_TALISMAN = registerModifier("chests/healing_talisman");
+
+        public static final ResourceKey<LootTable> DRAGON_SCALE = registerModifier("entities/healing_talisman");
+
+        public static final ResourceKey<LootTable> DARK_GOLD_FRAGMENTS = registerModifier("chests/dark_gold_fragments");
+
+        public static final ResourceKey<LootTable> DARK_GOLD_FRAGMENTS_HIGH_CHANCE = registerModifier("chests/dark_gold_fragments_high_chance");
+
         public LootTableModifier(HolderLookup.Provider provider) {
             this.provider = provider;
         }
 
         @Override
         public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+
+            output.accept(DARK_GOLD_FRAGMENTS_HIGH_CHANCE,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(40))
+                                    .add(LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT).setWeight(10))
+
+                    )
+            );
+
+            output.accept(DARK_GOLD_FRAGMENTS,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(90))
+                                    .add(LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT).setWeight(10))
+
+                    )
+            );
+
+            output.accept(DRAGON_SCALE,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(LootItem.lootTableItem(LRItems.DRAGON_SCALE).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4))).setWeight(10))
+
+                    )
+            );
+
+            output.accept(HEALING_TALISMAN,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(20))
+                                    .add(LootItem.lootTableItem(LRItems.HEALING_TALISMAN).setWeight(10))
+
+                    )
+            );
+
             output.accept(VILLAGE_WEAPONSMITH_MODIFIER,
                     LootTable.lootTable().withPool(
                             LootPool.lootPool().setRolls(new ConstantValue(1))
@@ -81,7 +134,7 @@ public class LRLootTableProvider extends LootTableProvider {
             output.accept(ANCIENT_FRAGMENT_ADD,
                     LootTable.lootTable().withPool(
                             LootPool.lootPool().setRolls(new ConstantValue(1))
-                                    .add(EmptyLootItem.emptyItem().setWeight(40))
+                                    .add(EmptyLootItem.emptyItem().setWeight(90))
                                     .add(LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT).setWeight(10))
                     )
             );
@@ -89,7 +142,7 @@ public class LRLootTableProvider extends LootTableProvider {
             output.accept(ANCIENT_FRAGMENT_ADD_HIGH_CHANCE,
                     LootTable.lootTable().withPool(
                             LootPool.lootPool().setRolls(new ConstantValue(1))
-                                    .add(EmptyLootItem.emptyItem().setWeight(20))
+                                    .add(EmptyLootItem.emptyItem().setWeight(40))
                                     .add(LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT).setWeight(10))
                     )
             );
@@ -99,6 +152,38 @@ public class LRLootTableProvider extends LootTableProvider {
                             LootPool.lootPool().setRolls(new ConstantValue(1))
                                     .add(EmptyLootItem.emptyItem().setWeight(30))
                                     .add(LootItem.lootTableItem(LRItems.DARK_STEEL_CLAW).setWeight(10))
+                    )
+            );
+
+            output.accept(THE_ORE_COLLECTORS_RING,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(30))
+                                    .add(LootItem.lootTableItem(LRItems.THE_ORE_COLLECTORS_RING).setWeight(10))
+                    )
+            );
+
+            output.accept(LAVA_RING,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(10))
+                                    .add(LootItem.lootTableItem(LRItems.LAVA_RING).setWeight(10))
+                    )
+            );
+
+            output.accept(NETHER_RING,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(30))
+                                    .add(LootItem.lootTableItem(LRItems.LAVA_RING).setWeight(10))
+                    )
+            );
+
+            output.accept(NETHER_TALISMAN,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(10))
+                                    .add(LootItem.lootTableItem(LRItems.NETHER_TALISMAN).setWeight(10))
                     )
             );
         }

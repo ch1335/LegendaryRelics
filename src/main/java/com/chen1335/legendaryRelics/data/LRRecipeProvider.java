@@ -31,5 +31,100 @@ public class LRRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .showNotification(false)
                 .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.PURGATORY_TALISMAN)
+                .define('A', LRItems.ANCIENT_FRAGMENT)
+                .define('B', LRItems.LAVA_RING)
+                .define('C', LRItems.NETHER_TALISMAN)
+                .define('D', LRItems.NETHER_RING)
+                .define('E', Items.GOLD_INGOT)
+                .pattern(" A ")
+                .pattern("BCD")
+                .pattern(" E ")
+                .unlockedBy("has_nether_talisman", has(LRItems.NETHER_TALISMAN))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.PERSEVERANCE_NECKLACE)
+                .define('A', LRItems.ANCIENT_FRAGMENT)
+                .define('B', Items.DIAMOND)
+                .define('C', LRItems.HEALING_TALISMAN)
+                .define('D', Items.STRING)
+                .pattern("DAD")
+                .pattern("BCB")
+                .pattern(" B ")
+                .unlockedBy("has_healing_talisman", has(LRItems.HEALING_TALISMAN))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_HELMET)
+                .define('A', LRItems.DRAGON_SCALE)
+                .define('B', Items.NETHERITE_HELMET)
+                .define('C', LRItems.ANCIENT_FRAGMENT)
+                .define('D', LRItems.DARK_GOLD_FRAGMENT)
+                .pattern("CAC")
+                .pattern("ABA")
+                .pattern(" D ")
+                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_CHEST_PLATE)
+                .define('A', LRItems.DRAGON_SCALE)
+                .define('B', Items.NETHERITE_CHESTPLATE)
+                .define('C', LRItems.ANCIENT_FRAGMENT)
+                .define('D', LRItems.DARK_GOLD_FRAGMENT)
+                .pattern("CAC")
+                .pattern("ABA")
+                .pattern(" D ")
+                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_LEGGINGS)
+                .define('A', LRItems.DRAGON_SCALE)
+                .define('B', Items.NETHERITE_LEGGINGS)
+                .define('C', LRItems.ANCIENT_FRAGMENT)
+                .define('D', LRItems.DARK_GOLD_FRAGMENT)
+                .pattern("CAC")
+                .pattern("ABA")
+                .pattern(" D ")
+                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_BOOTS)
+                .define('A', LRItems.DRAGON_SCALE)
+                .define('B', Items.NETHERITE_BOOTS)
+                .define('C', LRItems.ANCIENT_FRAGMENT)
+                .define('D', LRItems.DARK_GOLD_FRAGMENT)
+                .pattern("CAC")
+                .pattern("ABA")
+                .pattern(" D ")
+                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.DARK_GOLD)
+                .define('A', Items.NETHERITE_INGOT)
+                .define('B', LRItems.ANCIENT_FRAGMENT)
+                .define('C', LRItems.DARK_GOLD_FRAGMENT)
+                .pattern(" C ")
+                .pattern("BAB")
+                .pattern(" C ")
+                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.DARK_GOLD_FORGING_TOOL)
+                .define('A', LRItems.DARK_GOLD)
+                .define('B', Items.OBSIDIAN)
+                .define('C', Items.IRON_INGOT)
+                .pattern(" C ")
+                .pattern("BAB")
+                .pattern(" C ")
+                .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
+                .showNotification(false)
+                .save(recipeOutput);
     }
 }

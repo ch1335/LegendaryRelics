@@ -1,7 +1,8 @@
 {
   "values": [
-    "legendary_relics:sacred_talisman",
     "legendary_relics:agglomeration_malice",
-    "legendary_relics:shield_regenerator"
+    "legendary_relics:shield_regenerator",
+    "legendary_relics:nether_talisman",
+    "legendary_relics:purgatory_talisman"
   ]
 }
