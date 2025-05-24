@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.AttachmentDatas;
+package com.chen1335.legendaryRelics.attachmentDatas;
 
 import com.chen1335.legendaryRelics.common.TimeLimitedAttributeBonusManager;
 import net.minecraft.core.HolderLookup;

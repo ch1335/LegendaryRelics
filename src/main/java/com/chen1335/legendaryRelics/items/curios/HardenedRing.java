@@ -1,6 +1,8 @@
 package com.chen1335.legendaryRelics.items.curios;
 
-import com.chen1335.legendaryRelics.API.LRCurioHelper;
+import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
+import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
 import com.chen1335.legendaryRelics.common.calculator.*;
@@ -13,19 +15,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.List;
 import java.util.Map;
 
-public class HardenedRing extends Item implements ICurioItem, LRCurioHelper {
+public class HardenedRing extends LRCuriosBase {
 
     public HardenedRing() {
         super(new Properties().rarity(Rarity.UNCOMMON).stacksTo(1));
@@ -36,20 +37,33 @@ public class HardenedRing extends Item implements ICurioItem, LRCurioHelper {
     );
     public static FinalCalculator ARMOR_AMOUNT = FinalCalculator.of(
             Add.of(
-                    Constant.of(2),
+                    DarkGoldUpdateArg.of(
+                            Constant.of(2F),
+                            Constant.of(4F)
+                    ),
                     Mul.of(
-                            Constant.of(0.75F),
+                            DarkGoldUpdateArg.of(
+                                    Constant.of(0.50F),
+                                    Constant.of(0.75F)
+                            ),
                             EntityAttributeValue.of(Attributes.ARMOR)
                     )
             )
     );
-    public static FinalCalculator TIME_KEEP = FinalCalculator.of(Constant.of(5));
-    public static FinalCalculator COOLDOWN = FinalCalculator.of(Constant.of(15));
+    public static FinalCalculator TIME_KEEP = FinalCalculator.of(DarkGoldUpdateArg.of(
+            Constant.of(5),
+            Constant.of(7.5F)
+    ));
+    public static FinalCalculator COOLDOWN = FinalCalculator.of(DarkGoldUpdateArg.of(
+            Constant.of(15),
+            Constant.of(12.5F)
+    ));
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         Level level = context.level();
         CalculatorArg args = CalculatorArg.emptyArg();
+        CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(args, stack);
         if (level != null && level.isClientSide()) {
             CalculatorArg.ArgType.THIS_ENTITY.putArg(args, LRClient.getClientPlayer());
             tooltipComponents.add(Component.translatable("item.legendary_relics.hardened_ring.skill",
@@ -73,5 +87,22 @@ public class HardenedRing extends Item implements ICurioItem, LRCurioHelper {
             modifierMultimap.put(entry.getKey(), entry.getValue().toAttributeModifier(slotContext));
         }
         return modifierMultimap;
+    }
+
+    public static void onDamage(CalculatorArg args, Player player, ItemStack itemStack) {
+        if (!player.getCooldowns().isOnCooldown(LRItems.HARDENED_RING.get())) {
+            player.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
+                    .addAttributeModifier(
+                            player,
+                            Attributes.ARMOR,
+                            new AttributeModifier(
+                                    LegendaryRelics.id("hardened_ring_armor"),
+                                    HardenedRing.ARMOR_AMOUNT.getValue(args),
+                                    AttributeModifier.Operation.ADD_VALUE
+                            ),
+                            HardenedRing.TIME_KEEP.getInt(args) * 20
+                    );
+            player.getCooldowns().addCooldown(LRItems.HARDENED_RING.get(), HardenedRing.COOLDOWN.getInt(args) * 20);
+        }
     }
 }

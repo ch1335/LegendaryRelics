@@ -36,4 +36,6 @@ public class LRItems {
 
     public static final DeferredItem<AncientFragment> ANCIENT_FRAGMENT = ITEM_DEFERRED_REGISTER.register("ancient_fragment", AncientFragment::new);
 
+    public static final DeferredItem<TheOreCollectorsRing> THE_ORE_COLLECTORS_RING = ITEM_DEFERRED_REGISTER.register("the_ore_collectors_ring", TheOreCollectorsRing::new);
+
 }

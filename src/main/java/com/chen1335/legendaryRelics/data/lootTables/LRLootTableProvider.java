@@ -45,6 +45,8 @@ public class LRLootTableProvider extends LootTableProvider {
 
         public static final ResourceKey<LootTable> DARK_STEEL_CLAW = registerModifier("chests/dark_steel_claw");
 
+        public static final ResourceKey<LootTable> THE_ORE_COLLECTORS_RING = registerModifier("chests/the_ore_collectors_ring");
+
         public LootTableModifier(HolderLookup.Provider provider) {
             this.provider = provider;
         }
@@ -99,6 +101,14 @@ public class LRLootTableProvider extends LootTableProvider {
                             LootPool.lootPool().setRolls(new ConstantValue(1))
                                     .add(EmptyLootItem.emptyItem().setWeight(30))
                                     .add(LootItem.lootTableItem(LRItems.DARK_STEEL_CLAW).setWeight(10))
+                    )
+            );
+
+            output.accept(THE_ORE_COLLECTORS_RING,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(EmptyLootItem.emptyItem().setWeight(30))
+                                    .add(LootItem.lootTableItem(LRItems.THE_ORE_COLLECTORS_RING).setWeight(10))
                     )
             );
         }

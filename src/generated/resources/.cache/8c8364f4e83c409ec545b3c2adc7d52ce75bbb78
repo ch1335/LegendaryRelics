@@ -1,4 +1,8 @@
-// 1.21.1	2025-05-19T17:05:45.4448423	Tags for minecraft:item mod id vanilla
+// 1.21.1	2025-05-24T02:06:25.1027199	Tags for minecraft:item mod id vanilla
 1b9f93e49de032ee5e8cc81c8cbcc67bf111f3b2 data/curios/tags/item/charm.json
 632df4625ff765e19e9925c4b1c2852056202cf5 data/curios/tags/item/hands.json
-89a5177117b39aaab467a3e20601734b1fd257aa data/curios/tags/item/ring.json
+39970eaf9e484d83a1d12106c707d76d02f64c9a data/curios/tags/item/ring.json
+1bbd42b2b343adce7cf76a5bf2e0010c1f94da5a data/minecraft/tags/item/chest_armor.json
+5de21bd1c95a0c8c31affc6ddb755116ebddd381 data/minecraft/tags/item/foot_armor.json
+04b565f69f3a43928a6e6c88baa3e02ca8cf95f0 data/minecraft/tags/item/head_armor.json
+573e62dcb27e464d004c5794eb75d4b6347fe4a2 data/minecraft/tags/item/leg_armor.json

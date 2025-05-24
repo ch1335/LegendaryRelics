@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "legendary_relics:item/the_ore_collectors_ring"
+  }
+}

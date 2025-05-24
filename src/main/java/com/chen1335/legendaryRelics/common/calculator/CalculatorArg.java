@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common.calculator;
 
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -21,8 +22,15 @@ public class CalculatorArg {
         args.put(argType, arg);
     }
 
+    public CalculatorArg copy() {
+        CalculatorArg arg = new CalculatorArg();
+        arg.args.putAll(this.args);
+        return arg;
+    }
+
     public static class ArgType<T> {
         public static final ArgType<LivingEntity> THIS_ENTITY = new ArgType<>();
+        public static final ArgType<ItemStack> THIS_ITEMS_STACK = new ArgType<>();
 
         public void putArg(CalculatorArg calculatorArg, T arg) {
             calculatorArg.putArg(this, arg);

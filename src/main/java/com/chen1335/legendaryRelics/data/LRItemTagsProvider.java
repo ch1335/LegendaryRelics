@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.API.objects.LRItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.CuriosConstants;
@@ -26,12 +27,28 @@ public class LRItemTagsProvider extends ItemTagsProvider {
 
         tag(CuriosConstants.Tags.RING)
                 .add(
-                        LRItems.HARDENED_RING.asItem()
+                        LRItems.HARDENED_RING.asItem(),
+                        LRItems.THE_ORE_COLLECTORS_RING.asItem()
                 );
         tag(CuriosConstants.Tags.HANDS)
                 .add(
                         LRItems.DARK_STEEL_CLAW.asItem()
                 );
 
+        tag(ItemTags.HEAD_ARMOR).add(
+                LRItems.BLACK_DRAGON_HELMET.value()
+        );
+
+        tag(ItemTags.CHEST_ARMOR).add(
+                LRItems.BLACK_DRAGON_CHEST_PLATE.value()
+        );
+
+        tag(ItemTags.LEG_ARMOR).add(
+                LRItems.BLACK_DRAGON_LEGGINGS.value()
+        );
+
+        tag(ItemTags.FOOT_ARMOR).add(
+                LRItems.BLACK_DRAGON_BOOTS.value()
+        );
     }
 }

@@ -1,7 +1,12 @@
-// 1.21.1	2025-05-19T17:00:03.1583714	Item Models: legendary_relics
+// 1.21.1	2025-05-24T16:19:54.1216571	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
+cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
+fd747a44967559c141a3cfab103272ef10d2b66f assets/legendary_relics/models/item/black_dragon_chestplate.json
+03a6112f159a30b073c201811a40c51bd43525d1 assets/legendary_relics/models/item/black_dragon_helmet.json
+4177b78cd5b7c6a52648d1b8fff855c0d5ddab1d assets/legendary_relics/models/item/black_dragon_leggings.json
 113e837bc6ca16daef4cb7bf3eea39cdd3cd12f9 assets/legendary_relics/models/item/dark_steel_claw.json
 894b927f4b0ddbe0574c7cfc342d388af0448dce assets/legendary_relics/models/item/hardened_ring.json
 e350612c536a90fa06fa508cdb490f2f1f2c3f87 assets/legendary_relics/models/item/sacred_talisman.json
 c210e24fbc9dc1a1f03f4939f3281a95d1e5736a assets/legendary_relics/models/item/shield_regenerator.json
+ceb76e23522c8c8c384c63d70b82a71166a097db assets/legendary_relics/models/item/the_ore_collectors_ring.json

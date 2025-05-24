@@ -19,6 +19,10 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.HARDENED_RING.asItem());
         basicItem(LRItems.ANCIENT_FRAGMENT.asItem());
         basicItem(LRItems.DARK_STEEL_CLAW.asItem());
-
+        basicItem(LRItems.THE_ORE_COLLECTORS_RING.asItem());
+        basicItem(LRItems.BLACK_DRAGON_HELMET.asItem());
+        basicItem(LRItems.BLACK_DRAGON_CHEST_PLATE.asItem());
+        basicItem(LRItems.BLACK_DRAGON_LEGGINGS.asItem());
+        basicItem(LRItems.BLACK_DRAGON_BOOTS.asItem());
     }
 }

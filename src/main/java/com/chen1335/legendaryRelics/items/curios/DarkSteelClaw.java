@@ -1,6 +1,5 @@
 package com.chen1335.legendaryRelics.items.curios;
 
-import com.chen1335.legendaryRelics.API.LRCurioHelper;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
 import com.chen1335.legendaryRelics.common.calculator.*;
@@ -13,19 +12,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.List;
 import java.util.Map;
 
-public class DarkSteelClaw extends Item implements ICurioItem, LRCurioHelper {
+public class DarkSteelClaw extends LRCuriosBase {
     public DarkSteelClaw() {
         super(new Properties().rarity(Rarity.RARE).stacksTo(1));
     }
@@ -33,20 +31,27 @@ public class DarkSteelClaw extends Item implements ICurioItem, LRCurioHelper {
     public static Multimap<Holder<Attribute>, AttributeModifierHolder> ATTRIBUTE_MODIFIERS = ImmutableMultimap.of(
             Attributes.ARMOR, new AttributeModifierHolder(4, AttributeModifier.Operation.ADD_VALUE),
             Attributes.ATTACK_DAMAGE, new AttributeModifierHolder(1, AttributeModifier.Operation.ADD_VALUE)
-
     );
 
     public static FinalCalculator DAMAGE_ADD = FinalCalculator.of(
             Mul.of(
-                    Constant.of(0.2F),
+                    DarkGoldUpdateArg.of(
+                            Constant.of(0.15F),
+                            Constant.of(0.2F)
+                    ),
                     EntityAttributeValue.of(Attributes.ARMOR)
             )
     );
+
+    public static void handleAttack(LivingIncomingDamageEvent event, CalculatorArg newArgs, ItemStack itemStack) {
+        event.setAmount(event.getAmount() + DAMAGE_ADD.getValue(newArgs));
+    }
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         Level level = context.level();
         CalculatorArg args = new CalculatorArg();
+        CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(args, stack);
         if (level != null && level.isClientSide()) {
             CalculatorArg.ArgType.THIS_ENTITY.putArg(args, LRClient.getClientPlayer());
             tooltipComponents.add(Component.translatable("item.legendary_relics.dark_steel_claw.skill",

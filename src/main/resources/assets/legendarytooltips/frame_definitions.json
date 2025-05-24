@@ -1,0 +1,17 @@
+{
+  "definitions": [
+    {
+      "image": "legendarytooltips:textures/gui/tooltip_borders.png",
+      "index": 0,
+      "startColor": "-6723294",
+      "endColor": "-10864099",
+      "bgColor": "-401208832",
+      "bgStartColor": "-266991104",
+      "bgEndColor": "-401208832",
+      "priority": 0,
+      "selectors": [
+        "!legendary_relics:dark_gold"
+      ]
+    }
+  ]
+}

@@ -1,17 +1,17 @@
 package com.chen1335.legendaryRelics.client;
 
-import com.chen1335.legendaryRelics.client.module.armor.BlackDragon;
+import com.chen1335.legendaryRelics.client.module.armor.BlackDragonArmorModel;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 public class EntityRendererRegister {
-    public static BlackDragon<LivingEntity> TEST_RENDER;
+    public static BlackDragonArmorModel<LivingEntity> BLACK_DRAGON_ARMOR_MODEL;
 
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(BlackDragon.LAYER_LOCATION, BlackDragon::createBodyLayer);
+        event.registerLayerDefinition(BlackDragonArmorModel.LAYER_LOCATION, BlackDragonArmorModel::createBodyLayer);
     }
 
     public static void addLayers(EntityRenderersEvent.AddLayers event) {
-        TEST_RENDER = new BlackDragon<>(event.getContext().bakeLayer(BlackDragon.LAYER_LOCATION));
+        BLACK_DRAGON_ARMOR_MODEL = new BlackDragonArmorModel<>(event.getContext().bakeLayer(BlackDragonArmorModel.LAYER_LOCATION));
     }
 }

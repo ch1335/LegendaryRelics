@@ -51,6 +51,9 @@ public class LRGlobalLootModifierProvider extends GlobalLootModifierProvider {
         addModifiers("dark_steel_claw", LRLootTableProvider.LootTableModifier.DARK_STEEL_CLAW.location(),
                 BuiltInLootTables.ANCIENT_CITY.location(),
                 BuiltInLootTables.ANCIENT_CITY_ICE_BOX.location());
+
+        addModifiers("the_ore_collectors_ring", LRLootTableProvider.LootTableModifier.THE_ORE_COLLECTORS_RING.location(),
+                BuiltInLootTables.ABANDONED_MINESHAFT.location());
     }
 
     private void simpleAdd(ResourceLocation resourceLocation) {
