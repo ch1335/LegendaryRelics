@@ -44,6 +44,16 @@ public class AgglomerationMalice extends LRCuriosBase {
         return lootingLevel;
     }
 
+    public static void handleLivingIncomingDamageEvent(LivingIncomingDamageEvent event, CalculatorArg args, LivingEntity entity, ItemStack itemStack) {
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            if (attacker instanceof Mob) {
+                if (((Mob) attacker).getSpawnType() == MobSpawnType.SPAWNER && LRItems.AGGLOMERATION_MALICE.value().isEquippedThis(event.getEntity())) {
+                    event.setAmount(event.getAmount() * AgglomerationMalice.DAMAGE_MULTIPLIER.getValue(args));
+                }
+            }
+        }
+    }
+
     @Override
     public void handleLivingIncomingDamageEventLowest(LivingIncomingDamageEvent event, CalculatorArg newArgs, ItemStack itemStack) {
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
