@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "item": "legendary_relics:ancient_fragment"
+    },
+    "C": {
+      "item": "legendary_relics:dark_gold_fragment"
+    }
+  },
+  "pattern": [
+    " C ",
+    "BAB",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:dark_gold"
+  },
+  "show_notification": false
+}

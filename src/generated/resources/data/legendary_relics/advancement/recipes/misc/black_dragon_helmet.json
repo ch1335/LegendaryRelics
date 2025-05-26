@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dark_gold_fragment": {
+      "conditions": {
+        "items": [
+          {
+            "items": "legendary_relics:dark_gold_fragment"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "legendary_relics:black_dragon_helmet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dark_gold_fragment"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "legendary_relics:black_dragon_helmet"
+    ]
+  }
+}

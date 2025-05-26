@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "legendary_relics:ancient_fragment"
+    },
+    "B": {
+      "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "legendary_relics:healing_talisman"
+    },
+    "D": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "DAD",
+    "BCB",
+    " B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:perseverance_necklace"
+  },
+  "show_notification": false
+}

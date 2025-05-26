@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "legendary_relics:dragon_scale"
+    },
+    "B": {
+      "item": "minecraft:netherite_boots"
+    },
+    "C": {
+      "item": "legendary_relics:ancient_fragment"
+    },
+    "D": {
+      "item": "legendary_relics:dark_gold_fragment"
+    }
+  },
+  "pattern": [
+    "CAC",
+    "ABA",
+    " D "
+  ],
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:black_dragon_boots"
+  },
+  "show_notification": false
+}
