@@ -27,7 +27,6 @@ public class LegendaryRelics {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.legendary_relics"))
-            .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> LRItems.SACRED_TALISMAN.value().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 LRItems.ITEM_DEFERRED_REGISTER.getEntries().forEach(itemDeferredHolder -> {
