@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.attachmentDatas;
 
+import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.TimeLimitedAttributeBonusManager;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.UnknownNullability;
 public class LREntityData implements INBTSerializable<CompoundTag> {
     private final TimeLimitedAttributeBonusManager timeLimitedAttributeBonusManager = new TimeLimitedAttributeBonusManager();
 
+    private final EquipmentEffectCooldownManager equipmentEffectCooldownManager = new EquipmentEffectCooldownManager();
 
     @Override
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
@@ -24,9 +26,14 @@ public class LREntityData implements INBTSerializable<CompoundTag> {
 
     public void tick(LivingEntity living) {
         timeLimitedAttributeBonusManager.tick(living);
+        equipmentEffectCooldownManager.tick(living);
     }
 
     public TimeLimitedAttributeBonusManager getTimeLimitedAttributeBonusManager() {
         return timeLimitedAttributeBonusManager;
+    }
+
+    public EquipmentEffectCooldownManager getEquipmentEffectCooldownManager() {
+        return equipmentEffectCooldownManager;
     }
 }

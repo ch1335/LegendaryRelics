@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.items.curios;
 
+import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
 import com.chen1335.legendaryRelics.API.LRCurio;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
@@ -18,7 +19,7 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.Map;
 
-public abstract class LRCuriosBase extends Item implements ICurioItem, LRCurio {
+public abstract class LRCuriosBase extends Item implements ICurioItem, LRCurio, IEffectEquipment {
     public LRCuriosBase(Properties properties) {
         super(properties);
     }
@@ -28,6 +29,7 @@ public abstract class LRCuriosBase extends Item implements ICurioItem, LRCurio {
         if (stack.getRarity() == LRRarities.DARK_GOLD.getValue()) {
             return Component.empty().append(Component.translatable("item.legendary_relics.rarity.dark_gold")).append(Component.literal(" ")).append(super.getName(stack));
         }
+
         return super.getName(stack);
     }
 

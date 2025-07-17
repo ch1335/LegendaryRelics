@@ -12,8 +12,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class LRDataComponentTypes {
     public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.DataComponents.createDataComponents(Registries.DATA_COMPONENT_TYPE, LegendaryRelics.MODID);
 
-    public static DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> ANCIENT_FRAGMENT_UPDATED = DATA_COMPONENTS.register("ancient_fragment_updated", () -> DataComponentType.<Boolean>builder().networkSynchronized(ByteBufCodecs.BOOL).persistent(Codec.BOOL).build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> ANCIENT_FRAGMENT_UPDATED = DATA_COMPONENTS.register("ancient_fragment_updated", () -> DataComponentType.<Boolean>builder().networkSynchronized(ByteBufCodecs.BOOL).persistent(Codec.BOOL).build());
 
-    public static DeferredHolder<DataComponentType<?>, DataComponentType<CollectedMinerals>> COLLECTED_MINERALS = DATA_COMPONENTS.register("collected_minerals", () -> DataComponentType.<CollectedMinerals>builder().networkSynchronized(CollectedMinerals.STREAM_CODEC).persistent(CollectedMinerals.CODEC).build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CollectedMinerals>> COLLECTED_MINERALS = DATA_COMPONENTS.register("collected_minerals", () -> DataComponentType.<CollectedMinerals>builder().networkSynchronized(CollectedMinerals.STREAM_CODEC).persistent(CollectedMinerals.CODEC).build());
 
 }

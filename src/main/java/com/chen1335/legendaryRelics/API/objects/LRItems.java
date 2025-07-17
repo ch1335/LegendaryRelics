@@ -7,6 +7,7 @@ import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.curios.*;
 import com.chen1335.legendaryRelics.items.misc.*;
+import com.chen1335.legendaryRelics.items.weaapons.TestWeapon;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -55,5 +56,6 @@ public class LRItems {
 
     public static final DeferredItem<DarkGold> DARK_GOLD = ITEM_DEFERRED_REGISTER.register("dark_gold", DarkGold::new);
 
+    public static final DeferredItem<TestWeapon> TestWeapon = ITEM_DEFERRED_REGISTER.register("test_weapon", TestWeapon::new);
 
 }

@@ -8,6 +8,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.CuriosConstants;
+import top.theillusivec4.curios.api.CuriosTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,7 +19,10 @@ public class LRItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        tag(CuriosConstants.Tags.CHARM)
+        tag(ItemTags.SWORDS).add(LRItems.TestWeapon.asItem());
+
+
+        tag(CuriosTags.CHARM)
                 .add(
                         LRItems.AGGLOMERATION_MALICE.asItem(),
                         LRItems.SHIELD_REGENERATOR.asItem(),
@@ -26,7 +30,7 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                         LRItems.PURGATORY_TALISMAN.asItem()
                 );
 
-        tag(CuriosConstants.Tags.RING)
+        tag(CuriosTags.RING)
                 .add(
                         LRItems.HARDENED_RING.asItem(),
                         LRItems.THE_ORE_COLLECTORS_RING.asItem(),
@@ -34,7 +38,7 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                         LRItems.NETHER_RING.asItem()
                 );
 
-        tag(CuriosConstants.Tags.HANDS)
+        tag(CuriosTags.HANDS)
                 .add(
                         LRItems.DARK_STEEL_CLAW.asItem()
                 );
@@ -43,7 +47,7 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.BLACK_DRAGON_HELMET.value()
         );
 
-        tag(CuriosConstants.Tags.NECKLACE).add(
+        tag(CuriosTags.NECKLACE).add(
                 LRItems.SACRED_TALISMAN.asItem(),
                 LRItems.PERSEVERANCE_NECKLACE.asItem(),
                 LRItems.HEALING_TALISMAN.asItem()

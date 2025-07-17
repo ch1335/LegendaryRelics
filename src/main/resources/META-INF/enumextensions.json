@@ -2,7 +2,7 @@
   "entries": [
     {
       "enum": "net/minecraft/world/item/Rarity",
-      "name": "LEGENDARY_RELICS_CUSTOM",
+      "name": "LEGENDARY_RELICS_DARK_GOLD",
       "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
       "parameters": {
         "class": "com/chen1335/legendaryRelics/API/objects/LRRarities",

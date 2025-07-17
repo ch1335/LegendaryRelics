@@ -1,0 +1,43 @@
+package com.chen1335.equipmentEffectLib.common;
+
+import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.EquipmentEffect;
+import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+import top.theillusivec4.curios.api.event.CurioChangeEvent;
+
+public class EventHandler {
+
+    @EventBusSubscriber(modid = EquipmentEffect.MODID, bus = EventBusSubscriber.Bus.GAME)
+    public static class Game {
+        @SubscribeEvent
+        public static void onCurioChange(CurioChangeEvent event) {
+            if (!event.getFrom().getItem().equals(event.getTo().getItem())) {
+                event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity());
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntityTick(EntityTickEvent.Pre event) {
+            if (event.getEntity() instanceof LivingEntity living) {
+                EntityEquipmentEffectData entityEquipmentEffectData = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
+                entityEquipmentEffectData.typeMapEnumMap.get(EntityEquipmentEffectData.EquipmentType.CURIO).values().forEach(pair -> {
+                    pair.getSecond().tick(pair.getFirst(), living);
+                });
+            }
+        }
+    }
+
+    @EventBusSubscriber(modid = EquipmentEffect.MODID, bus = EventBusSubscriber.Bus.MOD)
+    public static class Mod {
+        @SubscribeEvent
+        public static void registerRegistries(NewRegistryEvent event) {
+            event.register(RegisterTypes.EQUIPMENT_EFFECT_TYPE);
+        }
+    }
+}
