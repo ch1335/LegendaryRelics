@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.common.calculator;
 
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.Redemption;
-import com.mojang.datafixers.util.Pair;
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +20,11 @@ public class CalculatorArg {
         return arg;
     }
 
+    public static CalculatorArg simpleArg(LivingEntity living, ItemStack itemStack, BaseEffect baseEffect) {
+        CalculatorArg arg = simpleArg(living, itemStack);
+        ArgType.THIS_EQUIPMENT_EFFECT.putArg(arg, baseEffect);
+        return arg;
+    }
 
     private final Map<ArgType<?>, Object> args = new HashMap<>();
 
@@ -41,6 +45,7 @@ public class CalculatorArg {
     public static class ArgType<T> {
         public static final ArgType<LivingEntity> THIS_ENTITY = new ArgType<>();
         public static final ArgType<ItemStack> THIS_ITEMS_STACK = new ArgType<>();
+        public static final ArgType<BaseEffect> THIS_EQUIPMENT_EFFECT = new ArgType<>();
 
         public void putArg(CalculatorArg calculatorArg, T arg) {
             calculatorArg.putArg(this, arg);

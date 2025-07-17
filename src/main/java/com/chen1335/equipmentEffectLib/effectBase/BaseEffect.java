@@ -20,11 +20,11 @@ import java.util.Objects;
 
 public class BaseEffect {
     private final EffectType<?> effectType;
-    public final int level;
+    public final int effectLevel;
 
     public BaseEffect(EffectType<?> effectType, int level) {
         this.effectType = effectType;
-        this.level = level;
+        this.effectLevel = level;
     }
 
     public static final Codec<BaseEffect> CODEC = Codec.of(
@@ -48,7 +48,7 @@ public class BaseEffect {
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
         tag.putString("EffectType", Objects.requireNonNull(RegisterTypes.EQUIPMENT_EFFECT_TYPE.getKey(getEffectType())).toString());
-        tag.putInt("Level", level);
+        tag.putInt("Level", effectLevel);
         return tag;
     }
 
@@ -88,6 +88,14 @@ public class BaseEffect {
     }
 
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
+
+    }
+
+    public void onActive(LivingEntity entity, ItemStack itemStack) {
+
+    }
+
+    public void onDeActive(LivingEntity entity, ItemStack itemStack) {
 
     }
 }

@@ -33,6 +33,10 @@ public class Redemption extends BaseEffect {
         super(effectType, level);
     }
 
+    public Redemption(int level) {
+        this(LREquipmentEffectTypes.REDEMPTION.value(), level);
+    }
+
     public static FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
             Add.of(
                     Constant.of(4),

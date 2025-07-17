@@ -25,15 +25,14 @@ public class EntityEquipmentEffectData {
     });
 
     public void update(LivingEntity entity) {
-        Map<EffectType<?>, Pair<ItemStack, BaseEffect>> curioEffects = typeMapEnumMap.get(EquipmentType.CURIO);
-        curioEffects.clear();
+        Map<EffectType<?>, Pair<ItemStack, BaseEffect>> curioEffects = new HashMap<>();
         CuriosApi.getCuriosInventory(entity).ifPresent(iCuriosItemHandler -> {
             for (int i = 0; i < iCuriosItemHandler.getEquippedCurios().getSlots(); i++) {
                 ItemStack itemStack = iCuriosItemHandler.getEquippedCurios().getStackInSlot(i);
                 if (itemStack.has(EEDataComponentTypes.ITEM_EFFECT_DATA)) {
                     Objects.requireNonNull(itemStack.get(EEDataComponentTypes.ITEM_EFFECT_DATA)).effects().forEach((effectType, effect) -> {
                         curioEffects.compute(effectType, (effectTypeHolder1, pair) -> {
-                            if (pair == null || effect.level > pair.getSecond().level) {
+                            if (pair == null || effect.effectLevel > pair.getSecond().effectLevel) {
                                 return new Pair<>(itemStack, effect);
                             }
                             return pair;
@@ -43,6 +42,26 @@ public class EntityEquipmentEffectData {
             }
         });
 
+        Map<EffectType<?>, Pair<ItemStack, BaseEffect>> oldCurioEffects = typeMapEnumMap.get(EquipmentType.CURIO);
+
+        curioEffects.forEach((effectType, pair) -> {
+            if (!oldCurioEffects.containsKey(effectType)) {
+                pair.getSecond().onActive(entity, pair.getFirst());
+            } else {
+                BaseEffect old = oldCurioEffects.get(effectType).getSecond();
+                BaseEffect theNew = pair.getSecond();
+                if (old.hashCode() != theNew.hashCode()) {
+                    old.onDeActive(entity, pair.getFirst());
+                    theNew.onActive(entity, pair.getFirst());
+                }
+                oldCurioEffects.remove(effectType);
+            }
+        });
+        for (Pair<ItemStack, BaseEffect> value : oldCurioEffects.values()) {
+            value.getSecond().onDeActive(entity, value.getFirst());
+        }
+        oldCurioEffects.clear();
+        oldCurioEffects.putAll(curioEffects);
 
     }
 
