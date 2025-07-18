@@ -14,15 +14,12 @@ import java.util.List;
 
 public class NetherTalisman extends LRCuriosBase {
 
-    public static final ResourceLocation NETHER_TALISMAN_ATTRIBUTE_MULTIPLIER = LegendaryRelics.id("nether_talisman_attribute_multiplier");
-
-
     public NetherTalisman() {
         super(new Properties().rarity(Rarity.RARE).stacksTo(1));
     }
 
     @Override
-    public List<BaseEffect> getDefaultEffect() {
+    public List<BaseEffect> getDefaultEffects() {
         return List.of(new AttributeBoostInNether(1));
     }
 }

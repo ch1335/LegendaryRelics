@@ -5,6 +5,7 @@
   "mixins": [
     "CommonHooksMixin",
     "CurioAttributeModifierEventInvoker",
+    "CurioInventoryCapabilityMixin",
     "EnchantedCountIncreaseFunctionMixin",
     "LootItemRandomChanceWithEnchantedBonusConditionMixin"
   ],

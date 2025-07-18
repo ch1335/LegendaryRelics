@@ -39,4 +39,9 @@ public class DarkGoldUpdateArg implements Unit {
     public static DarkGoldUpdateArg of(Unit a, Unit b) {
         return new DarkGoldUpdateArg(a, b);
     }
+
+    public static DarkGoldUpdateArg of(Unit a) {
+        return new DarkGoldUpdateArg(a, a);
+    }
+
 }

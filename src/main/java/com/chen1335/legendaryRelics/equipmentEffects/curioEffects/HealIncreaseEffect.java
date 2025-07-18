@@ -1,0 +1,58 @@
+package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
+
+import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
+import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectLevelArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
+
+import java.util.List;
+
+@EventBusSubscriber(modid = LegendaryRelics.MODID)
+public class HealIncreaseEffect extends LRCurioEffectBase {
+    public HealIncreaseEffect(EffectType<?> effectType, int level) {
+        super(effectType, level);
+    }
+
+    public HealIncreaseEffect(int level) {
+        this(LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value(), level);
+    }
+
+    public static FinalCalculator HEAL_INCREASE = FinalCalculator.of(DarkGoldUpdateArg.of(
+            EquipmentEffectLevelArg.of(level -> level * 0.05F)
+    ));
+
+
+    @Override
+    public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
+        CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        tooltipComponents.add(Component.translatable("item.legendary_relics.healing_talisman.desc.1", HEAL_INCREASE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+    }
+
+
+    @SubscribeEvent
+    public static void HandleHealEvent(LivingHealEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        EquipmentEffectAPI.findStackableEffect(livingEntity, LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value()).ifPresent(pair -> {
+            float i = 0;
+            for (HealIncreaseEffect effect : pair.getSecond()) {
+                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), effect);
+                i += HEAL_INCREASE.getValue(args);
+            }
+            event.setAmount(event.getAmount() * (1 + i));
+
+        });
+    }
+}

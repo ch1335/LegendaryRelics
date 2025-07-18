@@ -5,7 +5,6 @@ import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentHolder;
@@ -25,7 +24,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements DataComponentHolder {
@@ -46,12 +47,11 @@ public abstract class ItemStackMixin implements DataComponentHolder {
     private void init(ItemLike item, int count, PatchedDataComponentMap components, CallbackInfo ci) {
         if (item.asItem() instanceof IEffectEquipment effectEquipment) {
             if (!components.has(EEDataComponentTypes.ITEM_EFFECT_DATA.value())) {
-
-                ImmutableMap.Builder<EffectType<?>, BaseEffect> builder = ImmutableMap.builder();
-                for (BaseEffect baseEffect : effectEquipment.getDefaultEffect()) {
-                    builder.put(baseEffect.getEffectType(), baseEffect);
+                Map<EffectType<?>, BaseEffect> map = new LinkedHashMap<>();
+                for (BaseEffect baseEffect : effectEquipment.getDefaultEffects()) {
+                    map.put(baseEffect.getEffectType(), baseEffect);
                 }
-                components.set(EEDataComponentTypes.ITEM_EFFECT_DATA.value(), new ItemEffectsData(builder.build()));
+                components.set(EEDataComponentTypes.ITEM_EFFECT_DATA.value(), new ItemEffectsData(map));
             }
         }
     }

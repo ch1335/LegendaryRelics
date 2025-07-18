@@ -4,6 +4,7 @@ import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
 import com.chen1335.equipmentEffectLib.EquipmentEffect;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,8 +27,13 @@ public class EventHandler {
         public static void onEntityTick(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity living) {
                 EntityEquipmentEffectData entityEquipmentEffectData = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
-                entityEquipmentEffectData.typeMapEnumMap.get(EntityEquipmentEffectData.EquipmentType.CURIO).values().forEach(pair -> {
+                entityEquipmentEffectData.unStackAbleTypeMapEnumMap.get(EntityEquipmentEffectData.EquipmentType.CURIO).values().forEach(pair -> {
                     pair.getSecond().tick(pair.getFirst(), living);
+                });
+                entityEquipmentEffectData.stackAbleTypeMapEnumMap.get(EntityEquipmentEffectData.EquipmentType.CURIO).values().forEach(pair -> {
+                    for (BaseEffect effect : pair.getSecond()) {
+                        effect.tick(pair.getFirst(), living);
+                    }
                 });
             }
         }

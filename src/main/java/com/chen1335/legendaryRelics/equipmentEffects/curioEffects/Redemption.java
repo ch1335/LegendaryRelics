@@ -1,11 +1,9 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.calculator.*;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
@@ -18,7 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -28,8 +25,8 @@ import java.util.List;
 import java.util.Optional;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
-public class Redemption extends BaseEffect {
-    public Redemption(EffectType<Redemption> effectType, int level) {
+public class Redemption extends LRCurioEffectBase {
+    public Redemption(EffectType<?> effectType, int level) {
         super(effectType, level);
     }
 
@@ -67,26 +64,16 @@ public class Redemption extends BaseEffect {
     );
 
 
+
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
-        Level level = context.level();
-        CalculatorArg args = new CalculatorArg();
-        CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(args, itemStack);
+        CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill.1", UNDEAD_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
-        if (level != null && level.isClientSide()) {
-            CalculatorArg.ArgType.THIS_ENTITY.putArg(args, LRClient.getClientPlayer());
-            tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill",
-                    MAX_HEALTH_PERCENTAGE.toPercentageComponent(tooltipFlag.hasShiftDown(), args),
-                    SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
-                    SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args)
-            ).withColor(0xaeaeae));
-        } else {
-            tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill",
-                    MAX_HEALTH_PERCENTAGE.toRawComponent(),
-                    SHIELD_AMOUNT.toRawComponent(),
-                    SHIELD_LAST_TIME.toRawComponent()
-            ).withColor(0xaeaeae));
-        }
+        tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill",
+                MAX_HEALTH_PERCENTAGE.toPercentageComponent(tooltipFlag.hasShiftDown(), args),
+                SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
+                SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args)
+        ).withColor(0xaeaeae));
         tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill.desc").withColor(5592405));
         tooltipComponents.add(Component.translatable("legendary_relics.cooldown", 120).withColor(5592405));
     }

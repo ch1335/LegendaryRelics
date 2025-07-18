@@ -29,6 +29,10 @@ public class FinalCalculator implements Unit {
         return Component.empty().append("(").append(unit.toComponent(CalculatorArg.emptyArg())).append(")").withColor(5592405);
     }
 
+    public Component toRawComponent(CalculatorArg calculatorArg) {
+        return Component.empty().append("(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+    }
+
     public Component toComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
         if (hasShiftDown) {
             return toComponent(calculatorArg);

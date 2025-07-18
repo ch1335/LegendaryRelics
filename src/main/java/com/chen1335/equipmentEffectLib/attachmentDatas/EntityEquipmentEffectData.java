@@ -9,15 +9,20 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class EntityEquipmentEffectData {
 
-    public final EnumMap<EquipmentType, Map<EffectType<?>, Pair<ItemStack, BaseEffect>>> typeMapEnumMap = Util.make(() -> {
+    public final EnumMap<EquipmentType, Map<EffectType<?>, Pair<ItemStack, BaseEffect>>> unStackAbleTypeMapEnumMap = Util.make(() -> {
         EnumMap<EquipmentType, Map<EffectType<?>, Pair<ItemStack, BaseEffect>>> enumMap = new EnumMap<>(EquipmentType.class);
+        for (EquipmentType value : EquipmentType.values()) {
+            enumMap.put(value, new HashMap<>());
+        }
+        return enumMap;
+    });
+
+    public final EnumMap<EquipmentType, Map<EffectType<?>, Pair<ItemStack, List<BaseEffect>>>> stackAbleTypeMapEnumMap = Util.make(() -> {
+        EnumMap<EquipmentType, Map<EffectType<?>, Pair<ItemStack, List<BaseEffect>>>> enumMap = new EnumMap<>(EquipmentType.class);
         for (EquipmentType value : EquipmentType.values()) {
             enumMap.put(value, new HashMap<>());
         }
@@ -26,23 +31,28 @@ public class EntityEquipmentEffectData {
 
     public void update(LivingEntity entity) {
         Map<EffectType<?>, Pair<ItemStack, BaseEffect>> curioEffects = new HashMap<>();
+        stackAbleTypeMapEnumMap.values().forEach(Map::clear);
         CuriosApi.getCuriosInventory(entity).ifPresent(iCuriosItemHandler -> {
             for (int i = 0; i < iCuriosItemHandler.getEquippedCurios().getSlots(); i++) {
                 ItemStack itemStack = iCuriosItemHandler.getEquippedCurios().getStackInSlot(i);
                 if (itemStack.has(EEDataComponentTypes.ITEM_EFFECT_DATA)) {
                     Objects.requireNonNull(itemStack.get(EEDataComponentTypes.ITEM_EFFECT_DATA)).effects().forEach((effectType, effect) -> {
-                        curioEffects.compute(effectType, (effectTypeHolder1, pair) -> {
-                            if (pair == null || effect.effectLevel > pair.getSecond().effectLevel) {
-                                return new Pair<>(itemStack, effect);
-                            }
-                            return pair;
-                        });
+                        if (!effectType.isStackable()) {
+                            curioEffects.compute(effectType, (effectTypeHolder1, oldPair) -> {
+                                if (oldPair == null || effect.isBetterThan(entity, itemStack, oldPair)) {
+                                    return new Pair<>(itemStack, effect);
+                                }
+                                return oldPair;
+                            });
+                        } else {
+                            stackAbleTypeMapEnumMap.get(EquipmentType.CURIO).computeIfAbsent(effectType, effectType1 -> new Pair<>(itemStack, new ArrayList<>())).getSecond().add(effect);
+                        }
                     });
                 }
             }
         });
 
-        Map<EffectType<?>, Pair<ItemStack, BaseEffect>> oldCurioEffects = typeMapEnumMap.get(EquipmentType.CURIO);
+        Map<EffectType<?>, Pair<ItemStack, BaseEffect>> oldCurioEffects = unStackAbleTypeMapEnumMap.get(EquipmentType.CURIO);
 
         curioEffects.forEach((effectType, pair) -> {
             if (!oldCurioEffects.containsKey(effectType)) {

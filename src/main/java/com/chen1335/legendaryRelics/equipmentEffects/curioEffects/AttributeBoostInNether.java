@@ -2,13 +2,12 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectArg;
+import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
 import com.mojang.datafixers.util.Pair;
@@ -29,13 +28,17 @@ import java.util.List;
 import java.util.Optional;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
-public class AttributeBoostInNether extends BaseEffect {
-    public static final ResourceLocation ATTRIBUTE_BOOST_IN_NETHER_MULTIPLIER = LegendaryRelics.id("attribute_boost_in_nether_multiplier");
+public class AttributeBoostInNether extends LRCurioEffectBase {
 
     public static FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectArg.of(e -> 0.025F * e.effectLevel),
-            EquipmentEffectArg.of(e -> 0.05F * e.effectLevel)
+            EquipmentEffectLevelArg.of(level -> 0.025F * level)
     ));
+
+    @Override
+    public int getDarkGoldLevelAdd() {
+
+        return getRawEffectLevel();
+    }
 
     public AttributeBoostInNether(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -54,13 +57,12 @@ public class AttributeBoostInNether extends BaseEffect {
 
     private void addAttribute(LivingEntity living, ItemStack itemStack) {
         CalculatorArg arg = CalculatorArg.simpleArg(living, itemStack, this);
-        AttributeModifyHelper.addAllPositive(living, ATTRIBUTE_BOOST_IN_NETHER_MULTIPLIER, ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        AttributeModifyHelper.addAllPositive(living, getModifierId(), ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
     }
 
     private void removeAttribute(LivingEntity living, ItemStack itemStack) {
-        AttributeModifyHelper.removeAllPositive(living, ATTRIBUTE_BOOST_IN_NETHER_MULTIPLIER);
-
+        AttributeModifyHelper.removeAllPositive(living, getModifierId());
     }
 
     @Override
@@ -77,6 +79,9 @@ public class AttributeBoostInNether extends BaseEffect {
         }
     }
 
+    public ResourceLocation getModifierId() {
+        return LegendaryRelics.id("nether_multiplier_" + this.hashCode());
+    }
 
     @SubscribeEvent
     public static void HandleEntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {

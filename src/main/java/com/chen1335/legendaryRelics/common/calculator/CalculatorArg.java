@@ -43,9 +43,14 @@ public class CalculatorArg {
     }
 
     public static class ArgType<T> {
-        public static final ArgType<LivingEntity> THIS_ENTITY = new ArgType<>();
-        public static final ArgType<ItemStack> THIS_ITEMS_STACK = new ArgType<>();
-        public static final ArgType<BaseEffect> THIS_EQUIPMENT_EFFECT = new ArgType<>();
+        public static final ArgType<LivingEntity> THIS_ENTITY = new ArgType<>("this_entity");
+        public static final ArgType<ItemStack> THIS_ITEMS_STACK = new ArgType<>("this_items_stack");
+        public static final ArgType<BaseEffect> THIS_EQUIPMENT_EFFECT = new ArgType<>("this_equipment_effect");
+        private final String name;
+
+        public ArgType(String name) {
+            this.name = name;
+        }
 
         public void putArg(CalculatorArg calculatorArg, T arg) {
             calculatorArg.putArg(this, arg);
@@ -54,6 +59,15 @@ public class CalculatorArg {
         @Nullable
         public T getArg(CalculatorArg calculatorArg) {
             return calculatorArg.getArg(this);
+        }
+
+
+        public T getArgOrThrow(CalculatorArg calculatorArg) {
+            T arg = calculatorArg.getArg(this);
+            if (arg == null) {
+                throw new Error("calculatorArg missing arg type:"+name);
+            }
+            return arg;
         }
     }
 }

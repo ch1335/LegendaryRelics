@@ -7,10 +7,16 @@ public class EffectType<T extends BaseEffect> {
 
     private final EffectFactory<T> factory;
     private final EntityEquipmentEffectData.EquipmentType equipmentType;
+    private final boolean stackable;
 
-    public EffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType) {
+    public EffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType,boolean stackable) {
         this.factory = factory;
         this.equipmentType = equipmentType;
+        this.stackable = stackable;
+    }
+
+    public EffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType) {
+        this(factory,equipmentType,false);
     }
 
     public T create(int level) {
@@ -23,5 +29,9 @@ public class EffectType<T extends BaseEffect> {
 
     public interface EffectFactory<T extends BaseEffect> {
         T create(EffectType<T> effectType, int level);
+    }
+
+    public boolean isStackable() {
+        return stackable;
     }
 }

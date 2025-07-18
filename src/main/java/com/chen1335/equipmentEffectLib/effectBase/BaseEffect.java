@@ -14,13 +14,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
 
 public class BaseEffect {
     private final EffectType<?> effectType;
-    public final int effectLevel;
+    private final int effectLevel;
 
     public BaseEffect(EffectType<?> effectType, int level) {
         this.effectType = effectType;
@@ -31,6 +32,13 @@ public class BaseEffect {
             BaseEffect::save, BaseEffect::load
     );
 
+    public int getEffectLevel(@Nullable LivingEntity livingEntity, ItemStack itemStack) {
+        return effectLevel;
+    }
+
+    public int getRawEffectLevel() {
+        return effectLevel;
+    }
 
     private static <T> DataResult<Pair<BaseEffect, T>> load(DynamicOps<T> ops, T input) {
         return DataResult.success(Pair.of(preLoad((CompoundTag) ops.convertTo(NbtOps.INSTANCE, input)), input));
@@ -97,5 +105,9 @@ public class BaseEffect {
 
     public void onDeActive(LivingEntity entity, ItemStack itemStack) {
 
+    }
+
+    public boolean isBetterThan(LivingEntity entity, ItemStack thisItemStack, Pair<ItemStack, BaseEffect> oldPair) {
+        return this.effectLevel > oldPair.getSecond().effectLevel;
     }
 }

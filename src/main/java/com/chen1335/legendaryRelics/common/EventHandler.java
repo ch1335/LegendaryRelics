@@ -48,14 +48,9 @@ import java.util.Map;
 public class EventHandler {
     @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.GAME)
     public static class Game {
-        @SubscribeEvent
-        public static void countOres(BlockEvent.BreakEvent event) {
-            LRItems.THE_ORE_COLLECTORS_RING.get().runIfEquippedThis(event.getPlayer(), (itemStack, calculatorArg) -> CollectedMinerals.checkAndAdd(itemStack, event.getState().getBlock()));
-        }
 
         @SubscribeEvent
         public static void heal(LivingHealEvent event) {
-            LRCurioHelper.runForeachCurio(event.getEntity(), (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingHealEvent(event, calculatorArg, itemStack));
 
             CalculatorArg arg = CalculatorArg.emptyArg();
             CalculatorArg.ArgType.THIS_ENTITY.putArg(arg, event.getEntity());
@@ -117,10 +112,6 @@ public class EventHandler {
                     }
                     living.heal(healthRegain / 10);
                 }
-                if (!living.level().isClientSide) {
-                    LRCurioHelper.runForeachCurio(living, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleTickEvent(event, calculatorArg, itemStack,living));
-
-                }
             }
         }
 
@@ -131,10 +122,7 @@ public class EventHandler {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void LivingDamageEvent(LivingDamageEvent.Post event) {
-            CalculatorArg args = new CalculatorArg();
-            LivingEntity entity = event.getEntity();
-            CalculatorArg.ArgType.THIS_ENTITY.putArg(args, entity);
-            LRCurioHelper.runForeachCurio(entity, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingDamageEventLowest(event, calculatorArg, itemStack));
+
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -142,7 +130,6 @@ public class EventHandler {
             CalculatorArg args = new CalculatorArg();
             LivingEntity entity = event.getEntity();
             CalculatorArg.ArgType.THIS_ENTITY.putArg(args, entity);
-            LRCurioHelper.runForeachCurio(entity, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingIncomingDamageEventLowest(event, calculatorArg, itemStack));
             for (ItemStack armorSlot : entity.getArmorSlots()) {
                 if (armorSlot.getItem() instanceof BlackDragonArmor blackDragonArmor) {
                     CalculatorArg args1 = args.copy();
@@ -154,10 +141,7 @@ public class EventHandler {
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void LivingIncomingDamageEventHighest(LivingIncomingDamageEvent event) {
-            LivingEntity entity = event.getEntity();
-            LRCurioHelper.runForeachCurio(entity, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleLivingIncomingDamageEventHighest(event, calculatorArg, itemStack));
             if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-                LRCurioHelper.runForeachCurio(attacker, (lrCurio, calculatorArg, itemStack) -> lrCurio.onAttack(event, calculatorArg, itemStack, attacker));
                 if (attacker instanceof Player playerAttacker) {
                     CalculatorArg args = new CalculatorArg();
                     CalculatorArg.ArgType.THIS_ENTITY.putArg(args, attacker);
@@ -242,12 +226,6 @@ public class EventHandler {
             }
         }
 
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void EntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
-            if (!event.isCanceled() && event.getEntity() instanceof LivingEntity living) {
-                LRCurioHelper.runForeachCurio(living, (lrCurio, calculatorArg, itemStack) -> lrCurio.handleEntityTravelToDimensionEvent(event, calculatorArg, itemStack, living));
-            }
-        }
 
         @SubscribeEvent
         public static void CurioChangeEvent(CurioChangeEvent event) {
@@ -256,7 +234,6 @@ public class EventHandler {
                 CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, event.getFrom());
                 lrCurio.handleCurioChangeEvent(event, arg, event.getFrom(), event.getEntity());
             }
-            LRCurioHelper.runForeachCurio(event.getEntity(), (lrCurio, calculatorArg, itemStack) -> lrCurio.handleCurioChangeEvent(event, calculatorArg, itemStack, event.getEntity()));
         }
     }
 }
