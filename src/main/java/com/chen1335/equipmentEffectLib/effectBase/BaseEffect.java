@@ -110,4 +110,9 @@ public class BaseEffect {
     public boolean isBetterThan(LivingEntity entity, ItemStack thisItemStack, Pair<ItemStack, BaseEffect> oldPair) {
         return this.effectLevel > oldPair.getSecond().effectLevel;
     }
+
+    public int modifyLoot(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
+
+        return lootingLevel;
+    }
 }

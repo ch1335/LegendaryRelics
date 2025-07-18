@@ -1,12 +1,9 @@
 package com.chen1335.legendaryRelics.common;
 
-import com.chen1335.legendaryRelics.API.LRCurio;
-import com.chen1335.legendaryRelics.API.LRCurioHelper;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.dataComponentTypes.CollectedMinerals;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonChestPlate;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
@@ -34,12 +31,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
-import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
-import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
-import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -223,16 +217,6 @@ public class EventHandler {
                 event.setOutput(input);
                 event.setCost(10);
                 event.setMaterialCost(1);
-            }
-        }
-
-
-        @SubscribeEvent
-        public static void CurioChangeEvent(CurioChangeEvent event) {
-            if (event.getFrom().getItem() instanceof LRCurio lrCurio) {
-                CalculatorArg arg = CalculatorArg.emptyArg();
-                CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, event.getFrom());
-                lrCurio.handleCurioChangeEvent(event, arg, event.getFrom(), event.getEntity());
             }
         }
     }

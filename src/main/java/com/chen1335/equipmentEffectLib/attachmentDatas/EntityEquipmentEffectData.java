@@ -29,6 +29,21 @@ public class EntityEquipmentEffectData {
         return enumMap;
     });
 
+    public List<Pair<ItemStack, BaseEffect>> collectAllEffects() {
+        List<Pair<ItemStack, BaseEffect>> list = new ArrayList<>();
+        for (Map<EffectType<?>, Pair<ItemStack, BaseEffect>> value : unStackAbleTypeMapEnumMap.values()) {
+            list.addAll(value.values());
+        }
+        for (Map<EffectType<?>, Pair<ItemStack, List<BaseEffect>>> value : stackAbleTypeMapEnumMap.values()) {
+            value.forEach((effectType, itemStackListPair) -> {
+                for (BaseEffect effect : itemStackListPair.getSecond()) {
+                    list.add(new Pair<>(itemStackListPair.getFirst(), effect));
+                }
+            });
+        }
+        return list;
+    }
+
     public void update(LivingEntity entity) {
         Map<EffectType<?>, Pair<ItemStack, BaseEffect>> curioEffects = new HashMap<>();
         stackAbleTypeMapEnumMap.values().forEach(Map::clear);

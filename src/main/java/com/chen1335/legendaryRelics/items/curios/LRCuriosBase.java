@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.items.curios;
 
 import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
-import com.chen1335.legendaryRelics.API.LRCurio;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
 import com.google.common.collect.HashMultimap;
@@ -19,7 +18,7 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.Map;
 
-public abstract class LRCuriosBase extends Item implements ICurioItem, LRCurio, IEffectEquipment {
+public abstract class LRCuriosBase extends Item implements ICurioItem, IEffectEquipment {
     public LRCuriosBase(Properties properties) {
         super(properties);
     }
