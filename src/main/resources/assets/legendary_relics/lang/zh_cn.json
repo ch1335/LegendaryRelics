@@ -59,5 +59,9 @@
   "item.the_ore_collectors_ring.sacred_talisman.desc.2": "已收集的矿石种类:%s。",
   "itemGroup.legendary_relics": "传说遗物",
   "legendary_relics.cooldown": "冷却:%ss",
-  "legendary_relics.items.skill.cannot_be_tacked": "该效果多个饰品不能叠加"
+  "legendary_relics.items.skill.cannot_be_tacked": "该效果多个饰品不能叠加",
+
+  "item.legendary_relics.withering_blade": "枯萎",
+  "item.legendary_relics.withering_blade.desc.1": "§6侵蚀§r:攻击目标会附加侵蚀效果，每层效果每秒会造成%s魔法伤害并且为你回复1%%已损失生命值，最多叠加4层。",
+  "item.legendary_relics.withering_blade.desc.2": "在最大层数时侵蚀每秒会造成%s魔法伤害并且为你回复4%%已损失生命值。"
 }

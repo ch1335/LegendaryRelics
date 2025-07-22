@@ -10,6 +10,7 @@
     "LootItemRandomChanceWithEnchantedBonusConditionMixin"
   ],
   "client": [
+    "GameRendererInvoker",
     "HumanoidArmorLayerMixin"
   ],
   "minVersion": "0.8"

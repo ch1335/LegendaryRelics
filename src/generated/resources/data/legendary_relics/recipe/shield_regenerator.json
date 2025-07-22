@@ -21,6 +21,14 @@
     "CAC"
   ],
   "result": {
+    "components": {
+      "legendary_relics:item_effect_data": [
+        {
+          "EffectType": "legendary_relics:shield_regenerator_effect",
+          "Level": 1
+        }
+      ]
+    },
     "count": 1,
     "id": "legendary_relics:shield_regenerator"
   },

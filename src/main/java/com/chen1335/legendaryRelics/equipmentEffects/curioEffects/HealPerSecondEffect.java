@@ -2,7 +2,10 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectLevelArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +29,7 @@ public class HealPerSecondEffect extends LRCurioEffectBase {
     ));
 
     @Override
-    public void tick(ItemStack itemStack, LivingEntity wearer) {
+    public void curioTick(ItemStack itemStack, LivingEntity wearer) {
         CalculatorArg calculatorArg = CalculatorArg.simpleArg(wearer, itemStack, this);
         if (wearer.level().getGameTime() % 10 == 0) {
             wearer.heal(HEAL_PER_5S.getValue(calculatorArg) / 10);

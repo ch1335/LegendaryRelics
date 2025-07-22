@@ -8,7 +8,6 @@ import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.*;
 import com.chen1335.legendaryRelics.dataComponentTypes.CollectedMinerals;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -65,8 +64,8 @@ public class OreCollectorEffect extends LRCurioEffectBase {
     }
 
     @Override
-    public boolean isBetterThan(LivingEntity entity, ItemStack thisItemStack, Pair<ItemStack, BaseEffect> oldPair) {
-        return thisItemStack.getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS.value(), CollectedMinerals.empty()).ores().size() > oldPair.getFirst().getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS.value(), CollectedMinerals.empty()).ores().size();
+    public boolean isBetterThan(LivingEntity entity, ItemStack thisItemStack, BaseEffect otherEffect, ItemStack otherStack) {
+        return thisItemStack.getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS.value(), CollectedMinerals.empty()).ores().size() > otherStack.getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS.value(), CollectedMinerals.empty()).ores().size();
     }
 
     public static class Task implements Unit {

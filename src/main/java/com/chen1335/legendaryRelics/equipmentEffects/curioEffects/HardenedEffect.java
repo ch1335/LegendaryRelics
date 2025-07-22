@@ -72,24 +72,26 @@ public class HardenedEffect extends LRCurioEffectBase {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void handleLivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
-        Optional<Pair<ItemStack, HardenedEffect>> pairOptional = EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.HARDENED_EFFECT.value());
-        pairOptional.ifPresent(pair -> {
-            LivingEntity living = event.getEntity();
-            CalculatorArg calculatorArg = CalculatorArg.simpleArg(living, pair.getFirst(), pair.getSecond());
-            if (!EquipmentEffectCooldownManager.isCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value())) {
-                living.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
-                        .addAttributeModifier(
-                                living,
-                                Attributes.ARMOR,
-                                new AttributeModifier(
-                                        LegendaryRelics.id("hardened_ring_armor"),
-                                        ARMOR_AMOUNT.getValue(calculatorArg),
-                                        AttributeModifier.Operation.ADD_VALUE
-                                ),
-                                TIME_KEEP.getInt(calculatorArg) * 20
-                        );
-                EquipmentEffectCooldownManager.addCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value(), COOLDOWN.getInt(calculatorArg) * 20);
-            }
-        });
+        if (!event.getEntity().level().isClientSide) {
+            Optional<Pair<ItemStack, HardenedEffect>> pairOptional = EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.HARDENED_EFFECT.value());
+            pairOptional.ifPresent(pair -> {
+                LivingEntity living = event.getEntity();
+                CalculatorArg calculatorArg = CalculatorArg.simpleArg(living, pair.getFirst(), pair.getSecond());
+                if (EquipmentEffectCooldownManager.isNotInCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value())) {
+                    living.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
+                            .addAttributeModifier(
+                                    living,
+                                    Attributes.ARMOR,
+                                    new AttributeModifier(
+                                            LegendaryRelics.id("hardened_ring_armor"),
+                                            ARMOR_AMOUNT.getValue(calculatorArg),
+                                            AttributeModifier.Operation.ADD_VALUE
+                                    ),
+                                    TIME_KEEP.getInt(calculatorArg) * 20
+                            );
+                    EquipmentEffectCooldownManager.addCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value(), COOLDOWN.getInt(calculatorArg) * 20);
+                }
+            });
+        }
     }
 }

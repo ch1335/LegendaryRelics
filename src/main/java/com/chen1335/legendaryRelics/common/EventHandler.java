@@ -11,6 +11,7 @@ import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
 import com.chen1335.legendaryRelics.mixins.main.CurioAttributeModifierEventInvoker;
+import com.chen1335.legendaryRelics.network.EffectCooldownPack;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -33,6 +34,8 @@ import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.ArrayList;
@@ -93,7 +96,7 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void EntityTickPre(EntityTickEvent.Pre event) {
-            if (event.getEntity() instanceof LivingEntity living) {
+            if (event.getEntity() instanceof LivingEntity living && !living.level().isClientSide) {
                 CalculatorArg args = new CalculatorArg();
                 CalculatorArg.ArgType.THIS_ENTITY.putArg(args, living);
                 if (living.hasData(LRAttachmentTypes.ENTITY_DATA)) {
@@ -218,6 +221,15 @@ public class EventHandler {
                 event.setCost(10);
                 event.setMaterialCost(1);
             }
+        }
+    }
+
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+    public static class Mod {
+        @SubscribeEvent
+        public static void RegisterPayloadHandlersEvent(RegisterPayloadHandlersEvent event) {
+            final PayloadRegistrar registrar = event.registrar("1");
+            registrar.playToClient(EffectCooldownPack.TYPE, EffectCooldownPack.STREAM_CODEC, EffectCooldownPack::handler);
         }
     }
 }

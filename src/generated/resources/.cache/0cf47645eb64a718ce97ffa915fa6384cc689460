@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-26T23:13:16.8521845	Item Models: legendary_relics
+// 1.21.1	2025-07-20T18:06:35.8074095	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
@@ -20,3 +20,4 @@ ce897aa84218c27a8f2d068fd4fa6f0237e5b636 assets/legendary_relics/models/item/per
 e350612c536a90fa06fa508cdb490f2f1f2c3f87 assets/legendary_relics/models/item/sacred_talisman.json
 c210e24fbc9dc1a1f03f4939f3281a95d1e5736a assets/legendary_relics/models/item/shield_regenerator.json
 ceb76e23522c8c8c384c63d70b82a71166a097db assets/legendary_relics/models/item/the_ore_collectors_ring.json
+78374888c0c8e4c219e0dea7114ecf8e98295ba8 assets/legendary_relics/models/item/withering_blade.json

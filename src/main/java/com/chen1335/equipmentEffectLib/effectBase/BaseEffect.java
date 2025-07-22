@@ -48,11 +48,6 @@ public class BaseEffect {
         return DataResult.success(NbtOps.INSTANCE.convertTo(tDynamicOps, save()));
     }
 
-    public void tick(ItemStack itemStack, LivingEntity wearer) {
-
-    }
-
-
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
         tag.putString("EffectType", Objects.requireNonNull(RegisterTypes.EQUIPMENT_EFFECT_TYPE.getKey(getEffectType())).toString());
@@ -107,12 +102,11 @@ public class BaseEffect {
 
     }
 
-    public boolean isBetterThan(LivingEntity entity, ItemStack thisItemStack, Pair<ItemStack, BaseEffect> oldPair) {
-        return this.effectLevel > oldPair.getSecond().effectLevel;
+    public boolean isBetterThan(LivingEntity entity, ItemStack thisItemStack, BaseEffect otherEffect, ItemStack otherStack) {
+        return this.effectLevel > otherEffect.effectLevel;
     }
 
     public int modifyLoot(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
-
         return lootingLevel;
     }
 }

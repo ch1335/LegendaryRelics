@@ -1,10 +1,8 @@
 package com.chen1335.legendaryRelics.items.curios;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.AgglomerationMaliceEffect;
 import net.minecraft.world.item.Rarity;
-import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 

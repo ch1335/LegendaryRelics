@@ -1,6 +1,5 @@
 package com.chen1335.legendaryRelics.items.armor;
 
-import com.chen1335.legendaryRelics.API.LRArmorHelper;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.calculator.*;

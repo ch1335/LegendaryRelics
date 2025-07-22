@@ -34,5 +34,6 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.DARK_GOLD_FRAGMENT.asItem());
         basicItem(LRItems.DARK_GOLD.asItem());
         basicItem(LRItems.DARK_GOLD_FORGING_TOOL.asItem());
+        handheldItem(LRItems.WITHERING_BLADE.asItem());
     }
 }

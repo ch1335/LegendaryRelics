@@ -55,7 +55,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
     }
 
     @Override
-    public void tick(ItemStack itemStack, LivingEntity wearer) {
+    public void curioTick(ItemStack itemStack, LivingEntity wearer) {
         CalculatorArg args = CalculatorArg.simpleArg(wearer, itemStack, this);
         if (wearer.level().getGameTime() % (COOLDOWN.getInt(args) * 20L) == 0) {
             @Nullable ShieldInstanceHolder<UnitShield> instance = ShieldAPI.getShieldInstance(wearer, LRShieldType.SHIELD_REGENERATOR_SHIELD.get());

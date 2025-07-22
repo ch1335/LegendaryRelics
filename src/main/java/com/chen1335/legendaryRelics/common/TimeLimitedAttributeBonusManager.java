@@ -30,6 +30,9 @@ public class TimeLimitedAttributeBonusManager {
     public void addAttributeModifier(LivingEntity living, Holder<Attribute> attributeHolder, AttributeModifier modifier, int time) {
         AttributeInstance attributeInstance = living.getAttribute(attributeHolder);
         if (attributeInstance != null) {
+            if (attributeInstance.hasModifier(modifier.id())) {
+                attributeInstance.removeModifier(modifier);
+            }
             attributeInstance.addTransientModifier(modifier);
             modifierHolders.add(new ModifierHolder(attributeHolder, modifier, time));
         }

@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-26T23:13:16.8501903	Recipes
+// 1.21.1	2025-07-20T18:06:35.8054135	Recipes
 4ab43bcd9ea92793bbfab050a594b30ca80d8e3b data/legendary_relics/advancement/recipes/misc/black_dragon_boots.json
 5343bf1548f4d2c76e0ed51c7fc9f60fd4637e0e data/legendary_relics/advancement/recipes/misc/black_dragon_chestplate.json
 b63e389adfafd1ee3c42e335398d300e948cd672 data/legendary_relics/advancement/recipes/misc/black_dragon_helmet.json
@@ -14,6 +14,6 @@ b42fbf1d18317c07aa377fba588d42e4ec6b5909 data/legendary_relics/recipe/black_drag
 6cfb9d68a36937a4e2076bbfcf3b816feae4769b data/legendary_relics/recipe/black_dragon_leggings.json
 4dc2864771eaa3067ba0a9aa7685ffebf9b95cb8 data/legendary_relics/recipe/dark_gold.json
 aa2027825448bee67436da527e23d368e76528ed data/legendary_relics/recipe/dark_gold_forging_tool.json
-f7be685598d82e4c92ee864733341365b851fd35 data/legendary_relics/recipe/perseverance_necklace.json
-199957db7d39c3fc4b9bcd87bc6b97d07d26ed80 data/legendary_relics/recipe/purgatory_talisman.json
-dc0e2867b83c3a1fda159ee66094eb2701bfd985 data/legendary_relics/recipe/shield_regenerator.json
+7085d29d558a7bd64168267e80d11da5d23a7eb9 data/legendary_relics/recipe/perseverance_necklace.json
+dae5d7fad79b8a8671a709dbf2c1c35a8142ecaf data/legendary_relics/recipe/purgatory_talisman.json
+de3a142adec3c844aff51158bde9d8a59e7d1ab7 data/legendary_relics/recipe/shield_regenerator.json

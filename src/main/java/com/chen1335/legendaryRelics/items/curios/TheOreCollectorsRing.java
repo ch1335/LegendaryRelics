@@ -1,16 +1,8 @@
 package com.chen1335.legendaryRelics.items.curios;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
-import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.Constant;
-import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
-import com.chen1335.legendaryRelics.dataComponentTypes.CollectedMinerals;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.OreCollectorEffect;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.storage.loot.LootContext;
-import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.List;
 

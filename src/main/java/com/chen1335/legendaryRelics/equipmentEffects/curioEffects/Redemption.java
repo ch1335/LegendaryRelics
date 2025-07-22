@@ -82,7 +82,7 @@ public class Redemption extends LRCurioEffectBase {
     @SubscribeEvent
     public static void onWearerBeDamage(LivingDamageEvent.Post event) {
         LivingEntity livingEntity = event.getEntity();
-        if (!EquipmentEffectCooldownManager.isCooldown(livingEntity, LREquipmentEffectTypes.REDEMPTION.get())) {
+        if (EquipmentEffectCooldownManager.isNotInCooldown(livingEntity, LREquipmentEffectTypes.REDEMPTION.get())) {
             Optional<Pair<ItemStack, Redemption>> pair = EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get());
             pair.ifPresent(itemStackRedemptionPair -> {
                 CalculatorArg args = CalculatorArg.simpleArg(livingEntity, itemStackRedemptionPair.getFirst());

@@ -3,6 +3,7 @@ package com.chen1335.equipmentEffectLib.dataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -13,7 +14,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
@@ -23,16 +23,16 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
 
     private static <T> DataResult<Pair<ItemEffectsData, T>> decode(DynamicOps<T> tDynamicOps, T t) {
         ListTag listTag = (ListTag) tDynamicOps.convertTo(NbtOps.INSTANCE, t);
-        Map<EffectType<?>, BaseEffect> effects = new LinkedHashMap<>();
+        ImmutableMap.Builder<EffectType<?>, BaseEffect> builder = ImmutableMap.builder();
         if (listTag != null) {
             for (Tag tag : listTag) {
                 CompoundTag compoundTag = (CompoundTag) tag;
                 DataResult<Pair<BaseEffect, Tag>> baseEffect = BaseEffect.CODEC.decode(NbtOps.INSTANCE, compoundTag);
-                RegisterTypes.EQUIPMENT_EFFECT_TYPE.getHolder(ResourceLocation.parse(compoundTag.getString("EffectType"))).ifPresent(effectType -> effects.put(effectType.value(), baseEffect.getOrThrow().getFirst()));
+                RegisterTypes.EQUIPMENT_EFFECT_TYPE.getHolder(ResourceLocation.parse(compoundTag.getString("EffectType"))).ifPresent(effectType -> builder.put(effectType.value(), baseEffect.getOrThrow().getFirst()));
 
             }
         }
-        return DataResult.success(Pair.of(new ItemEffectsData(effects), t));
+        return DataResult.success(Pair.of(new ItemEffectsData(builder.build()), t));
     }
 
     private <T> DataResult<T> encode(DynamicOps<T> tDynamicOps, T t) {
@@ -61,16 +61,17 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
         buffer.writeNbt(listTag);
     }, byteBuf -> {
         ListTag listTag = (ListTag) byteBuf.readNbt(NbtAccounter.create(2097152L));
-        Map<EffectType<?>, BaseEffect> effects = new LinkedHashMap<>();
+
+        ImmutableMap.Builder<EffectType<?>, BaseEffect> builder = ImmutableMap.builder();
         if (listTag != null) {
             for (Tag tag : listTag) {
                 CompoundTag compoundTag = (CompoundTag) tag;
                 DataResult<Pair<BaseEffect, Tag>> baseEffect = BaseEffect.CODEC.decode(NbtOps.INSTANCE, compoundTag);
                 Holder<EffectType<?>> effectTypeHolder = RegisterTypes.EQUIPMENT_EFFECT_TYPE.getHolder(ResourceLocation.parse(compoundTag.getString("EffectType"))).orElseThrow();
-                effects.put(effectTypeHolder.value(), baseEffect.getOrThrow().getFirst());
+                builder.put(effectTypeHolder.value(), baseEffect.getOrThrow().getFirst());
             }
         }
-        return new ItemEffectsData(effects);
+        return new ItemEffectsData(builder.build());
     });
 
 

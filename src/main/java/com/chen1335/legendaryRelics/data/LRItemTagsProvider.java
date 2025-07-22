@@ -7,7 +7,6 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
-import top.theillusivec4.curios.CuriosConstants;
 import top.theillusivec4.curios.api.CuriosTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -19,9 +18,6 @@ public class LRItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        tag(ItemTags.SWORDS).add(LRItems.TestWeapon.asItem());
-
-
         tag(CuriosTags.CHARM)
                 .add(
                         LRItems.AGGLOMERATION_MALICE.asItem(),
