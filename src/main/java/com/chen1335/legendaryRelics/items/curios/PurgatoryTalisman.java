@@ -36,7 +36,7 @@ public class PurgatoryTalisman extends LRCuriosBase {
     }
 
     @Override
-    public List<BaseEffect> getDefaultEffects() {
+    public List<BaseEffect> EE$getDefaultEffects() {
         return List.of(new AttributeBoostInNether(2), new FireDamageReduce(1), new InFireTargetDamageIncrease(1));
     }
 }

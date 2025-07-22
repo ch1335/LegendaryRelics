@@ -53,16 +53,18 @@ public class EntityEquipmentEffectData {
                 ItemStack itemStack = iCuriosItemHandler.getEquippedCurios().getStackInSlot(i);
                 if (itemStack.has(EEDataComponentTypes.ITEM_EFFECT_DATA)) {
                     Objects.requireNonNull(itemStack.get(EEDataComponentTypes.ITEM_EFFECT_DATA)).effects().forEach((effectType, effect) -> {
-                        if (effect instanceof CurioEffect curioEffect) {
-                            if (!effectType.isStackable()) {
-                                curioEffects.compute(effectType, (effectTypeHolder1, oldPair) -> {
-                                    if (oldPair == null || curioEffect.isBetterThan(entity, itemStack, oldPair.getSecond(),oldPair.getFirst())) {
-                                        return new Pair<>(itemStack, curioEffect);
-                                    }
-                                    return oldPair;
-                                });
-                            } else {
-                                stackAbleTypeMapEnumMap.get(EquipmentType.CURIO).computeIfAbsent(effectType, effectType1 -> new Pair<>(itemStack, new ArrayList<>())).getSecond().add(curioEffect);
+                        if (effectType.getEquipmentType() == EquipmentType.CURIO) {
+                            if (effect instanceof CurioEffect curioEffect) {
+                                if (!effectType.isStackable()) {
+                                    curioEffects.compute(effectType, (effectTypeHolder1, oldPair) -> {
+                                        if (oldPair == null || curioEffect.isBetterThan(entity, itemStack, oldPair.getSecond(), oldPair.getFirst())) {
+                                            return new Pair<>(itemStack, curioEffect);
+                                        }
+                                        return oldPair;
+                                    });
+                                } else {
+                                    stackAbleTypeMapEnumMap.get(EquipmentType.CURIO).computeIfAbsent(effectType, effectType1 -> new Pair<>(itemStack, new ArrayList<>())).getSecond().add(curioEffect);
+                                }
                             }
                         }
                     });
@@ -94,6 +96,6 @@ public class EntityEquipmentEffectData {
     }
 
     public enum EquipmentType {
-        CURIO, ARMOR
+        CURIO, ARMOR, WEAPON
     }
 }

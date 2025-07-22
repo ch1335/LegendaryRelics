@@ -12,7 +12,7 @@ public class TheOreCollectorsRing extends LRCuriosBase {
     }
     
     @Override
-    public List<BaseEffect> getDefaultEffects() {
+    public List<BaseEffect> EE$getDefaultEffects() {
         return List.of(new OreCollectorEffect(1));
     }
 

@@ -47,7 +47,7 @@ public abstract class ItemStackMixin implements DataComponentHolder {
         if (item.asItem() instanceof IEffectEquipment effectEquipment) {
             if (!components.has(EEDataComponentTypes.ITEM_EFFECT_DATA.value())) {
                 ImmutableMap.Builder<EffectType<?>, BaseEffect> builder = ImmutableMap.builder();
-                for (BaseEffect baseEffect : effectEquipment.getDefaultEffects()) {
+                for (BaseEffect baseEffect : effectEquipment.EE$getDefaultEffects()) {
                     builder.put(baseEffect.getEffectType(), baseEffect);
                 }
                 components.set(EEDataComponentTypes.ITEM_EFFECT_DATA.value(), new ItemEffectsData(builder.build()));

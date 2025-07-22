@@ -59,5 +59,9 @@ public class LRItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.FOOT_ARMOR).add(
                 LRItems.BLACK_DRAGON_BOOTS.value()
         );
+
+        tag(ItemTags.SWORDS).add(
+                LRItems.WITHERING_BLADE.value()
+        );
     }
 }

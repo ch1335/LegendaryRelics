@@ -18,6 +18,7 @@ import java.util.Map;
 
 public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
 
+    public static ItemEffectsData EMPTY = new ItemEffectsData(Map.of());
 
     public static final Codec<ItemEffectsData> CODEC = Codec.of(ItemEffectsData::encode, ItemEffectsData::decode);
 

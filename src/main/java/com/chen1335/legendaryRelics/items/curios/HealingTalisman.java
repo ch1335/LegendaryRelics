@@ -13,7 +13,7 @@ public class HealingTalisman extends LRCuriosBase {
     }
 
     @Override
-    public List<BaseEffect> getDefaultEffects() {
+    public List<BaseEffect> EE$getDefaultEffects() {
         return List.of(new HealIncreaseEffect(1), new HealPerSecondEffect(1));
     }
 

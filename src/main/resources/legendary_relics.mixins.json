@@ -7,7 +7,9 @@
     "CurioAttributeModifierEventInvoker",
     "CurioInventoryCapabilityMixin",
     "EnchantedCountIncreaseFunctionMixin",
-    "LootItemRandomChanceWithEnchantedBonusConditionMixin"
+    "ItemStackMixin",
+    "LootItemRandomChanceWithEnchantedBonusConditionMixin",
+    "SwordItemMixin"
   ],
   "client": [
     "GameRendererInvoker",

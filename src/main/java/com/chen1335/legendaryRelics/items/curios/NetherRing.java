@@ -12,7 +12,7 @@ public class NetherRing extends LRCuriosBase {
     }
 
     @Override
-    public List<BaseEffect> getDefaultEffects() {
+    public List<BaseEffect> EE$getDefaultEffects() {
         return List.of(new InFireTargetDamageIncrease(1));
     }
 }
