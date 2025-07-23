@@ -1,6 +1,7 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
 import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -108,5 +109,9 @@ public class BaseEffect {
 
     public int modifyLoot(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
         return lootingLevel;
+    }
+
+    public void markItemChanged(ItemStack itemStack) {
+        ((IEEItemStackMixin) (Object) itemStack).ee$setMarkFlag(!((IEEItemStackMixin) (Object) itemStack).ee$getMarkFlag());
     }
 }

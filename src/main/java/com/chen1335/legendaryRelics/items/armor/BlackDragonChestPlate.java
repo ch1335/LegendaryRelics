@@ -33,8 +33,8 @@ public class BlackDragonChestPlate extends BlackDragonArmor {
             Add.of(
                     Mul.of(
                             DarkGoldUpdateArg.of(
-                                    Constant.of(1.5F),
-                                    Constant.of(2.5F)
+                                    Constant.of(1F),
+                                    Constant.of(1.5F)
                             ),
                             EntityAttributeValue.of(Attributes.ATTACK_DAMAGE)
                     ),
@@ -52,8 +52,8 @@ public class BlackDragonChestPlate extends BlackDragonArmor {
     public static FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
             Mul.of(
                     DarkGoldUpdateArg.of(
-                            Constant.of(0.2F),
-                            Constant.of(0.3F)
+                            Constant.of(0.3F),
+                            Constant.of(0.4F)
                     ),
                     EntityAttributeValue.of(Attributes.MAX_HEALTH)
             )
@@ -69,7 +69,7 @@ public class BlackDragonChestPlate extends BlackDragonArmor {
     public static FinalCalculator SHIELD_LAST_TIME = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(5F),
-                    Constant.of(6F)
+                    Constant.of(7F)
             )
     );
 

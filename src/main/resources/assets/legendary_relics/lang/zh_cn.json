@@ -30,7 +30,7 @@
   "item.legendary_relics.dark_gold_forging_tool.desc.4": "将此物品在铁砧上与其他物品结合。",
   "item.legendary_relics.dark_gold_fragment": "暗金残片",
   "item.legendary_relics.dark_steel_claw": "暗钢利爪",
-  "item.legendary_relics.dark_steel_claw.skill": "你的攻击造成额外%s伤害。",
+  "item.legendary_relics.dark_steel_claw.skill": "这件饰品获得%s攻击伤害。",
   "item.legendary_relics.dragon_scale": "龙鳞",
   "item.legendary_relics.hardened_ring": "硬化指环",
   "item.legendary_relics.hardened_ring.skill": "受到伤害后，获得%s护甲，持续%s秒，这个效果有%s秒冷却时间。",
@@ -55,15 +55,13 @@
   "item.legendary_relics.shield_regenerator": "护盾再生器",
   "item.legendary_relics.shield_regenerator.skill.1": "每%s秒为你提供%s护盾，最多提供%s护盾。",
   "item.legendary_relics.the_ore_collectors_ring": "矿石收藏家的戒指",
+  "item.legendary_relics.wither_spirit": "凋零精魄",
+  "item.legendary_relics.withering_blade": "枯萎",
+  "item.legendary_relics.withering_blade.desc.1": "§6侵蚀§r:攻击目标会附加侵蚀效果，每层效果每秒会造成%s魔法伤害并且为你回复1%%已损失生命值，最多叠加4层。",
+  "item.legendary_relics.withering_blade.desc.2": "在最大层数时侵蚀每秒会造成%s魔法伤害并且为你回复4%%已损失生命值。",
   "item.the_ore_collectors_ring.sacred_talisman.desc.1": "提供%s时运等级，如果你收集的矿石达到了%s种，那么额外提供1时运等级。",
   "item.the_ore_collectors_ring.sacred_talisman.desc.2": "已收集的矿石种类:%s。",
   "itemGroup.legendary_relics": "传说遗物",
   "legendary_relics.cooldown": "冷却:%ss",
-  "legendary_relics.items.skill.cannot_be_tacked": "该效果多个饰品不能叠加",
-
-  "item.legendary_relics.withering_blade": "枯萎",
-  "item.legendary_relics.withering_blade.desc.1": "§6侵蚀§r:攻击目标会附加侵蚀效果，每层效果每秒会造成%s魔法伤害并且为你回复1%%已损失生命值，最多叠加4层。",
-  "item.legendary_relics.withering_blade.desc.2": "在最大层数时侵蚀每秒会造成%s魔法伤害并且为你回复4%%已损失生命值。",
-
-  "item.legendary_relics.wither_spirit": "凋零精魄"
+  "legendary_relics.items.skill.cannot_be_tacked": "该效果多个饰品不能叠加"
 }

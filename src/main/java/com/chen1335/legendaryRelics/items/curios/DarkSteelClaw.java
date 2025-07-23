@@ -19,8 +19,7 @@ public class DarkSteelClaw extends LRCuriosBase {
     }
 
     public static Multimap<Holder<Attribute>, AttributeModifierHolder> ATTRIBUTE_MODIFIERS = ImmutableMultimap.of(
-            Attributes.ARMOR, new AttributeModifierHolder(4, AttributeModifier.Operation.ADD_VALUE),
-            Attributes.ATTACK_DAMAGE, new AttributeModifierHolder(1, AttributeModifier.Operation.ADD_VALUE)
+            Attributes.ARMOR, new AttributeModifierHolder(4, AttributeModifier.Operation.ADD_VALUE)
     );
 
 
