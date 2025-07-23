@@ -1,6 +1,7 @@
 package com.chen1335.specialEffectLib.API;
 
 import com.chen1335.specialEffectLib.API.objects.SEAttachmentTypes;
+import com.chen1335.specialEffectLib.attachmentDatas.EntityEffectData;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +15,8 @@ public class SpecialEffectAPI {
     }
 
     public static <T extends SpecialMobEffect> void addEffectToEntity(LivingEntity target, T effect, @Nullable FinalEffectGetter<T> finalEffectGetter) {
-        Map<MobEffectType<?>, SpecialMobEffect> effectMap = target.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA).effectMap;
+        EntityEffectData entityEffectData = target.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA);
+        Map<MobEffectType<?>, SpecialMobEffect> effectMap = entityEffectData.getSourceEffects(effect.getSourceEntityUUID());
         SpecialMobEffect old = effectMap.get(effect.getEffectType());
         if (finalEffectGetter != null && old != null) {
             effect = finalEffectGetter.accept(effect, (T) old);

@@ -126,5 +126,17 @@ public class LRRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
                 .showNotification(false)
                 .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, LRItems.WITHERING_BLADE)
+                .define('A', Items.CRYING_OBSIDIAN)
+                .define('B', Items.NETHERITE_INGOT)
+                .define('C', LRItems.WITHER_SPIRIT)
+                .define('D', LRItems.DARK_GOLD_FRAGMENT)
+                .pattern(" DC")
+                .pattern(" BD")
+                .pattern("A  ")
+                .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
+                .showNotification(false)
+                .save(recipeOutput);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class WitheringBlade extends LRSwordItem {
 
     public WitheringBlade() {
-        super(Tiers.NETHERITE, new Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.NETHERITE, 4, -2.4F)));
+        super(Tiers.NETHERITE, new Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.NETHERITE, 6, -2.4F)));
     }
 
     @Override

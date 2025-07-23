@@ -63,5 +63,7 @@
 
   "item.legendary_relics.withering_blade": "枯萎",
   "item.legendary_relics.withering_blade.desc.1": "§6侵蚀§r:攻击目标会附加侵蚀效果，每层效果每秒会造成%s魔法伤害并且为你回复1%%已损失生命值，最多叠加4层。",
-  "item.legendary_relics.withering_blade.desc.2": "在最大层数时侵蚀每秒会造成%s魔法伤害并且为你回复4%%已损失生命值。"
+  "item.legendary_relics.withering_blade.desc.2": "在最大层数时侵蚀每秒会造成%s魔法伤害并且为你回复4%%已损失生命值。",
+
+  "item.legendary_relics.wither_spirit": "凋零精魄"
 }

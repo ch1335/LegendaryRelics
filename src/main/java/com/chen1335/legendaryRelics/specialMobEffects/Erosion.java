@@ -1,9 +1,11 @@
 package com.chen1335.legendaryRelics.specialMobEffects;
 
+import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
 import com.chen1335.legendaryRelics.entities.TreatmentBall;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.TimeLimitEffect;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
@@ -28,14 +30,11 @@ public class Erosion extends TimeLimitEffect {
         super.tick(livingEntity);
         if (livingEntity.level().getGameTime() % 20 == 0) {
             @Nullable Entity sourceEntity = getSourceEntity(livingEntity.level());
-            if (sourceEntity instanceof LivingEntity living) {
-                int oldInvulnerableTime = livingEntity.invulnerableTime;
-                livingEntity.invulnerableTime = 0;
-                livingEntity.hurt(livingEntity.level().damageSources().mobAttack(living), perLayerDamage * layers);
-                livingEntity.invulnerableTime = oldInvulnerableTime;
-                TreatmentBall treatmentBall = new TreatmentBall(living.level(), living, layers);
+            if (sourceEntity instanceof LivingEntity sourceLiving) {
+                livingEntity.hurt(livingEntity.level().damageSources().source(LRDamageTypes.EROSION, sourceEntity), perLayerDamage * layers);
+                TreatmentBall treatmentBall = new TreatmentBall(sourceLiving.level(), sourceLiving, layers);
                 treatmentBall.setPos(livingEntity.getEyePosition());
-                living.level().addFreshEntity(treatmentBall);
+                sourceLiving.level().addFreshEntity(treatmentBall);
             }
         }
     }
@@ -43,5 +42,21 @@ public class Erosion extends TimeLimitEffect {
     public Erosion getFinal(Erosion theOld) {
         this.layers = Math.min(theOld.layers + this.layers, 4);
         return this;
+    }
+
+    @Override
+    public CompoundTag save() {
+        CompoundTag compoundTag = super.save();
+        compoundTag.putInt("Layers", layers);
+        compoundTag.putFloat("PerLayerDamage", perLayerDamage);
+        return compoundTag;
+    }
+
+    @Override
+    public void load(CompoundTag compoundTag) {
+        super.load(compoundTag);
+        layers = compoundTag.getInt("Layers");
+        perLayerDamage = compoundTag.getFloat("PerLayerDamage");
+
     }
 }

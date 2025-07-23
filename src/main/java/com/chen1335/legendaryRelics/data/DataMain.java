@@ -1,9 +1,11 @@
 package com.chen1335.legendaryRelics.data;
 
+import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.data.lootTables.LRGlobalLootModifierProvider;
 import com.chen1335.legendaryRelics.data.lootTables.LRLootTableProvider;
 import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,6 +25,7 @@ public class DataMain {
                 generator.getPackOutput(),
                 event.getLookupProvider(),
                 new RegistrySetBuilder()
+                        .add(Registries.DAMAGE_TYPE, LRDamageTypes::bootstrap)
                 ,
                 Map.of(),
                 Set.of(LegendaryRelics.MODID)
@@ -47,6 +50,11 @@ public class DataMain {
         generator.addProvider(event.includeServer(), new LRRecipeProvider(
                 generator.getPackOutput(),
                 builtinEntriesProvider.getRegistryProvider()));
+
+        generator.addProvider(event.includeServer(), new LRDamageTypeTagsProvider(
+                generator.getPackOutput(),
+                builtinEntriesProvider.getRegistryProvider(),
+                event.getExistingFileHelper()));
     }
 
     public static String modid() {

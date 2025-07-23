@@ -12,6 +12,6 @@ public class SEAttachmentTypes {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, SpecialEffectLib.MODID);
 
     public static final Supplier<AttachmentType<EntityEffectData>> ENTITY_EFFECT_DATA = ATTACHMENT_TYPES.register(
-            "entity_effect_data", () -> AttachmentType.builder((holder) -> new EntityEffectData()).build()
+            "entity_effect_data", () -> AttachmentType.serializable((holder) -> new EntityEffectData()).build()
     );
 }

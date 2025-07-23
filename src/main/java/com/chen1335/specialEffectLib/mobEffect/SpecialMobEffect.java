@@ -1,6 +1,7 @@
 package com.chen1335.specialEffectLib.mobEffect;
 
-import com.chen1335.legendaryRelics.specialMobEffects.Erosion;
+import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
+import com.chen1335.specialEffectLib.attachmentDatas.EntityEffectData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -9,12 +10,13 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class SpecialMobEffect {
     private final MobEffectType<?> effectType;
-    @Nullable
-    private UUID sourceEntityUUID = null;
+    @NotNull
+    private UUID sourceEntityUUID = EntityEffectData.NO_SOURCE_UUID;
 
     private Entity sourceEntity = null;
 
@@ -28,11 +30,11 @@ public class SpecialMobEffect {
         return effectType;
     }
 
-    public @Nullable UUID getSourceEntityUUID() {
+    public @NotNull UUID getSourceEntityUUID() {
         return sourceEntityUUID;
     }
 
-    public void setSourceEntityUUID(@Nullable UUID sourceEntityUUID) {
+    public void setSourceEntityUUID(@NotNull UUID sourceEntityUUID) {
         this.sourceEntityUUID = sourceEntityUUID;
     }
 
@@ -41,7 +43,7 @@ public class SpecialMobEffect {
     }
 
     public @Nullable Entity getSourceEntity(Level level) {
-        if (sourceEntityUUID == null) {
+        if (sourceEntityUUID == EntityEffectData.NO_SOURCE_UUID) {
             return null;
         } else if (sourceEntity != null) {
             if (sourceEntity.isRemoved()) {
@@ -56,9 +58,6 @@ public class SpecialMobEffect {
         } else if (level.isClientSide) {
             return null;
         } else {
-            if (sourceEntityUUID == null) {
-                return null;
-            }
             sourceEntity = ((ServerLevel) level).getEntity(sourceEntityUUID);
             return sourceEntity;
         }
@@ -71,9 +70,8 @@ public class SpecialMobEffect {
 
     public CompoundTag save() {
         CompoundTag compoundTag = new CompoundTag();
-        if (sourceEntityUUID != null) {
-            compoundTag.putUUID("SourceEntityUUID", sourceEntityUUID);
-        }
+        compoundTag.putUUID("SourceEntityUUID", sourceEntityUUID);
+        compoundTag.putString("EffectType", Objects.requireNonNull(RegisterTypes.SPECIAL_EFFECT_TYPE.getKey(getEffectType())).toString());
         return compoundTag;
     }
 

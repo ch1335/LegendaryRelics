@@ -36,7 +36,6 @@ public class AttributeBoostInNether extends LRCurioEffectBase {
 
     @Override
     public int getDarkGoldLevelAdd() {
-
         return getRawEffectLevel();
     }
 

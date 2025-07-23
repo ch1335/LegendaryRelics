@@ -93,6 +93,10 @@ public class LRGlobalLootModifierProvider extends GlobalLootModifierProvider {
         addModifiers("dark_gold_fragments_high_chance", LRLootTableProvider.LootTableModifier.DARK_GOLD_FRAGMENTS_HIGH_CHANCE.location(),
                 BuiltInLootTables.BASTION_TREASURE.location()
         );
+
+        addModifiers("wither_spirit", LRLootTableProvider.LootTableModifier.WITHER_SPIRIT.location(),
+                EntityType.WITHER.getDefaultLootTable().location()
+        );
     }
 
     private void simpleAdd(ResourceLocation resourceLocation) {

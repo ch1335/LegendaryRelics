@@ -56,7 +56,10 @@ public class LRLootTableProvider extends LootTableProvider {
 
         public static final ResourceKey<LootTable> HEALING_TALISMAN = registerModifier("chests/healing_talisman");
 
-        public static final ResourceKey<LootTable> DRAGON_SCALE = registerModifier("entities/healing_talisman");
+        public static final ResourceKey<LootTable> DRAGON_SCALE = registerModifier("entities/dragon_scale");
+
+
+        public static final ResourceKey<LootTable> WITHER_SPIRIT = registerModifier("entities/wither_spirit");
 
         public static final ResourceKey<LootTable> DARK_GOLD_FRAGMENTS = registerModifier("chests/dark_gold_fragments");
 
@@ -91,6 +94,16 @@ public class LRLootTableProvider extends LootTableProvider {
                     LootTable.lootTable().withPool(
                             LootPool.lootPool().setRolls(new ConstantValue(1))
                                     .add(LootItem.lootTableItem(LRItems.DRAGON_SCALE).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4))).setWeight(10))
+
+                    )
+            );
+
+            output.accept(WITHER_SPIRIT,
+                    LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(new ConstantValue(1))
+                                    .add(LootItem.lootTableItem(LRItems.WITHER_SPIRIT)
+                                            .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2)))
+                                    )
 
                     )
             );

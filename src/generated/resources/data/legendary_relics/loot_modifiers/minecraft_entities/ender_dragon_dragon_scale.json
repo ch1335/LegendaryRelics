@@ -6,5 +6,5 @@
       "loot_table_id": "minecraft:entities/ender_dragon"
     }
   ],
-  "table": "legendary_relics:modifier/entities/healing_talisman"
+  "table": "legendary_relics:modifier/entities/dragon_scale"
 }

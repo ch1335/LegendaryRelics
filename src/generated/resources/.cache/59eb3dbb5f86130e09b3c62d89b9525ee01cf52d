@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-26T21:52:26.2915366	Loot Tables
+// 1.21.1	2025-07-23T17:39:04.9991116	Loot Tables
 cfd9bb26042238fcd48a4611a16c92b3ae06506a data/legendary_relics/loot_table/modifier/chests/ancient_fragment_add.json
 687d36eabb59a748f7b9178ea72b12ca7f1ef254 data/legendary_relics/loot_table/modifier/chests/ancient_fragment_add_high_chance.json
 73f4c744dffd6017a37a75cfe61b7c41d74de263 data/legendary_relics/loot_table/modifier/chests/dark_gold_fragments.json
@@ -12,4 +12,5 @@ e83c26f1b30f38b2f3f905e60465cd29616ab91c data/legendary_relics/loot_table/modifi
 fa5fe1883f788f1ceacc347301ec3966288f771f data/legendary_relics/loot_table/modifier/chests/simple_dungeon.json
 0cc4b7342209661e715df10998ba0e1f3e898da2 data/legendary_relics/loot_table/modifier/chests/the_ore_collectors_ring.json
 a0ea0427bacebdc2cbb0968e4afcbc8bed6b2533 data/legendary_relics/loot_table/modifier/chests/village/village_weaponsmith.json
-bbcc43360a6042748be57773b14bfe0ecccf17b3 data/legendary_relics/loot_table/modifier/entities/healing_talisman.json
+c271f5db9371d8f5ab86dba3319bb49998067749 data/legendary_relics/loot_table/modifier/entities/dragon_scale.json
+84c93cd9e8811cc56c2c847155d7ead2bbc91b47 data/legendary_relics/loot_table/modifier/entities/wither_spirit.json
