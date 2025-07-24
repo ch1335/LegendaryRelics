@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -8,6 +9,7 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -45,12 +47,13 @@ public class HealIncreaseEffect extends LRCurioEffectBase {
     @SubscribeEvent
     public static void HandleHealEvent(LivingHealEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        EquipmentEffectAPI.findStackableEffect(livingEntity, LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value()).ifPresent(pair -> {
+        EquipmentEffectAPI.findStackableEffect(livingEntity, LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value()).ifPresent(list -> {
             float i = 0;
-            for (HealIncreaseEffect effect : pair.getSecond()) {
-                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), effect);
+            for (Pair<ItemStack, BaseEffect> pair : list) {
+                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
                 i += HEAL_INCREASE.getValue(args);
             }
+
             event.setAmount(event.getAmount() * (1 + i));
 
         });

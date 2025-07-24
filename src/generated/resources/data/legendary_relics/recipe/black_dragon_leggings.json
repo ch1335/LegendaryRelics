@@ -21,6 +21,9 @@
     " D "
   ],
   "result": {
+    "components": {
+      "legendary_relics:item_effect_data": []
+    },
     "count": 1,
     "id": "legendary_relics:black_dragon_leggings"
   },

@@ -51,10 +51,10 @@ public class PerseveranceEffect extends LRCurioEffectBase {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void handleLivingDamageEventLowest(LivingDamageEvent.Post event) {
         LivingEntity livingEntity = event.getEntity();
-        EquipmentEffectAPI.findBestEffect(livingEntity,LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value()).ifPresent(pair->{
+        EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value()).ifPresent(pair -> {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
             int totalTime = TIME.getInt(calculatorArg) * 20;
-            float totalHeal = DAMAGE_PERCENTAGE.getValue(calculatorArg) * event.getNewDamage();
+            float totalHeal = DAMAGE_PERCENTAGE.getValue(calculatorArg) * Math.min(livingEntity.getMaxHealth(), event.getNewDamage());
             int runCount = totalTime / 10;
             float perHeal = totalHeal / runCount;
             SimpleSchedule.addSchedule(event.getEntity().level(), new SimpleSchedule.RepeatSchedule(runCount, 10, () -> {

@@ -142,7 +142,6 @@ public class EventHandler {
                 if (attacker instanceof Player playerAttacker) {
                     CalculatorArg args = new CalculatorArg();
                     CalculatorArg.ArgType.THIS_ENTITY.putArg(args, attacker);
-                    LRItems.BLACK_DRAGON_CHEST_PLATE.get().runIfEquippedThis(attacker, args, (itemStack, newArgs) -> BlackDragonChestPlate.handleAttack(event, playerAttacker, newArgs, itemStack));
                 }
             }
         }

@@ -19,8 +19,8 @@ public final class EquipmentEffectAPI {
         return Optional.ofNullable((Pair<ItemStack, T>) living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).unStackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType));
     }
 
-    public static <T extends BaseEffect> Optional<Pair<ItemStack, List<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
-        return Optional.ofNullable((Pair<ItemStack, List<T>>) (Object) living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).stackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType));
+    public static <T extends BaseEffect> Optional<List<Pair<ItemStack, BaseEffect>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
+        return Optional.ofNullable((List<Pair<ItemStack, BaseEffect>>) (Object) living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).stackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType));
     }
 
     public static <T extends BaseEffect> Optional<T> findItemEffect(ItemStack itemStack, EffectType<T> effectType) {

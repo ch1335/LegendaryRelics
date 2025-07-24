@@ -5,6 +5,7 @@ import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.client.RenderUtils;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
+import com.chen1335.legendaryRelics.config.Config;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,22 +20,21 @@ public class EffectCooldownRender implements LayeredDraw.Layer {
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, @NotNull DeltaTracker deltaTracker) {
         EquipmentEffectCooldownManager clientCooldownManager = LRClient.getClientCooldownManager();
-        int size = clientCooldownManager.getCooldownHolders().size();
-        int i = 0;
-        int yAdd = size * 16;
+        int width = guiGraphics.guiWidth();
+        int height = guiGraphics.guiHeight();
+        float xPercentage = (float) Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X;
+        float yPercentage = (float) Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y;
+        int x = (int) (width * xPercentage);
+        int y = (int) (height * yPercentage)-16;
         for (Map.Entry<EffectType<?>, EquipmentEffectCooldownManager.CooldownHolder> entry : clientCooldownManager.getCooldownHolders().entrySet()) {
             if (entry.getKey() instanceof CooldownAbleEffectType<?> effectType) {
-                int width = guiGraphics.guiWidth();
-                int height = guiGraphics.guiHeight();
-                int x = 0;
-                int y = (height + yAdd) / 2 - i * 16;
+                y = y + 16;
                 EquipmentEffectCooldownManager.CooldownHolder cooldownHolder = entry.getValue();
-                guiGraphics.blit(effectType.getCooldownIcon(), 0, y, 0, 0, 16, 16, 16, 16);
+                guiGraphics.blit(effectType.getCooldownIcon(), x, y, 0, 0, 16, 16, 16, 16);
                 PoseStack poseStack = guiGraphics.pose();
                 poseStack.pushPose();
                 RenderUtils.drawSector(guiGraphics, x, y, 16, (float) cooldownHolder.getTimeLeft() / cooldownHolder.getTotalTime());
                 poseStack.popPose();
-                i++;
             }
         }
     }

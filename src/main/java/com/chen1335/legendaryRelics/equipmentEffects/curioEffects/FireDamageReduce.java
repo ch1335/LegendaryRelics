@@ -51,7 +51,7 @@ public class FireDamageReduce extends LRCurioEffectBase {
         Optional<Pair<ItemStack, FireDamageReduce>> pairOptional = EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.FIRE_DAMAGE_REDUCE.value());
         pairOptional.ifPresent(pair -> {
             if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
-                event.setAmount(event.getAmount() * (1 - FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.getFirst()))));
+                event.setAmount(event.getAmount() * (1 - FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.getFirst(), pair.getSecond()))));
             }
         });
     }

@@ -63,5 +63,9 @@
   "item.the_ore_collectors_ring.sacred_talisman.desc.2": "Ore types collected: %s.",
   "itemGroup.legendary_relics": "Legendary Relics",
   "legendary_relics.cooldown": "cooldown:%ss",
-  "legendary_relics.items.skill.cannot_be_tacked": "Multiple curios cannot be stacked for this effect"
+  "legendary_relics.items.skill.cannot_be_tacked": "Multiple curios cannot be stacked for this effect",
+  "legendary_relics.config": "Legendary Relics Configs",
+  "legendary_relics.config.client": "ClientConfig",
+  "legendary_relics.cooldown.x": "Equipment effect cooldown render X-axis percentage",
+  "legendary_relics.cooldown.y": "Equipment effect cooldown render Y-axis percentage"
 }

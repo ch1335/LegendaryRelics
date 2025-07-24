@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.mixins.main;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.CurioEffect;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -27,7 +28,7 @@ public class LootItemRandomChanceWithEnchantedBonusConditionMixin {
             Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
             Entity attacker = context.getParamOrNull(LootContextParams.ATTACKING_ENTITY);
             if (entity instanceof LivingEntity mob && attacker instanceof LivingEntity livingAttacker) {
-                for (Pair<ItemStack, CurioEffect> collectAllEffect : livingAttacker.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA.get()).collectAllCurioEffects()) {
+                for (Pair<ItemStack, BaseEffect> collectAllEffect : livingAttacker.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA.get()).collectAllCurioEffects()) {
                     lootingLevel = collectAllEffect.getSecond().modifyLoot(collectAllEffect.getFirst(), mob, livingAttacker, lootingLevel);
                 }
             }

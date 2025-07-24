@@ -63,5 +63,9 @@
   "item.the_ore_collectors_ring.sacred_talisman.desc.2": "已收集的矿石种类:%s。",
   "itemGroup.legendary_relics": "传说遗物",
   "legendary_relics.cooldown": "冷却:%ss",
-  "legendary_relics.items.skill.cannot_be_tacked": "该效果多个饰品不能叠加"
+  "legendary_relics.items.skill.cannot_be_tacked": "该效果多个饰品不能叠加",
+  "legendary_relics.config": "Legendary Relics 配置",
+  "legendary_relics.config.client": "客户端配置",
+  "legendary_relics.cooldown.x": "装备效果冷却渲染占总屏幕的x轴的百分比",
+  "legendary_relics.cooldown.y": "装备效果冷却渲染占总屏幕的y轴的百分比"
 }

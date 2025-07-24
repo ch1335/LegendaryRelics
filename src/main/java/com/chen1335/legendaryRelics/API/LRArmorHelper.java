@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.API;
 
+import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -8,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiConsumer;
 
-public interface LRArmorHelper {
+public interface LRArmorHelper extends IEffectEquipment {
     default boolean isEquippedThis(LivingEntity entity) {
         return entity.getItemBySlot(((ArmorItem) this).getEquipmentSlot()).getItem() == this;
     }

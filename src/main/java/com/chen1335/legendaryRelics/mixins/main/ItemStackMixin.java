@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ItemStack.class)
+@Mixin(value = ItemStack.class, priority = 1001)
 public class ItemStackMixin {
     @Inject(method = "hurtEnemy", at = @At("RETURN"))
     private void onHurtEnemy(LivingEntity target, Player attacker, CallbackInfoReturnable<Boolean> cir) {
         for (BaseEffect effect : attacker.getWeaponItem().getOrDefault(EEDataComponentTypes.ITEM_EFFECT_DATA, ItemEffectsData.EMPTY).effects().values()) {
             if (effect instanceof WeaponEffect weaponEffect) {
-               weaponEffect.hurtEnemy((ItemStack) (Object) this, target, attacker);
+                weaponEffect.hurtEnemy((ItemStack) (Object) this, target, attacker);
             }
         }
     }

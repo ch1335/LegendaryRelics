@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,7 +20,9 @@ public class ClientEventHandler {
         public static void ClientTickEvent(ClientTickEvent.Pre event) {
             Player clientPlayer = LRClient.getClientPlayer();
             if (clientPlayer != null) {
-                LRClient.getClientCooldownManager().tick(clientPlayer);
+                if (!Minecraft.getInstance().isPaused()) {
+                    LRClient.getClientCooldownManager().tick(clientPlayer);
+                }
             }
         }
     }
