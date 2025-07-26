@@ -14,14 +14,18 @@ public class LREntityData implements INBTSerializable<CompoundTag> {
 
     private final EquipmentEffectCooldownManager equipmentEffectCooldownManager = new EquipmentEffectCooldownManager();
 
+    public boolean hasGiveBook = false;
+
     @Override
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
-        return new CompoundTag();
+        CompoundTag compoundTag = new CompoundTag();
+        compoundTag.putBoolean("HasGiveBook", hasGiveBook);
+        return compoundTag;
     }
 
     @Override
     public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull CompoundTag nbt) {
-
+        hasGiveBook = nbt.getBoolean("HasGiveBook");
     }
 
     public void tick(LivingEntity living) {

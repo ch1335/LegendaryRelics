@@ -36,5 +36,8 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.DARK_GOLD_FORGING_TOOL.asItem());
         basicItem(LRItems.WITHER_SPIRIT.asItem());
         handheldItem(LRItems.WITHERING_BLADE.asItem());
+
+        basicItem(LegendaryRelics.id("book"));
+
     }
 }

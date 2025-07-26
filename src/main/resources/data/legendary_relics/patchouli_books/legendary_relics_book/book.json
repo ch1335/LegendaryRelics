@@ -3,5 +3,7 @@
   "landing_text": "legendary_relics.book.landing_text",
   "creative_tab":"legendary_relics:legendary_relics_tab",
   "use_resource_pack": true,
+  "show_progress": false,
+  "model": "legendary_relics:book",
   "version": 1
 }

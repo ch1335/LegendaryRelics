@@ -1,10 +1,11 @@
-// 1.21.1	2025-07-23T15:18:10.8689929	Item Models: legendary_relics
+// 1.21.1	2025-07-26T17:23:39.7432732	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
 fd747a44967559c141a3cfab103272ef10d2b66f assets/legendary_relics/models/item/black_dragon_chestplate.json
 03a6112f159a30b073c201811a40c51bd43525d1 assets/legendary_relics/models/item/black_dragon_helmet.json
 4177b78cd5b7c6a52648d1b8fff855c0d5ddab1d assets/legendary_relics/models/item/black_dragon_leggings.json
+7eabc86687963e39260741d3372be035b1bca639 assets/legendary_relics/models/item/book.json
 83cf5cdcfa5575812a21970aada2cd9307bfc91f assets/legendary_relics/models/item/dark_gold.json
 6ce12388844edfa8ecc0ecfe9b8438f7abfe7c3e assets/legendary_relics/models/item/dark_gold_forging_tool.json
 3ebad738133b85ae64b62e48da42672addb8ee50 assets/legendary_relics/models/item/dark_gold_fragment.json

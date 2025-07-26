@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.common;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
+import com.chen1335.legendaryRelics.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
@@ -37,6 +39,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
+import vazkii.patchouli.common.item.ItemModBook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,17 @@ import java.util.Map;
 public class EventHandler {
     @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.GAME)
     public static class Game {
+
+        @SubscribeEvent
+        public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+            if (ModList.get().isLoaded("patchouli")) {
+                LREntityData entityData = event.getEntity().getData(LRAttachmentTypes.ENTITY_DATA);
+                if (!entityData.hasGiveBook) {
+                    event.getEntity().addItem(ItemModBook.forBook(LegendaryRelics.id("legendary_relics_book")));
+                    entityData.hasGiveBook = true;
+                }
+            }
+        }
 
         @SubscribeEvent
         public static void playerClone(PlayerEvent.Clone event) {
