@@ -1,0 +1,15 @@
+{
+  "name": "Dark Gold Fragment",
+  "icon": "legendary_relics:dark_gold_fragment",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Rarely spawns in chests across different structures in Nether."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:dark_gold_fragment"
+    }
+  ]
+}

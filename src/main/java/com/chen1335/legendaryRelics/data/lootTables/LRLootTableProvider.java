@@ -111,7 +111,7 @@ public class LRLootTableProvider extends LootTableProvider {
             output.accept(HEALING_TALISMAN,
                     LootTable.lootTable().withPool(
                             LootPool.lootPool().setRolls(new ConstantValue(1))
-                                    .add(EmptyLootItem.emptyItem().setWeight(20))
+                                    .add(EmptyLootItem.emptyItem().setWeight(40))
                                     .add(LootItem.lootTableItem(LRItems.HEALING_TALISMAN).setWeight(10))
 
                     )
@@ -188,14 +188,14 @@ public class LRLootTableProvider extends LootTableProvider {
                     LootTable.lootTable().withPool(
                             LootPool.lootPool().setRolls(new ConstantValue(1))
                                     .add(EmptyLootItem.emptyItem().setWeight(30))
-                                    .add(LootItem.lootTableItem(LRItems.LAVA_RING).setWeight(10))
+                                    .add(LootItem.lootTableItem(LRItems.NETHER_RING).setWeight(10))
                     )
             );
 
             output.accept(NETHER_TALISMAN,
                     LootTable.lootTable().withPool(
                             LootPool.lootPool().setRolls(new ConstantValue(1))
-                                    .add(EmptyLootItem.emptyItem().setWeight(10))
+                                    .add(EmptyLootItem.emptyItem().setWeight(30))
                                     .add(LootItem.lootTableItem(LRItems.NETHER_TALISMAN).setWeight(10))
                     )
             );

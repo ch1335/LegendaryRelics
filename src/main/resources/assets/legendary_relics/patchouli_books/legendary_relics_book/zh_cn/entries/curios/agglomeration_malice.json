@@ -1,0 +1,15 @@
+{
+  "name": "凝集恶意",
+  "icon": "legendary_relics:agglomeration_malice",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "地牢的箱子中有50%的几率生成。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:agglomeration_malice"
+    }
+  ]
+}

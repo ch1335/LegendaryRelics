@@ -1,0 +1,15 @@
+{
+  "name": "坚毅项链",
+  "icon": "legendary_relics:perseverance_necklace",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "可以通过工作台合成。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:perseverance_necklace"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "凋零精魄",
+  "icon": "legendary_relics:wither_spirit",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "击杀凋零必定掉落两个凋零精魄，不受抢夺影响。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:wither_spirit"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:withering_blade"
+    }
+  ]
+}

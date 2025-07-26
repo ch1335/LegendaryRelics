@@ -1,0 +1,19 @@
+{
+  "name": "Wither Spirit",
+  "icon": "legendary_relics:wither_spirit",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Slaying the Wither will always drop two Wither Spirits, unaffected by the Looting enchantment."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:wither_spirit"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:withering_blade"
+    }
+  ]
+}

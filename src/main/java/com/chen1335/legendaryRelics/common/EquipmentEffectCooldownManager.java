@@ -18,9 +18,12 @@ public class EquipmentEffectCooldownManager {
     public void tick(LivingEntity living) {
         Iterator<Map.Entry<EffectType<?>, CooldownHolder>> iterator = cooldownHolders.entrySet().iterator();
         while (iterator.hasNext()) {
-            Map.Entry<EffectType<?>, CooldownHolder> entry = iterator.next();
-            entry.getValue().tick();
-            if (entry.getValue().finished()) {
+            CooldownHolder cooldownHolder = iterator.next().getValue();
+            cooldownHolder.tick();
+            if (cooldownHolder.finished()) {
+                if (cooldownHolder.actionOnFinished != null) {
+                    cooldownHolder.actionOnFinished.run();
+                }
                 iterator.remove();
             }
         }
@@ -31,12 +34,25 @@ public class EquipmentEffectCooldownManager {
         cooldownHolders.put(effectType, new CooldownHolder(time));
     }
 
+    public void addCooldown(EffectType<?> effectType, int time, Runnable runnable) {
+        cooldownHolders.put(effectType, new CooldownHolder(time, runnable));
+    }
+
     public boolean isNotInCooldown(EffectType<?> effectType) {
         return !cooldownHolders.containsKey(effectType);
     }
 
     public static void addCooldown(LivingEntity living, EffectType<?> effectType, int time) {
         living.getData(LRAttachmentTypes.ENTITY_DATA).getEquipmentEffectCooldownManager().addCooldown(effectType, time);
+        if (living instanceof ServerPlayer serverPlayer) {
+            PacketDistributor.sendToPlayer(serverPlayer, new EffectCooldownPack(effectType, time));
+        } else if (living.level().isClientSide) {
+            LRClient.getClientCooldownManager().addCooldown(effectType, time);
+        }
+    }
+
+    public static void addCooldown(LivingEntity living, EffectType<?> effectType, int time, Runnable runnable) {
+        living.getData(LRAttachmentTypes.ENTITY_DATA).getEquipmentEffectCooldownManager().addCooldown(effectType, time,runnable);
         if (living instanceof ServerPlayer serverPlayer) {
             PacketDistributor.sendToPlayer(serverPlayer, new EffectCooldownPack(effectType, time));
         } else if (living.level().isClientSide) {
@@ -55,11 +71,17 @@ public class EquipmentEffectCooldownManager {
     public static class CooldownHolder {
         private int timeLeft;
 
-        private int totalTime;
+        public Runnable actionOnFinished = null;
+        private final int totalTime;
 
         public CooldownHolder(int timeLeft) {
             this.timeLeft = timeLeft;
             this.totalTime = timeLeft;
+        }
+
+        public CooldownHolder(int timeLeft, Runnable runnable) {
+            this(timeLeft);
+            actionOnFinished = runnable;
         }
 
         public void tick() {

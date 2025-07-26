@@ -1,0 +1,15 @@
+{
+  "name": "Dark Gold",
+  "icon": "legendary_relics:dark_gold",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A very sturdy metal that seems to have certain special uses."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:dark_gold"
+    }
+  ]
+}

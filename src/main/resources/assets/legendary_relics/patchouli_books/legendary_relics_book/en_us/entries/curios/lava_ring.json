@@ -1,0 +1,15 @@
+{
+  "name": "Lava Ring",
+  "icon": "legendary_relics:lava_ring",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "50% chance to spawn in Ruined Portal chests."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:lava_ring"
+    }
+  ]
+}

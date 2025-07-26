@@ -1,0 +1,15 @@
+{
+  "name": "Dark Gold Forging Tool",
+  "icon": "legendary_relics:dark_gold_forging_tool",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Can be used to improve the quality of items."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:dark_gold_forging_tool"
+    }
+  ]
+}

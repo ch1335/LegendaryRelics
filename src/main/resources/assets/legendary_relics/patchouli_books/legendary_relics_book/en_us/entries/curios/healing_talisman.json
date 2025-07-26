@@ -1,0 +1,15 @@
+{
+  "name": "Healing Talisman",
+  "icon": "legendary_relics:healing_talisman",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "20% chance to spawn in Jungle Pyramid and Village chests."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:healing_talisman"
+    }
+  ]
+}

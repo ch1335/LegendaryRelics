@@ -53,7 +53,7 @@
   "item.legendary_relics.sacred_talisman.skill.desc": "如果是致命伤，那么至少会使你剩下一滴血。",
   "item.legendary_relics.set_effect.desc.1": "套装效果:%s",
   "item.legendary_relics.shield_regenerator": "护盾再生器",
-  "item.legendary_relics.shield_regenerator.skill.1": "每%s秒为你提供%s护盾，最多提供%s护盾。",
+  "item.legendary_relics.shield_regenerator.skill.1": "若%s秒内未受到伤害，则为你提供%s护盾，若在冷却时间内受到伤害，则冷却时间重置。",
   "item.legendary_relics.the_ore_collectors_ring": "矿石收藏家的戒指",
   "item.legendary_relics.wither_spirit": "凋零精魄",
   "item.legendary_relics.withering_blade": "枯萎",
@@ -67,5 +67,7 @@
   "legendary_relics.config": "Legendary Relics 配置",
   "legendary_relics.config.client": "客户端配置",
   "legendary_relics.cooldown.x": "装备效果冷却渲染占总屏幕的x轴的百分比",
-  "legendary_relics.cooldown.y": "装备效果冷却渲染占总屏幕的y轴的百分比"
+  "legendary_relics.cooldown.y": "装备效果冷却渲染占总屏幕的y轴的百分比",
+  "legendary_relics.book.name": "传说遗物手册",
+  "legendary_relics.book.landing_text": "《传说遗物》模组的教程手册"
 }

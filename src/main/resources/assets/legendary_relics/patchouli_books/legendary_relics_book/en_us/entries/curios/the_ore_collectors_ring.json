@@ -1,0 +1,15 @@
+{
+  "name": "The Ore Collectors Ring",
+  "icon": "legendary_relics:the_ore_collectors_ring",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Chests in mineshaft have a 25% chance to spawn."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:the_ore_collectors_ring"
+    }
+  ]
+}

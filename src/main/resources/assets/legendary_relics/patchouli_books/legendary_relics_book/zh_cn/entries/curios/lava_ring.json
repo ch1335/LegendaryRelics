@@ -1,0 +1,15 @@
+{
+  "name": "熔岩戒指",
+  "icon": "legendary_relics:lava_ring",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "废弃传送门的箱子中有50%的几率生成。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:lava_ring"
+    }
+  ]
+}

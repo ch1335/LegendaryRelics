@@ -1,0 +1,15 @@
+{
+  "name": "远古碎片",
+  "icon": "legendary_relics:ancient_fragment",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "低概率生成在各种遗迹的箱子中。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:ancient_fragment"
+    }
+  ]
+}

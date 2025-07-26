@@ -1,0 +1,15 @@
+{
+  "name": "Dark Steel Claw",
+  "icon": "legendary_relics:dark_steel_claw",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Chests in Ancient Cities have a 25% chance to spawn."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:dark_steel_claw"
+    }
+  ]
+}

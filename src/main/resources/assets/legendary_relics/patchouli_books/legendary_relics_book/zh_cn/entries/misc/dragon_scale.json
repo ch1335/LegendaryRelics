@@ -1,0 +1,31 @@
+{
+  "name": "龙鳞",
+  "icon": "legendary_relics:dragon_scale",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "击杀末影龙必定掉落四个龙鳞，不受抢夺影响。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:dragon_scale"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_helmet"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_chestplate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_leggings"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_boots"
+    }
+  ]
+}

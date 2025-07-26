@@ -1,0 +1,31 @@
+{
+  "name": "Dragon Scale",
+  "icon": "legendary_relics:dragon_scale",
+  "category": "legendary_relics:misc_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Slaying the Ender Dragon will always drop four dragon scales, unaffected by the Looting enchantment."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:dragon_scale"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_helmet"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_chestplate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_leggings"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:black_dragon_boots"
+    }
+  ]
+}

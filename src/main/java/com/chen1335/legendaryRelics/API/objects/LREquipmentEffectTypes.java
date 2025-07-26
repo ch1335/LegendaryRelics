@@ -32,7 +32,7 @@ public class LREquipmentEffectTypes {
 
     public static DeferredHolder<EffectType<?>, EffectType<PerseveranceEffect>> PERSEVERANCE_EFFECT = EQUIPMENT_EFFECT_TYPES.register("perseverance_effect", () -> new EffectType<>(PerseveranceEffect::new, EntityEquipmentEffectData.EquipmentType.CURIO));
 
-    public static DeferredHolder<EffectType<?>, EffectType<ShieldRegeneratorEffect>> SHIELD_REGENERATOR_EFFECT = EQUIPMENT_EFFECT_TYPES.register("shield_regenerator_effect", () -> new EffectType<>(ShieldRegeneratorEffect::new, EntityEquipmentEffectData.EquipmentType.CURIO));
+    public static DeferredHolder<EffectType<?>, EffectType<ShieldRegeneratorEffect>> SHIELD_REGENERATOR_EFFECT = EQUIPMENT_EFFECT_TYPES.register("shield_regenerator_effect", () -> new CooldownAbleEffectType<ShieldRegeneratorEffect>(ShieldRegeneratorEffect::new, EntityEquipmentEffectData.EquipmentType.CURIO).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/shield_regenerator.png")));
 
     public static DeferredHolder<EffectType<?>, EffectType<OreCollectorEffect>> ORE_COLLECTOR_EFFECT = EQUIPMENT_EFFECT_TYPES.register("ore_collector_effect", () -> new EffectType<>(OreCollectorEffect::new, EntityEquipmentEffectData.EquipmentType.CURIO));
 

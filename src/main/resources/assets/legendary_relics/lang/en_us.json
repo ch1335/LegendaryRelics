@@ -53,7 +53,7 @@
   "item.legendary_relics.sacred_talisman.skill.desc": "If it's a fatal injury, it will at least leave you with one health",
   "item.legendary_relics.set_effect.desc.1": "Set Effect: %s",
   "item.legendary_relics.shield_regenerator": "Shield Regenerator",
-  "item.legendary_relics.shield_regenerator.skill.1": "Provide you with %s shield every %s seconds, up to a maximum of %s shield",
+  "item.legendary_relics.shield_regenerator.skill.1": "If you take no damage for %s seconds, gain a %s Shield. Taking damage during the cooldown will resets it.",
   "item.legendary_relics.the_ore_collectors_ring": "Ore Collector's Ring",
   "item.legendary_relics.wither_spirit": "Wither Spirit",
   "item.legendary_relics.withering_blade": "Withering Blade",
@@ -67,5 +67,7 @@
   "legendary_relics.config": "Legendary Relics Configs",
   "legendary_relics.config.client": "ClientConfig",
   "legendary_relics.cooldown.x": "Equipment effect cooldown render X-axis percentage",
-  "legendary_relics.cooldown.y": "Equipment effect cooldown render Y-axis percentage"
+  "legendary_relics.cooldown.y": "Equipment effect cooldown render Y-axis percentage",
+  "legendary_relics.book.name": "Legendary Relics",
+  "legendary_relics.book.landing_text": "Tutorial manual for the \"Legendary Relics\" mod"
 }

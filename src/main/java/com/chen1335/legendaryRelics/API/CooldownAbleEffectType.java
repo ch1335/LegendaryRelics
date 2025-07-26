@@ -3,12 +3,11 @@ package com.chen1335.legendaryRelics.API;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 
 public class CooldownAbleEffectType<T extends BaseEffect> extends EffectType<T> {
 
-    private ResourceLocation resourceLocation = MissingTextureAtlasSprite.getLocation();
+    private ResourceLocation resourceLocation = null;
 
     public CooldownAbleEffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType, boolean stackable) {
         super(factory, equipmentType, stackable);

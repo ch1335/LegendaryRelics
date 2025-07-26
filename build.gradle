@@ -111,8 +111,15 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+repositories {
+    maven {
+        url "https://cursemaven.com"
+    }
+}
+
 dependencies {
     implementation fileTree("libs")
+    implementation "curse.maven:patchouli-306770:6164617"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

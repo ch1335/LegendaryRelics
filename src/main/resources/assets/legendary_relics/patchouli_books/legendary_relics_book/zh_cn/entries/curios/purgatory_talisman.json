@@ -1,0 +1,15 @@
+{
+  "name": "炼狱护符",
+  "icon": "legendary_relics:purgatory_talisman",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "可以通过工作台合成。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:purgatory_talisman"
+    }
+  ]
+}

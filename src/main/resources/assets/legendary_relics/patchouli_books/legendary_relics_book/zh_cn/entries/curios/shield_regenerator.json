@@ -1,0 +1,15 @@
+{
+  "name": "护盾再生器",
+  "icon": "legendary_relics:shield_regenerator",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "可以通过工作台合成"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:shield_regenerator"
+    }
+  ]
+}

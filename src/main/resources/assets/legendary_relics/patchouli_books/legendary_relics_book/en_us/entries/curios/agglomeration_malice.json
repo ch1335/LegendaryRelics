@@ -1,0 +1,15 @@
+{
+  "name": "Agglomeration Malice",
+  "icon": "legendary_relics:agglomeration_malice",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Chests in dungeons have a 50% chance to spawn."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:agglomeration_malice"
+    }
+  ]
+}

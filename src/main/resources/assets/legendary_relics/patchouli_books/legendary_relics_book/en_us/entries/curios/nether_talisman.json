@@ -1,0 +1,15 @@
+{
+  "name": "Nether Talisman",
+  "icon": "legendary_relics:nether_talisman",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "25% chance to spawn in Bastion Remnant chests."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:nether_talisman"
+    }
+  ]
+}

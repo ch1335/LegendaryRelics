@@ -1,0 +1,15 @@
+{
+  "name": "下界护符",
+  "icon": "legendary_relics:nether_talisman",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "堡垒遗迹的箱子中有25%的几率生成。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:nether_talisman"
+    }
+  ]
+}

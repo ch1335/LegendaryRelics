@@ -5,7 +5,6 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonChestPlate;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.misc.AncientFragment;
@@ -33,6 +32,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -47,8 +47,12 @@ public class EventHandler {
     public static class Game {
 
         @SubscribeEvent
-        public static void heal(LivingHealEvent event) {
+        public static void playerClone(PlayerEvent.Clone event) {
+            event.getEntity().setData(LRAttachmentTypes.ENTITY_DATA, event.getOriginal().getData(LRAttachmentTypes.ENTITY_DATA));
+        }
 
+        @SubscribeEvent
+        public static void heal(LivingHealEvent event) {
             CalculatorArg arg = CalculatorArg.emptyArg();
             CalculatorArg.ArgType.THIS_ENTITY.putArg(arg, event.getEntity());
             LRItems.BLACK_DRAGON_LEGGINGS.get().runIfEquippedThis(event.getEntity(), arg, (itemStack, arg1) -> event.setAmount(event.getAmount() * (1 + BlackDragonLeggings.HEAL_INCREASE.getValue(arg1))));

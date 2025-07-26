@@ -1,0 +1,15 @@
+{
+  "name": "暗钢利爪",
+  "icon": "legendary_relics:dark_steel_claw",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "远古城市的箱子中有25%的几率生成。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:dark_steel_claw"
+    }
+  ]
+}

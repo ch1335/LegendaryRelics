@@ -1,0 +1,15 @@
+{
+  "name": "硬化指环",
+  "icon": "legendary_relics:hardened_ring",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "沙漠神殿的箱子中有25%的几率生成。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:hardened_ring"
+    }
+  ]
+}

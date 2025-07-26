@@ -1,0 +1,15 @@
+{
+  "name": "Sacred Talisman",
+  "icon": "legendary_relics:sacred_talisman",
+  "category": "legendary_relics:curios_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "25% chance to spawn in village weapon smith chest."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "legendary_relics:sacred_talisman"
+    }
+  ]
+}
