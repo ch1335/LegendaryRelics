@@ -7,6 +7,7 @@ import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.curios.*;
 import com.chen1335.legendaryRelics.items.misc.*;
+import com.chen1335.legendaryRelics.items.weapons.Reaper;
 import com.chen1335.legendaryRelics.items.weapons.WitheringBlade;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -60,5 +61,7 @@ public class LRItems {
     public static final DeferredItem<WitheringBlade> WITHERING_BLADE = ITEM_DEFERRED_REGISTER.register("withering_blade", WitheringBlade::new);
 
     public static final DeferredItem<Item> WITHER_SPIRIT = ITEM_DEFERRED_REGISTER.register("wither_spirit", WitherSpirit::new);
+
+    public static final DeferredItem<Reaper> REAPER = ITEM_DEFERRED_REGISTER.register("reaper", Reaper::new);
 
 }

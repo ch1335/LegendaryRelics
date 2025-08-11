@@ -9,7 +9,8 @@
     },
     {
       "type": "patchouli:spotlight",
-      "item": "legendary_relics:dragon_scale"
+      "item": "legendary_relics:dragon_scale",
+      "text": "末影龙身上最坚固的鳞片。"
     },
     {
       "type": "patchouli:crafting",

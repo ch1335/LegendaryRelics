@@ -53,6 +53,7 @@ public class LegendaryRelics {
         LREquipmentEffectTypes.EQUIPMENT_EFFECT_TYPES.register(modEventBus);
         LRSpecialMobEffect.SPECIAL_MOB_EFFECT_TYPES.register(modEventBus);
         LREntityTypes.ENTITY_TYPES.register(modEventBus);
+        LRSetsEffects.SETS_EFFECTS.register(modEventBus);
         modEventBus.addListener(ClientExtensionsRegister::register);
         modEventBus.addListener(EntityRendererRegister::registerLayerDefinitions);
         modEventBus.addListener(EntityRendererRegister::addLayers);

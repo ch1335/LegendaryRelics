@@ -13,7 +13,13 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "legendary_relics:withering_blade"
+      "recipe": "legendary_relics:withering_blade",
+      "text": "可以使用凋零玫瑰修复"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:reaper",
+      "text": "可以使用黑曜石修复"
     }
   ]
 }

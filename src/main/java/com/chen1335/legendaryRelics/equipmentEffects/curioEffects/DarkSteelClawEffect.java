@@ -4,9 +4,12 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.mixinsAPI.IAttributeInstanceMixin;
+import com.google.common.util.concurrent.AtomicDouble;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +27,7 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
         super(effectType, level);
     }
 
-    public float oldArmor = 0;
+    public double oldArmor = 0;
 
     public DarkSteelClawEffect(int level) {
         this(LREquipmentEffectTypes.DARK_STEEL_CLAW_EFFECT.value(), level);
@@ -40,21 +43,35 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
                             EntityAttributeValue.of(Attributes.ARMOR)
                     )
             )
-
     );
 
     @Override
     public void curioTick(ItemStack itemStack, LivingEntity wearer) {
-        float currentArmor = wearer.getArmorValue();
+        double currentArmor = wearer.getAttributeValue(Attributes.ARMOR);
         if (oldArmor != currentArmor) {
-            markItemChanged(itemStack);
             oldArmor = currentArmor;
+            markItemChanged(itemStack);
         }
     }
 
+
     @Override
     public void modifyCurioAttribute(CurioAttributeModifierEvent event) {
-        event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_MODIFIER_ID, DAMAGE_ADD.getValue(CalculatorArg.simpleArg(event.getSlotContext().entity(), event.getItemStack(), this)), AttributeModifier.Operation.ADD_VALUE));
+        AttributeInstance attributeInstance = event.getSlotContext().entity().getAttribute(Attributes.ARMOR);
+        if (!event.getSlotContext().entity().level().isClientSide) {
+            if (attributeInstance != null) {
+                ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(new AtomicDouble(oldArmor));
+            }
+        }
+
+        double armor = event.getSlotContext().entity().getAttributeValue(Attributes.ARMOR);
+        double damage = DAMAGE_ADD.getValue(CalculatorArg.simpleArg(event.getSlotContext().entity(), event.getItemStack(), this));
+        event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_MODIFIER_ID, damage, AttributeModifier.Operation.ADD_VALUE));
+        if (!event.getSlotContext().entity().level().isClientSide) {
+            if (attributeInstance != null) {
+                ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(null);
+            }
+        }
     }
 
     @Override

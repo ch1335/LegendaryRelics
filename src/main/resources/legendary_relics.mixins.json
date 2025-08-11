@@ -3,6 +3,7 @@
   "package": "com.chen1335.legendaryRelics.mixins.main",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AttributeInstanceMixin",
     "CommonHooksMixin",
     "CurioAttributeModifierEventInvoker",
     "CurioInventoryCapabilityMixin",

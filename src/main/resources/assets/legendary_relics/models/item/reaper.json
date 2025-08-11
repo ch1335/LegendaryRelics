@@ -1,0 +1,37 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:item/handheld",
+	"textures": {
+		"layer0": "legendary_relics:item/reaper"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-45, -90, 0],
+			"translation": [0, 7, 2.25],
+			"scale": [2, 2, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-45, 90, 0],
+			"translation": [0, 7, 2.25],
+			"scale": [2, 2, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [-45, -90, 0],
+			"translation": [2.25, 7, 0],
+			"scale": [2, 2, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-45, 90, 0],
+			"translation": [2.25, 7, 0],
+			"scale": [2, 2, 1]
+		},
+		"ground": {
+			"translation": [3.25, 3.25, 0]
+		},
+		"head": {
+			"rotation": [106, 90, 0],
+			"translation": [0, 9.75, -6.75],
+			"scale": [2, 2, 1]
+		}
+	}
+}

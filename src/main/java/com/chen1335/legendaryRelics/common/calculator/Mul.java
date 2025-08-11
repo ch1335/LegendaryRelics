@@ -19,7 +19,18 @@ public class Mul implements Unit {
 
     @Override
     public Component toComponent(CalculatorArg calculatorArg) {
-        return Component.empty().append(a.toComponent(calculatorArg)).append("x").append(b.toComponent(calculatorArg));
+        Component componentA = a.toComponent(calculatorArg);
+        if (a instanceof IBracketsNeedUnit) {
+            componentA = Component.empty().append("(").append(componentA).append(")");
+        }
+
+        Component componentB = b.toComponent(calculatorArg);
+        if (b instanceof IBracketsNeedUnit) {
+            componentB = Component.empty().append("(").append(componentB).append(")");
+        }
+
+
+        return Component.empty().append(componentA).append("x").append(componentB);
     }
 
     public static Mul of(Unit a, Unit b) {

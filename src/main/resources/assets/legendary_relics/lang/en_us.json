@@ -69,5 +69,9 @@
   "legendary_relics.cooldown.x": "Equipment effect cooldown render X-axis percentage",
   "legendary_relics.cooldown.y": "Equipment effect cooldown render Y-axis percentage",
   "legendary_relics.book.name": "Legendary Relics",
-  "legendary_relics.book.landing_text": "Tutorial manual for the \"Legendary Relics\" mod"
+  "legendary_relics.book.landing_text": "Tutorial manual for the \"Legendary Relics\" mod",
+  "item.legendary_relics.reaper.desc.1": "§6Rotating Scythe§r: When used, throws a scythe that deals %s physical damage on hit and bounces until landing. Approach the embedded scythe to throw it again.",
+  "item.legendary_relics.reaper.desc.2": "The scythe bounces off any non-ground surface during flight.",
+  "item.legendary_relics.reaper.desc.3": "Each scythe loses 20% damage per hit, breaks after 5 hits, and lasts up to 30 seconds after landing.",
+  "item.legendary_relics.reaper": "The Reaper"
 }

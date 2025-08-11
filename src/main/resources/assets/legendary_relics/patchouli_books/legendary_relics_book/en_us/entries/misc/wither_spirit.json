@@ -13,7 +13,13 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "legendary_relics:withering_blade"
+      "recipe": "legendary_relics:withering_blade",
+      "text": "Wither Roses can be used to repair this weapon."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "legendary_relics:reaper",
+      "text": "Obsidian can be used to repair this weapon."
     }
   ]
 }

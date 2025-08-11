@@ -121,6 +121,10 @@ dependencies {
     implementation fileTree("libs")
     implementation "curse.maven:patchouli-306770:6164617"
     implementation "curse.maven:cloth-config-348521:5729127"
+    implementation "curse.maven:lendercataclysm-551586:6849033"
+    implementation "curse.maven:lionfish-api-1001614:6168249"
+    implementation "curse.maven:kubejs-238086:5810100"
+    implementation "curse.maven:rhino-416294:6184623"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

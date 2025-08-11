@@ -61,7 +61,10 @@ public class LRItemTagsProvider extends ItemTagsProvider {
         );
 
         tag(ItemTags.SWORDS).add(
-                LRItems.WITHERING_BLADE.value()
+                LRItems.WITHERING_BLADE.value(),
+                LRItems.REAPER.value()
         );
+
+
     }
 }

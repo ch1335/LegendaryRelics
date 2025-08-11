@@ -9,7 +9,8 @@
     },
     {
       "type": "patchouli:spotlight",
-      "item": "legendary_relics:dragon_scale"
+      "item": "legendary_relics:dragon_scale",
+      "text": "The strongest scales on the ender dragon's body."
     },
     {
       "type": "patchouli:crafting",

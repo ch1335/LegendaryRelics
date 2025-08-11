@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.client;
 
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.client.entityRenderers.FlyingReaperRender;
 import com.chen1335.legendaryRelics.client.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
 import net.minecraft.client.Minecraft;
@@ -37,6 +38,7 @@ public class ClientEventHandler {
         @SubscribeEvent
         public static void RegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(LREntityTypes.TREATMENT_BALL.value(), TreatmentBallRenderer::new);
+            event.registerEntityRenderer(LREntityTypes.FLYING_REAPER.value(), FlyingReaperRender::new);
         }
     }
 }

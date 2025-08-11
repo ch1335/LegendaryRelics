@@ -29,6 +29,7 @@ public class BaseEffect {
         this.effectLevel = level;
     }
 
+
     public static final Codec<BaseEffect> CODEC = Codec.of(
             BaseEffect::save, BaseEffect::load
     );

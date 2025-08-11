@@ -2,10 +2,12 @@ package com.chen1335.equipmentEffectLib.mixins;
 
 import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
 import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
+import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemMixin;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -19,6 +21,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,17 +32,30 @@ import java.util.List;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStackMixin {
+    @Shadow public abstract Item getItem();
+
     @Unique
     private boolean ee$markFlag = false;
 
 
     @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V"))
-    private void appendLine(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
+    private void beforeAppendLine(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
         @Nullable ItemEffectsData itemEffectsData = this.get(EEDataComponentTypes.ITEM_EFFECT_DATA);
+        ItemStack itemStack = ItemStack.class.cast(this);
         if (itemEffectsData != null) {
             itemEffectsData.effects().values().forEach(effect -> {
-                effect.appendToolTip(ItemStack.class.cast(this), tooltipContext, player, tooltipFlag, list);
+                effect.appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
             });
+        }
+    }
+
+
+    @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",shift = At.Shift.AFTER))
+    private void afterAppendLine(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
+        ItemStack itemStack = ItemStack.class.cast(this);
+        SetsEffectBase setsEffect = ((IEEItemMixin) this.getItem()).EE$GetSetsEffect();
+        if (setsEffect != null) {
+            setsEffect.appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
         }
     }
 
