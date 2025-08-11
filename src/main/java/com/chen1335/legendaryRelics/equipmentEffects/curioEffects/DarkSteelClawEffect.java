@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.common.AttributeFixer;
 import com.chen1335.legendaryRelics.common.calculator.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +25,7 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
         super(effectType, level);
     }
 
-    public float oldArmor = 0;
+    public double oldArmor = 0;
 
     public DarkSteelClawEffect(int level) {
         this(LREquipmentEffectTypes.DARK_STEEL_CLAW_EFFECT.value(), level);
@@ -40,21 +41,31 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
                             EntityAttributeValue.of(Attributes.ARMOR)
                     )
             )
-
     );
 
     @Override
     public void curioTick(ItemStack itemStack, LivingEntity wearer) {
-        float currentArmor = wearer.getArmorValue();
+        double currentArmor = wearer.getAttributeValue(Attributes.ARMOR);
         if (oldArmor != currentArmor) {
-            markItemChanged(itemStack);
             oldArmor = currentArmor;
+            markItemChanged(itemStack);
         }
     }
 
+
     @Override
     public void modifyCurioAttribute(CurioAttributeModifierEvent event) {
-        event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_MODIFIER_ID, DAMAGE_ADD.getValue(CalculatorArg.simpleArg(event.getSlotContext().entity(), event.getItemStack(), this)), AttributeModifier.Operation.ADD_VALUE));
+        Runnable runnable = () -> {
+            double damage = DAMAGE_ADD.getValue(CalculatorArg.simpleArg(event.getSlotContext().entity(), event.getItemStack(), this));
+            event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_MODIFIER_ID, damage, AttributeModifier.Operation.ADD_VALUE));
+        };
+
+        if (event.getSlotContext().entity().level().isClientSide) {
+            runnable.run();
+        } else {
+            AttributeFixer.runWhileFix(event.getSlotContext().entity(), Attributes.ARMOR, oldArmor, runnable);
+        }
+
     }
 
     @Override

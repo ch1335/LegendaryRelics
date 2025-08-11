@@ -49,7 +49,7 @@ public class ErosionEffect extends LRWeaponEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         tooltipComponents.add(Component.translatable("item.legendary_relics.withering_blade.desc.1", DAMAGE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.withering_blade.desc.2", DAMAGE_PER_LAYER_FULL.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(11184810));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.withering_blade.desc.2", DAMAGE_PER_LAYER_FULL.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(5592405));
     }
 
     @Override

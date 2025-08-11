@@ -1,10 +1,11 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
@@ -12,17 +13,19 @@ import com.chen1335.legendaryRelics.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
 import com.chen1335.legendaryRelics.mixins.main.CurioAttributeModifierEventInvoker;
 import com.chen1335.legendaryRelics.network.EffectCooldownPack;
+import com.chen1335.legendaryRelics.network.LootConfigPack;
+import com.chen1335.legendaryRelics.network.SetsInfoPack;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,9 +36,13 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
-import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
@@ -46,7 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EventHandler {
-    @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(modid = LegendaryRelics.MODID)
     public static class Game {
 
         @SubscribeEvent
@@ -58,11 +65,22 @@ public class EventHandler {
                     entityData.hasGiveBook = true;
                 }
             }
+            if (!event.getEntity().level().isClientSide) {
+                PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new LootConfigPack(LootModifier.save()));
+            }
         }
 
         @SubscribeEvent
         public static void playerClone(PlayerEvent.Clone event) {
             event.getEntity().setData(LRAttachmentTypes.ENTITY_DATA, event.getOriginal().getData(LRAttachmentTypes.ENTITY_DATA));
+        }
+
+        @SubscribeEvent
+        public static void setItemSetsEffect(SetItemSetsEffectEvent event) {
+            event.set(LRItems.BLACK_DRAGON_HELMET.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
+            event.set(LRItems.BLACK_DRAGON_CHEST_PLATE.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
+            event.set(LRItems.BLACK_DRAGON_LEGGINGS.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
+            event.set(LRItems.BLACK_DRAGON_BOOTS.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
         }
 
         @SubscribeEvent
@@ -89,43 +107,12 @@ public class EventHandler {
             }
         }
 
-        @SubscribeEvent
-        public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
-            CalculatorArg args = new CalculatorArg();
-            LivingEntity livingEntity = event.getEntity();
-            CalculatorArg.ArgType.THIS_ENTITY.putArg(args, livingEntity);
-            if (!(event.getFrom().getItem() == event.getTo().getItem()) && (event.getFrom().getItem() instanceof BlackDragonArmor || event.getTo().getItem() instanceof BlackDragonArmor)) {
-                float multiplier = BlackDragonArmorSetEffect.ATTRIBUTE_MULTIPLIER.getValue(args);
-                if (BlackDragonArmorSetEffect.BLACK_ARMOR_COUNT_GETTER.getValue(args) == 0) {
-                    multiplier = 0;
-                }
-                for (AttributeInstance value : livingEntity.getAttributes().supplier.instances.values()) {
-                    AttributeInstance instance = livingEntity.getAttribute(value.getAttribute());
-                    if (instance != null && instance.getAttribute().value().sentiment == Attribute.Sentiment.POSITIVE) {
-                        instance.removeModifier(BlackDragonArmorSetEffect.BLACK_DRAGON_ATTRIBUTE_MULTIPLIER);
-                        if (multiplier > 0) {
-                            instance.addPermanentModifier(new AttributeModifier(BlackDragonArmorSetEffect.BLACK_DRAGON_ATTRIBUTE_MULTIPLIER, multiplier, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-                        }
-                    }
-                }
-            }
-        }
-
 
         @SubscribeEvent
         public static void EntityTickPre(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity living && !living.level().isClientSide) {
-                CalculatorArg args = new CalculatorArg();
-                CalculatorArg.ArgType.THIS_ENTITY.putArg(args, living);
                 if (living.hasData(LRAttachmentTypes.ENTITY_DATA)) {
                     living.getData(LRAttachmentTypes.ENTITY_DATA).tick(living);
-                }
-                if (!living.level().isClientSide && living.level().getGameTime() % 10 == 0 && living.getHealth() < living.getMaxHealth()) {
-                    float healthRegain = BlackDragonArmorSetEffect.HEALTH_REGAIN.getValue(args);
-                    if (BlackDragonArmorSetEffect.BLACK_ARMOR_COUNT_GETTER.getValue(args) == 0) {
-                        healthRegain = 0;
-                    }
-                    living.heal(healthRegain / 10);
                 }
             }
         }
@@ -241,12 +228,14 @@ public class EventHandler {
         }
     }
 
-    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = LegendaryRelics.MODID)
     public static class Mod {
         @SubscribeEvent
         public static void RegisterPayloadHandlersEvent(RegisterPayloadHandlersEvent event) {
             final PayloadRegistrar registrar = event.registrar("1");
             registrar.playToClient(EffectCooldownPack.TYPE, EffectCooldownPack.STREAM_CODEC, EffectCooldownPack::handler);
+            registrar.playToClient(SetsInfoPack.TYPE, SetsInfoPack.STREAM_CODEC, SetsInfoPack::handler);
+            registrar.playBidirectional(LootConfigPack.TYPE, LootConfigPack.STREAM_CODEC, LootConfigPack::handler);
         }
     }
 }

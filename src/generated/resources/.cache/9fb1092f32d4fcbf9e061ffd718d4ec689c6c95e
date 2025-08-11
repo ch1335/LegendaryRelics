@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-25T00:07:45.4217382	Recipes
+// 1.21.1	2025-08-01T22:49:37.661418	Recipes
 4ab43bcd9ea92793bbfab050a594b30ca80d8e3b data/legendary_relics/advancement/recipes/misc/black_dragon_boots.json
 5343bf1548f4d2c76e0ed51c7fc9f60fd4637e0e data/legendary_relics/advancement/recipes/misc/black_dragon_chestplate.json
 b63e389adfafd1ee3c42e335398d300e948cd672 data/legendary_relics/advancement/recipes/misc/black_dragon_helmet.json
@@ -8,6 +8,7 @@ b63e389adfafd1ee3c42e335398d300e948cd672 data/legendary_relics/advancement/recip
 816b6020df95d9e63850465202f5aa75dcd14ec7 data/legendary_relics/advancement/recipes/misc/perseverance_necklace.json
 8e3139a1144736fa59e6e0fc316a7858fadb8426 data/legendary_relics/advancement/recipes/misc/purgatory_talisman.json
 eb58f6fc539661a767f8c3eac34a44f6dd033586 data/legendary_relics/advancement/recipes/misc/shield_regenerator.json
+69433cab3dbecfde1da75720c7a7bfffa7553458 data/legendary_relics/advancement/recipes/tools/reaper.json
 5d9a1dc8a65af284fda3f2967f0d1442fd2c78bb data/legendary_relics/advancement/recipes/tools/withering_blade.json
 8e0443a153e3d44e149aebbec802e0544d92af74 data/legendary_relics/recipe/black_dragon_boots.json
 454fb1e0fb10a1c325e6bb6637e451f2e01fdfb3 data/legendary_relics/recipe/black_dragon_chestplate.json
@@ -17,5 +18,6 @@ eb58f6fc539661a767f8c3eac34a44f6dd033586 data/legendary_relics/advancement/recip
 aa2027825448bee67436da527e23d368e76528ed data/legendary_relics/recipe/dark_gold_forging_tool.json
 7085d29d558a7bd64168267e80d11da5d23a7eb9 data/legendary_relics/recipe/perseverance_necklace.json
 dae5d7fad79b8a8671a709dbf2c1c35a8142ecaf data/legendary_relics/recipe/purgatory_talisman.json
+2d42fc89ceb7023913a9c169abe0a251c2f70ec7 data/legendary_relics/recipe/reaper.json
 de3a142adec3c844aff51158bde9d8a59e7d1ab7 data/legendary_relics/recipe/shield_regenerator.json
-35eb01812cb3dda103a0dea4a1143997d07c080b data/legendary_relics/recipe/withering_blade.json
+32e91ef7737270f73a83db261482fcc61faccc40 data/legendary_relics/recipe/withering_blade.json

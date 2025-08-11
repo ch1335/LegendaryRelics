@@ -20,10 +20,25 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        this.tag(DamageTypeTags.BYPASSES_COOLDOWN).add(LRDamageTypes.EROSION);
+        this.tag(DamageTypeTags.BYPASSES_COOLDOWN).
+                add(
+                        LRDamageTypes.EROSION,
+                        LRDamageTypes.FLYING_REAPER
+                );
 
-        this.tag(Tags.DamageTypes.IS_MAGIC).add(LRDamageTypes.EROSION);
+        this.tag(Tags.DamageTypes.IS_MAGIC)
+                .add(LRDamageTypes.EROSION);
 
-        this.tag(DamageTypeTags.NO_KNOCKBACK).add(LRDamageTypes.EROSION);
+        this.tag(Tags.DamageTypes.IS_PHYSICAL)
+                .add(LRDamageTypes.FLYING_REAPER);
+
+        this.tag(DamageTypeTags.IS_PROJECTILE)
+                .add(LRDamageTypes.FLYING_REAPER);
+
+        this.tag(DamageTypeTags.NO_KNOCKBACK)
+                .add(
+                        LRDamageTypes.EROSION,
+                        LRDamageTypes.FLYING_REAPER
+                );
     }
 }

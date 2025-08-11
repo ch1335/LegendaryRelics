@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.items.armor;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.Constant;
@@ -35,7 +37,6 @@ public class BlackDragonLeggings extends BlackDragonArmor {
     );
 
 
-
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         CalculatorArg arg = new CalculatorArg();
@@ -48,7 +49,7 @@ public class BlackDragonLeggings extends BlackDragonArmor {
     @Override
     public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
         if (event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
-            event.setAmount(event.getAmount() * (1 - PROJECTILE_DAMAGE_REDUCE.getValue(arg)));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -PROJECTILE_DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

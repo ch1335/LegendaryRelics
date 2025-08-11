@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -47,7 +49,7 @@ public class InFireTargetDamageIncrease extends LRCurioEffectBase {
         if (event.getEntity().isOnFire() && event.getSource().getEntity() instanceof LivingEntity attacker) {
             Optional<Pair<ItemStack, InFireTargetDamageIncrease>> pairOptional = EquipmentEffectAPI.findBestEffect(attacker, LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value());
             pairOptional.ifPresent(pair -> {
-                event.setAmount(event.getAmount() * (1 + DAMAGE_INCREASE.getValue(CalculatorArg.simpleArg(attacker, pair.getFirst()))));
+                DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(CalculatorArg.simpleArg(attacker, pair.getFirst(), pair.getSecond())));
             });
         }
     }

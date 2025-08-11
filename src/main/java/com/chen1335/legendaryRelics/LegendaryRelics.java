@@ -5,8 +5,10 @@ import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.client.ClientExtensionsRegister;
 import com.chen1335.legendaryRelics.client.EntityRendererRegister;
 import com.chen1335.legendaryRelics.client.LegendaryTooltipsHandler;
-import com.chen1335.legendaryRelics.client.clothconfig.ClothConfig;
+import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
+import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.Config;
+import com.chen1335.legendaryRelics.config.LootConfig;
 import com.chen1335.specialEffectLib.SpecialEffectLib;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
@@ -18,6 +20,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforgespi.Environment;
@@ -53,10 +56,12 @@ public class LegendaryRelics {
         LREquipmentEffectTypes.EQUIPMENT_EFFECT_TYPES.register(modEventBus);
         LRSpecialMobEffect.SPECIAL_MOB_EFFECT_TYPES.register(modEventBus);
         LREntityTypes.ENTITY_TYPES.register(modEventBus);
+        LRSetsEffects.SETS_EFFECTS.register(modEventBus);
         modEventBus.addListener(ClientExtensionsRegister::register);
         modEventBus.addListener(EntityRendererRegister::registerLayerDefinitions);
         modEventBus.addListener(EntityRendererRegister::addLayers);
         modEventBus.addListener(this::clientInit);
+        modEventBus.addListener(this::setup);
         if (ModList.get().isLoaded("cloth_config")) {
             if (Environment.get().getDist().isClient()) {
                 ClothConfig.build(modContainer);
@@ -73,5 +78,10 @@ public class LegendaryRelics {
         if (ModList.get().isLoaded("legendarytooltips")) {
             LegendaryTooltipsHandler.init();
         }
+    }
+
+    public void setup(FMLCommonSetupEvent event) {
+        LootEntries.init();
+        LootConfig.load();
     }
 }

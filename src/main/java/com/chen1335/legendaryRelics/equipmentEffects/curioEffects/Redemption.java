@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -64,7 +66,6 @@ public class Redemption extends LRCurioEffectBase {
     );
 
 
-
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
@@ -101,11 +102,10 @@ public class Redemption extends LRCurioEffectBase {
     public static void onWearerIncomingDamage(LivingIncomingDamageEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             LivingEntity livingEntity = event.getEntity();
-            Optional<Pair<ItemStack, Redemption>> pair = EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get());
-            pair.ifPresent(itemStackRedemptionPair -> {
+            EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get()).ifPresent(pair -> {
                 if (attacker.getType().is(EntityTypeTags.UNDEAD)) {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, itemStackRedemptionPair.getFirst());
-                    event.setAmount(event.getAmount() * (1 - UNDEAD_REDUCE.getValue(args)));
+                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
+                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -UNDEAD_REDUCE.getValue(args));
                 }
             });
         }

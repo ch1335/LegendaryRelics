@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -51,7 +53,7 @@ public class FireDamageReduce extends LRCurioEffectBase {
         Optional<Pair<ItemStack, FireDamageReduce>> pairOptional = EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.FIRE_DAMAGE_REDUCE.value());
         pairOptional.ifPresent(pair -> {
             if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
-                event.setAmount(event.getAmount() * (1 - FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.getFirst(), pair.getSecond()))));
+                DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.getFirst(), pair.getSecond())));
             }
         });
     }

@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnknownNullability;
 
 public class LREntityData implements INBTSerializable<CompoundTag> {
+    public int reaperPickCooldown = 0;
+
     private final TimeLimitedAttributeBonusManager timeLimitedAttributeBonusManager = new TimeLimitedAttributeBonusManager();
 
     private final EquipmentEffectCooldownManager equipmentEffectCooldownManager = new EquipmentEffectCooldownManager();
@@ -31,6 +33,7 @@ public class LREntityData implements INBTSerializable<CompoundTag> {
     public void tick(LivingEntity living) {
         timeLimitedAttributeBonusManager.tick(living);
         equipmentEffectCooldownManager.tick(living);
+        reaperPickCooldown = Math.max(0,reaperPickCooldown-1);
     }
 
     public TimeLimitedAttributeBonusManager getTimeLimitedAttributeBonusManager() {

@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.items.armor;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.Constant;
@@ -58,10 +60,10 @@ public class BlackDragonBoots extends BlackDragonArmor {
     public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
         LivingEntity entity = event.getEntity();
         if (event.getSource().is(Tags.DamageTypes.IS_ENVIRONMENT) || event.getSource().is(DamageTypeTags.IS_FALL)) {
-            event.setAmount(event.getAmount() * (1 - ENVIRONMENT_DAMAGE_REDUCE.getValue(arg)));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -ENVIRONMENT_DAMAGE_REDUCE.getValue(arg));
         }
         if (entity.getHealth() < entity.getMaxHealth() * HEALTH_THRESHOLD.getValue(arg)) {
-            event.setAmount(event.getAmount() * (1 - DAMAGE_REDUCE.getValue(arg)));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

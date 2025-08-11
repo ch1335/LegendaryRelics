@@ -53,4 +53,5 @@ public record CollectedMinerals(List<Block> ores) {
     public static CollectedMinerals empty() {
         return new CollectedMinerals(List.of());
     }
+
 }

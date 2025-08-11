@@ -77,6 +77,11 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
 
 
     @Override
+    public int hashCode() {
+        return effects.hashCode();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof ItemEffectsData other) {
             if (this.effects.size() != other.effects.size()) {

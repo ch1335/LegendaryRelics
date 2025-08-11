@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.items.armor;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.Constant;
@@ -56,7 +58,7 @@ public class BlackDragonHelmet extends BlackDragonArmor {
     @Override
     public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
         if (event.getSource().is(Tags.DamageTypes.IS_MAGIC)) {
-            event.setAmount(event.getAmount() * (1 - MAGIC_DAMAGE_REDUCE.getValue(arg)));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -MAGIC_DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

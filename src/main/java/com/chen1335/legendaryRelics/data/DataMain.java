@@ -15,7 +15,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import java.util.Map;
 import java.util.Set;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class DataMain {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
@@ -43,9 +43,6 @@ public class DataMain {
                 modid()
         ));
 
-        generator.addProvider(event.includeServer(), new LRLootTableProvider(
-                generator.getPackOutput(),
-                builtinEntriesProvider.getRegistryProvider()));
 
         generator.addProvider(event.includeServer(), new LRRecipeProvider(
                 generator.getPackOutput(),
@@ -55,6 +52,11 @@ public class DataMain {
                 generator.getPackOutput(),
                 builtinEntriesProvider.getRegistryProvider(),
                 event.getExistingFileHelper()));
+
+        generator.addProvider(event.includeServer(), new LRLootTableProvider(
+                generator.getPackOutput(),
+                builtinEntriesProvider.getRegistryProvider()));
+
     }
 
     public static String modid() {

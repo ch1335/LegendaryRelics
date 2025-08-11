@@ -1,0 +1,3 @@
+com.chen1335.equipmentEffectLib.kubejs.EquipmentEffectKubeJSPlugin
+com.chen1335.specialEffectLib.kubejs.SpecialEffectKubeJSPlugin
+com.chen1335.legendaryRelics.kubejs.LRKubeJSPlugin

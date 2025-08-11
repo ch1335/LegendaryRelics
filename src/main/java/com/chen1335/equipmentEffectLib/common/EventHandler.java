@@ -22,19 +22,21 @@ import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 public class EventHandler {
 
-    @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(modid = LegendaryRelics.MODID)
     public static class Game {
         @SubscribeEvent
         public static void onCurioChange(CurioChangeEvent event) {
-            if (!event.getFrom().getItem().equals(event.getTo().getItem())) {
-                event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).updateCurio(event.getEntity());
+            if (event.getFrom().has(EEDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEDataComponentTypes.ITEM_EFFECT_DATA)) {
+                event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.CURIO);
+                event.getEntity().getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(event.getEntity());
             }
         }
 
         @SubscribeEvent
         public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
-            if (!event.getFrom().getItem().equals(event.getTo().getItem()) && event.getSlot().getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
-                event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).updateArmorEffect(event.getEntity());
+            if (event.getFrom().has(EEDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEDataComponentTypes.ITEM_EFFECT_DATA) && event.getSlot().getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR);
+                event.getEntity().getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(event.getEntity());
             }
         }
 
@@ -71,11 +73,12 @@ public class EventHandler {
         }
     }
 
-    @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = LegendaryRelics.MODID)
     public static class Mod {
         @SubscribeEvent
         public static void registerRegistries(NewRegistryEvent event) {
             event.register(RegisterTypes.EQUIPMENT_EFFECT_TYPE);
+            event.register(RegisterTypes.SETS_EFFECT_TYPE);
         }
     }
 }

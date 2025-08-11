@@ -13,9 +13,14 @@ public class CalculatorArg {
         return new CalculatorArg();
     }
 
-    public static CalculatorArg simpleArg(LivingEntity living, ItemStack itemStack) {
+    public static CalculatorArg simpleArg(LivingEntity living) {
         CalculatorArg arg = new CalculatorArg();
         ArgType.THIS_ENTITY.putArg(arg, living);
+        return arg;
+    }
+
+    public static CalculatorArg simpleArg(LivingEntity living, ItemStack itemStack) {
+        CalculatorArg arg = simpleArg(living);
         ArgType.THIS_ITEMS_STACK.putArg(arg, itemStack);
         return arg;
     }

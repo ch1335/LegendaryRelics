@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 
 public class EventHandler {
-    @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(modid = LegendaryRelics.MODID)
     public static class Game {
         @SubscribeEvent
         public static void EntityTickEvent(EntityTickEvent.Pre event) {
@@ -21,7 +21,7 @@ public class EventHandler {
         }
     }
 
-    @EventBusSubscriber(modid = LegendaryRelics.MODID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = LegendaryRelics.MODID)
     public static class Mod {
         @SubscribeEvent
         public static void registerRegistries(NewRegistryEvent event) {

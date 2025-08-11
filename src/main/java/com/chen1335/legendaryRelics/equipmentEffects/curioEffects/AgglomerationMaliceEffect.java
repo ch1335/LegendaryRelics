@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -76,7 +78,7 @@ public class AgglomerationMaliceEffect extends LRCurioEffectBase {
             if (attacker.getSpawnType() == MobSpawnType.SPAWNER) {
                 EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value()).ifPresent(pair -> {
                     CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
-                    event.setAmount(event.getAmount() * DAMAGE_MULTIPLIER.getValue(args));
+                    DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event,DAMAGE_MULTIPLIER.getValue(args));
                 });
             }
         }

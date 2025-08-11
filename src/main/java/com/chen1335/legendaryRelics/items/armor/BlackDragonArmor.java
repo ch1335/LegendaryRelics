@@ -3,7 +3,6 @@ package com.chen1335.legendaryRelics.items.armor;
 import com.chen1335.legendaryRelics.API.LRArmorHelper;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.armorSetEffect.ArmorSetEffect;
 import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.google.common.base.Suppliers;
@@ -48,13 +47,9 @@ public class BlackDragonArmor extends ArmorItem implements LRArmorHelper {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         tooltipComponents.add(Component.empty());
-        setEffect.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+
     }
 
-
-    public ArmorSetEffect getArmorSetEffect() {
-        return setEffect;
-    }
 
     @Override
     public @Nullable ResourceLocation getArmorTexture(@NotNull ItemStack stack, @NotNull Entity entity, @NotNull EquipmentSlot slot, ArmorMaterial.@NotNull Layer layer, boolean innerModel) {

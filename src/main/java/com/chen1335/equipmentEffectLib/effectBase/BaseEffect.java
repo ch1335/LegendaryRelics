@@ -23,11 +23,13 @@ import java.util.Objects;
 public class BaseEffect {
     private final EffectType<?> effectType;
     private final int effectLevel;
+    private CompoundTag cachedData = new CompoundTag();
 
     public BaseEffect(EffectType<?> effectType, int level) {
         this.effectType = effectType;
         this.effectLevel = level;
     }
+
 
     public static final Codec<BaseEffect> CODEC = Codec.of(
             BaseEffect::save, BaseEffect::load
@@ -70,8 +72,14 @@ public class BaseEffect {
         } else {
             BaseEffect baseEffect = effectType.create(level);
             baseEffect.load(tag);
+            baseEffect.cachedData = tag;
             return baseEffect;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return cachedData.hashCode();
     }
 
     @Override

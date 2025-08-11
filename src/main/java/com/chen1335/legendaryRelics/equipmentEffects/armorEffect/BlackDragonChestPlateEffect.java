@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.armorEffect;
 
+import com.chen1335.damageController.API.DamageControllerAPI;
+import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -85,7 +87,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        if (getRawEffectLevel() >1) {
+        if (getRawEffectLevel() > 1) {
             tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", PHYSICAL_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
         }
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
@@ -104,7 +106,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
             if (EquipmentEffectCooldownManager.isNotInCooldown(attacker, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value())) {
                 EquipmentEffectAPI.findBestEffect(attacker, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value()).ifPresent(pair -> {
                     CalculatorArg args = CalculatorArg.simpleArg(attacker, pair.getFirst(), pair.getSecond());
-                    event.setAmount(event.getAmount() + DAMAGE_INCREASE.getValue(args));
+                    DamageControllerAPI.addValue((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(args));
                     ShieldAPI.addCommonDecayShield(attacker, SHIELD_AMOUNT.getValue(args), SHIELD_LAST_TIME.getInt(args) * 20);
                     EquipmentEffectCooldownManager.addCooldown(attacker, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value(), COOL_DOWN.getInt(args) * 20);
                 });
@@ -114,7 +116,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value()).ifPresent(pair -> {
                 if (event.getSource().is(Tags.DamageTypes.IS_PHYSICAL)) {
                     CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
-                    event.setAmount(event.getAmount() * (1 - PHYSICAL_DAMAGE_REDUCE.getValue(args)));
+                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -PHYSICAL_DAMAGE_REDUCE.getValue(args));
                 }
             });
         }
