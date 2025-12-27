@@ -22,7 +22,9 @@
   ],
   "result": {
     "components": {
-      "legendary_relics:item_effect_data": []
+      "legendary_relics:item_effect_data": {
+        "effects": {}
+      }
     },
     "count": 1,
     "id": "legendary_relics:black_dragon_boots"

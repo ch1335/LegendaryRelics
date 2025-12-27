@@ -4,9 +4,13 @@ import com.electronwill.nightconfig.core.concurrent.ConcurrentCommentedConfig;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import net.neoforged.fml.loading.FMLPaths;
 
+import java.nio.file.Path;
+
 public class Config {
     public static void load() {
-        try (CommentedFileConfig config = CommentedFileConfig.of(FMLPaths.CONFIGDIR.get().resolve("legendary_relics.toml"))) {
+        Path path = FMLPaths.CONFIGDIR.get().resolve("legendary_relics");
+        path.toFile().mkdirs();
+        try (CommentedFileConfig config = CommentedFileConfig.of(path.resolve("legendary_relics.toml"))) {
             config.load();
             ClientConfig.load(config);
             config.save();
@@ -14,7 +18,9 @@ public class Config {
     }
 
     public static void save() {
-        try (CommentedFileConfig config = CommentedFileConfig.of(FMLPaths.CONFIGDIR.get().resolve("legendary_relics.toml"))) {
+        Path path = FMLPaths.CONFIGDIR.get().resolve("legendary_relics");
+        path.toFile().mkdirs();
+        try (CommentedFileConfig config = CommentedFileConfig.of(path.resolve("legendary_relics.toml"))) {
             ClientConfig.load(config);
             config.save();
         }
@@ -22,6 +28,7 @@ public class Config {
 
     public static class ClientConfig {
         public static double EQUIPMENT_EFFECT_COOLDOWN_X = 0F;
+
         public static double EQUIPMENT_EFFECT_COOLDOWN_Y = 0.5F;
 
         public static void load(CommentedFileConfig config) {

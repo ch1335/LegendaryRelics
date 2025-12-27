@@ -8,6 +8,12 @@ import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Add;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
@@ -36,7 +42,8 @@ public class Redemption extends LRCurioEffectBase {
         this(LREquipmentEffectTypes.REDEMPTION.value(), level);
     }
 
-    public static FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
             Add.of(
                     Constant.of(4),
                     Mul.of(
@@ -49,16 +56,19 @@ public class Redemption extends LRCurioEffectBase {
             )
     );
 
-    public static FinalCalculator MAX_HEALTH_PERCENTAGE = FinalCalculator.of(Constant.of(0.25F));
+    @Calculator
+    public static final FinalCalculator MAX_HEALTH_PERCENTAGE = FinalCalculator.of(Constant.of(0.25F));
 
-    public static FinalCalculator SHIELD_LAST_TIME = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator SHIELD_LAST_TIME = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(5),
                     Constant.of(7.5F)
             )
     );
 
-    public static FinalCalculator UNDEAD_REDUCE = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator UNDEAD_REDUCE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.1F),
                     Constant.of(0.2F)

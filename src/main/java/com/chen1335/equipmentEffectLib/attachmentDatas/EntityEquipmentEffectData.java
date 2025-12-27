@@ -116,7 +116,11 @@ public class EntityEquipmentEffectData {
         oldStackAbleEffects.putAll(stackAbleEffects);
     }
 
-    public enum EquipmentType {
+    public interface IEquipmentType {
+        IEquipmentSource getSource();
+    }
+
+    public enum EquipmentType implements IEquipmentType{
         CURIO(CuriosSource.INSTANCE),
         ARMOR(ArmorSource.INSTANCE),
         WEAPON(null);
@@ -127,9 +131,9 @@ public class EntityEquipmentEffectData {
             this.source = source;
         }
 
+        @Override
         public IEquipmentSource getSource() {
             return source;
         }
-
     }
 }

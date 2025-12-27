@@ -31,8 +31,6 @@ public class BlackDragonArmor extends ArmorItem implements LRArmorHelper {
 
     private final Supplier<ItemAttributeModifiers> defaultModifiers;
 
-    private final BlackDragonArmorSetEffect setEffect = new BlackDragonArmorSetEffect();
-
     public BlackDragonArmor(Holder<ArmorMaterial> material, Type type, Properties properties) {
         super(material, type, properties.stacksTo(1));
         defaultModifiers = Suppliers.memoize(() -> {

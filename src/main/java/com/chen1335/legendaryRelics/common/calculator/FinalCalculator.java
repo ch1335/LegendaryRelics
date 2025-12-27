@@ -1,14 +1,56 @@
 package com.chen1335.legendaryRelics.common.calculator;
 
+import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public class FinalCalculator implements Unit {
-    private final Unit unit;
-    private final int i;
 
-    public FinalCalculator(Unit unit, int i) {
+    public static final StreamCodec<RegistryFriendlyByteBuf, FinalCalculator> STREAM_CODEC = StreamCodec.composite(
+            CalculatorRegister.DISPATCH_STREAM_CODEC,
+            value -> value.unit,
+            ByteBufCodecs.INT,
+            value -> value.i,
+            FinalCalculator::new
+    );
+
+
+    private final Unit defaultUnit;
+    private Unit unit;
+    private int i;
+
+    private FinalCalculator(Unit unit, int i) {
         this.unit = unit;
+        this.defaultUnit = unit;
         this.i = i;
+    }
+
+    public FinalCalculator define(FinalCalculator finalCalculator) {
+        this.unit = finalCalculator.unit;
+        this.i = finalCalculator.i;
+        return this;
+    }
+
+    public FinalCalculator define(Unit unit) {
+        this.unit = unit;
+        return this;
+    }
+
+    public FinalCalculator define(Unit unit, int i) {
+        FinalCalculator calculator = define(unit);
+        calculator.i = i;
+        return calculator;
+    }
+
+    public boolean changed() {
+        return unit != defaultUnit;
+    }
+
+
+    public void reset() {
+        unit = defaultUnit;
     }
 
     @Override
@@ -23,6 +65,11 @@ public class FinalCalculator implements Unit {
     @Override
     public Component toComponent(CalculatorArg calculatorArg) {
         return Component.empty().append(Component.literal(String.format("%." + i + "f", getValue(calculatorArg))).withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+    }
+
+    @Override
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+        return STREAM_CODEC;
     }
 
     public Component toRawComponent() {
@@ -50,10 +97,11 @@ public class FinalCalculator implements Unit {
     }
 
     public static FinalCalculator of(Unit unit) {
-        return new FinalCalculator(unit, 2);
+        return new FinalCalculator(unit, 1);
     }
 
     public static FinalCalculator of(Unit unit, int i) {
+
         return new FinalCalculator(unit, i);
     }
 }

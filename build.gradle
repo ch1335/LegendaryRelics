@@ -119,6 +119,21 @@ repositories {
     maven {
         url "https://cursemaven.com"
     }
+    maven {
+        url "https://maven.latvian.dev/releases"
+        content {
+            includeGroup "dev.latvian.mods"
+            includeGroup "dev.latvian.apps"
+        }
+    }
+
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup "com.github.rtyley"
+        }
+    }
+
     flatDir {
         dir 'libs'
     }
@@ -131,8 +146,12 @@ dependencies {
     implementation "curse.maven:cloth-config-348521:5729127"
     implementation "curse.maven:lendercataclysm-551586:6849033"
     implementation "curse.maven:lionfish-api-1001614:6168249"
-    implementation "curse.maven:kubejs-238086:5810100"
+    api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
     implementation "curse.maven:rhino-416294:6184623"
+    implementation "curse.maven:apothic-attributes-extension-1327218:6911429"
+
+    implementation "curse.maven:apothic-attributes-898963:6751650"
+    implementation "curse.maven:placebo-283644:6751290"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

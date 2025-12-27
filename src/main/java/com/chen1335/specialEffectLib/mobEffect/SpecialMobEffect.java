@@ -18,6 +18,7 @@ public class SpecialMobEffect {
     @NotNull
     private UUID sourceEntityUUID = EntityEffectData.NO_SOURCE_UUID;
 
+    @Nullable
     private Entity sourceEntity = null;
 
     private boolean sourceEntityRemoved = false;

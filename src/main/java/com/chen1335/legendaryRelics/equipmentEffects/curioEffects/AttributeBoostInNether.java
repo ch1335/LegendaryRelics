@@ -6,11 +6,11 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectLevelArg;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -20,18 +20,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 
 import java.util.List;
-import java.util.Optional;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class AttributeBoostInNether extends LRCurioEffectBase {
 
-    public static FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectLevelArg.of(level -> 0.025F * level)
+    @Calculator
+    public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
+            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.025F),3)
     ));
 
     @Override
@@ -86,8 +87,7 @@ public class AttributeBoostInNether extends LRCurioEffectBase {
     public static void HandleEntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
 
         if (event.getEntity() instanceof LivingEntity livingEntity) {
-            Optional<Pair<ItemStack, AttributeBoostInNether>> pairOptional = EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value());
-            pairOptional.ifPresent(pair -> {
+            EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value()).ifPresent(pair -> {
                 AttributeBoostInNether effect = pair.getSecond();
                 if (event.getDimension().equals(ServerLevel.NETHER)) {
                     effect.addAttribute(livingEntity, pair.getFirst());
@@ -95,7 +95,6 @@ public class AttributeBoostInNether extends LRCurioEffectBase {
                     effect.removeAttribute(livingEntity, pair.getFirst());
                 }
             });
-
         }
     }
 }

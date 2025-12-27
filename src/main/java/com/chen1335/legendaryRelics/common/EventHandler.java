@@ -5,6 +5,8 @@ import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
@@ -15,6 +17,7 @@ import com.chen1335.legendaryRelics.mixins.main.CurioAttributeModifierEventInvok
 import com.chen1335.legendaryRelics.network.EffectCooldownPack;
 import com.chen1335.legendaryRelics.network.LootConfigPack;
 import com.chen1335.legendaryRelics.network.SetsInfoPack;
+import com.chen1335.legendaryRelics.network.UpdateCalculatorPack;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -66,7 +69,20 @@ public class EventHandler {
                 }
             }
             if (!event.getEntity().level().isClientSide) {
-                PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new LootConfigPack(LootModifier.save()));
+                PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
+
+                CalculatorsHolder.getCalculators().forEach((locateInfo, finalCalculator) -> {
+                    if (finalCalculator.changed()) {
+                        PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new UpdateCalculatorPack(locateInfo, finalCalculator));
+                    }
+                });
+            }
+        }
+
+        @SubscribeEvent
+        public static void playerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+            if (event.getEntity().level().isClientSide) {
+                CalculatorsHolder.getCalculators().values().forEach(FinalCalculator::reset);
             }
         }
 
@@ -97,7 +113,7 @@ public class EventHandler {
                 CalculatorArg arg = CalculatorArg.emptyArg();
                 CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, headArmor);
                 MobEffectInstance effectInstance = event.getEffectInstance();
-                if (effectInstance != null) {
+                if (effectInstance != null && effectInstance.duration != -1) {
                     if (effectInstance.getEffect().value().getCategory() != MobEffectCategory.HARMFUL) {
                         effectInstance.duration = (int) (effectInstance.duration * BlackDragonHelmet.GOOD_EFFECT_TIME_MULTIPLIER.getValue(arg));
                     } else {
@@ -144,7 +160,7 @@ public class EventHandler {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void LivingIncomingDamageEventHighest(LivingIncomingDamageEvent event) {
             if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-                if (attacker instanceof Player playerAttacker) {
+                if (attacker instanceof Player) {
                     CalculatorArg args = new CalculatorArg();
                     CalculatorArg.ArgType.THIS_ENTITY.putArg(args, attacker);
                 }
@@ -165,17 +181,21 @@ public class EventHandler {
 
             List<ItemAttributeModifiers.Entry> old = new ArrayList<>(event.getModifiers());
             for (ItemAttributeModifiers.Entry modifier : old) {
-                boolean isNeutral = false;
-                if (modifier.attribute().value().sentiment == Attribute.Sentiment.NEUTRAL) {
-                    isNeutral = true;
-                } else if (modifier.attribute().value().sentiment == Attribute.Sentiment.POSITIVE && modifier.modifier().amount() < 0) {
-                    i = 0;
-                } else if (modifier.attribute().value().sentiment == Attribute.Sentiment.NEGATIVE && modifier.modifier().amount() > 0) {
-                    i = 0;
-                }
+                Holder<Attribute> holder = modifier.attribute();
+                if (holder.isBound()) {
+                    boolean isNeutral = false;
+                    Attribute attribute = holder.value();
+                    if (attribute.sentiment == Attribute.Sentiment.NEUTRAL) {
+                        isNeutral = true;
+                    } else if (attribute.sentiment == Attribute.Sentiment.POSITIVE && modifier.modifier().amount() < 0) {
+                        i = 0;
+                    } else if (attribute.sentiment == Attribute.Sentiment.NEGATIVE && modifier.modifier().amount() > 0) {
+                        i = 0;
+                    }
 
-                if (!isNeutral && i != 0) {
-                    event.addModifier(modifier.attribute(), new AttributeModifier(LegendaryRelics.id("dark_gold_improve_" + modifier.slot().getSerializedName()), i * modifier.modifier().amount(), AttributeModifier.Operation.ADD_VALUE), modifier.slot());
+                    if (!isNeutral && i != 0) {
+                        event.addModifier(modifier.attribute(), new AttributeModifier(LegendaryRelics.id("dark_gold_improve_" + modifier.slot().getSerializedName()), i * modifier.modifier().amount(), AttributeModifier.Operation.ADD_VALUE), modifier.slot());
+                    }
                 }
             }
         }
@@ -236,6 +256,8 @@ public class EventHandler {
             registrar.playToClient(EffectCooldownPack.TYPE, EffectCooldownPack.STREAM_CODEC, EffectCooldownPack::handler);
             registrar.playToClient(SetsInfoPack.TYPE, SetsInfoPack.STREAM_CODEC, SetsInfoPack::handler);
             registrar.playBidirectional(LootConfigPack.TYPE, LootConfigPack.STREAM_CODEC, LootConfigPack::handler);
+
+            registrar.playBidirectional(UpdateCalculatorPack.TYPE, UpdateCalculatorPack.STREAM_CODEC, UpdateCalculatorPack::handler);
         }
     }
 }

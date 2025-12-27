@@ -19,12 +19,11 @@ public class EquipmentEffectLib {
 
     public static final String MODID = "equipment_effect_lib";
 
-    public EquipmentEffectLib(IEventBus modEventBus, ModContainer modContainer) {
+    public static void init(IEventBus modEventBus, ModContainer modContainer){
         EEDataComponentTypes.init();
         EEAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
         modEventBus.addListener(EquipmentEffectLib::onSetup);
     }
-
     public static void onSetup(FMLCommonSetupEvent event) {
         EQUIPMENT_SOURCES.add(ArmorSource.INSTANCE);
         EQUIPMENT_SOURCES.add(CuriosSource.INSTANCE);

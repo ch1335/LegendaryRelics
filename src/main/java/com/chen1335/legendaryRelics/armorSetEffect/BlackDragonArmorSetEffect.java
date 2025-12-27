@@ -4,6 +4,11 @@ import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.normal.Add;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
+import com.chen1335.legendaryRelics.common.calculator.special.SingleCustomArg;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +31,7 @@ import java.util.List;
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class BlackDragonArmorSetEffect extends SetsEffectBase {
     public static final ResourceLocation BLACK_DRAGON_ATTRIBUTE_MULTIPLIER = LegendaryRelics.id("black_dragon_attribute_multiplier");
-    public static SingleCustomArg<LivingEntity> BLACK_ARMOR_COUNT_GETTER = SingleCustomArg.of(CalculatorArg.ArgType.THIS_ENTITY, livingEntity -> {
+    public static SingleCustomArg<LivingEntity> BLACK_ARMOR_COUNT_GETTER = SingleCustomArg.register(LegendaryRelics.id("black_armor_count_getter"),CalculatorArg.ArgType.THIS_ENTITY, livingEntity -> {
         if (livingEntity == null) {
             return 0f;
         }

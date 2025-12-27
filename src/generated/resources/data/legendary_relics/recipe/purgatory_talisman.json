@@ -25,20 +25,22 @@
   ],
   "result": {
     "components": {
-      "legendary_relics:item_effect_data": [
-        {
-          "EffectType": "legendary_relics:attribute_boost_in_nether",
-          "Level": 2
-        },
-        {
-          "EffectType": "legendary_relics:fire_damage_reduce",
-          "Level": 1
-        },
-        {
-          "EffectType": "legendary_relics:in_fire_target_damage_increase",
-          "Level": 1
+      "legendary_relics:item_effect_data": {
+        "effects": {
+          "legendary_relics:attribute_boost_in_nether": {
+            "EffectType": "legendary_relics:attribute_boost_in_nether",
+            "Level": 2
+          },
+          "legendary_relics:fire_damage_reduce": {
+            "EffectType": "legendary_relics:fire_damage_reduce",
+            "Level": 1
+          },
+          "legendary_relics:in_fire_target_damage_increase": {
+            "EffectType": "legendary_relics:in_fire_target_damage_increase",
+            "Level": 1
+          }
         }
-      ]
+      }
     },
     "count": 1,
     "id": "legendary_relics:purgatory_talisman"

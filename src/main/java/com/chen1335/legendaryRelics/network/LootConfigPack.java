@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.network;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.common.lootModifier.LootEntry;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -14,11 +14,13 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
-public record LootConfigPack(CompoundTag lootData) implements CustomPacketPayload {
+import java.util.List;
+
+public record LootConfigPack(List<LootEntry> lootEntries) implements CustomPacketPayload {
     public static final Type<LootConfigPack> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "loot_config"));
     public static final StreamCodec<? super RegistryFriendlyByteBuf, LootConfigPack> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.COMPOUND_TAG,
-            LootConfigPack::lootData,
+            LootEntry.STREAM_CODEC.apply(ByteBufCodecs.list()),
+            LootConfigPack::lootEntries,
             LootConfigPack::new
     );
 
@@ -31,16 +33,15 @@ public record LootConfigPack(CompoundTag lootData) implements CustomPacketPayloa
     public void handler(IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player().hasPermissions(2) || context.player().isLocalPlayer()) {
-                LootModifier.LOOT_ENTRIES.forEach((id, lootEntry) -> {
-                    CompoundTag compoundTag = (CompoundTag) lootData.get(id);
-                    if (compoundTag != null) {
-                        lootEntry.load(compoundTag);
-                    }
-                });
+                for (LootEntry lootEntry : lootEntries) {
+                    LootModifier.LOOT_ENTRIES.put(lootEntry.getId(), lootEntry);
+                }
                 if (context.player() instanceof ServerPlayer serverPlayer) {
                     serverPlayer.sendSystemMessage(Component.translatable("legendary_relics.loot_config.request_update_success"));
                     for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
-                        PacketDistributor.sendToPlayer(player, this);
+                        if (player != serverPlayer) {
+                            PacketDistributor.sendToPlayer(player, this);
+                        }
                     }
                 }
             } else {
@@ -48,8 +49,6 @@ public record LootConfigPack(CompoundTag lootData) implements CustomPacketPayloa
                     serverPlayer.sendSystemMessage(Component.translatable("legendary_relics.loot_config.request_update_failure"));
                 }
             }
-
-
         });
     }
 }

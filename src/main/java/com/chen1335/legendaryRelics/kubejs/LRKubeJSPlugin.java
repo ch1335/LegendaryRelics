@@ -1,8 +1,18 @@
 package com.chen1335.legendaryRelics.kubejs;
 
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.*;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
+import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
+import com.chen1335.legendaryRelics.common.calculator.special.SingleCustomArg;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class LRKubeJSPlugin implements KubeJSPlugin {
     @Override
@@ -19,5 +29,19 @@ public class LRKubeJSPlugin implements KubeJSPlugin {
         bindings.add("CalculatorMul", Mul.class);
         bindings.add("CalculatorMultiMul", MultiMul.class);
         bindings.add("CalculatorSingleCustomArg", SingleCustomArg.class);
+
+        Set<Class<?>> classes = new HashSet<>();
+        for (CalculatorsHolder.LocateInfo locateInfo : CalculatorsHolder.getCalculators().keySet()) {
+            try {
+                classes.add(Class.forName(locateInfo.className()));
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        for (Class<?> aClass : classes) {
+            bindings.add(aClass.getSimpleName(), classes);
+        }
+
     }
 }

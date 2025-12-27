@@ -10,7 +10,7 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import java.util.List;
 import java.util.Optional;
 
-public interface LRCurioHelper {
+public interface LRCurioHelper{
     default boolean isEquippedThis(LivingEntity entity) {
         Optional<ICuriosItemHandler> o = CuriosApi.getCuriosInventory(entity);
         return o.filter(iCuriosItemHandler -> !iCuriosItemHandler.findCurios((Item) this).isEmpty()).isPresent();

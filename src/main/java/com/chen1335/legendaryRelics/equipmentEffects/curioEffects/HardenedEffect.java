@@ -7,6 +7,12 @@ import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Add;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,8 +41,8 @@ public class HardenedEffect extends LRCurioEffectBase {
     }
 
 
-
-    public static FinalCalculator ARMOR_AMOUNT = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator ARMOR_AMOUNT = FinalCalculator.of(
             Add.of(
                     DarkGoldUpdateArg.of(
                             Constant.of(2F),
@@ -51,11 +57,15 @@ public class HardenedEffect extends LRCurioEffectBase {
                     )
             )
     );
-    public static FinalCalculator TIME_KEEP = FinalCalculator.of(DarkGoldUpdateArg.of(
+
+    @Calculator
+    public static final FinalCalculator TIME_KEEP = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(5),
             Constant.of(7.5F)
     ));
-    public static FinalCalculator COOLDOWN = FinalCalculator.of(DarkGoldUpdateArg.of(
+
+    @Calculator
+    public static final FinalCalculator COOLDOWN = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(15),
             Constant.of(12.5F)
     ));

@@ -7,8 +7,9 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.Constant;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,12 +36,14 @@ public class AgglomerationMaliceEffect extends LRCurioEffectBase {
         this(LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value(), level);
     }
 
-    public static FinalCalculator DAMAGE_MULTIPLIER = FinalCalculator.of(DarkGoldUpdateArg.of(
+    @Calculator
+    public static final FinalCalculator DAMAGE_MULTIPLIER = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(2),
             Constant.of(1.5F)
     ));
 
-    public static FinalCalculator LOOTING_LEVEL_ADD = FinalCalculator.of(DarkGoldUpdateArg.of(
+    @Calculator
+    public static final FinalCalculator LOOTING_LEVEL_ADD = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(2),
             Constant.of(3F)
     ));

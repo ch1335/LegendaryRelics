@@ -8,6 +8,7 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.apache.logging.log4j.util.Cast;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.Optional;
 
 public final class EquipmentEffectAPI {
     public static <T extends BaseEffect> Optional<Pair<ItemStack, T>> findBestEffect(LivingEntity living, EffectType<T> effectType) {
-        return Optional.ofNullable((Pair<ItemStack, T>) living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).unStackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType));
+        return Optional.ofNullable(Cast.cast(living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).unStackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType)));
     }
 
     public static <T extends BaseEffect> Optional<List<Pair<ItemStack, BaseEffect>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
-        return Optional.ofNullable((List<Pair<ItemStack, BaseEffect>>) (Object) living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).stackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType));
+        return Optional.ofNullable(living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).stackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType));
     }
 
     public static <T extends BaseEffect> Optional<T> findItemEffect(ItemStack itemStack, EffectType<T> effectType) {
@@ -36,7 +37,7 @@ public final class EquipmentEffectAPI {
             return Optional.empty();
         }
 
-        return (Optional<T>) Optional.of(baseEffect);
+        return Optional.of(Cast.cast(baseEffect));
     }
 
     public static <T extends BaseEffect> Optional<Map<EffectType<?>, BaseEffect>> findItemEffects(ItemStack itemStack, EffectType<T> effectType) {
@@ -46,7 +47,7 @@ public final class EquipmentEffectAPI {
         @Nullable ItemEffectsData effectsData = itemStack.get(EEDataComponentTypes.ITEM_EFFECT_DATA);
         if (effectsData == null) {
             return Optional.empty();
-        }else {
+        } else {
             return Optional.ofNullable(effectsData.effects());
         }
     }

@@ -2,7 +2,7 @@ package com.chen1335.legendaryRelics.items.misc;
 
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

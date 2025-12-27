@@ -3,15 +3,17 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
 
 import java.util.List;
 
@@ -24,9 +26,15 @@ public class HealPerSecondEffect extends LRCurioEffectBase {
         this(LREquipmentEffectTypes.HEAL_PER_SECOND_EFFECT.value(), level);
     }
 
-    public static FinalCalculator HEAL_PER_5S = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectLevelArg.of(level -> 0.5F + level * 0.5F)
-    ));
+    @Calculator
+    public static final FinalCalculator HEAL_PER_5S = FinalCalculator.of(
+            DarkGoldUpdateArg.of(
+                    EquipmentEffectLevelArg.of(
+                            LevelBasedValue.perLevel(1F)
+                    )
+            ),
+            2
+    );
 
     @Override
     public void curioTick(ItemStack itemStack, LivingEntity wearer) {

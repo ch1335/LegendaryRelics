@@ -1,8 +1,24 @@
-package com.chen1335.legendaryRelics.common.calculator;
+package com.chen1335.legendaryRelics.common.calculator.normal;
 
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
+import com.chen1335.legendaryRelics.common.calculator.api.IBracketsNeedUnit;
+import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+
 
 public class Mul implements Unit {
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, Mul> STREAM_CODEC = StreamCodec.composite(
+            CalculatorRegister.DISPATCH_STREAM_CODEC,
+            value -> value.a,
+            CalculatorRegister.DISPATCH_STREAM_CODEC,
+            value -> value.b,
+            Mul::new
+    );
+
     private final Unit a;
     private final Unit b;
 
@@ -31,6 +47,11 @@ public class Mul implements Unit {
 
 
         return Component.empty().append(componentA).append("x").append(componentB);
+    }
+
+    @Override
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+        return STREAM_CODEC;
     }
 
     public static Mul of(Unit a, Unit b) {

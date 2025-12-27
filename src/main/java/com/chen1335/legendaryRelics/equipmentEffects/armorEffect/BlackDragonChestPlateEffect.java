@@ -7,7 +7,14 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Add;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,14 +40,16 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
         this(LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value(), level);
     }
 
-    public static FinalCalculator PHYSICAL_DAMAGE_REDUCE = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator PHYSICAL_DAMAGE_REDUCE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.1F),
                     Constant.of(0.15F)
             )
     );
 
-    public static FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(
             Add.of(
                     Mul.of(
                             DarkGoldUpdateArg.of(
@@ -59,8 +68,8 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
             )
     );
 
-
-    public static FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
             Mul.of(
                     DarkGoldUpdateArg.of(
                             Constant.of(0.3F),
@@ -70,14 +79,16 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
             )
     );
 
-    public static FinalCalculator COOL_DOWN = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator COOL_DOWN = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(12F),
                     Constant.of(8F)
             )
     );
 
-    public static FinalCalculator SHIELD_LAST_TIME = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator SHIELD_LAST_TIME = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(5F),
                     Constant.of(7F)
@@ -112,6 +123,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
                 });
             }
         }
+
         if (event.getEntity() instanceof LivingEntity livingEntity) {
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value()).ifPresent(pair -> {
                 if (event.getSource().is(Tags.DamageTypes.IS_PHYSICAL)) {

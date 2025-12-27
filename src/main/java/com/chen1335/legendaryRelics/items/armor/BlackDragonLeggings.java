@@ -4,8 +4,9 @@ import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.Constant;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
@@ -21,14 +22,14 @@ public class BlackDragonLeggings extends BlackDragonArmor {
     public BlackDragonLeggings() {
         super(LRArmorMaterials.BLACK_DRAGON, Type.LEGGINGS, new Properties().rarity(Rarity.EPIC));
     }
-
+    @Calculator
     public static FinalCalculator PROJECTILE_DAMAGE_REDUCE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.1F),
                     Constant.of(0.15F)
             )
     );
-
+    @Calculator
     public static FinalCalculator HEAL_INCREASE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.1F),

@@ -5,8 +5,9 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.Constant;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.utils.SimpleSchedule;
 import net.minecraft.network.chat.Component;
@@ -32,12 +33,14 @@ public class PerseveranceEffect extends LRCurioEffectBase {
         this(LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value(), level);
     }
 
-    public static FinalCalculator TIME = FinalCalculator.of(DarkGoldUpdateArg.of(
+    @Calculator
+    public static final FinalCalculator TIME = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(10F),
             Constant.of(8F)
     ));
 
-    public static FinalCalculator DAMAGE_PERCENTAGE = FinalCalculator.of(DarkGoldUpdateArg.of(
+    @Calculator
+    public static final FinalCalculator DAMAGE_PERCENTAGE = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(0.15F),
             Constant.of(0.20F)
     ));

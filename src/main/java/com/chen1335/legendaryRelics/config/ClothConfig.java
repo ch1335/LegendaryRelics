@@ -6,6 +6,7 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.DoubleListEntry;
+import me.shedaniel.clothconfig2.gui.entries.IntegerListEntry;
 import me.shedaniel.clothconfig2.gui.entries.StringListListEntry;
 import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
 import net.minecraft.client.Minecraft;
@@ -14,8 +15,6 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class ClothConfig {
     public static void build(ModContainer modContainer) {
@@ -49,10 +48,10 @@ public class ClothConfig {
             LootModifier.LOOT_ENTRIES.forEach((id, lootEntry) -> {
                 SubCategoryBuilder subCategoryBuilder = entryBuilder.startSubCategory(lootEntry.getComponent());
 
-                @NotNull StringListListEntry lootTables = entryBuilder.startStrList(Component.translatable("legendary_relics.loot_config.loot_tables"), LootConfig.fromResourceLocationList(lootEntry.lootTables.value))
-                        .setDefaultValue(LootConfig.fromResourceLocationList(lootEntry.lootTables.defaultValue))
+                @NotNull StringListListEntry lootTables = entryBuilder.startStrList(Component.translatable("legendary_relics.loot_config.loot_tables"), lootEntry.lootTables.value)
+                        .setDefaultValue(lootEntry.lootTables.defaultValue)
                         .setSaveConsumer(strings -> {
-                            lootEntry.lootTables.value = LootConfig.fromStringList(strings);
+                            lootEntry.lootTables.value = strings;
                         })
                         .build();
                 lootTables.setEditable(canEdit(parent.getMinecraft()));
@@ -65,16 +64,26 @@ public class ClothConfig {
                         }).build();
                 chance.setEditable(canEdit(parent.getMinecraft()));
                 subCategoryBuilder.add(chance);
+
+                @NotNull IntegerListEntry rolls = entryBuilder.startIntField(Component.translatable("legendary_relics.loot_config.rolls"), lootEntry.rolls.value)
+                        .setDefaultValue(lootEntry.rolls.defaultValue)
+                        .setSaveConsumer(i -> {
+                            lootEntry.rolls.value = i;
+                        }).build();
+                rolls.setEditable(canEdit(parent.getMinecraft()));
+                subCategoryBuilder.add(rolls);
+
+
                 lootTableConfig.addEntry(subCategoryBuilder.build());
             });
 
             configBuilder.setSavingRunnable(() -> {
                 Config.save();
-                if (parent.getMinecraft().getSingleplayerServer() != null) {
+                if (parent.getMinecraft().getSingleplayerServer() != null || parent.getMinecraft().player == null) {
                     LootConfig.save();
-                } else if (Objects.requireNonNull(parent.getMinecraft().player).getPermissionLevel() >= 2) {
+                } else if (parent.getMinecraft().player.getPermissionLevel() >= 2) {
                     parent.getMinecraft().player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.request_update"));
-                    PacketDistributor.sendToServer(new LootConfigPack(LootModifier.save()));
+                    PacketDistributor.sendToServer(new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
                 }
 
             });
@@ -83,6 +92,9 @@ public class ClothConfig {
     }
 
     private static boolean canEdit(Minecraft minecraft) {
-        return minecraft.getSingleplayerServer() != null || Objects.requireNonNull(minecraft.player).getPermissionLevel() >= 2;
+        if (minecraft.player == null) {
+            return true;
+        }
+        return minecraft.getSingleplayerServer() != null || minecraft.player.getPermissionLevel() >= 2;
     }
 }

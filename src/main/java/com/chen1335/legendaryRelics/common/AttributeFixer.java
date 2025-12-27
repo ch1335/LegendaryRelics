@@ -10,23 +10,18 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 public class AttributeFixer {
     public static void runWhileFix(LivingEntity livingEntity, Holder<Attribute> attribute, double targetValue, Runnable runnable) {
         AttributeInstance attributeInstance = livingEntity.getAttribute(attribute);
-        if (attributeInstance != null) {
-            ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(new AtomicDouble(targetValue));
+        if (attributeInstance == null) {
+            return;
         }
+        ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(new AtomicDouble(targetValue));
 
         try {
             runnable.run();
-            if (attributeInstance != null) {
-                ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(null);
-            }
+            ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (attributeInstance != null) {
-                ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(null);
-            }
+            ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(null);
         }
-
-
     }
 }

@@ -6,11 +6,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class LootModifier {
-    public static final Map<String, LootEntry> LOOT_ENTRIES = new HashMap<>();
+    public static final Map<String, LootEntry> LOOT_ENTRIES = new LinkedHashMap<>();
 
     public static void modify(ResourceLocation lootTableId, ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         if (lootTableId == null) {

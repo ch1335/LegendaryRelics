@@ -4,8 +4,9 @@ import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.Constant;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -22,21 +23,21 @@ public class BlackDragonHelmet extends BlackDragonArmor {
     public BlackDragonHelmet() {
         super(LRArmorMaterials.BLACK_DRAGON, Type.HELMET, new Properties().rarity(Rarity.EPIC));
     }
-
+    @Calculator
     public static FinalCalculator MAGIC_DAMAGE_REDUCE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.1F),
                     Constant.of(0.15F)
             )
     );
-
+    @Calculator
     public static FinalCalculator GOOD_EFFECT_TIME_MULTIPLIER = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(2F),
                     Constant.of(2.5F)
             )
     );
-
+    @Calculator
     public static FinalCalculator BAD_EFFECT_TIME_MULTIPLIER = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.75F),

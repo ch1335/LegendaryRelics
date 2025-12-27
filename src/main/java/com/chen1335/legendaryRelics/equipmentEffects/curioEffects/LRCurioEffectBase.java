@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class LRCurioEffectBase extends CurioEffect {
+
     public LRCurioEffectBase(EffectType<?> effectType, int level) {
         super(effectType, level);
     }

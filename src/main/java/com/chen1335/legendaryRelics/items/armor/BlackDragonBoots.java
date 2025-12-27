@@ -4,8 +4,9 @@ import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.Constant;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
@@ -24,6 +25,7 @@ public class BlackDragonBoots extends BlackDragonArmor {
         super(LRArmorMaterials.BLACK_DRAGON, Type.BOOTS, new Properties().rarity(Rarity.EPIC));
     }
 
+    @Calculator
     public static FinalCalculator ENVIRONMENT_DAMAGE_REDUCE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.2F),
@@ -31,7 +33,7 @@ public class BlackDragonBoots extends BlackDragonArmor {
             )
     );
 
-
+    @Calculator
     public static FinalCalculator HEALTH_THRESHOLD = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.25F),
@@ -39,6 +41,7 @@ public class BlackDragonBoots extends BlackDragonArmor {
             )
     );
 
+    @Calculator
     public static FinalCalculator DAMAGE_REDUCE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.10F),

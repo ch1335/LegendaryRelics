@@ -1,9 +1,15 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
+import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import org.apache.logging.log4j.util.Cast;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class EffectType<T extends BaseEffect> {
     private int cachedHashCode = 0;
@@ -44,5 +50,9 @@ public class EffectType<T extends BaseEffect> {
 
     public boolean isStackable() {
         return stackable;
+    }
+
+    public <A extends BaseEffect> Optional<Pair<ItemStack, A>> findBestEffect(LivingEntity living) {
+        return Cast.cast(EquipmentEffectAPI.findBestEffect(living, this));
     }
 }

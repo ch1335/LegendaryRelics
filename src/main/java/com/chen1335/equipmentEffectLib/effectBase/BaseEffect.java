@@ -1,14 +1,14 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
+import com.chen1335.equipmentEffectLib.API.IEffectHelper;
 import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class BaseEffect {
+public class BaseEffect implements IEffectHelper {
+
     private final EffectType<?> effectType;
     private final int effectLevel;
     private CompoundTag cachedData = new CompoundTag();
@@ -30,9 +31,13 @@ public class BaseEffect {
         this.effectLevel = level;
     }
 
+    public static final Codec<BaseEffect> CODEC = CompoundTag.CODEC.xmap(BaseEffect::loadFromNbt, BaseEffect::save);
 
-    public static final Codec<BaseEffect> CODEC = Codec.of(
-            BaseEffect::save, BaseEffect::load
+
+    public static final StreamCodec<ByteBuf, BaseEffect> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.COMPOUND_TAG,
+            BaseEffect::save,
+            BaseEffect::loadFromNbt
     );
 
     public int getEffectLevel(@Nullable LivingEntity livingEntity, ItemStack itemStack) {
@@ -41,14 +46,6 @@ public class BaseEffect {
 
     public int getRawEffectLevel() {
         return effectLevel;
-    }
-
-    private static <T> DataResult<Pair<BaseEffect, T>> load(DynamicOps<T> ops, T input) {
-        return DataResult.success(Pair.of(preLoad((CompoundTag) ops.convertTo(NbtOps.INSTANCE, input)), input));
-    }
-
-    private <T> DataResult<T> save(DynamicOps<T> tDynamicOps, T t) {
-        return DataResult.success(NbtOps.INSTANCE.convertTo(tDynamicOps, save()));
     }
 
     public CompoundTag save() {
@@ -62,7 +59,7 @@ public class BaseEffect {
 
     }
 
-    public static BaseEffect preLoad(CompoundTag tag) {
+    public static BaseEffect loadFromNbt(CompoundTag tag) {
         String effectTypeId = tag.getString("EffectType");
         int level = tag.getInt("Level");
 
@@ -95,6 +92,8 @@ public class BaseEffect {
         }
     }
 
+
+    @Override
     public EffectType<?> getEffectType() {
         return effectType;
     }
@@ -122,4 +121,5 @@ public class BaseEffect {
     public void markItemChanged(ItemStack itemStack) {
         ((IEEItemStackMixin) (Object) itemStack).ee$setMarkFlag(!((IEEItemStackMixin) (Object) itemStack).ee$getMarkFlag());
     }
+
 }

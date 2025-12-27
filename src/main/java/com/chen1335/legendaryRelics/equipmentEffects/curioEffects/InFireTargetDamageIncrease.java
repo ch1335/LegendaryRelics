@@ -7,8 +7,9 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.EquipmentEffectLevelArg;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -34,8 +36,9 @@ public class InFireTargetDamageIncrease extends LRCurioEffectBase {
         this(LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value(), level);
     }
 
-    public static FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectLevelArg.of(level -> 0.05F + level * 0.05F)
+    @Calculator
+    public static final FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(DarkGoldUpdateArg.of(
+            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.1f,0.05f))
     ));
 
     @Override

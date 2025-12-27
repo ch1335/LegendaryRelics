@@ -7,7 +7,7 @@ import net.neoforged.fml.ModContainer;
 public class SpecialEffectLib {
     public static final String MODID = "special_effect_lib";
 
-    public SpecialEffectLib(IEventBus modEventBus, ModContainer modContainer) {
+    public static void init(IEventBus modEventBus, ModContainer modContainer) {
         SEAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
     }
 }

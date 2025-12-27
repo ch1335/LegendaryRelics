@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.mixins.main;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
+import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.dataComponentTypes.CollectedMinerals;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.OreCollectorEffect;
@@ -26,6 +27,9 @@ public class CurioInventoryCapabilityMixin {
 
     @ModifyReturnValue(method = "getFortuneLevel", at = @At("RETURN"))
     private int ModifyFortuneLevel(int original) {
+        if (LegendaryRelics.isApothicAttributesExtensionLoaded()) {
+            return original;
+        }
         Optional<Pair<ItemStack, OreCollectorEffect>> pairOptional = EquipmentEffectAPI.findBestEffect(this.livingEntity, LREquipmentEffectTypes.ORE_COLLECTOR_EFFECT.value());
         if (pairOptional.isPresent()) {
             Pair<ItemStack, OreCollectorEffect> pair = pairOptional.get();

@@ -3,6 +3,11 @@ package com.chen1335.legendaryRelics.equipmentEffects.weaponEffects;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.specialMobEffects.Erosion;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
@@ -25,7 +30,8 @@ public class ErosionEffect extends LRWeaponEffect {
         this(LREquipmentEffectTypes.EROSION_EFFECT.value(), level);
     }
 
-    public static FinalCalculator DAMAGE_PER_LAYER = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator DAMAGE_PER_LAYER = FinalCalculator.of(
             Mul.of(
                     DarkGoldUpdateArg.of(
                             Constant.of(0.1F),
@@ -35,7 +41,8 @@ public class ErosionEffect extends LRWeaponEffect {
             )
     );
 
-    public static FinalCalculator DAMAGE_PER_LAYER_FULL = FinalCalculator.of(
+    @Calculator
+    public static final FinalCalculator DAMAGE_PER_LAYER_FULL = FinalCalculator.of(
             Mul.of(
                     DarkGoldUpdateArg.of(
                             Constant.of(0.4F),

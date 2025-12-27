@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.common.calculator;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.apache.logging.log4j.util.Cast;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class CalculatorArg {
     private final Map<ArgType<?>, Object> args = new HashMap<>();
 
     public <T> T getArg(ArgType<T> arg) {
-        return (T) args.get(arg);
+        return Cast.cast(args.get(arg));
     }
 
     public <T> void putArg(ArgType<T> argType, T arg) {
@@ -70,7 +71,7 @@ public class CalculatorArg {
         public T getArgOrThrow(CalculatorArg calculatorArg) {
             T arg = calculatorArg.getArg(this);
             if (arg == null) {
-                throw new Error("calculatorArg missing arg type:"+name);
+                throw new Error("calculatorArg missing arg type:" + name);
             }
             return arg;
         }

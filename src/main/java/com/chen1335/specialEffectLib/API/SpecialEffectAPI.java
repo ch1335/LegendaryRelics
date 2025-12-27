@@ -5,6 +5,7 @@ import com.chen1335.specialEffectLib.attachmentDatas.EntityEffectData;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
 import net.minecraft.world.entity.LivingEntity;
+import org.apache.logging.log4j.util.Cast;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ public class SpecialEffectAPI {
         Map<MobEffectType<?>, SpecialMobEffect> effectMap = entityEffectData.getSourceEffects(effect.getSourceEntityUUID());
         SpecialMobEffect old = effectMap.get(effect.getEffectType());
         if (finalEffectGetter != null && old != null) {
-            effect = finalEffectGetter.accept(effect, (T) old);
+            effect = finalEffectGetter.accept(effect, Cast.cast(old));
         }
         effectMap.put(effect.getEffectType(), effect);
     }

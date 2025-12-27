@@ -1,11 +1,25 @@
-package com.chen1335.legendaryRelics.common.calculator;
+package com.chen1335.legendaryRelics.common.calculator.normal;
 
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
+import com.chen1335.legendaryRelics.common.calculator.api.IBracketsNeedUnit;
+import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import org.apache.logging.log4j.util.Cast;
 
 import java.util.List;
 
 public class MultiMul implements Unit {
+    public static final StreamCodec<RegistryFriendlyByteBuf, MultiMul> STREAM_CODEC = StreamCodec.composite(
+            CalculatorRegister.DISPATCH_STREAM_CODEC.apply(ByteBufCodecs.list()),
+            value -> value.units,
+            MultiMul::new
+    );
+
     private final List<Unit> units;
 
     public MultiMul(List<Unit> units) {
@@ -36,6 +50,11 @@ public class MultiMul implements Unit {
             }
         }
         return component;
+    }
+
+    @Override
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+        return Cast.cast(STREAM_CODEC);
     }
 
     public static MultiMul of(Unit... units) {

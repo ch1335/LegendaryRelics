@@ -5,6 +5,8 @@ import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.client.ClientExtensionsRegister;
 import com.chen1335.legendaryRelics.client.EntityRendererRegister;
 import com.chen1335.legendaryRelics.client.LegendaryTooltipsHandler;
+import com.chen1335.legendaryRelics.common.calculator.AutoRegister;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
 import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.Config;
@@ -21,6 +23,8 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforgespi.Environment;
@@ -41,11 +45,13 @@ public class LegendaryRelics {
                 });
             }).build());
 
+    public static boolean APOTHIC_ATTRIBUTES_EXTENSION_LOADED = false;
+
     public LegendaryRelics(IEventBus modEventBus, ModContainer modContainer) {
         Config.load();
 
-        new EquipmentEffectLib(modEventBus, modContainer);
-        new SpecialEffectLib(modEventBus, modContainer);
+        EquipmentEffectLib.init(modEventBus, modContainer);
+        SpecialEffectLib.init(modEventBus, modContainer);
 
         CREATIVE_MODE_TABS.register(modEventBus);
         LRItems.ITEM_DEFERRED_REGISTER.register(modEventBus);
@@ -62,13 +68,24 @@ public class LegendaryRelics {
         modEventBus.addListener(EntityRendererRegister::addLayers);
         modEventBus.addListener(this::clientInit);
         modEventBus.addListener(this::setup);
+        NeoForge.EVENT_BUS.addListener(this::serverAboutToStartEvent);
         if (ModList.get().isLoaded("cloth_config")) {
             if (Environment.get().getDist().isClient()) {
                 ClothConfig.build(modContainer);
             }
         }
+
+        if (ModList.get().isLoaded("apothic_attributes_extension")) {
+            APOTHIC_ATTRIBUTES_EXTENSION_LOADED = true;
+        }
+
+        CalculatorRegister.init();
+        AutoRegister.init();
     }
 
+    public static boolean isApothicAttributesExtensionLoaded() {
+        return APOTHIC_ATTRIBUTES_EXTENSION_LOADED;
+    }
 
     public static ResourceLocation id(String string) {
         return ResourceLocation.fromNamespaceAndPath(MODID, string);
@@ -83,5 +100,9 @@ public class LegendaryRelics {
     public void setup(FMLCommonSetupEvent event) {
         LootEntries.init();
         LootConfig.load();
+    }
+
+    public void serverAboutToStartEvent(ServerAboutToStartEvent event) {
+
     }
 }
