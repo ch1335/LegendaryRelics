@@ -6,7 +6,7 @@ import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
 import net.minecraft.core.component.DataComponentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-public class EEDataComponentTypes {
+public class EEItemDataComponentTypes {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemEffectsData>> ITEM_EFFECT_DATA = LRDataComponentTypes.DATA_COMPONENTS.register("item_effect_data", () -> DataComponentType.<ItemEffectsData>builder().networkSynchronized(ItemEffectsData.STREAM_CODEC).persistent(ItemEffectsData.CODEC).build());
 

@@ -11,8 +11,10 @@ import net.minecraft.network.codec.StreamCodec;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
+
 
     public static ItemEffectsData EMPTY = new ItemEffectsData(Map.of());
 
@@ -35,25 +37,15 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
 
 
     @Override
-    public int hashCode() {
-        return effects.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemEffectsData that = (ItemEffectsData) o;
+        return Objects.equals(effects, that.effects);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ItemEffectsData other) {
-            if (this.effects.size() != other.effects.size()) {
-                return false;
-            }
-
-            for (Map.Entry<EffectType<?>, BaseEffect> entry : this.effects.entrySet()) {
-                if (!other.effects.get(entry.getKey()).equals(entry.getValue())) {
-                    return false;
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
+    public int hashCode() {
+        return Objects.hashCode(effects);
     }
 }

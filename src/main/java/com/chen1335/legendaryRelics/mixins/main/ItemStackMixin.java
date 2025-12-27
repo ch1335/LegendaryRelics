@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.mixins.main;
 
-import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.WeaponEffect;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ItemStackMixin {
     @Inject(method = "hurtEnemy", at = @At("RETURN"))
     private void onHurtEnemy(LivingEntity target, Player attacker, CallbackInfoReturnable<Boolean> cir) {
-        for (BaseEffect effect : attacker.getWeaponItem().getOrDefault(EEDataComponentTypes.ITEM_EFFECT_DATA, ItemEffectsData.EMPTY).effects().values()) {
+        for (BaseEffect effect : attacker.getWeaponItem().getOrDefault(EEItemDataComponentTypes.ITEM_EFFECT_DATA, ItemEffectsData.EMPTY).effects().values()) {
             if (effect instanceof WeaponEffect weaponEffect) {
                 weaponEffect.hurtEnemy((ItemStack) (Object) this, target, attacker);
             }

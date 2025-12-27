@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.mixins;
 
 import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
-import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemMixin;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
@@ -40,7 +40,7 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
 
     @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V"))
     private void beforeAppendLine(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
-        @Nullable ItemEffectsData itemEffectsData = this.get(EEDataComponentTypes.ITEM_EFFECT_DATA);
+        @Nullable ItemEffectsData itemEffectsData = this.get(EEItemDataComponentTypes.ITEM_EFFECT_DATA);
         ItemStack itemStack = ItemStack.class.cast(this);
         if (itemEffectsData != null) {
             itemEffectsData.effects().values().forEach(effect -> {
@@ -62,12 +62,12 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
     @Inject(method = "<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/core/component/PatchedDataComponentMap;)V", at = @At("RETURN"))
     private void init(ItemLike item, int count, PatchedDataComponentMap components, CallbackInfo ci) {
         if (item.asItem() instanceof IEffectEquipment effectEquipment) {
-            if (!components.has(EEDataComponentTypes.ITEM_EFFECT_DATA.value())) {
+            if (!components.has(EEItemDataComponentTypes.ITEM_EFFECT_DATA.value())) {
                 ImmutableMap.Builder<EffectType<?>, BaseEffect> builder = ImmutableMap.builder();
                 for (BaseEffect baseEffect : effectEquipment.EE$getDefaultEffects()) {
-                    builder.put(baseEffect.getEffectType(), baseEffect);
+                    builder.put(baseEffect.getType(), baseEffect);
                 }
-                components.set(EEDataComponentTypes.ITEM_EFFECT_DATA.value(), new ItemEffectsData(builder.build()));
+                components.set(EEItemDataComponentTypes.ITEM_EFFECT_DATA.value(), new ItemEffectsData(builder.build()));
             }
         }
     }

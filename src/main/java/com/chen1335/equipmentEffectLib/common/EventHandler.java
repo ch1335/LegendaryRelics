@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.common;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
-import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
@@ -26,7 +26,7 @@ public class EventHandler {
     public static class Game {
         @SubscribeEvent
         public static void onCurioChange(CurioChangeEvent event) {
-            if (event.getFrom().has(EEDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEDataComponentTypes.ITEM_EFFECT_DATA)) {
+            if (event.getFrom().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA)) {
                 event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.CURIO);
                 event.getEntity().getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(event.getEntity());
             }
@@ -34,7 +34,7 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
-            if (event.getFrom().has(EEDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEDataComponentTypes.ITEM_EFFECT_DATA) && event.getSlot().getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+            if (event.getFrom().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) && event.getSlot().getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
                 event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR);
                 event.getEntity().getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(event.getEntity());
             }
@@ -44,7 +44,7 @@ public class EventHandler {
         public static void CurioAttributeModifierEvent(CurioAttributeModifierEvent event) {
             LivingEntity livingEntity = event.getSlotContext().entity();
             if (livingEntity != null) {
-                for (BaseEffect effects : event.getItemStack().getOrDefault(EEDataComponentTypes.ITEM_EFFECT_DATA.value(), ItemEffectsData.EMPTY).effects().values()) {
+                for (BaseEffect effects : event.getItemStack().getOrDefault(EEItemDataComponentTypes.ITEM_EFFECT_DATA.value(), ItemEffectsData.EMPTY).effects().values()) {
                     if (effects instanceof CurioEffect curioEffect) {
                         curioEffect.modifyCurioAttribute(event);
                     }

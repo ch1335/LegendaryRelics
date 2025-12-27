@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.API;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
-import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
@@ -28,7 +28,7 @@ public final class EquipmentEffectAPI {
         if (itemStack.isEmpty()) {
             return Optional.empty();
         }
-        @Nullable ItemEffectsData effectsData = itemStack.get(EEDataComponentTypes.ITEM_EFFECT_DATA);
+        @Nullable ItemEffectsData effectsData = itemStack.get(EEItemDataComponentTypes.ITEM_EFFECT_DATA);
         if (effectsData == null) {
             return Optional.empty();
         }
@@ -44,7 +44,7 @@ public final class EquipmentEffectAPI {
         if (itemStack.isEmpty()) {
             return Optional.empty();
         }
-        @Nullable ItemEffectsData effectsData = itemStack.get(EEDataComponentTypes.ITEM_EFFECT_DATA);
+        @Nullable ItemEffectsData effectsData = itemStack.get(EEItemDataComponentTypes.ITEM_EFFECT_DATA);
         if (effectsData == null) {
             return Optional.empty();
         } else {

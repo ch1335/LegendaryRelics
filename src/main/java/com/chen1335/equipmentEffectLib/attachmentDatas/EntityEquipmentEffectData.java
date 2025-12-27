@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.attachmentDatas;
 
 import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
-import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
@@ -56,8 +56,8 @@ public class EntityEquipmentEffectData {
         Map<EffectType<?>, List<Pair<ItemStack, BaseEffect>>> stackAbleEffects = new HashMap<>();
 
         for (ItemStack itemStack : itemStacks) {
-            if (!itemStack.isEmpty() && itemStack.has(EEDataComponentTypes.ITEM_EFFECT_DATA)) {
-                itemStack.getOrDefault(EEDataComponentTypes.ITEM_EFFECT_DATA, ItemEffectsData.EMPTY).effects().forEach((effectType, baseEffect) -> {
+            if (!itemStack.isEmpty() && itemStack.has(EEItemDataComponentTypes.ITEM_EFFECT_DATA)) {
+                itemStack.getOrDefault(EEItemDataComponentTypes.ITEM_EFFECT_DATA, ItemEffectsData.EMPTY).effects().forEach((effectType, baseEffect) -> {
                     if (effectType.getEquipmentType() == equipmentType) {
                         if (!effectType.isStackable()) {
                             unStackAbleEffects.compute(effectType, (effectTypeHolder1, oldPair) -> {

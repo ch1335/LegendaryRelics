@@ -2,7 +2,8 @@ package com.chen1335.equipmentEffectLib;
 
 import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
-import com.chen1335.equipmentEffectLib.API.objects.EEDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
 import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
@@ -20,7 +21,8 @@ public class EquipmentEffectLib {
     public static final String MODID = "equipment_effect_lib";
 
     public static void init(IEventBus modEventBus, ModContainer modContainer){
-        EEDataComponentTypes.init();
+        EEItemDataComponentTypes.init();
+        EEItemEffectDataComponentTypes.init();
         EEAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
         modEventBus.addListener(EquipmentEffectLib::onSetup);
     }
