@@ -14,7 +14,7 @@ import java.util.List;
 public class SwordItemMixin implements IEffectEquipment {
     @Override
     public List<BaseEffect> EE$getDefaultEffects() {
-        if ((Item) (Object) this == Items.NETHERITE_SWORD) {
+        if ((Object) this == Items.NETHERITE_SWORD) {
             return List.of(new ErosionEffect(1));
         }
         return IEffectEquipment.super.EE$getDefaultEffects();

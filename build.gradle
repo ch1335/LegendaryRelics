@@ -172,6 +172,21 @@ dependencies {
     implementation "curse.maven:apothic-attributes-898963:6751650"
     implementation "curse.maven:placebo-283644:6751290"
     implementation "curse.maven:nbtedit-reborn-678133:6125444"
+    implementation "curse.maven:curios-309927:6529130"
+    implementation "curse.maven:bookshelf-228525:7335846"
+    implementation "curse.maven:puzzles-lib-495476:7140307"
+    implementation "curse.maven:prickle-1023259:6961457"
+    implementation "curse.maven:mmmmmmmmmmmm-225738:7206981"
+    implementation "curse.maven:selene-499980:7340883"
+    implementation "curse.maven:playeranimator-658587:6024462"
+    implementation "curse.maven:attributefix-280510:7115922"
+    implementation "curse.maven:better-combat-by-daedelus-639842:7348161"
+    implementation "curse.maven:iceberg-520110:6423863"
+    implementation "curse.maven:jei-238222:7364648"
+    implementation "curse.maven:legendary-tooltips-532127:6400660"
+    implementation "curse.maven:overflowing-bars-852662:5770623"
+    implementation "curse.maven:prism-lib-638111:6372979"
+    implementation "curse.maven:tslatentitystatus-tes-830420:7115952"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

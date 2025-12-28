@@ -6,5 +6,5 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
 public interface IEquipmentSource {
-    public List<ItemStack> get(LivingEntity livingEntity);
+    List<ItemStack> get(LivingEntity livingEntity);
 }
