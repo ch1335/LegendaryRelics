@@ -57,7 +57,7 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
         double currentArmor = wearer.getAttributeValue(Attributes.ARMOR);
         if (oldArmor != currentArmor) {
             oldArmor = currentArmor;
-            markItemChanged(itemStack);
+            markChanged(itemStack);
         }
     }
 

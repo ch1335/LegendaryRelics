@@ -9,6 +9,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 public class EEItemEffectDataComponentTypes {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> EFFECT_LEVEL = LRDataComponentTypes.DATA_COMPONENTS.register("effect_level", () -> DataComponentType.<Integer>builder().networkSynchronized(ByteBufCodecs.INT).persistent(Codec.INT).build());
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Double>> WEARER_ARMOR = LRDataComponentTypes.DATA_COMPONENTS.register("wearer_armor", () -> DataComponentType.<Double>builder().networkSynchronized(ByteBufCodecs.DOUBLE).persistent(Codec.DOUBLE).build());
+
     public static void init() {
 
     }

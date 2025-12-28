@@ -1,5 +1,8 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
+import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -8,6 +11,7 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
+import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.AttributeBoostInNether;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
@@ -140,7 +144,13 @@ public class EventHandler {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void LivingDamageEvent(LivingDamageEvent.Post event) {
-
+//            if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+//                ItemEffectsData effectsData = serverPlayer.getMainHandItem().getOrDefault(EEItemDataComponentTypes.ITEM_EFFECT_DATA, ItemEffectsData.EMPTY);
+//                AttributeBoostInNether effect = effectsData.getEffect(LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value());
+//                if (effect != null) {
+//                    effect.set(EEItemEffectDataComponentTypes.EFFECT_LEVEL.value(), 10);
+//                }
+//            }
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)

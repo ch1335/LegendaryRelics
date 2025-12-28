@@ -32,10 +32,11 @@ import java.util.List;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStackMixin {
-    @Shadow public abstract Item getItem();
+    @Shadow
+    public abstract Item getItem();
 
     @Unique
-    private boolean ee$markFlag = false;
+    private int ee$mark = 0;
 
 
     @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V"))
@@ -50,7 +51,7 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
     }
 
 
-    @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",shift = At.Shift.AFTER))
+    @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V", shift = At.Shift.AFTER))
     private void afterAppendLine(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
         ItemStack itemStack = ItemStack.class.cast(this);
         SetsEffectBase setsEffect = ((IEEItemMixin) this.getItem()).EE$GetSetsEffect();
@@ -75,22 +76,22 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
 
     @Inject(method = "matches", at = @At("HEAD"), cancellable = true)
     private static void matches(ItemStack stack, ItemStack other, CallbackInfoReturnable<Boolean> cir) {
-        if (((IEEItemStackMixin) (Object) stack).ee$getMarkFlag() != ((IEEItemStackMixin) (Object) other).ee$getMarkFlag()) {
+        if (IEEItemStackMixin.cast(stack).ee$getMark() != IEEItemStackMixin.cast(other).ee$getMark()) {
             cir.setReturnValue(false);
         }
     }
 
     @ModifyReturnValue(method = "copy", at = @At("RETURN"))
     private ItemStack copy(ItemStack original) {
-        ((IEEItemStackMixin) (Object) original).ee$setMarkFlag(ee$getMarkFlag());
+        IEEItemStackMixin.cast(original).ee$setMark(ee$getMark());
         return original;
     }
 
-    public boolean ee$getMarkFlag() {
-        return ee$markFlag;
+    public int ee$getMark() {
+        return ee$mark;
     }
 
-    public void ee$setMarkFlag(boolean flag) {
-        this.ee$markFlag = flag;
+    public void ee$setMark(int flag) {
+        this.ee$mark = flag;
     }
 }
