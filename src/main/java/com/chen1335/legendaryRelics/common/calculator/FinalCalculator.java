@@ -6,6 +6,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
+import java.math.BigDecimal;
+
 public class FinalCalculator implements Unit {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FinalCalculator> STREAM_CODEC = StreamCodec.composite(
@@ -64,7 +66,7 @@ public class FinalCalculator implements Unit {
 
     @Override
     public Component toComponent(CalculatorArg calculatorArg) {
-        return Component.empty().append(Component.literal(String.format("%." + i + "f", getValue(calculatorArg))).withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+        return Component.empty().append(Component.literal(format(getValue(calculatorArg), i)).withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
     }
 
     @Override
@@ -84,15 +86,15 @@ public class FinalCalculator implements Unit {
         if (hasShiftDown) {
             return toComponent(calculatorArg);
         } else {
-            return Component.literal(String.format("%." + i + "f", getValue(calculatorArg)));
+            return Component.literal(format(getValue(calculatorArg),i));
         }
     }
 
     public Component toPercentageComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
         if (hasShiftDown) {
-            return Component.empty().append(Component.literal(String.format("%." + i + "f%%", getValue(calculatorArg) * 100)).withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+            return Component.empty().append(Component.literal(format(getValue(calculatorArg) * 100, i) + "%").withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
         } else {
-            return Component.literal(String.format("%." + i + "f%%", getValue(calculatorArg) * 100));
+            return Component.literal(format(getValue(calculatorArg) * 100, i) + "%");
         }
     }
 
@@ -103,5 +105,9 @@ public class FinalCalculator implements Unit {
     public static FinalCalculator of(Unit unit, int i) {
 
         return new FinalCalculator(unit, i);
+    }
+
+    public static String format(float value, int i) {
+        return new BigDecimal(String.format("%." + i + "f", value)).stripTrailingZeros().toPlainString();
     }
 }

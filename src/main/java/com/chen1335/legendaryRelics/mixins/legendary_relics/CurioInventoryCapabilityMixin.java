@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.mixins.main;
+package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;

@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.mixins.main;
+package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;

@@ -43,10 +43,16 @@ neoForge {
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
+
+        clientAuthed {
+            client()
+            mainClass = 'net.covers1624.devlogin.DevLogin'
+            programArguments.addAll('--launch_target', 'cpw.mods.bootstraplauncher.BootstrapLauncher')
+        }
+
         client {
             client()
 
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
@@ -153,6 +159,8 @@ repositories {
         }
     }
 
+    maven { url 'https://maven.covers1624.net/' }
+
     flatDir {
         dir 'libs'
     }
@@ -160,7 +168,7 @@ repositories {
 
 dependencies {
     implementation fileTree("libs")
-    jarJar(implementation("blank:damage_controller:2101.1.0"))
+    jarJar(implementation("blank:damage_controller:2101.1.1"))
     implementation "curse.maven:patchouli-306770:6164617"
     implementation "curse.maven:cloth-config-348521:5729127"
     implementation "curse.maven:lendercataclysm-551586:6849033"
@@ -187,6 +195,8 @@ dependencies {
     implementation "curse.maven:overflowing-bars-852662:5770623"
     implementation "curse.maven:prism-lib-638111:6372979"
     implementation "curse.maven:tslatentitystatus-tes-830420:7115952"
+
+    runtimeOnly 'net.covers1624:DevLogin:0.1.0.5'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

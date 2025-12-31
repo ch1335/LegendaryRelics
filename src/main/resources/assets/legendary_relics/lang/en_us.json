@@ -5,9 +5,10 @@
   "item.legendary_relics.agglomeration_malice.good_effect": "+%s looting level to mobs that spawned by spawner.",
   "item.legendary_relics.ancient_fragment": "Ancient Fragment",
   "item.legendary_relics.ancient_fragment.desc": "Can be combined with item on an anvil. Increase the bonus of some attributes of the item by %s",
-  "item.legendary_relics.arg_name.already_equipped_black_dragon_armor": "Equipped Black Dragon Armor pieces",
   "item.legendary_relics.black_dragon.desc.1": "Increases most of your attributes by %s.",
   "item.legendary_relics.black_dragon.desc.2": "Restores %s health every 5 seconds.",
+  "item.legendary_relics.set_effect.equipped_armor": "Equipment pieces",
+
   "item.legendary_relics.black_dragon_boots": "Black Dragon Boots",
   "item.legendary_relics.black_dragon_boots.desc.1": "Reduces environmental damage taken by %s.",
   "item.legendary_relics.black_dragon_boots.desc.2": "When health is below %s, gain %s damage reduction.",

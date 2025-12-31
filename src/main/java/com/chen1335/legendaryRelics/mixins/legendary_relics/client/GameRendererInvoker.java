@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.mixins.main;
+package com.chen1335.legendaryRelics.mixins.legendary_relics.client;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;

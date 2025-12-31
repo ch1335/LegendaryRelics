@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.mixins.main;
+package com.chen1335.legendaryRelics.mixins.legendary_relics.client;
 
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.mojang.blaze3d.vertex.PoseStack;

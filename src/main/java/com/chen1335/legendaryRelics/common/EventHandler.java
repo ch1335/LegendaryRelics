@@ -1,8 +1,5 @@
 package com.chen1335.legendaryRelics.common;
 
-import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
-import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
-import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -11,13 +8,12 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.AttributeBoostInNether;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
-import com.chen1335.legendaryRelics.mixins.main.CurioAttributeModifierEventInvoker;
+import com.chen1335.legendaryRelics.mixins.legendary_relics.CurioAttributeModifierEventInvoker;
 import com.chen1335.legendaryRelics.network.EffectCooldownPack;
 import com.chen1335.legendaryRelics.network.LootConfigPack;
 import com.chen1335.legendaryRelics.network.SetsInfoPack;

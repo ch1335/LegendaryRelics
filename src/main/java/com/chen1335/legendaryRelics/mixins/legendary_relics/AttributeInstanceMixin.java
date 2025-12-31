@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.mixins.main;
+package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
 import com.chen1335.legendaryRelics.mixinsAPI.IAttributeInstanceMixin;
 import com.google.common.util.concurrent.AtomicDouble;

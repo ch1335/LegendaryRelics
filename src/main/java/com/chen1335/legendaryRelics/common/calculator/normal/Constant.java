@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common.calculator.normal;
 
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.api.Unit;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -35,7 +36,7 @@ public class Constant implements Unit {
     }
 
     public Component toComponent(CalculatorArg calculatorArg) {
-        return Component.literal(String.format("%." + i + "f", amount));
+        return Component.literal(FinalCalculator.format(amount, i));
     }
 
     @Override

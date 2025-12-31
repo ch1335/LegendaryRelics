@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.client;
 import com.anthonyhilyard.iceberg.util.Selectors;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import net.minecraft.world.item.Rarity;
+import org.apache.logging.log4j.util.Cast;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class LegendaryTooltipsHandler {
         try {
             Field declaredField = Selectors.class.getDeclaredField("rarities");
             declaredField.setAccessible(true);
-            Map<String, Rarity> rarityMap = (Map<String, Rarity>) declaredField.get(Selectors.class);
+            Map<String, Rarity> rarityMap = Cast.cast(declaredField.get(Selectors.class));
             rarityMap.put("legendary_relics:dark_gold", LRRarities.DARK_GOLD.getValue());
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);

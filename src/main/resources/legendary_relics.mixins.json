@@ -1,19 +1,16 @@
 {
   "required": true,
-  "package": "com.chen1335.legendaryRelics.mixins.main",
+  "package": "com.chen1335.legendaryRelics.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AttributeInstanceMixin",
-    "CommonHooksMixin",
-    "CurioAttributeModifierEventInvoker",
-    "CurioInventoryCapabilityMixin",
-    "EnchantedCountIncreaseFunctionMixin",
-    "ItemStackMixin",
-    "LootItemRandomChanceWithEnchantedBonusConditionMixin"
+    "legendary_relics.AttributeInstanceMixin",
+    "legendary_relics.CommonHooksMixin",
+    "legendary_relics.CurioAttributeModifierEventInvoker",
+    "legendary_relics.CurioInventoryCapabilityMixin",
+    "legendary_relics.EnchantedCountIncreaseFunctionMixin",
+    "legendary_relics.ItemStackMixin",
+    "legendary_relics.LootItemRandomChanceWithEnchantedBonusConditionMixin"
   ],
-  "client": [
-    "GameRendererInvoker",
-    "HumanoidArmorLayerMixin"
-  ],
+  "client": ["legendary_relics.client.ElytraLayerMixin", "legendary_relics.client.GameRendererInvoker", "legendary_relics.client.HumanoidArmorLayerMixin"],
   "minVersion": "0.8"
 }

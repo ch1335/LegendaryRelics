@@ -42,12 +42,12 @@ public class BlackDragonArmorSetEffect extends SetsEffectBase {
             }
         }
         return (float) i;
-    }, (livingEntity) -> Component.translatable("item.legendary_relics.arg_name.already_equipped_black_dragon_armor").withColor(16733695));
+    }, (livingEntity) -> Component.translatable("item.legendary_relics.set_effect.equipped_armor").withColor(16733695));
 
 
     public static FinalCalculator ATTRIBUTE_MULTIPLIER = FinalCalculator.of(
             Add.of(
-                    Constant.of(0.02F, 3),
+                    Constant.of(0.02F, 2),
                     Mul.of(
                             Constant.of(0.02F, 3),
                             BLACK_ARMOR_COUNT_GETTER
