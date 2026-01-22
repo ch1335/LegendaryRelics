@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +21,7 @@ public class EffectType<T extends BaseEffect> {
     @Override
     public int hashCode() {
         if (cachedHashCode == 0) {
-            cachedHashCode = Objects.requireNonNull(RegisterTypes.EQUIPMENT_EFFECT_TYPE.getKey(this)).hashCode();
+            cachedHashCode = Objects.requireNonNull(EERegisterTypes.EQUIPMENT_EFFECT_TYPE.getKey(this)).hashCode();
         }
         return cachedHashCode;
     }

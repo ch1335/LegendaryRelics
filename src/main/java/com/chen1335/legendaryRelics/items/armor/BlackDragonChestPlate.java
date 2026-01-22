@@ -28,7 +28,7 @@ public class BlackDragonChestPlate extends BlackDragonArmor {
     }
 
     @Override
-    public List<BaseEffect> EE$getDefaultEffects() {
+    public List<BaseEffect> getDefaultEffects() {
         return List.of(new BlackDragonChestPlateEffect(2));
     }
 

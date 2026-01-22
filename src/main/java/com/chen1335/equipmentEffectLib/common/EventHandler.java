@@ -2,7 +2,7 @@ package com.chen1335.equipmentEffectLib.common;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
-import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
@@ -34,8 +34,16 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
-            if (event.getFrom().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) && event.getSlot().getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
-                event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR);
+            EquipmentSlot.Type type = event.getSlot().getType();
+            if (event.getFrom().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA)) {
+                switch (type) {
+                    case HUMANOID_ARMOR -> {
+                        event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR);
+                    }
+                    case HAND -> {
+                        event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.MAIN_HIND);
+                    }
+                }
                 event.getEntity().getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(event.getEntity());
             }
         }
@@ -77,8 +85,8 @@ public class EventHandler {
     public static class Mod {
         @SubscribeEvent
         public static void registerRegistries(NewRegistryEvent event) {
-            event.register(RegisterTypes.EQUIPMENT_EFFECT_TYPE);
-            event.register(RegisterTypes.SETS_EFFECT_TYPE);
+            event.register(EERegisterTypes.EQUIPMENT_EFFECT_TYPE);
+            event.register(EERegisterTypes.SETS_EFFECT_TYPE);
         }
     }
 }

@@ -29,9 +29,11 @@ public record UpdateCalculatorPack(CalculatorsHolder.LocateInfo locateInfo,
     }
 
     public void handler(IPayloadContext context) {
-        FinalCalculator finalCalculator = CalculatorsHolder.getCalculators().get(locateInfo);
-        if (finalCalculator != null) {
-            finalCalculator.define(unit);
-        }
+        context.enqueueWork(() -> {
+            FinalCalculator finalCalculator = CalculatorsHolder.getCalculators().get(locateInfo);
+            if (finalCalculator != null) {
+                finalCalculator.define(unit);
+            }
+        });
     }
 }

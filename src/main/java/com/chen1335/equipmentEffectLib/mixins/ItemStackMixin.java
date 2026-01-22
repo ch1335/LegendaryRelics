@@ -1,8 +1,7 @@
 package com.chen1335.equipmentEffectLib.mixins;
 
-import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
-import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemMixin;
+import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
@@ -54,7 +53,7 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
     @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V", shift = At.Shift.AFTER))
     private void afterAppendLine(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
         ItemStack itemStack = ItemStack.class.cast(this);
-        SetsEffectBase setsEffect = ((IEEItemMixin) this.getItem()).EE$GetSetsEffect();
+        SetsEffectBase setsEffect = ((IEEItemExtension) this.getItem()).EE$GetSetsEffect();
         if (setsEffect != null) {
             setsEffect.appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
         }
@@ -62,10 +61,11 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
 
     @Inject(method = "<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/core/component/PatchedDataComponentMap;)V", at = @At("RETURN"))
     private void init(ItemLike item, int count, PatchedDataComponentMap components, CallbackInfo ci) {
-        if (item.asItem() instanceof IEffectEquipment effectEquipment) {
+        IEEItemExtension itemExtension = (IEEItemExtension) item.asItem();
+        if (EEItemDataComponentTypes.ITEM_EFFECT_DATA.isBound() && !itemExtension.EE$GetItemEffect().isEmpty()) {
             if (!components.has(EEItemDataComponentTypes.ITEM_EFFECT_DATA.value())) {
                 ImmutableMap.Builder<EffectType<?>, BaseEffect> builder = ImmutableMap.builder();
-                for (BaseEffect baseEffect : effectEquipment.EE$getDefaultEffects()) {
+                for (BaseEffect baseEffect : itemExtension.EE$GetItemEffect()) {
                     builder.put(baseEffect.getType(), baseEffect);
                 }
                 components.set(EEItemDataComponentTypes.ITEM_EFFECT_DATA.value(), new ItemEffectsData(builder.build()));

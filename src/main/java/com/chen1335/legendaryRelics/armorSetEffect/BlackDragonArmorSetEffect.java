@@ -42,7 +42,7 @@ public class BlackDragonArmorSetEffect extends SetsEffectBase {
             }
         }
         return (float) i;
-    }, (livingEntity) -> Component.translatable("item.legendary_relics.set_effect.equipped_armor").withColor(16733695));
+    }, Component.translatable("item.legendary_relics.set_effect.equipped_armor").withColor(16733695));
 
 
     public static FinalCalculator ATTRIBUTE_MULTIPLIER = FinalCalculator.of(

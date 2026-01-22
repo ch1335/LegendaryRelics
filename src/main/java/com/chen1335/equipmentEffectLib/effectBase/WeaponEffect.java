@@ -1,14 +1,10 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import com.chen1335.equipmentEffectLib.API.IMainHandEffect;
 
-public class WeaponEffect extends BaseEffect {
+public class WeaponEffect extends BaseEffect implements IMainHandEffect {
     public WeaponEffect(EffectType<?> effectType, int level) {
         super(effectType, level);
     }
 
-    public void hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
-    }
 }

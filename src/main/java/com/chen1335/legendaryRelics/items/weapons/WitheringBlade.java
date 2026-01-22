@@ -15,7 +15,7 @@ public class WitheringBlade extends LRSwordItem {
     }
 
     @Override
-    public List<BaseEffect> EE$getDefaultEffects() {
+    public List<BaseEffect> getDefaultEffects() {
         return List.of(new ErosionEffect(1));
     }
 

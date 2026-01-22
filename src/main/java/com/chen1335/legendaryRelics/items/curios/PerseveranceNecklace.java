@@ -32,7 +32,7 @@ public class PerseveranceNecklace extends LRCuriosBase {
 
 
     @Override
-    public List<BaseEffect> EE$getDefaultEffects() {
+    public List<BaseEffect> getDefaultEffects() {
         return List.of(new HealIncreaseEffect(2), new HealPerSecondEffect(2), new PerseveranceEffect(1));
     }
 }

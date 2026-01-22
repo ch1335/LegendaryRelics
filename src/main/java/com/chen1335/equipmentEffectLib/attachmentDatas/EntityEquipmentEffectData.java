@@ -7,6 +7,7 @@ import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
+import com.chen1335.equipmentEffectLib.equipmentSources.MainHand;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.Util;
 import net.minecraft.world.entity.LivingEntity;
@@ -120,10 +121,10 @@ public class EntityEquipmentEffectData {
         IEquipmentSource getSource();
     }
 
-    public enum EquipmentType implements IEquipmentType{
+    public enum EquipmentType implements IEquipmentType {
         CURIO(CuriosSource.INSTANCE),
         ARMOR(ArmorSource.INSTANCE),
-        WEAPON(null);
+        MAIN_HIND(MainHand.INSTANCE);
 
         private final IEquipmentSource source;
 

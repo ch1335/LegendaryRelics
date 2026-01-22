@@ -2,7 +2,7 @@ package com.chen1335.equipmentEffectLib.attachmentDatas;
 
 import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.EquipmentEffectLib;
-import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemMixin;
+import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
 import com.chen1335.legendaryRelics.network.SetsInfoPack;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,7 +34,7 @@ public class EntitySetsEffectData {
     public static void buildSets(List<ItemStack> itemStacks, Map<SetsEffectBase, Set<Item>> map) {
         for (ItemStack itemStack : itemStacks) {
             if (!itemStack.isEmpty()) {
-                SetsEffectBase setsEffectBase = ((IEEItemMixin) itemStack.getItem()).EE$GetSetsEffect();
+                SetsEffectBase setsEffectBase = ((IEEItemExtension) itemStack.getItem()).EE$GetSetsEffect();
                 if (setsEffectBase != null) {
                     map.computeIfAbsent(setsEffectBase, setsEffectBase1 -> new HashSet<>()).add(itemStack.getItem());
                 }

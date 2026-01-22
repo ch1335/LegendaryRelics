@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.network;
 
-import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
@@ -16,7 +16,7 @@ public record EffectCooldownPack(EffectType<?> effectType, int cooldownTick) imp
     public static final Type<EffectCooldownPack> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "effect_cooldown"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, EffectCooldownPack> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.registry(RegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY), EffectCooldownPack::effectType,
+            ByteBufCodecs.registry(EERegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY), EffectCooldownPack::effectType,
             ByteBufCodecs.INT, EffectCooldownPack::cooldownTick,
             EffectCooldownPack::new
     );

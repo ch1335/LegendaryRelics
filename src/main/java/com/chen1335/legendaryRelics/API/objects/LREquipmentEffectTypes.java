@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.API.objects;
 
-import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class LREquipmentEffectTypes {
-    public static DeferredRegister<EffectType<?>> EQUIPMENT_EFFECT_TYPES = DeferredRegister.create(RegisterTypes.EQUIPMENT_EFFECT_TYPE, LegendaryRelics.MODID);
+    public static DeferredRegister<EffectType<?>> EQUIPMENT_EFFECT_TYPES = DeferredRegister.create(EERegisterTypes.EQUIPMENT_EFFECT_TYPE, LegendaryRelics.MODID);
 
     public static DeferredHolder<EffectType<?>, EffectType<Redemption>> REDEMPTION = EQUIPMENT_EFFECT_TYPES.register("redemption", () -> new CooldownAbleEffectType<Redemption>(Redemption::new, EntityEquipmentEffectData.EquipmentType.CURIO).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/sacred_talisman.png")));
 
@@ -38,7 +38,7 @@ public class LREquipmentEffectTypes {
 
     public static DeferredHolder<EffectType<?>, EffectType<AgglomerationMaliceEffect>> AGGLOMERATION_MALICE_EFFECT = EQUIPMENT_EFFECT_TYPES.register("agglomeration_malice_effect", () -> new EffectType<>(AgglomerationMaliceEffect::new, EntityEquipmentEffectData.EquipmentType.CURIO));
 
-    public static DeferredHolder<EffectType<?>, EffectType<ErosionEffect>> EROSION_EFFECT = EQUIPMENT_EFFECT_TYPES.register("erosion_effect", () -> new EffectType<>(ErosionEffect::new, EntityEquipmentEffectData.EquipmentType.WEAPON));
+    public static DeferredHolder<EffectType<?>, EffectType<ErosionEffect>> EROSION_EFFECT = EQUIPMENT_EFFECT_TYPES.register("erosion_effect", () -> new EffectType<>(ErosionEffect::new, EntityEquipmentEffectData.EquipmentType.MAIN_HIND));
 
     public static DeferredHolder<EffectType<?>, EffectType<BlackDragonChestPlateEffect>> BLACK_DRAGON_CHESTPLATE_EFFECT = EQUIPMENT_EFFECT_TYPES.register("black_dragon_chestplate_effect", () -> new CooldownAbleEffectType<BlackDragonChestPlateEffect>(BlackDragonChestPlateEffect::new, EntityEquipmentEffectData.EquipmentType.ARMOR).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/black_dragon_chestplate.png")));
 

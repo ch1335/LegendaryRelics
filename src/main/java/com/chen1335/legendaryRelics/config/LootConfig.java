@@ -31,7 +31,7 @@ public class LootConfig {
         }
     }
 
-    public static void load(CommentedFileConfig config) {
+    private static void load(CommentedFileConfig config) {
         ConcurrentCommentedConfig server = ConfigUtils.get(config, "lootTable", config.createSubConfig(), "LootTable Config");
         LootModifier.LOOT_ENTRIES.forEach((id, lootEntry) -> {
             if (lootEntry.isCreatedByRemote) {

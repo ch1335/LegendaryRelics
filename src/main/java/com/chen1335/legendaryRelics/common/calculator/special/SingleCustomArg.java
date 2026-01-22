@@ -2,9 +2,9 @@ package com.chen1335.legendaryRelics.common.calculator.special;
 
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.api.Unit;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -12,14 +12,15 @@ import org.apache.logging.log4j.util.Cast;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 public class SingleCustomArg<T> implements Unit {
 
     public static final Map<ResourceLocation, SingleCustomArg<?>> REGISTERED_TYPE = new HashMap<>();
 
     public static final StreamCodec<RegistryFriendlyByteBuf, SingleCustomArg<?>> STREAM_CODEC = StreamCodec.of(
-            (buffer, value) -> ByteBufCodecs.STRING_UTF8.encode(buffer, value.id.toString()),
+            (buffer, value) -> {
+                ByteBufCodecs.STRING_UTF8.encode(buffer, value.id.toString());
+            },
             buffer -> REGISTERED_TYPE.get(ResourceLocation.parse(ByteBufCodecs.STRING_UTF8.decode(buffer)))
     );
 
@@ -27,13 +28,13 @@ public class SingleCustomArg<T> implements Unit {
     private final ResourceLocation id;
     private final CalculatorArg.ArgType<T> argType;
     private final NumberGetter<T> function;
-    private final Function<T, Component> componentFunction;
+    private final Component component;
 
-    private SingleCustomArg(ResourceLocation id, CalculatorArg.ArgType<T> argType, NumberGetter<T> function, Function<T, Component> componentFunction) {
+    private SingleCustomArg(ResourceLocation id, CalculatorArg.ArgType<T> argType, NumberGetter<T> function, Component component) {
         this.id = id;
         this.argType = argType;
         this.function = function;
-        this.componentFunction = componentFunction;
+        this.component = component;
         REGISTERED_TYPE.put(id, this);
     }
 
@@ -45,8 +46,7 @@ public class SingleCustomArg<T> implements Unit {
 
     @Override
     public Component toComponent(CalculatorArg calculatorArg) {
-        T arg = argType.getArg(calculatorArg);
-        return componentFunction.apply(arg);
+        return component;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class SingleCustomArg<T> implements Unit {
         Number get(T arg);
     }
 
-    public static <T> SingleCustomArg<T> register(ResourceLocation id, CalculatorArg.ArgType<T> argType, NumberGetter<T> function, Function<T, Component> componentFunction) {
-        return new SingleCustomArg<>(id, argType, function, componentFunction);
+    public static <T> SingleCustomArg<T> register(ResourceLocation id, CalculatorArg.ArgType<T> argType, NumberGetter<T> function, Component component) {
+        return new SingleCustomArg<>(id, argType, function, component);
     }
 }

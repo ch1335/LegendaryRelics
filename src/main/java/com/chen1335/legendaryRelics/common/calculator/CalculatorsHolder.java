@@ -15,6 +15,22 @@ public class CalculatorsHolder {
         CALCULATORS_HOLDER_MAP.putIfAbsent(locateInfo, finalCalculator);
     }
 
+    public static FinalCalculator registerKubejs(String id, FinalCalculator finalCalculator) {
+        LocateInfo locateInfo = LocateInfo.kubejsLocateInfo(id);
+        FinalCalculator old = CALCULATORS_HOLDER_MAP.get(locateInfo);
+        if (old != null) {
+            old.define(finalCalculator);
+            return old;
+        }
+        CALCULATORS_HOLDER_MAP.putIfAbsent(locateInfo, finalCalculator);
+        return finalCalculator;
+    }
+
+    public static FinalCalculator getKubejs(String id) {
+        LocateInfo locateInfo = LocateInfo.kubejsLocateInfo(id);
+        return CALCULATORS_HOLDER_MAP.get(locateInfo);
+    }
+
     public static Map<LocateInfo, FinalCalculator> getCalculators() {
         return CALCULATORS_HOLDER_MAP;
     }
@@ -23,6 +39,10 @@ public class CalculatorsHolder {
 
         public LocateInfo(Class<?> className, String fieldName) {
             this(className.getName(), fieldName);
+        }
+
+        public static LocateInfo kubejsLocateInfo(String name) {
+            return new LocateInfo("kubejs", name);
         }
 
         public static final StreamCodec<ByteBuf, LocateInfo> STREAM_CODEC = StreamCodec.composite(

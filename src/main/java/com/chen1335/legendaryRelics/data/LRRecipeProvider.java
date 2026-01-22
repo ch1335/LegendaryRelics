@@ -3,10 +3,7 @@ package com.chen1335.legendaryRelics.data;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 

@@ -15,8 +15,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LRKubeJSPlugin implements KubeJSPlugin {
+
     @Override
     public void registerBindings(BindingRegistry bindings) {
+        bindings.add("CalculatorsHolder", CalculatorsHolder.class);
+
         bindings.add("CalculatorAdd", Add.class);
         bindings.add("CalculatorMultiAdd", MultiAdd.class);
         bindings.add("CalculatorArg", CalculatorArg.class);
@@ -33,14 +36,16 @@ public class LRKubeJSPlugin implements KubeJSPlugin {
         Set<Class<?>> classes = new HashSet<>();
         for (CalculatorsHolder.LocateInfo locateInfo : CalculatorsHolder.getCalculators().keySet()) {
             try {
-                classes.add(Class.forName(locateInfo.className()));
+                if (!locateInfo.className().equals("kubejs")) {
+                    classes.add(Class.forName(locateInfo.className()));
+                }
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
 
         for (Class<?> aClass : classes) {
-            bindings.add(aClass.getSimpleName(), classes);
+            bindings.add(aClass.getSimpleName(), aClass);
         }
 
     }

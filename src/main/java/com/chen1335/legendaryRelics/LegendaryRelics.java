@@ -47,6 +47,7 @@ public class LegendaryRelics {
 
     public static boolean APOTHIC_ATTRIBUTES_EXTENSION_LOADED = false;
 
+
     public LegendaryRelics(IEventBus modEventBus, ModContainer modContainer) {
         Config.load();
 
@@ -97,9 +98,10 @@ public class LegendaryRelics {
         }
     }
 
+
     public void setup(FMLCommonSetupEvent event) {
-        LootEntries.init();
-        LootConfig.load();
+        event.enqueueWork(LootEntries::init);
+        event.enqueueWork(LootConfig::load);
     }
 
     public void serverAboutToStartEvent(ServerAboutToStartEvent event) {

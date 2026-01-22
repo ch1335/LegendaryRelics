@@ -12,7 +12,7 @@ public class SacredTalisman extends LRCuriosBase {
     }
 
     @Override
-    public List<BaseEffect> EE$getDefaultEffects() {
+    public List<BaseEffect> getDefaultEffects() {
         return List.of(new Redemption(1));
     }
 }

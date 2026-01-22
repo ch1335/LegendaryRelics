@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.dataComponentTypes;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
-import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.google.common.collect.ImmutableMap;
@@ -23,7 +23,7 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
 
     public static ItemEffectsData EMPTY = new ItemEffectsData(Map.of());
 
-    private static final Codec<Map<EffectType<?>, BaseEffect>> MAP_CODEC = Codec.unboundedMap(RegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec(), BaseEffect.CODEC);
+    private static final Codec<Map<EffectType<?>, BaseEffect>> MAP_CODEC = Codec.unboundedMap(EERegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec(), BaseEffect.CODEC);
 
     public static final Codec<ItemEffectsData> CODEC = RecordCodecBuilder.create(i -> i.group(
             MAP_CODEC.fieldOf("effects").forGetter(ItemEffectsData::effects)
@@ -32,7 +32,7 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemEffectsData> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.map(
                     HashMap::new,
-                    ByteBufCodecs.registry(RegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY),
+                    ByteBufCodecs.registry(EERegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY),
                     BaseEffect.STREAM_CODEC,
                     64
             ),

@@ -2,7 +2,7 @@ package com.chen1335.equipmentEffectLib.effectBase;
 
 import com.chen1335.equipmentEffectLib.API.IEffectHelper;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
-import com.chen1335.equipmentEffectLib.API.objects.RegisterTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -42,13 +42,13 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
     }
 
     public static final Codec<BaseEffect> CODEC = RecordCodecBuilder.create(baseEffectInstance -> baseEffectInstance.group(
-            RegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec().fieldOf("EffectType").forGetter(BaseEffect::getType),
+            EERegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec().fieldOf("EffectType").forGetter(BaseEffect::getType),
             DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(BaseEffect::getDataComponentPatch)
     ).apply(baseEffectInstance, BaseEffect::buildEffect));
 
 
     public static final StreamCodec<RegistryFriendlyByteBuf, BaseEffect> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.registry(RegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY),
+            ByteBufCodecs.registry(EERegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY),
             BaseEffect::getType,
             DataComponentPatch.STREAM_CODEC,
             BaseEffect::getDataComponentPatch,

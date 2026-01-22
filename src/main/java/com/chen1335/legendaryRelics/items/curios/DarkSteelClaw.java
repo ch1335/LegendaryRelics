@@ -29,7 +29,7 @@ public class DarkSteelClaw extends LRCuriosBase {
     }
 
     @Override
-    public List<BaseEffect> EE$getDefaultEffects() {
+    public List<BaseEffect> getDefaultEffects() {
         return List.of(new DarkSteelClawEffect(1));
     }
 }

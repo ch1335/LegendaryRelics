@@ -24,7 +24,7 @@ public class HardenedRing extends LRCuriosBase {
     );
 
     @Override
-    public List<BaseEffect> EE$getDefaultEffects() {
+    public List<BaseEffect> getDefaultEffects() {
         return List.of(new HardenedEffect(1));
     }
 
