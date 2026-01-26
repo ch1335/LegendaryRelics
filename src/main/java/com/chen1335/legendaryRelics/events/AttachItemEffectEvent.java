@@ -10,13 +10,13 @@ import java.util.Map;
 
 public class AttachItemEffectEvent extends Event {
 
-    private final Map<Item, ArrayList<BaseEffect>> capturedEffect;
+    private final Map<Item, ArrayList<BaseEffect>> capturedEffects;
 
     public AttachItemEffectEvent(Map<Item, ArrayList<BaseEffect>> capturedEffect) {
-        this.capturedEffect = capturedEffect;
+        this.capturedEffects = capturedEffect;
     }
 
-    public EffectType<?> getEffectType(EffectType<?> effectType) {
+    public <T extends BaseEffect> EffectType<T> getEffectType(EffectType<T> effectType) {
         return effectType;
     }
 
@@ -29,10 +29,10 @@ public class AttachItemEffectEvent extends Event {
     }
 
     public ArrayList<BaseEffect> getEffects(Item item) {
-        return capturedEffect.computeIfAbsent(item, item1 -> new ArrayList<>());
+        return capturedEffects.computeIfAbsent(item, item1 -> new ArrayList<>());
     }
 
-    public Map<Item, ArrayList<BaseEffect>> getCapturedEffect() {
-        return capturedEffect;
+    public Map<Item, ArrayList<BaseEffect>> getCapturedEffects() {
+        return capturedEffects;
     }
 }

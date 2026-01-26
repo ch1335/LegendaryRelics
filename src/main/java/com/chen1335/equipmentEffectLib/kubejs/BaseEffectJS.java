@@ -101,4 +101,15 @@ public class BaseEffectJS extends BaseEffect {
         }
 
     }
+
+    @Override
+    public BaseEffect copy() {
+        BaseEffect baseEffect = super.copy();
+        CustomData customData = baseEffect.get(DataComponents.CUSTOM_DATA);
+
+        if (customData != null) {
+            baseEffect.set(DataComponents.CUSTOM_DATA, CustomData.of(customData.copyTag()));
+        }
+        return baseEffect;
+    }
 }

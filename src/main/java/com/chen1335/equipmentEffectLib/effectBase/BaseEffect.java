@@ -139,4 +139,10 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
     public void applyComponents(@NotNull DataComponentMap components) {
         this.components.setAll(components);
     }
+
+    public BaseEffect copy() {
+        BaseEffect effect = this.effectType.create(getRawEffectLevel());
+        effect.components.setAll(components.copy());
+        return effect;
+    }
 }

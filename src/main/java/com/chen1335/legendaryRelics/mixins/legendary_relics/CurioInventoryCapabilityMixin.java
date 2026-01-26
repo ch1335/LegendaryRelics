@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -30,11 +31,11 @@ public class CurioInventoryCapabilityMixin {
         if (LegendaryRelics.isApothicAttributesExtensionLoaded()) {
             return original;
         }
-        Optional<Pair<ItemStack, OreCollectorEffect>> pairOptional = EquipmentEffectAPI.findBestEffect(this.livingEntity, LREquipmentEffectTypes.ORE_COLLECTOR_EFFECT.value());
+        Optional<EntityEquipmentEffectData.InfoHolder<OreCollectorEffect>> pairOptional = EquipmentEffectAPI.findBestEffect(this.livingEntity, LREquipmentEffectTypes.ORE_COLLECTOR_EFFECT.value());
         if (pairOptional.isPresent()) {
-            Pair<ItemStack, OreCollectorEffect> pair = pairOptional.get();
-            CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
-            int addition = pair.getFirst().getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS, CollectedMinerals.empty()).getCollectedOresAmount() >= OreCollectorEffect.COLLECTED_MINERALS_REQUIRE.getInt(args) ? 1 : 0;
+            EntityEquipmentEffectData.InfoHolder<OreCollectorEffect> pair = pairOptional.get();
+            CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
+            int addition = pair.itemStack().getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS, CollectedMinerals.empty()).getCollectedOresAmount() >= OreCollectorEffect.COLLECTED_MINERALS_REQUIRE.getInt(args) ? 1 : 0;
             return original + (int) (OreCollectorEffect.DEFAULT.getValue(args) + addition);
         } else {
             return original;

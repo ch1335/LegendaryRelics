@@ -80,7 +80,7 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.dark_steel_claw.skill", DAMAGE_ADD.toComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("legendary_relics.items.skill.cannot_be_tacked").withColor(5592405));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.dark_steel_claw", DAMAGE_ADD.toComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("legendary_relics.special.cannot_be_tacked").withColor(5592405));
     }
 }

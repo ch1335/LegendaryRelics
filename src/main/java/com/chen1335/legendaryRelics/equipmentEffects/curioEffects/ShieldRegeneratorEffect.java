@@ -57,7 +57,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.shield_regenerator.skill.1",
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.shield_regenerator_effect",
                 COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args),
                 MAX_SHIELD.toComponent(tooltipFlag.hasShiftDown(), args)
         ).withColor(0xaeaeae));
@@ -112,11 +112,9 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
         @Nullable ShieldInstanceHolder<UnitShield> instance = ShieldAPI.getShieldInstance(entity, LRShieldType.SHIELD_REGENERATOR_SHIELD.get());
         if (instance != null) {
             effectType.findBestEffect(entity).ifPresent(pair -> {
-                CalculatorArg args = CalculatorArg.simpleArg(entity, pair.getFirst(), pair.getSecond());
-                pair.getSecond().addCooldown(entity, COOLDOWN.getInt(args) * 20, () -> {
+                pair.effect().addCooldown(entity, COOLDOWN.getInt(CalculatorArg.simpleArg(entity, pair.itemStack(), pair.effect())) * 20, () -> {
                     effectType.findBestEffect(entity).ifPresent(pair1 -> {
-                        CalculatorArg args1 = CalculatorArg.simpleArg(entity, pair1.getFirst(), pair1.getSecond());
-                        instance.getShield().setAmount(MAX_SHIELD.getValue(args1));
+                        instance.getShield().setAmount(MAX_SHIELD.getValue(CalculatorArg.simpleArg(entity, pair1.itemStack(), pair1.effect())));
                     });
                 });
             });

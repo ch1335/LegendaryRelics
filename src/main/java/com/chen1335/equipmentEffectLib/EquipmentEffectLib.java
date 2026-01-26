@@ -9,6 +9,7 @@ import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
+import com.chen1335.equipmentEffectLib.equipmentSources.MainHand;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.events.AttachItemEffectEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -37,6 +38,7 @@ public class EquipmentEffectLib {
     public static void onSetup(FMLCommonSetupEvent event) {
         EQUIPMENT_SOURCES.add(ArmorSource.INSTANCE);
         EQUIPMENT_SOURCES.add(CuriosSource.INSTANCE);
+        EQUIPMENT_SOURCES.add(MainHand.INSTANCE);
         NeoForge.EVENT_BUS.post(new SetItemSetsEffectEvent());
         event.enqueueWork(() -> {
             BuiltInRegistries.ITEM.forEach(item -> {
@@ -46,9 +48,9 @@ public class EquipmentEffectLib {
             });
 
             AttachItemEffectEvent attachItemEffectEvent = NeoForge.EVENT_BUS.post(new AttachItemEffectEvent(CAPTURED_EFFECT));
-            attachItemEffectEvent.getCapturedEffect().forEach((item, baseEffects) -> {
+            attachItemEffectEvent.getCapturedEffects().forEach((item, baseEffects) -> {
                 IEEItemExtension itemExtension = (IEEItemExtension) item;
-                itemExtension.EE$SetItemEffect(List.copyOf(baseEffects));
+                itemExtension.EE$SetDefaultItemEffect(List.copyOf(baseEffects));
             });
             CAPTURED_EFFECT.clear();
         });

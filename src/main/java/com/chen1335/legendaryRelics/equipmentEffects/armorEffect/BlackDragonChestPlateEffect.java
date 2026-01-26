@@ -2,7 +2,6 @@ package com.chen1335.legendaryRelics.equipmentEffects.armorEffect;
 
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
-import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -113,21 +112,23 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
 
     @SubscribeEvent
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
+        EffectType<BlackDragonChestPlateEffect> effectType = LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value();
+
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-            if (EquipmentEffectCooldownManager.isNotInCooldown(attacker, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value())) {
-                EquipmentEffectAPI.findBestEffect(attacker, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value()).ifPresent(pair -> {
-                    CalculatorArg args = CalculatorArg.simpleArg(attacker, pair.getFirst(), pair.getSecond());
+            if (effectType.isNotInCooldown(attacker)) {
+                effectType.findBestEffect(attacker).ifPresent(pair -> {
+                    CalculatorArg args = CalculatorArg.simpleArg(attacker, pair.itemStack(), pair.effect());
                     DamageControllerAPI.addValue((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(args));
                     ShieldAPI.addCommonDecayShield(attacker, SHIELD_AMOUNT.getValue(args), SHIELD_LAST_TIME.getInt(args) * 20);
-                    EquipmentEffectCooldownManager.addCooldown(attacker, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value(), COOL_DOWN.getInt(args) * 20);
+                    EquipmentEffectCooldownManager.addCooldown(attacker, effectType, COOL_DOWN.getInt(args) * 20);
                 });
             }
         }
 
         if (event.getEntity() instanceof LivingEntity livingEntity) {
-            EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value()).ifPresent(pair -> {
+            effectType.findBestEffect(livingEntity).ifPresent(pair -> {
                 if (event.getSource().is(Tags.DamageTypes.IS_PHYSICAL)) {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
+                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
                     DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -PHYSICAL_DAMAGE_REDUCE.getValue(args));
                 }
             });

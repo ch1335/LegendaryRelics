@@ -44,7 +44,7 @@ public class BlackDragonArmor extends ArmorItem implements LRArmorHelper {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.empty());
+
 
     }
 

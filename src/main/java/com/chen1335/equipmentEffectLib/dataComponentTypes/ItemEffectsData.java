@@ -14,12 +14,15 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.util.Cast;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
 
+    public static ItemEffectsData buildFromLinkedMap(Map<EffectType<?>, BaseEffect> map) {
+        return new ItemEffectsData(ImmutableMap.copyOf(map));
+    }
 
     public static ItemEffectsData EMPTY = new ItemEffectsData(Map.of());
 
@@ -31,18 +34,19 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemEffectsData> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.map(
-                    HashMap::new,
+                    LinkedHashMap::new,
                     ByteBufCodecs.registry(EERegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY),
                     BaseEffect.STREAM_CODEC,
                     64
             ),
             ItemEffectsData::effects,
-            ItemEffectsData::new
+            ItemEffectsData::buildFromLinkedMap
     );
 
     public <T extends BaseEffect> T getEffect(EffectType<T> effectType) {
         return Cast.cast(effects.get(effectType));
     }
+
 
     public static void addEffect(ItemStack itemStack, BaseEffect effect) {
         @Nullable ItemEffectsData effectsData = itemStack.get(EEItemDataComponentTypes.ITEM_EFFECT_DATA);

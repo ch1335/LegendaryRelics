@@ -1,7 +1,9 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
+import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.OreCollectorEffect;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -27,8 +29,8 @@ public class LootItemRandomChanceWithEnchantedBonusConditionMixin {
             Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
             Entity attacker = context.getParamOrNull(LootContextParams.ATTACKING_ENTITY);
             if (entity instanceof LivingEntity mob && attacker instanceof LivingEntity livingAttacker) {
-                for (Pair<ItemStack, BaseEffect> collectAllEffect : livingAttacker.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA.get()).collectAllCurioEffects()) {
-                    lootingLevel = collectAllEffect.getSecond().modifyLoot(collectAllEffect.getFirst(), mob, livingAttacker, lootingLevel);
+                for (EntityEquipmentEffectData.InfoHolder<?> collectAllEffect : livingAttacker.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA.get()).collectAllCurioEffects()) {
+                    lootingLevel = collectAllEffect.effect().modifyLoot(collectAllEffect.itemStack(), mob, livingAttacker, lootingLevel);
                 }
             }
         }

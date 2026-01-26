@@ -48,14 +48,14 @@ public class PerseveranceEffect extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.perseverance_necklace.desc.1", TIME.toComponent(tooltipFlag.hasShiftDown(), args), DAMAGE_PERCENTAGE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.perseverance_effect", TIME.toComponent(tooltipFlag.hasShiftDown(), args), DAMAGE_PERCENTAGE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void handleLivingDamageEventLowest(LivingDamageEvent.Post event) {
         LivingEntity livingEntity = event.getEntity();
         EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value()).ifPresent(pair -> {
-            CalculatorArg calculatorArg = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
+            CalculatorArg calculatorArg = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
             int totalTime = TIME.getInt(calculatorArg) * 20;
             float totalHeal = DAMAGE_PERCENTAGE.getValue(calculatorArg) * Math.min(livingEntity.getMaxHealth(), event.getNewDamage());
             int runCount = totalTime / 10;

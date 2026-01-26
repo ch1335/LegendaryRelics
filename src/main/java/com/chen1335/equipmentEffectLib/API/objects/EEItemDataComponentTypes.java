@@ -10,6 +10,9 @@ public class EEItemDataComponentTypes {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemEffectsData>> ITEM_EFFECT_DATA = LRDataComponentTypes.DATA_COMPONENTS.register("item_effect_data", () -> DataComponentType.<ItemEffectsData>builder().networkSynchronized(ItemEffectsData.STREAM_CODEC).persistent(ItemEffectsData.CODEC).build());
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemEffectsData>> ITEM_EFFECT_DATA_ADDITION = LRDataComponentTypes.DATA_COMPONENTS.register("item_effect_data_addition", () -> DataComponentType.<ItemEffectsData>builder().networkSynchronized(ItemEffectsData.STREAM_CODEC).persistent(ItemEffectsData.CODEC).build());
+
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SetsEffectBase>> SET_EFFECT = LRDataComponentTypes.DATA_COMPONENTS.register("sets_effect", () -> DataComponentType.<SetsEffectBase>builder().networkSynchronized(SetsEffectBase.STREAM_CODEC).persistent(EERegisterTypes.SETS_EFFECT_TYPE.byNameCodec()).build());
 
     public static void init() {

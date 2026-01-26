@@ -44,15 +44,15 @@ public class InFireTargetDamageIncrease extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.nether_ring.desc.1", DAMAGE_INCREASE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.in_fire_target_damage_increase", DAMAGE_INCREASE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
     }
 
     @SubscribeEvent()
     public static void handleAttack(LivingIncomingDamageEvent event) {
         if (event.getEntity().isOnFire() && event.getSource().getEntity() instanceof LivingEntity attacker) {
-            Optional<Pair<ItemStack, InFireTargetDamageIncrease>> pairOptional = EquipmentEffectAPI.findBestEffect(attacker, LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value());
-            pairOptional.ifPresent(pair -> {
-                DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(CalculatorArg.simpleArg(attacker, pair.getFirst(), pair.getSecond())));
+            LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value().findBestEffect(attacker).ifPresent(infoHolder -> {
+                DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(CalculatorArg.simpleArg(attacker, infoHolder.itemStack(), infoHolder.effect())));
+
             });
         }
     }

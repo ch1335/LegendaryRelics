@@ -79,13 +79,13 @@ public class Redemption extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill.1", UNDEAD_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill",
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.undead_reduce", UNDEAD_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.skill",
                 MAX_HEALTH_PERCENTAGE.toPercentageComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args)
         ).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.sacred_talisman.skill.desc").withColor(5592405));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.skill.desc").withColor(5592405));
         tooltipComponents.add(Component.translatable("legendary_relics.cooldown", 120).withColor(5592405));
     }
 
@@ -94,9 +94,8 @@ public class Redemption extends LRCurioEffectBase {
     public static void onWearerBeDamage(LivingDamageEvent.Post event) {
         LivingEntity livingEntity = event.getEntity();
         if (EquipmentEffectCooldownManager.isNotInCooldown(livingEntity, LREquipmentEffectTypes.REDEMPTION.get())) {
-            Optional<Pair<ItemStack, Redemption>> pair = EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get());
-            pair.ifPresent(itemStackRedemptionPair -> {
-                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, itemStackRedemptionPair.getFirst());
+            LREquipmentEffectTypes.REDEMPTION.get().findBestEffect(livingEntity).ifPresent(infoHolder -> {
+                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, infoHolder.itemStack(), infoHolder.effect());
                 if (livingEntity.getHealth() <= livingEntity.getMaxHealth() * MAX_HEALTH_PERCENTAGE.getValue(args)) {
                     ShieldAPI.addCommonTimeLimitedShield(livingEntity, SHIELD_AMOUNT.getValue(args), (int) (SHIELD_LAST_TIME.getValue(args) * 20));
                     if (livingEntity.isDeadOrDying()) {
@@ -114,7 +113,7 @@ public class Redemption extends LRCurioEffectBase {
             LivingEntity livingEntity = event.getEntity();
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get()).ifPresent(pair -> {
                 if (attacker.getType().is(EntityTypeTags.UNDEAD)) {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.getFirst(), pair.getSecond());
+                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
                     DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -UNDEAD_REDUCE.getValue(args));
                 }
             });

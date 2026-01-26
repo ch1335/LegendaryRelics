@@ -52,7 +52,7 @@ public class AttributeBoostInNether extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.nether_talisman.desc.1", ATTRIBUTE_BOOST.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.attribute_boost_in_nether", ATTRIBUTE_BOOST.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
     }
 
     private void addAttribute(LivingEntity living, ItemStack itemStack) {
@@ -88,11 +88,11 @@ public class AttributeBoostInNether extends LRCurioEffectBase {
 
         if (event.getEntity() instanceof LivingEntity livingEntity) {
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value()).ifPresent(pair -> {
-                AttributeBoostInNether effect = pair.getSecond();
+                AttributeBoostInNether effect = pair.effect();
                 if (event.getDimension().equals(ServerLevel.NETHER)) {
-                    effect.addAttribute(livingEntity, pair.getFirst());
+                    effect.addAttribute(livingEntity, pair.itemStack());
                 } else {
-                    effect.removeAttribute(livingEntity, pair.getFirst());
+                    effect.removeAttribute(livingEntity, pair.itemStack());
                 }
             });
         }

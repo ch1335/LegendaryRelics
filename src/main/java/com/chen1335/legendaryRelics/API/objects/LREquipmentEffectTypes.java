@@ -6,8 +6,10 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
+import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.FallImmunity;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.*;
 import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.ErosionEffect;
+import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.SoulEater;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -42,5 +44,8 @@ public class LREquipmentEffectTypes {
 
     public static DeferredHolder<EffectType<?>, EffectType<BlackDragonChestPlateEffect>> BLACK_DRAGON_CHESTPLATE_EFFECT = EQUIPMENT_EFFECT_TYPES.register("black_dragon_chestplate_effect", () -> new CooldownAbleEffectType<BlackDragonChestPlateEffect>(BlackDragonChestPlateEffect::new, EntityEquipmentEffectData.EquipmentType.ARMOR).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/black_dragon_chestplate.png")));
 
+    public static DeferredHolder<EffectType<?>, EffectType<FallImmunity>> FALL_IMMUNITY = EQUIPMENT_EFFECT_TYPES.register("fall_immunity", () -> new EffectType<>(FallImmunity::new, EntityEquipmentEffectData.EquipmentType.ARMOR));
+
+    public static DeferredHolder<EffectType<?>, EffectType<SoulEater>> SOUL_EATER = EQUIPMENT_EFFECT_TYPES.register("soul_eater", () -> new EffectType<>(SoulEater::new, EntityEquipmentEffectData.EquipmentType.MAIN_HIND));
 
 }

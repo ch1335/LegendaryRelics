@@ -45,14 +45,14 @@ public class FireDamageReduce extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.lava_ring.desc.1", FIRE_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.fire_damage_reduce", FIRE_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void handleLivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.FIRE_DAMAGE_REDUCE.value()).ifPresent(pair -> {
             if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
-                DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.getFirst(), pair.getSecond())));
+                DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.itemStack(), pair.effect())));
             }
         });
     }

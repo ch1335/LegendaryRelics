@@ -1,19 +1,18 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
-import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Add;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -28,7 +27,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
-import java.util.Optional;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class HardenedEffect extends LRCurioEffectBase {
@@ -73,7 +71,7 @@ public class HardenedEffect extends LRCurioEffectBase {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.hardened_ring.skill",
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.hardened_effect",
                 ARMOR_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
                 TIME_KEEP.toComponent(tooltipFlag.hasShiftDown(), args),
                 COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args)
@@ -83,10 +81,9 @@ public class HardenedEffect extends LRCurioEffectBase {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void handleLivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         if (!event.getEntity().level().isClientSide) {
-            Optional<Pair<ItemStack, HardenedEffect>> pairOptional = EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.HARDENED_EFFECT.value());
-            pairOptional.ifPresent(pair -> {
+            LREquipmentEffectTypes.HARDENED_EFFECT.value().findBestEffect(event.getEntity()).ifPresent(infoHolder -> {
                 LivingEntity living = event.getEntity();
-                CalculatorArg calculatorArg = CalculatorArg.simpleArg(living, pair.getFirst(), pair.getSecond());
+                CalculatorArg calculatorArg = CalculatorArg.simpleArg(living, infoHolder.itemStack(), infoHolder.effect());
                 if (EquipmentEffectCooldownManager.isNotInCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value())) {
                     living.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
                             .addAttributeModifier(
@@ -102,6 +99,7 @@ public class HardenedEffect extends LRCurioEffectBase {
                     EquipmentEffectCooldownManager.addCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value(), COOLDOWN.getInt(calculatorArg) * 20);
                 }
             });
+
         }
     }
 }

@@ -22,12 +22,14 @@ public class LREntityData implements INBTSerializable<CompoundTag> {
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.putBoolean("HasGiveBook", hasGiveBook);
+        compoundTag.put("AttributeBonusData", timeLimitedAttributeBonusManager.serializeNBT(provider));
         return compoundTag;
     }
 
     @Override
     public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull CompoundTag nbt) {
         hasGiveBook = nbt.getBoolean("HasGiveBook");
+        timeLimitedAttributeBonusManager.deserializeNBT(provider,nbt.getCompound("AttributeBonusData"));
     }
 
     public void tick(LivingEntity living) {

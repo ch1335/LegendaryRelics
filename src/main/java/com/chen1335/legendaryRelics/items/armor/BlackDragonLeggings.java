@@ -44,7 +44,6 @@ public class BlackDragonLeggings extends BlackDragonArmor {
         CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, stack);
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.1", PROJECTILE_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.2", HEAL_INCREASE.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     @Override

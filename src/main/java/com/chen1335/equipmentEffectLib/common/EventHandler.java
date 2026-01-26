@@ -1,17 +1,16 @@
 package com.chen1335.equipmentEffectLib.common;
 
+import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.API.ICurioEffect;
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.equipmentEffectLib.effectBase.CurioEffect;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -26,7 +25,7 @@ public class EventHandler {
     public static class Game {
         @SubscribeEvent
         public static void onCurioChange(CurioChangeEvent event) {
-            if (event.getFrom().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA)) {
+            if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
                 event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.CURIO);
                 event.getEntity().getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(event.getEntity());
             }
@@ -35,7 +34,7 @@ public class EventHandler {
         @SubscribeEvent
         public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
             EquipmentSlot.Type type = event.getSlot().getType();
-            if (event.getFrom().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) || event.getTo().has(EEItemDataComponentTypes.ITEM_EFFECT_DATA)) {
+            if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
                 switch (type) {
                     case HUMANOID_ARMOR -> {
                         event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR);
@@ -52,8 +51,8 @@ public class EventHandler {
         public static void CurioAttributeModifierEvent(CurioAttributeModifierEvent event) {
             LivingEntity livingEntity = event.getSlotContext().entity();
             if (livingEntity != null) {
-                for (BaseEffect effects : event.getItemStack().getOrDefault(EEItemDataComponentTypes.ITEM_EFFECT_DATA.value(), ItemEffectsData.EMPTY).effects().values()) {
-                    if (effects instanceof CurioEffect curioEffect) {
+                for (BaseEffect effects : EquipmentEffectAPI.getEffects(event.getItemStack()).values()) {
+                    if (effects instanceof ICurioEffect curioEffect) {
                         curioEffect.modifyCurioAttribute(event);
                     }
                 }
@@ -66,14 +65,14 @@ public class EventHandler {
             if (event.getEntity() instanceof LivingEntity living) {
                 EntityEquipmentEffectData entityEquipmentEffectData = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
                 entityEquipmentEffectData.unStackAbleTypeMapEnumMap.get(EntityEquipmentEffectData.EquipmentType.CURIO).values().forEach(pair -> {
-                    if (pair.getSecond() instanceof CurioEffect curioEffect) {
-                        curioEffect.curioTick(pair.getFirst(), living);
+                    if (pair.effect() instanceof ICurioEffect curioEffect) {
+                        curioEffect.curioTick(pair.itemStack(), living);
                     }
                 });
                 entityEquipmentEffectData.stackAbleTypeMapEnumMap.get(EntityEquipmentEffectData.EquipmentType.CURIO).values().forEach(pair -> {
-                    for (Pair<ItemStack, BaseEffect> itemStackBaseEffectPair : pair) {
-                        if (itemStackBaseEffectPair.getSecond() instanceof CurioEffect curioEffect) {
-                            curioEffect.curioTick(itemStackBaseEffectPair.getFirst(), living);
+                    for (EntityEquipmentEffectData.InfoHolder<?> info : pair) {
+                        if (info.effect() instanceof ICurioEffect curioEffect) {
+                            curioEffect.curioTick(info.itemStack(), living);
                         }
                     }
                 });

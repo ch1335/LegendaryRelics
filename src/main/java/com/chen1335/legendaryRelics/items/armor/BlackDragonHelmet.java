@@ -53,7 +53,6 @@ public class BlackDragonHelmet extends BlackDragonArmor {
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.2", GOOD_EFFECT_TIME_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.3", BAD_EFFECT_TIME_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
 
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     @Override

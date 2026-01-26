@@ -10,7 +10,7 @@ public interface IEEItemExtension {
 
     void EE$SetSetsEffect(SetsEffectBase EE$SetsEffect);
 
-    List<BaseEffect> EE$GetItemEffect();
+    List<BaseEffect> EE$GetDefaultItemEffect();
 
-    void EE$SetItemEffect(List<BaseEffect> EE$SetsEffect);
+    void EE$SetDefaultItemEffect(List<BaseEffect> EE$SetsEffect);
 }

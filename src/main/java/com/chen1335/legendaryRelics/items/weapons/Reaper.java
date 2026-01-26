@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.items.weapons;
 
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -10,6 +11,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.entities.projectiles.FlyingReaper;
+import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.SoulEater;
 import com.chen1335.legendaryRelics.items.LRSwordItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -26,7 +28,12 @@ import java.util.List;
 
 public class Reaper extends LRSwordItem {
     public Reaper() {
-        super(Tiers.NETHERITE, new Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.NETHERITE, 10, -2.4F)));
+        super(Tiers.NETHERITE, new Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.NETHERITE, 8, -2.4F)));
+    }
+
+    @Override
+    public List<BaseEffect> getDefaultEffects() {
+        return List.of(new SoulEater(1));
     }
 
     @Calculator

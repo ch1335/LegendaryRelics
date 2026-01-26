@@ -29,12 +29,12 @@ public class ItemMixin implements IEEItemExtension {
     }
 
     @Override
-    public List<BaseEffect> EE$GetItemEffect() {
+    public List<BaseEffect> EE$GetDefaultItemEffect() {
         return EE$ItemEffects;
     }
 
     @Override
-    public void EE$SetItemEffect(List<BaseEffect> EE$SetsEffect) {
+    public void EE$SetDefaultItemEffect(List<BaseEffect> EE$SetsEffect) {
         this.EE$ItemEffects = EE$SetsEffect;
     }
 }

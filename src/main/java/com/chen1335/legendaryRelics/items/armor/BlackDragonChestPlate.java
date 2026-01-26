@@ -34,7 +34,6 @@ public class BlackDragonChestPlate extends BlackDragonArmor {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate_elytra").withStyle(ChatFormatting.GRAY));
     }
 
