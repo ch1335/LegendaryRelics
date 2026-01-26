@@ -15,12 +15,14 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
+
 public class Erosion extends TimeLimitEffect {
 
     public int layers = 1;
     private float perLayerDamage = 1;
 
-    private float armorReducePerLayer = 0.03F;
+    private double armorReducePerLayer = 0.03F;
     private ResourceLocation modifierId = Utils.randomLocation(10);
 
     public Erosion(MobEffectType<?> effectType) {
@@ -31,7 +33,7 @@ public class Erosion extends TimeLimitEffect {
         this(LRSpecialMobEffect.EROSION.value());
         this.initTime(100);
         this.perLayerDamage = perLayerDamage;
-        this.armorReducePerLayer = armorReducePerLayer;
+        this.armorReducePerLayer = new BigDecimal(String.valueOf(armorReducePerLayer)).doubleValue();
     }
 
     @Override
@@ -76,7 +78,7 @@ public class Erosion extends TimeLimitEffect {
         AttributeInstance instance = livingEntity.getAttribute(Attributes.ARMOR);
         if (instance != null) {
             instance.removeModifier(modifierId);
-            instance.addPermanentModifier(new AttributeModifier(modifierId, -armorReducePerLayer * layers, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            instance.addPermanentModifier(new AttributeModifier(modifierId, -(armorReducePerLayer * layers), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         }
     }
 
