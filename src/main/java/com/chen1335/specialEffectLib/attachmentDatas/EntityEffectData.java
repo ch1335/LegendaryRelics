@@ -38,6 +38,7 @@ public class EntityEffectData implements INBTSerializable<CompoundTag> {
                 effect.tick(livingEntity);
                 if (effect.isExpired()) {
                     iterator.remove();
+                    effect.onRemove(livingEntity);
                 }
             }
         }

@@ -2,7 +2,8 @@ package com.chen1335.legendaryRelics.equipmentEffects.weaponEffects;
 
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
@@ -42,6 +43,14 @@ public class ErosionEffect extends LRWeaponEffect {
     );
 
     @Calculator
+    public static final FinalCalculator ARMOR_REDUCE_PER_LAYER = FinalCalculator.of(
+            DarkGoldUpdateArg.of(
+                    Constant.of(0.03F),
+                    Constant.of(0.05F)
+            )
+    );
+
+    @Calculator
     public static final FinalCalculator DAMAGE_PER_LAYER_FULL = FinalCalculator.of(
             Mul.of(
                     DarkGoldUpdateArg.of(
@@ -55,14 +64,15 @@ public class ErosionEffect extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.withering_blade.desc.1", DAMAGE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.withering_blade.desc.2", DAMAGE_PER_LAYER_FULL.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(5592405));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.1").withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.2", DAMAGE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.3", ARMOR_REDUCE_PER_LAYER.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
     }
 
     @Override
     public void hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
-        CalculatorArg arg = CalculatorArg.simpleArg(attacker, stack);
-        Erosion erosion = new Erosion(DAMAGE_PER_LAYER.getValue(arg));
+        CalculatorArg arg = CalculatorArg.simpleArg(attacker, stack,this);
+        Erosion erosion = new Erosion(DAMAGE_PER_LAYER.getValue(arg),ARMOR_REDUCE_PER_LAYER.getValue(arg));
         erosion.setSourceEntity(attacker);
         SpecialEffectAPI.addEffectToEntity(target, erosion, Erosion::getFinal);
     }

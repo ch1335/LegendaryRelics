@@ -85,4 +85,12 @@ public class SpecialMobEffect {
     public boolean isExpired() {
         return false;
     }
+
+    public void onAddOrUpdate(LivingEntity livingEntity) {
+
+    }
+
+    public void onRemove(LivingEntity livingEntity) {
+
+    }
 }

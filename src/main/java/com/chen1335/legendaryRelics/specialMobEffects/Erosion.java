@@ -3,11 +3,16 @@ package com.chen1335.legendaryRelics.specialMobEffects;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
 import com.chen1335.legendaryRelics.entities.TreatmentBall;
+import com.chen1335.legendaryRelics.utils.Utils;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.TimeLimitEffect;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.Nullable;
 
 public class Erosion extends TimeLimitEffect {
@@ -15,14 +20,18 @@ public class Erosion extends TimeLimitEffect {
     public int layers = 1;
     private float perLayerDamage = 1;
 
+    private float armorReducePerLayer = 0.03F;
+    private ResourceLocation modifierId = Utils.randomLocation(10);
+
     public Erosion(MobEffectType<?> effectType) {
         super(effectType);
     }
 
-    public Erosion(float perLayerDamage) {
+    public Erosion(float perLayerDamage,float armorReducePerLayer) {
         this(LRSpecialMobEffect.EROSION.value());
         this.initTime(100);
         this.perLayerDamage = perLayerDamage;
+        this.armorReducePerLayer = armorReducePerLayer;
     }
 
     @Override
@@ -40,7 +49,8 @@ public class Erosion extends TimeLimitEffect {
     }
 
     public Erosion getFinal(Erosion theOld) {
-        this.layers = Math.min(theOld.layers + this.layers, 4);
+        this.layers = Math.min(theOld.layers + this.layers, 5);
+        this.modifierId = theOld.modifierId;
         return this;
     }
 
@@ -49,6 +59,7 @@ public class Erosion extends TimeLimitEffect {
         CompoundTag compoundTag = super.save();
         compoundTag.putInt("Layers", layers);
         compoundTag.putFloat("PerLayerDamage", perLayerDamage);
+        compoundTag.putString("modifierId", modifierId.toString());
         return compoundTag;
     }
 
@@ -57,6 +68,23 @@ public class Erosion extends TimeLimitEffect {
         super.load(compoundTag);
         layers = compoundTag.getInt("Layers");
         perLayerDamage = compoundTag.getFloat("PerLayerDamage");
+        modifierId = ResourceLocation.parse(compoundTag.getString("modifierId"));
+    }
 
+    @Override
+    public void onAddOrUpdate(LivingEntity livingEntity) {
+        AttributeInstance instance = livingEntity.getAttribute(Attributes.ARMOR);
+        if (instance != null) {
+            instance.removeModifier(modifierId);
+            instance.addPermanentModifier(new AttributeModifier(modifierId, -armorReducePerLayer * layers, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        }
+    }
+
+    @Override
+    public void onRemove(LivingEntity livingEntity) {
+        AttributeInstance instance = livingEntity.getAttribute(Attributes.ARMOR);
+        if (instance != null) {
+            instance.removeModifier(modifierId);
+        }
     }
 }

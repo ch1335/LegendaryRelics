@@ -3,7 +3,8 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.common.AttributeFixer;
+import com.chen1335.legendaryRelics.common.attributeFix.AttributeFixer;
+import com.chen1335.legendaryRelics.common.attributeFix.fixTypes.ConstantValueFix;
 import com.chen1335.legendaryRelics.common.calculator.*;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Add;
@@ -72,7 +73,7 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
         if (event.getSlotContext().entity().level().isClientSide) {
             runnable.run();
         } else {
-            AttributeFixer.runWhileFix(event.getSlotContext().entity(), Attributes.ARMOR, oldArmor, runnable);
+            AttributeFixer.runWhileFix(event.getSlotContext().entity(), Attributes.ARMOR, new ConstantValueFix(oldArmor), runnable);
         }
 
     }

@@ -16,12 +16,17 @@ public class SpecialEffectAPI {
     }
 
     public static <T extends SpecialMobEffect> void addEffectToEntity(LivingEntity target, T effect, @Nullable FinalEffectGetter<T> finalEffectGetter) {
-        EntityEffectData entityEffectData = target.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA);
+        EntityEffectData entityEffectData = getEntityEffectData(target);
         Map<MobEffectType<?>, SpecialMobEffect> effectMap = entityEffectData.getSourceEffects(effect.getSourceEntityUUID());
         SpecialMobEffect old = effectMap.get(effect.getEffectType());
         if (finalEffectGetter != null && old != null) {
             effect = finalEffectGetter.accept(effect, Cast.cast(old));
         }
         effectMap.put(effect.getEffectType(), effect);
+        effect.onAddOrUpdate(target);
+    }
+
+    public static EntityEffectData getEntityEffectData(LivingEntity livingEntity){
+        return livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA);
     }
 }

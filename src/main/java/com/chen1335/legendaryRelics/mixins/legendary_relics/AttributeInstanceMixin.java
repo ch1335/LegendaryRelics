@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
+import com.chen1335.legendaryRelics.common.attributeFix.fixTypes.BaseFix;
 import com.chen1335.legendaryRelics.mixinsAPI.IAttributeInstanceMixin;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
@@ -17,19 +18,19 @@ public abstract class AttributeInstanceMixin implements IAttributeInstanceMixin 
 
     @Shadow private double cachedValue;
     @Unique
-    public AtomicDouble lr$valueFix = null;
+    public BaseFix lr$valueFix = null;
 
     @WrapMethod(method = "getValue")
     private double getValue(Operation<Double> original) {
         if (lr$valueFix != null) {
-            return lr$valueFix.doubleValue();
+            return lr$valueFix.getValue(original.call());
         }
         return original.call();
     }
 
     @Unique
-    public void lr$setValueFix(AtomicDouble atomicDouble) {
-        lr$valueFix = atomicDouble;
+    public void lr$setValueFix(BaseFix fix) {
+        lr$valueFix = fix;
     }
 
     @Override
