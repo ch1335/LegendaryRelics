@@ -14,9 +14,9 @@ import net.neoforged.neoforge.common.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public record CollectedMinerals(List<Block> ores) {
-
 
     public static final Codec<CollectedMinerals> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
@@ -53,5 +53,4 @@ public record CollectedMinerals(List<Block> ores) {
     public static CollectedMinerals empty() {
         return new CollectedMinerals(List.of());
     }
-
 }

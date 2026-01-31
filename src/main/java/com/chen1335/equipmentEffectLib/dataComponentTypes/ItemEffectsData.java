@@ -71,17 +71,4 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
             itemStack.set(EEItemDataComponentTypes.ITEM_EFFECT_DATA, new ItemEffectsData(builder.build()));
         }
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemEffectsData that = (ItemEffectsData) o;
-        return Objects.equals(effects, that.effects);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(effects);
-    }
 }

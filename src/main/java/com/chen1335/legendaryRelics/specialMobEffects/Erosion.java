@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.specialMobEffects;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
 import com.chen1335.legendaryRelics.entities.TreatmentBall;
-import com.chen1335.legendaryRelics.utils.Utils;
+import com.chen1335.legendaryRelics.utils.Util;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.TimeLimitEffect;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +23,7 @@ public class Erosion extends TimeLimitEffect {
     private float perLayerDamage = 1;
 
     private double armorReducePerLayer = 0.03F;
-    private ResourceLocation modifierId = Utils.randomLocation(10);
+    private ResourceLocation modifierId = Util.randomLocation(10);
 
     public Erosion(MobEffectType<?> effectType) {
         super(effectType);

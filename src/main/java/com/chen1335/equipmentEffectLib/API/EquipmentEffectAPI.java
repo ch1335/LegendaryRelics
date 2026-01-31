@@ -2,14 +2,17 @@ package com.chen1335.equipmentEffectLib.API;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
+import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.util.Cast;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
@@ -19,12 +22,15 @@ import java.util.Optional;
 
 public final class EquipmentEffectAPI {
     public static <T extends BaseEffect> Optional<EntityEquipmentEffectData.InfoHolder<T>> findBestEffect(LivingEntity living, EffectType<T> effectType) {
-        return Optional.ofNullable(Cast.cast(living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).unStackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType)));
+        @Nullable List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
+        return list == null ? Optional.empty() : Optional.of(list.getFirst());
     }
 
     public static <T extends BaseEffect> Optional<List<EntityEquipmentEffectData.InfoHolder<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
-        return Optional.ofNullable(Cast.cast(living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).stackAbleTypeMapEnumMap.get(effectType.getEquipmentType()).get(effectType)));
+        @Nullable List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
+        return list == null ? Optional.empty() : Optional.of(list);
     }
+
 
     public static boolean haveEffects(ItemStack itemStack) {
         return itemStack.has(EEItemDataComponentTypes.ITEM_EFFECT_DATA) || itemStack.has(EEItemDataComponentTypes.ITEM_EFFECT_DATA_ADDITION);
@@ -60,7 +66,26 @@ public final class EquipmentEffectAPI {
         return ImmutableMap.copyOf(map);
     }
 
+    @Nullable
     public static <T extends BaseEffect> T getEffect(ItemStack itemStack, EffectType<T> type) {
         return Cast.cast(getEffects(itemStack).get(type));
+    }
+
+    @Nullable
+    public static SetsEffectBase getItemSetEffect(ItemStack itemStack) {
+        return ((IEEItemExtension) itemStack.getItem()).EE$GetSetsEffect();
+    }
+
+
+    public static void updateEntitySetEffect(@NotNull LivingEntity living) {
+        living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(living);
+    }
+
+    public static void updateEntityEquipmentEffect(@NotNull LivingEntity living, EntityEquipmentEffectData.IEquipmentType equipmentType) {
+        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(living, equipmentType);
+    }
+
+    public static void updateEntityEquipmentEffectSameItem(@NotNull LivingEntity living, EntityEquipmentEffectData.IEquipmentType equipmentType, ItemStack from, ItemStack to) {
+        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).updateSameItem(equipmentType,from,to);
     }
 }

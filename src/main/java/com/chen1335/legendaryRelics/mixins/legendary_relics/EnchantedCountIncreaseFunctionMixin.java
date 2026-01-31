@@ -2,15 +2,12 @@ package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
-import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -29,7 +26,7 @@ public class EnchantedCountIncreaseFunctionMixin {
             Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
             Entity attacker = context.getParamOrNull(LootContextParams.ATTACKING_ENTITY);
             if (entity instanceof LivingEntity mob && attacker instanceof LivingEntity livingAttacker) {
-                for (EntityEquipmentEffectData.InfoHolder collectAllEffect : livingAttacker.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA.get()).collectAllCurioEffects()) {
+                for (EntityEquipmentEffectData.InfoHolder<?> collectAllEffect : livingAttacker.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA.get()).collectAllEffects()) {
                     lootingLevel = collectAllEffect.effect().modifyLoot(collectAllEffect.itemStack(), mob, livingAttacker, lootingLevel);
                 }
             }

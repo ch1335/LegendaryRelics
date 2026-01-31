@@ -3,120 +3,147 @@ package com.chen1335.equipmentEffectLib.attachmentDatas;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
-import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.MainHand;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.Util;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.apache.logging.log4j.util.Cast;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EntityEquipmentEffectData {
-    public record InfoHolder<T extends BaseEffect>(ItemStack itemStack, T effect) {
+
+    public static class InfoHolder<T extends BaseEffect> {
+        private ItemStack itemStack;
+        private T effect;
+
+        public InfoHolder(ItemStack itemStack, T effect) {
+            this.itemStack = itemStack;
+            this.effect = effect;
+        }
+
+        public T effect() {
+            return effect;
+        }
+
+        public ItemStack itemStack() {
+            return itemStack;
+        }
+
+        private void setEffect(T effect) {
+            this.effect = effect;
+        }
+
+        private void setItemStack(ItemStack itemStack) {
+            this.itemStack = itemStack;
+        }
     }
 
-    public final EnumMap<EquipmentType, Map<EffectType<?>, InfoHolder<?>>> unStackAbleTypeMapEnumMap = Util.make(() -> {
-        EnumMap<EquipmentType, Map<EffectType<?>, InfoHolder<?>>> enumMap = new EnumMap<>(EquipmentType.class);
-        for (EquipmentType value : EquipmentType.values()) {
-            enumMap.put(value, new HashMap<>());
-        }
-        return enumMap;
-    });
+    private final Map<IEquipmentType, Map<EffectType<?>, List<InfoHolder<?>>>> effects = new HashMap<>();
 
-    public final EnumMap<EquipmentType, Map<EffectType<?>, List<InfoHolder<?>>>> stackAbleTypeMapEnumMap = Util.make(() -> {
-        EnumMap<EquipmentType, Map<EffectType<?>, List<InfoHolder<?>>>> enumMap = new EnumMap<>(EquipmentType.class);
-        for (EquipmentType value : EquipmentType.values()) {
-            enumMap.put(value, new HashMap<>());
-        }
-        return enumMap;
-    });
-
-
-    public List<InfoHolder<?>> collectAllCurioEffects() {
+    public List<InfoHolder<?>> collectAllEffects() {
         List<InfoHolder<?>> list = new ArrayList<>();
-        for (Map<EffectType<?>, InfoHolder<?>> value : unStackAbleTypeMapEnumMap.values()) {
-            list.addAll(value.values());
+        for (Map.Entry<IEquipmentType, Map<EffectType<?>, List<InfoHolder<?>>>> entry : effects.entrySet()) {
+            for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry1 : entry.getValue().entrySet()) {
+                list.addAll(entry1.getValue());
+            }
         }
-        for (Map<EffectType<?>, List<InfoHolder<?>>> value : stackAbleTypeMapEnumMap.values()) {
-            value.forEach((effectType, info) -> {
-                list.addAll(info);
-            });
-        }
-        return list;
+        return ImmutableList.copyOf(list);
     }
 
-    public void update(LivingEntity entity, EquipmentType equipmentType) {
+    public Map<EffectType<?>, List<InfoHolder<?>>> getEffects(IEquipmentType equipmentType) {
+        return effects.getOrDefault(equipmentType, Map.of());
+    }
+
+    @Nullable
+    public <T extends BaseEffect> List<InfoHolder<T>> getEffectsByType(EffectType<T> effectType) {
+        return Cast.cast(getEffects(effectType.getEquipmentType()).get(effectType));
+    }
+
+    //快速跟新同一个itemStack的效果
+    public void updateSameItem(IEquipmentType equipmentType, ItemStack from, ItemStack to) {
+        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : getEffects(equipmentType).entrySet()) {
+            for (InfoHolder<?> infoHolder : entry.getValue()) {
+                if (ItemStack.matches(infoHolder.itemStack, from)) {
+                    infoHolder.setItemStack(to);
+                }
+            }
+        }
+
+    }
+
+    //跟新所有效果
+    public void update(LivingEntity entity, IEquipmentType equipmentType) {
         if (equipmentType.getSource() == null) {
             return;
         }
         List<ItemStack> itemStacks = equipmentType.getSource().get(entity);
-        Map<EffectType<?>, InfoHolder<?>> unStackAbleEffects = new HashMap<>();
-        Map<EffectType<?>, List<InfoHolder<?>>> stackAbleEffects = new HashMap<>();
+        Map<EffectType<?>, List<InfoHolder<?>>> newEffects = new HashMap<>();
+
 
         for (ItemStack itemStack : itemStacks) {
             if (!itemStack.isEmpty() && itemStack.has(EEItemDataComponentTypes.ITEM_EFFECT_DATA)) {
-                EquipmentEffectAPI.getEffects(itemStack).forEach((effectType, baseEffect) -> {
+                for (Map.Entry<EffectType<?>, BaseEffect> entry : EquipmentEffectAPI.getEffects(itemStack).entrySet()) {
+                    EffectType<?> effectType = entry.getKey();
+                    BaseEffect baseEffect = entry.getValue();
                     if (effectType.getEquipmentType() == equipmentType) {
-                        if (!effectType.isStackable()) {
-                            unStackAbleEffects.compute(effectType, (effectTypeHolder1, oldPair) -> {
-                                if (oldPair == null || baseEffect.isBetterThan(entity, itemStack, oldPair.effect, oldPair.itemStack)) {
-                                    return new InfoHolder<>(itemStack, baseEffect);
-                                }
-                                return oldPair;
-                            });
+                        if (effectType.isStackable()) {
+                            newEffects.computeIfAbsent(effectType, effectType1 -> new ArrayList<>()).add(new InfoHolder<>(itemStack, baseEffect));
                         } else {
-                            stackAbleEffects.computeIfAbsent(effectType, effectType1 -> new ArrayList<>()).add(new InfoHolder<>(itemStack, baseEffect));
+                            List<InfoHolder<?>> oldInfos = newEffects.get(effectType);
+                            if (oldInfos == null) {
+                                newEffects.put(effectType, List.of(new InfoHolder<>(itemStack, baseEffect)));
+                            } else {
+                                InfoHolder<?> oldInfo = oldInfos.getFirst();
+                                if (baseEffect.isBetterThan(entity, itemStack, oldInfo.effect, oldInfo.itemStack)) {
+                                    newEffects.put(effectType, List.of(new InfoHolder<>(itemStack, baseEffect)));
+                                }
+                            }
                         }
                     }
-                });
-            }
-        }
-
-        Map<EffectType<?>, InfoHolder<?>> oldUnStackAbleEffects = unStackAbleTypeMapEnumMap.get(equipmentType);
-
-        Map<EffectType<?>, List<InfoHolder<?>>> oldStackAbleEffects = stackAbleTypeMapEnumMap.get(equipmentType);
-
-        unStackAbleEffects.forEach((effectType, pair) -> {
-            if (!oldUnStackAbleEffects.containsKey(effectType)) {
-                pair.effect.onActive(entity, pair.itemStack);
-            } else {
-                BaseEffect old = oldUnStackAbleEffects.get(effectType).effect;
-                BaseEffect theNew = pair.effect;
-                if (old.hashCode() != theNew.hashCode()) {
-                    old.onDeActive(entity, pair.itemStack);
-                    theNew.onActive(entity, pair.itemStack);
                 }
-                oldUnStackAbleEffects.remove(effectType);
-            }
-        });
-
-
-        for (InfoHolder<?> value : oldUnStackAbleEffects.values()) {
-            value.effect.onDeActive(entity, value.itemStack);
-        }
-
-        for (List<InfoHolder<?>> value : stackAbleEffects.values()) {
-            for (InfoHolder<?> pair : value) {
-                pair.effect.onActive(entity, pair.itemStack);
             }
         }
 
-        for (List<InfoHolder<?>> value : oldStackAbleEffects.values()) {
-            for (InfoHolder<?> info : value) {
-                info.effect.onDeActive(entity, info.itemStack);
+        Map<EffectType<?>, List<InfoHolder<?>>> oldEffects = effects.getOrDefault(equipmentType, Map.of());
+
+        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : newEffects.entrySet()) {
+            if (!oldEffects.containsKey(entry.getKey())) {
+                for (InfoHolder<?> infoHolder : entry.getValue()) {
+                    infoHolder.effect.onActive(entity, infoHolder.itemStack);
+                }
             }
         }
 
-        oldUnStackAbleEffects.clear();
-        oldUnStackAbleEffects.putAll(unStackAbleEffects);
-
-        oldStackAbleEffects.clear();
-        oldStackAbleEffects.putAll(stackAbleEffects);
+        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : oldEffects.entrySet()) {
+            List<InfoHolder<?>> newInfoHolders = newEffects.get(entry.getKey());
+            if (newInfoHolders == null) {
+                for (InfoHolder<?> infoHolder : entry.getValue()) {
+                    infoHolder.effect.onDeActive(entity, infoHolder.itemStack);
+                }
+            } else {
+                List<InfoHolder<?>> oldInfoHolders = entry.getValue();
+                for (InfoHolder<?> oldInfoHolder : oldInfoHolders) {
+                    if (!newInfoHolders.contains(oldInfoHolder)) {
+                        oldInfoHolder.effect.onDeActive(entity, oldInfoHolder.itemStack);
+                    }
+                }
+                for (InfoHolder<?> newInfoHolder : newInfoHolders) {
+                    if (!oldInfoHolders.contains(newInfoHolder)) {
+                        newInfoHolder.effect.onActive(entity, newInfoHolder.itemStack);
+                    }
+                }
+            }
+        }
+        effects.put(equipmentType, newEffects);
     }
 
     public interface IEquipmentType {

@@ -9,11 +9,11 @@ public class CooldownAbleEffectType<T extends BaseEffect> extends EffectType<T> 
 
     private ResourceLocation resourceLocation = null;
 
-    public CooldownAbleEffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType, boolean stackable) {
+    public CooldownAbleEffectType(EffectFactory<T> factory, EntityEquipmentEffectData.IEquipmentType equipmentType, boolean stackable) {
         super(factory, equipmentType, stackable);
     }
 
-    public CooldownAbleEffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType) {
+    public CooldownAbleEffectType(EffectFactory<T> factory, EntityEquipmentEffectData.IEquipmentType equipmentType) {
         super(factory, equipmentType);
     }
 

@@ -31,7 +31,7 @@ public class BaseEffectJS extends BaseEffect {
     Consumer<EquipmentEffectBuilder.AppendToolTipContext> appendToolTip = context -> {
     };
 
-    CompoundTag getNbt() {
+    CompoundTag getEffectNbt() {
         if (!has(DataComponents.CUSTOM_DATA)) {
             set(DataComponents.CUSTOM_DATA, CustomData.of(new CompoundTag()));
         }

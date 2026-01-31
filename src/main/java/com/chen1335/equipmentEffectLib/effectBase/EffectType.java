@@ -16,7 +16,7 @@ public class EffectType<T extends BaseEffect> {
     private int cachedHashCode = 0;
 
     private final EffectFactory<T> factory;
-    private final EntityEquipmentEffectData.EquipmentType equipmentType;
+    private final EntityEquipmentEffectData.IEquipmentType equipmentType;
     private final boolean stackable;
 
     @Override
@@ -27,13 +27,13 @@ public class EffectType<T extends BaseEffect> {
         return cachedHashCode;
     }
 
-    public EffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType, boolean stackable) {
+    public EffectType(EffectFactory<T> factory, EntityEquipmentEffectData.IEquipmentType equipmentType, boolean stackable) {
         this.factory = factory;
         this.equipmentType = equipmentType;
         this.stackable = stackable;
     }
 
-    public EffectType(EffectFactory<T> factory, EntityEquipmentEffectData.EquipmentType equipmentType) {
+    public EffectType(EffectFactory<T> factory, EntityEquipmentEffectData.IEquipmentType equipmentType) {
         this(factory, equipmentType, false);
     }
 
@@ -42,7 +42,7 @@ public class EffectType<T extends BaseEffect> {
         return factory.create(this, level);
     }
 
-    public EntityEquipmentEffectData.EquipmentType getEquipmentType() {
+    public EntityEquipmentEffectData.IEquipmentType getEquipmentType() {
         return equipmentType;
     }
 

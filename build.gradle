@@ -184,6 +184,7 @@ dependencies {
     implementation "curse.maven:placebo-283644:6751290"
     implementation "curse.maven:nbtedit-reborn-678133:6125444"
     implementation "curse.maven:curios-309927:6529130"
+
     implementation "curse.maven:bookshelf-228525:7335846"
     implementation "curse.maven:puzzles-lib-495476:7140307"
     implementation "curse.maven:prickle-1023259:6961457"
