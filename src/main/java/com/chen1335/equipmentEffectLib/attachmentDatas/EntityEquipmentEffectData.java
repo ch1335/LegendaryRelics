@@ -1,6 +1,8 @@
 package com.chen1335.equipmentEffectLib.attachmentDatas;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.API.IArmorEffect;
+import com.chen1335.equipmentEffectLib.API.ICurioEffect;
 import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityEquipmentEffectData {
+
 
     public static class InfoHolder<T extends BaseEffect> {
         private ItemStack itemStack;
@@ -68,7 +71,7 @@ public class EntityEquipmentEffectData {
         return Cast.cast(getEffects(effectType.getEquipmentType()).get(effectType));
     }
 
-    //快速跟新同一个itemStack的效果
+    //快速更新同一个itemStack的效果
     public void updateSameItem(IEquipmentType equipmentType, ItemStack from, ItemStack to) {
         for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : getEffects(equipmentType).entrySet()) {
             for (InfoHolder<?> infoHolder : entry.getValue()) {
@@ -80,7 +83,25 @@ public class EntityEquipmentEffectData {
 
     }
 
-    //跟新所有效果
+    public void tick(LivingEntity living) {
+        for (List<EntityEquipmentEffectData.InfoHolder<?>> value : getEffects(EquipmentType.CURIO).values()) {
+            for (EntityEquipmentEffectData.InfoHolder<?> info : value) {
+                if (info.effect() instanceof ICurioEffect curioEffect) {
+                    curioEffect.curioTick(info.itemStack(), living);
+                }
+            }
+        }
+
+        for (List<EntityEquipmentEffectData.InfoHolder<?>> value : getEffects(EquipmentType.ARMOR).values()) {
+            for (EntityEquipmentEffectData.InfoHolder<?> info : value) {
+                if (info.effect() instanceof IArmorEffect armorEffect) {
+                    armorEffect.armorTick(info.itemStack(), living);
+                }
+            }
+        }
+    }
+
+    //更新所有效果
     public void update(LivingEntity entity, IEquipmentType equipmentType) {
         if (equipmentType.getSource() == null) {
             return;
@@ -115,22 +136,22 @@ public class EntityEquipmentEffectData {
 
         Map<EffectType<?>, List<InfoHolder<?>>> oldEffects = effects.getOrDefault(equipmentType, Map.of());
 
-        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : newEffects.entrySet()) {
-            if (!oldEffects.containsKey(entry.getKey())) {
+        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : oldEffects.entrySet()) {
+            if (!newEffects.containsKey(entry.getKey())) {
                 for (InfoHolder<?> infoHolder : entry.getValue()) {
-                    infoHolder.effect.onActive(entity, infoHolder.itemStack);
+                    infoHolder.effect.onDeActive(entity, infoHolder.itemStack);
                 }
             }
         }
 
-        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : oldEffects.entrySet()) {
-            List<InfoHolder<?>> newInfoHolders = newEffects.get(entry.getKey());
-            if (newInfoHolders == null) {
+        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : newEffects.entrySet()) {
+            List<InfoHolder<?>> oldInfoHolders = oldEffects.get(entry.getKey());
+            if (oldInfoHolders == null) {
                 for (InfoHolder<?> infoHolder : entry.getValue()) {
-                    infoHolder.effect.onDeActive(entity, infoHolder.itemStack);
+                    infoHolder.effect.onActive(entity, infoHolder.itemStack);
                 }
             } else {
-                List<InfoHolder<?>> oldInfoHolders = entry.getValue();
+                List<InfoHolder<?>> newInfoHolders = entry.getValue();
                 for (InfoHolder<?> oldInfoHolder : oldInfoHolders) {
                     if (!newInfoHolders.contains(oldInfoHolder)) {
                         oldInfoHolder.effect.onDeActive(entity, oldInfoHolder.itemStack);

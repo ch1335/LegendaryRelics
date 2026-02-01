@@ -5,14 +5,14 @@ import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.attributeFix.AttributeFixer;
 import com.chen1335.legendaryRelics.common.attributeFix.fixTypes.ConstantValueFix;
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Add;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
-import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.LevelBasedValue;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.List;
@@ -46,7 +45,8 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
                     Constant.of(1),
                     Mul.of(
                             DarkGoldUpdateArg.of(
-                                    EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.15f,0.05f))
+                                    Constant.of(0.15F),
+                                    Constant.of(0.2F)
                             ),
                             EntityAttributeValue.of(Attributes.ARMOR)
                     )

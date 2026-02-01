@@ -2,29 +2,25 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
-import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
-import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
-import com.mojang.datafixers.util.Pair;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
-import java.util.Optional;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class InFireTargetDamageIncrease extends LRCurioEffectBase {
@@ -38,7 +34,8 @@ public class InFireTargetDamageIncrease extends LRCurioEffectBase {
 
     @Calculator
     public static final FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.1f,0.05f))
+            Constant.of(0.1F),
+            Constant.of(0.15F)
     ));
 
     @Override

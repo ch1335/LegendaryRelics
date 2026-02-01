@@ -27,6 +27,7 @@ public class EventHandler {
         public static void onCurioChange(CurioChangeEvent event) {
             boolean updateTotal = false;
             boolean updateSameItem = false;
+
             if (!event.getFrom().is(event.getTo().getItem())) {
                 if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
                     updateTotal = true;
@@ -106,7 +107,9 @@ public class EventHandler {
         @SubscribeEvent
         public static void onEntityTick(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity living) {
+                living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).tick(living);
                 EntityEquipmentEffectData entityEquipmentEffectData = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
+
 
                 for (List<EntityEquipmentEffectData.InfoHolder<?>> value : entityEquipmentEffectData.getEffects(EntityEquipmentEffectData.EquipmentType.CURIO).values()) {
                     for (EntityEquipmentEffectData.InfoHolder<?> info : value) {
