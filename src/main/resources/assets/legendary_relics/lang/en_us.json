@@ -91,5 +91,8 @@
   "legendary_relics.loot_config.request_update_failure": "Synchronization fails with insufficient permissions.",
   "legendary_relics.loot_config.request_update_success": "Synchronization was successful!",
   "legendary_relics.loot_config.rolls": "Rolls",
-  "legendary_relics.special.cannot_be_tacked": "Multiple curios cannot be stacked for this effect"
+  "legendary_relics.special.cannot_be_tacked": "Multiple curios cannot be stacked for this effect",
+  "legendary_relics.loot_config.info.ali": "You may need to re-enter the world to update ALI's loot table",
+  "legendary_relics.rolls_type.independent": "Items in this loot table scroll independently"
+
 }

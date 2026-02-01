@@ -8,13 +8,13 @@ import java.util.List;
 
 public class LootEntries {
 
-    public static LootEntry WITHER_SPIRIT = LootEntry.ofSimpleItem(2, List.of(
+    public static LootEntry WITHER_SPIRIT = LootEntry.ofSimpleItem(1, List.of(
             EntityType.WITHER.getDefaultLootTable().location()
-    ), LRItems.WITHER_SPIRIT);
+    ), LRItems.WITHER_SPIRIT).rolls(2);
 
-    public static LootEntry DRAGON_SCALE = LootEntry.ofSimpleItem(4, List.of(
+    public static LootEntry DRAGON_SCALE = LootEntry.ofSimpleItem(1, List.of(
             EntityType.ENDER_DRAGON.getDefaultLootTable().location()
-    ), LRItems.DRAGON_SCALE);
+    ), LRItems.DRAGON_SCALE).rolls(4);
 
     public static LootEntry HEALING_TALISMAN = LootEntry.ofSimpleItem(0.2, List.of(
             BuiltInLootTables.JUNGLE_TEMPLE.location(),

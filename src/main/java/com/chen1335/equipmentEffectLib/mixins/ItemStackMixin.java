@@ -69,7 +69,8 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
             } else {
                 for (BaseEffect baseEffect : itemExtension.EE$GetDefaultItemEffect()) {
                     BaseEffect old = itemEffectsData.effects().get(baseEffect.getType());
-                    builder.put(baseEffect.getType(), Objects.requireNonNullElse(old, baseEffect.copy()));
+                    //深拷贝
+                    builder.put(baseEffect.getType(), Objects.requireNonNullElse(old, baseEffect).copy());
                 }
             }
             components.set(EEItemDataComponentTypes.ITEM_EFFECT_DATA.value(), new ItemEffectsData(builder.build()));

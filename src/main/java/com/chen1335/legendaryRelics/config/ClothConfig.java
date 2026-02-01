@@ -10,8 +10,11 @@ import me.shedaniel.clothconfig2.gui.entries.IntegerListEntry;
 import me.shedaniel.clothconfig2.gui.entries.StringListListEntry;
 import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
@@ -79,11 +82,17 @@ public class ClothConfig {
 
             configBuilder.setSavingRunnable(() -> {
                 Config.save();
-                if (parent.getMinecraft().getSingleplayerServer() != null || parent.getMinecraft().player == null) {
-                    LootConfig.save();
-                } else if (parent.getMinecraft().player.getPermissionLevel() >= 2) {
-                    parent.getMinecraft().player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.request_update"));
-                    PacketDistributor.sendToServer(new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
+                LocalPlayer player = parent.getMinecraft().player;
+                if (player != null) {
+                    if (parent.getMinecraft().getSingleplayerServer() != null) {
+                        LootConfig.save();
+                        if (ModList.get().isLoaded("ali")) {
+                            player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.info.ali"));
+                        }
+                    } else if (player.getPermissionLevel() >= 2) {
+                        player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.request_update"));
+                        PacketDistributor.sendToServer(new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
+                    }
                 }
 
             });

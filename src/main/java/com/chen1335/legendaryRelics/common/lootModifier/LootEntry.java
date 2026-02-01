@@ -27,7 +27,7 @@ public class LootEntry {
     public DefaultValueHolder<Double> chance;
     public DefaultValueHolder<Integer> rolls = new DefaultValueHolder<>(1);
     public DefaultValueHolder<List<String>> lootTables;
-    private final Consumer<ObjectArrayList<ItemStack>> consumer;
+    public final Consumer<ObjectArrayList<ItemStack>> stackGetter;
     public boolean isCreatedByRemote = false;
     public static final StreamCodec<ByteBuf, LootEntry> STREAM_CODEC = StreamCodec.of((byteBuf, lootEntry) -> {
         ByteBufCodecs.STRING_UTF8.encode(byteBuf, lootEntry.id);
@@ -59,7 +59,7 @@ public class LootEntry {
         this.id = id;
         this.chance = new DefaultValueHolder<>(Double.parseDouble(String.format("%.2f", chance)));
         this.lootTables = new DefaultValueHolder<>(lootTables, List.copyOf(lootTables));
-        this.consumer = consumer;
+        this.stackGetter = consumer;
         LootModifier.LOOT_ENTRIES.put(id, this);
     }
 
@@ -134,12 +134,12 @@ public class LootEntry {
                 for (int r = 0; r < rolls.value; r++) {
                     double i = Math.floor(chance.value);
                     for (int j = 0; j < i; j++) {
-                        consumer.accept(generatedLoot);
+                        stackGetter.accept(generatedLoot);
                     }
 
                     double i2 = chance.value - i;
                     if (i2 >= Math.random()) {
-                        consumer.accept(generatedLoot);
+                        stackGetter.accept(generatedLoot);
                     }
                 }
                 break;

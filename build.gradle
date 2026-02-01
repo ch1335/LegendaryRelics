@@ -200,6 +200,7 @@ dependencies {
     implementation "curse.maven:prism-lib-638111:6372979"
     implementation "curse.maven:tslatentitystatus-tes-830420:7115952"
 
+    implementation "curse.maven:advanced-loot-info-1205426:7537434"
     runtimeOnly 'net.covers1624:DevLogin:0.1.0.5'
 }
 

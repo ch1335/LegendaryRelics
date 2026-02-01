@@ -1,8 +1,7 @@
 {
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "在下界时，你的大部分属性提升%s",
-  "equipment_effect.legendary_relics.soul_eater": "§6噬魂者§r:击杀生物时立刻恢复%s最大生命值并且获得被击杀生物的%s攻击力，持续10秒",
-
   "equipment_effect.legendary_relics.dark_steel_claw": "这件饰品获得%s攻击伤害。",
+  "equipment_effect.legendary_relics.soul_eater": "§6噬魂者§r:击杀生物时立刻恢复%s最大生命值并且获得被击杀生物的%s攻击力，持续10秒",
   "equipment_effect.legendary_relics.fall_immunity": "免疫摔落伤害",
   "equipment_effect.legendary_relics.fire_damage_reduce": "你受到的火焰伤害降低%s。",
   "equipment_effect.legendary_relics.hardened_effect": "受到伤害后，获得%s护甲，持续%s秒，这个效果有%s秒冷却时间。",
@@ -91,5 +90,7 @@
   "legendary_relics.loot_config.request_update_failure": "同步失败，权限不足。",
   "legendary_relics.loot_config.request_update_success": "同步成功!",
   "legendary_relics.loot_config.rolls": "投掷次数",
-  "legendary_relics.special.cannot_be_tacked": "该效果多个饰品不能叠加"
+  "legendary_relics.special.cannot_be_tacked": "该效果多个饰品不能叠加",
+  "legendary_relics.loot_config.info.ali": "你可能需要重新进入世界来更新ALI的战利品表",
+  "legendary_relics.rolls_type.independent": "此战利品表中的物品独立滚动"
 }
