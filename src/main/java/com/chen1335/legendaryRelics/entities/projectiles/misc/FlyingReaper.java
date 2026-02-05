@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.entities.projectiles;
+package com.chen1335.legendaryRelics.entities.projectiles.misc;
 
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;

@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.entities.TreatmentBall;
-import com.chen1335.legendaryRelics.entities.projectiles.FlyingReaper;
+import com.chen1335.legendaryRelics.entities.projectiles.misc.TreatmentBall;
+import com.chen1335.legendaryRelics.entities.projectiles.misc.FlyingReaper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

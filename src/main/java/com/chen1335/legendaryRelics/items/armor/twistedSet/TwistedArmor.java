@@ -1,26 +1,19 @@
-package com.chen1335.legendaryRelics.items.armor.InfernoSet;
+package com.chen1335.legendaryRelics.items.armor.twistedSet;
 
-import com.chen1335.legendaryRelics.API.LRArmorHelper;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.items.armor.LRArmorBase;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import org.jetbrains.annotations.Nullable;
 
-public class InfernoArmor extends LRArmorBase implements LRArmorHelper {
-    public static final ResourceLocation TEXTURE = LegendaryRelics.id("textures/armor/inferno_armor.png");
-
-    public InfernoArmor(Type type, Properties properties) {
-        super(LRArmorMaterials.INFERNO, type, properties.stacksTo(1).rarity(Rarity.EPIC));
+public class TwistedArmor extends LRArmorBase {
+    public TwistedArmor(Type type, Properties properties) {
+        super(LRArmorMaterials.TWISTED, type, properties.stacksTo(1).rarity(Rarity.EPIC));
     }
 
     @Override
@@ -35,17 +28,10 @@ public class InfernoArmor extends LRArmorBase implements LRArmorHelper {
         )
 
                 ;
-
     }
 
     @Override
     public boolean isDamageable(ItemStack stack) {
         return false;
     }
-
-    @Override
-    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-        return TEXTURE;
-    }
-
 }

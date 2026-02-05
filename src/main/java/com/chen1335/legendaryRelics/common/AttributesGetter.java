@@ -8,4 +8,16 @@ public class AttributesGetter {
     public static Holder<Attribute> healReceive() {
         return ALObjects.Attributes.HEALING_RECEIVED;
     }
+
+    public static Holder<Attribute> drawSpeed() {
+        return ALObjects.Attributes.DRAW_SPEED;
+    }
+
+    public static Holder<Attribute> projectDamage() {
+        return ALObjects.Attributes.PROJECTILE_DAMAGE;
+    }
+
+    public static Holder<Attribute> arrowDamage() {
+        return ALObjects.Attributes.ARROW_DAMAGE;
+    }
 }

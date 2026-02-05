@@ -10,7 +10,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
-import com.chen1335.legendaryRelics.entities.projectiles.FlyingReaper;
+import com.chen1335.legendaryRelics.entities.projectiles.misc.FlyingReaper;
 import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.SoulEater;
 import com.chen1335.legendaryRelics.items.LRSwordItem;
 import net.minecraft.network.chat.Component;

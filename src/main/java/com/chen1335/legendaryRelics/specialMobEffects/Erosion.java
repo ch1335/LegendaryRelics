@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.specialMobEffects;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
-import com.chen1335.legendaryRelics.entities.TreatmentBall;
+import com.chen1335.legendaryRelics.entities.projectiles.misc.TreatmentBall;
 import com.chen1335.legendaryRelics.utils.Util;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.TimeLimitEffect;

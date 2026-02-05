@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.items.armor.blackDragonSet;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import net.minecraft.ChatFormatting;
