@@ -36,7 +36,9 @@
   "item.legendary_relics.black_dragon_leggings": "Black Dragon Leggings",
   "item.legendary_relics.black_dragon_leggings.desc.1": "Reduces ranged damage taken by %s.",
   "item.legendary_relics.black_dragon_leggings.desc.2": "Increases healing received by %s.",
-  "item.legendary_relics.black_dragon_set_effect.name": "Excellence",
+  "set_effect.legendary_relics.excellence.name": "Excellence",
+  "set_effect.legendary_relics.inferno.name": "Inferno",
+
   "item.legendary_relics.dark_gold": "Dark Gold Ingot",
   "item.legendary_relics.dark_gold_forging_tool": "Dark Gold Forging Tool",
   "item.legendary_relics.dark_gold_forging_tool.desc.1": "Set the rarity of the item to dark gold rarity.",
@@ -59,12 +61,20 @@
   "item.legendary_relics.reaper.desc.2": "The scythe bounces off any non-ground surface during flight.",
   "item.legendary_relics.reaper.desc.3": "Each scythe loses 20% damage per hit, breaks after 5 hits, and lasts up to 30 seconds after landing.",
   "item.legendary_relics.sacred_talisman": "Sacred Talisman",
-  "item.legendary_relics.set_effect.desc.1": "Set Effect: %s",
+  "set_effect_type.legendary_relics.full_set_bonus": "Full Set Bonus: %s",
+  "set_effect_type.legendary_relics.tiered_bonus": "Tiered Bonus: %s",
+  "set_effect.legendary_relics.armor_pieces_required": "Armor Pieces Required: %s",
+
   "item.legendary_relics.set_effect.equipped_armor": "Equipment pieces",
   "item.legendary_relics.shield_regenerator": "Shield Regenerator",
   "item.legendary_relics.the_ore_collectors_ring": "Ore Collector's Ring",
   "item.legendary_relics.wither_spirit": "Wither Spirit",
   "item.legendary_relics.withering_blade": "Withering Blade",
+  "item.legendary_relics.inferno_helmet": "Inferno Helmet",
+  "item.legendary_relics.inferno_chest_plate": "Inferno Chestplate",
+  "item.legendary_relics.inferno_leggings": "Inferno Leggings",
+  "item.legendary_relics.inferno_boots": "Inferno Boots",
+
   "equipment_effect.legendary_relics.erosion.1": "§6Erosion§r:The target be attacked will be inflicted with up to 5 stacks of erosion, each stack:",
   "equipment_effect.legendary_relics.erosion.2": "Deals %s magic damage per second and heals you for 1%% of your lost health",
   "equipment_effect.legendary_relics.erosion.3": "Reduced the target's %s total armor",
@@ -93,6 +103,14 @@
   "legendary_relics.loot_config.rolls": "Rolls",
   "legendary_relics.special.cannot_be_tacked": "Multiple curios cannot be stacked for this effect",
   "legendary_relics.loot_config.info.ali": "You may need to re-enter the world to update ALI's loot table",
-  "legendary_relics.rolls_type.independent": "Items in this loot table scroll independently"
+  "legendary_relics.rolls_type.independent": "Items in this loot table scroll independently",
+  "equipment_effect.legendary_relics.flame_immunity": "Immune Flame Damage",
+  "legendary_relics.special_effect.inferno_scorch": "Inferno Scorch",
+  "set_effect.legendary_relics.inferno.desc.1": "Every %s second, attacks gain 1 stack %s, up to 10 stacks",
+  "legendary_relics.stack.doom": "Doom",
+  "set_effect.legendary_relics.inferno.desc.3": "Each stack provides %s attack range and %s attack damage",
+  "set_effect.legendary_relics.inferno.desc.2": "If you don't get %2$s for more than %1$s seconds, you lose one stack of %3$s every second",
+  "set_effect.legendary_relics.inferno.desc.4": "At 10 stacks, attack applies %s effect, dealing %s physical damage per second",
+  "set_effect.legendary_relics.inferno.desc.5": "When a creature with %s effect dies, it applies %s to nearby creatures and deals %s physical damage"
 
 }

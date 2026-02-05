@@ -21,24 +21,6 @@
     " B "
   ],
   "result": {
-    "components": {
-      "legendary_relics:item_effect_data": {
-        "effects": {
-          "legendary_relics:heal_increase_effect": {
-            "EffectType": "legendary_relics:heal_increase_effect",
-            "Level": 2
-          },
-          "legendary_relics:heal_per_second_effect": {
-            "EffectType": "legendary_relics:heal_per_second_effect",
-            "Level": 2
-          },
-          "legendary_relics:perseverance_effect": {
-            "EffectType": "legendary_relics:perseverance_effect",
-            "Level": 1
-          }
-        }
-      }
-    },
     "count": 1,
     "id": "legendary_relics:perseverance_necklace"
   },

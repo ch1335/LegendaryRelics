@@ -4,6 +4,7 @@ import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.util.Cast;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -34,8 +35,15 @@ public class CalculatorArg {
 
     private final Map<ArgType<?>, Object> args = new HashMap<>();
 
+    @Nullable
     public <T> T getArg(ArgType<T> arg) {
         return Cast.cast(args.get(arg));
+    }
+
+    @NotNull
+    public <T> T getArgElse(ArgType<T> arg, T other) {
+        T r = Cast.cast(args.get(arg));
+        return r == null ? other : r;
     }
 
     public <T> void putArg(ArgType<T> argType, T arg) {

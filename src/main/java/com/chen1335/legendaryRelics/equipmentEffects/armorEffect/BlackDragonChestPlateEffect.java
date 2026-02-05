@@ -4,7 +4,6 @@ import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -14,7 +13,6 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
-import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,15 +21,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.LevelBasedValue;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class BlackDragonChestPlateEffect extends LRArmorEffect {
     public BlackDragonChestPlateEffect(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -112,7 +106,6 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
     }
 
 
-    @SubscribeEvent
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         EffectType<BlackDragonChestPlateEffect> effectType = LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value();
 

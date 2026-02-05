@@ -4,7 +4,6 @@ import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -16,13 +15,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class InFireTargetDamageIncrease extends LRCurioEffectBase {
     public InFireTargetDamageIncrease(EffectType<InFireTargetDamageIncrease> effectType, int level) {
         super(effectType, level);
@@ -44,8 +40,7 @@ public class InFireTargetDamageIncrease extends LRCurioEffectBase {
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.in_fire_target_damage_increase", DAMAGE_INCREASE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
     }
 
-    @SubscribeEvent()
-    public static void handleAttack(LivingIncomingDamageEvent event) {
+    public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         if (event.getEntity().isOnFire() && event.getSource().getEntity() instanceof LivingEntity attacker) {
             LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value().findBestEffect(attacker).ifPresent(infoHolder -> {
                 DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(CalculatorArg.simpleArg(attacker, infoHolder.itemStack(), infoHolder.effect())));

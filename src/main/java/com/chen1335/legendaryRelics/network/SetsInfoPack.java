@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.network;
 
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.LRClient;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public record SetsInfoPack(Map<SetsEffectBase, Integer> map) implements CustomPacketPayload {
+public record SetsInfoPack(Map<SetEffect, Integer> map) implements CustomPacketPayload {
     public static final Type<SetsInfoPack> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "sets_info"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, SetsInfoPack> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.map(
                     HashMap::new,
-                    SetsEffectBase.STREAM_CODEC,
+                    SetEffect.STREAM_CODEC,
                     ByteBufCodecs.INT,
                     8
             ),
@@ -34,6 +34,8 @@ public record SetsInfoPack(Map<SetsEffectBase, Integer> map) implements CustomPa
     }
 
     public void handler(IPayloadContext context) {
-        LRClient.ENTITY_SETS_EFFECT_DATA = map;
+        context.enqueueWork(()->{
+            LRClient.ENTITY_SETS_EFFECT_DATA = map;
+        });
     }
 }

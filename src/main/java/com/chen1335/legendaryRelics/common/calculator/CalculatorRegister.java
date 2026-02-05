@@ -3,10 +3,7 @@ package com.chen1335.legendaryRelics.common.calculator;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.api.Unit;
 import com.chen1335.legendaryRelics.common.calculator.normal.*;
-import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
-import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
-import com.chen1335.legendaryRelics.common.calculator.special.SingleCustomArg;
+import com.chen1335.legendaryRelics.common.calculator.special.*;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -44,6 +41,7 @@ public class CalculatorRegister {
         register("entity_attribute", EntityAttributeValue.STREAM_CODEC);
         register("equipment_effect_level", EquipmentEffectLevelArg.STREAM_CODEC);
         register("single_custom", SingleCustomArg.STREAM_CODEC);
+        register("tiered_bonus", TieredBonus.STREAM_CODEC);
     }
 
     private static void register(String name, StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> streamCodec) {

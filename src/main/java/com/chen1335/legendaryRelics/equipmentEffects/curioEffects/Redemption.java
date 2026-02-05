@@ -5,9 +5,9 @@ import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Add;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
@@ -15,7 +15,6 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,15 +23,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
-import java.util.Optional;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class Redemption extends LRCurioEffectBase {
     public Redemption(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -90,8 +85,7 @@ public class Redemption extends LRCurioEffectBase {
     }
 
 
-    @SubscribeEvent
-    public static void onWearerBeDamage(LivingDamageEvent.Post event) {
+    public static void LivingDamageEvent(LivingDamageEvent.Post event) {
         LivingEntity livingEntity = event.getEntity();
         if (EquipmentEffectCooldownManager.isNotInCooldown(livingEntity, LREquipmentEffectTypes.REDEMPTION.get())) {
             LREquipmentEffectTypes.REDEMPTION.get().findBestEffect(livingEntity).ifPresent(infoHolder -> {
@@ -107,8 +101,7 @@ public class Redemption extends LRCurioEffectBase {
         }
     }
 
-    @SubscribeEvent
-    public static void onWearerIncomingDamage(LivingIncomingDamageEvent event) {
+    public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             LivingEntity livingEntity = event.getEntity();
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get()).ifPresent(pair -> {

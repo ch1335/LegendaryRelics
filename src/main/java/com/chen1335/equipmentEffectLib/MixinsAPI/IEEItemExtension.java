@@ -1,14 +1,14 @@
 package com.chen1335.equipmentEffectLib.MixinsAPI;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 
 import java.util.List;
 
 public interface IEEItemExtension {
-    SetsEffectBase EE$GetSetsEffect();
+    SetEffect EE$GetSetsEffect();
 
-    void EE$SetSetsEffect(SetsEffectBase EE$SetsEffect);
+    void EE$SetSetsEffect(SetEffect EE$SetsEffect);
 
     List<BaseEffect> EE$GetDefaultItemEffect();
 

@@ -2,20 +2,21 @@ package com.chen1335.legendaryRelics.specialMobEffects;
 
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.entities.TreatmentBall;
 import com.chen1335.legendaryRelics.utils.Util;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.TimeLimitEffect;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.math.BigDecimal;
 
 public class Erosion extends TimeLimitEffect {
 
@@ -29,11 +30,11 @@ public class Erosion extends TimeLimitEffect {
         super(effectType);
     }
 
-    public Erosion(float perLayerDamage,float armorReducePerLayer) {
+    public Erosion(float perLayerDamage, float armorReducePerLayer) {
         this(LRSpecialMobEffect.EROSION.value());
         this.initTime(100);
         this.perLayerDamage = perLayerDamage;
-        this.armorReducePerLayer = new BigDecimal(String.valueOf(armorReducePerLayer)).doubleValue();
+        this.armorReducePerLayer = FinalCalculator.castToDoubleStrict(armorReducePerLayer);
     }
 
     @Override
@@ -88,5 +89,17 @@ public class Erosion extends TimeLimitEffect {
         if (instance != null) {
             instance.removeModifier(modifierId);
         }
+    }
+
+    @Override
+    public void decode(@NotNull RegistryFriendlyByteBuf buffer) {
+        super.decode(buffer);
+        layers = buffer.readInt();
+    }
+
+    @Override
+    public void encode(@NotNull RegistryFriendlyByteBuf buffer) {
+        super.encode(buffer);
+        buffer.writeInt(layers);
     }
 }

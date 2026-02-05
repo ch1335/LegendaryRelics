@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.items.armor;
+package com.chen1335.legendaryRelics.items.armor.blackDragonSet;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
@@ -20,7 +20,7 @@ public class BlackDragonChestPlate extends BlackDragonArmor {
     private static final ResourceLocation WINGS_LOCATION = LegendaryRelics.id("textures/armor/black_dragon_chestplate_elytra.png");
 
     public BlackDragonChestPlate() {
-        super(LRArmorMaterials.BLACK_DRAGON, Type.CHESTPLATE, new Properties().rarity(Rarity.EPIC));
+        super(Type.CHESTPLATE, new Properties().rarity(Rarity.EPIC));
     }
 
     public static ResourceLocation getElytraTexture() {

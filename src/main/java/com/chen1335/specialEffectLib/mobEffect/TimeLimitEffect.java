@@ -1,7 +1,9 @@
 package com.chen1335.specialEffectLib.mobEffect;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class TimeLimitEffect extends SpecialMobEffect {
     protected int timeLeft = 0;
@@ -48,5 +50,19 @@ public class TimeLimitEffect extends SpecialMobEffect {
         super.load(compoundTag);
         totalTime = compoundTag.getInt("TotalTime");
         timeLeft = compoundTag.getInt("TimeLeft");
+    }
+
+    @Override
+    public void decode(@NotNull RegistryFriendlyByteBuf buffer) {
+        super.decode(buffer);
+        totalTime = buffer.readInt();
+        timeLeft = buffer.readInt();
+    }
+
+    @Override
+    public void encode(@NotNull RegistryFriendlyByteBuf buffer) {
+        super.encode(buffer);
+        buffer.writeInt(totalTime);
+        buffer.writeInt(timeLeft);
     }
 }

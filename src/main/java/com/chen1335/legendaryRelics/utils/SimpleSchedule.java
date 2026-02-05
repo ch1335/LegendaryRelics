@@ -32,19 +32,26 @@ public class SimpleSchedule {
             Dist.DEDICATED_SERVER, new ArrayList<>()
     );
 
+    private static final Map<Dist, List<Schedule>> DIST_SCHEDULES_TO_ADD = ImmutableMap.of(
+            Dist.CLIENT, new ArrayList<>(),
+            Dist.DEDICATED_SERVER, new ArrayList<>()
+    );
+
     public static void addSchedule(Level level, Schedule schedule) {
         if (level.isClientSide) {
-            DIST_SCHEDULES.get(Dist.CLIENT).add(schedule);
+            DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule);
         } else {
-            DIST_SCHEDULES.get(Dist.DEDICATED_SERVER).add(schedule);
+            DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule);
         }
     }
 
     public static void addSchedule(Dist dist, Schedule schedule) {
-        DIST_SCHEDULES.get(dist).add(schedule);
+        DIST_SCHEDULES_TO_ADD.get(dist).add(schedule);
     }
 
     private static void update(Dist dist) {
+        DIST_SCHEDULES.get(dist).addAll(DIST_SCHEDULES_TO_ADD.get(dist));
+        DIST_SCHEDULES_TO_ADD.get(dist).clear();
         Iterator<Schedule> iterator = DIST_SCHEDULES.get(dist).iterator();
         while (iterator.hasNext()) {
             Schedule schedule = iterator.next();

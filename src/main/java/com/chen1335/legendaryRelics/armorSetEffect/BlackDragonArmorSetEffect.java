@@ -1,15 +1,16 @@
 package com.chen1335.legendaryRelics.armorSetEffect;
 
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.LRClient;
-import com.chen1335.legendaryRelics.common.calculator.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Add;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.common.calculator.special.SingleCustomArg;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonArmor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,17 +22,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
-public class BlackDragonArmorSetEffect extends SetsEffectBase {
+public class BlackDragonArmorSetEffect extends SetEffect {
     public static final ResourceLocation BLACK_DRAGON_ATTRIBUTE_MULTIPLIER = LegendaryRelics.id("black_dragon_attribute_multiplier");
-    public static SingleCustomArg<LivingEntity> BLACK_ARMOR_COUNT_GETTER = SingleCustomArg.register(LegendaryRelics.id("black_armor_count_getter"),CalculatorArg.ArgType.THIS_ENTITY, livingEntity -> {
+    public static SingleCustomArg<LivingEntity> BLACK_ARMOR_COUNT_GETTER = SingleCustomArg.register(LegendaryRelics.id("black_armor_count_getter"), CalculatorArg.ArgType.THIS_ENTITY, livingEntity -> {
         if (livingEntity == null) {
             return 0f;
         }
@@ -68,7 +66,6 @@ public class BlackDragonArmorSetEffect extends SetsEffectBase {
             )
     );
 
-    @SubscribeEvent
     public static void EntityTickPre(EntityTickEvent.Pre event) {
         if (event.getEntity() instanceof LivingEntity living && !living.level().isClientSide) {
             CalculatorArg args = CalculatorArg.simpleArg(living);
@@ -82,7 +79,6 @@ public class BlackDragonArmorSetEffect extends SetsEffectBase {
         }
     }
 
-    @SubscribeEvent
     public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
         LivingEntity livingEntity = event.getEntity();
         CalculatorArg args = CalculatorArg.simpleArg(livingEntity);
@@ -107,7 +103,7 @@ public class BlackDragonArmorSetEffect extends SetsEffectBase {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = new CalculatorArg();
         CalculatorArg.ArgType.THIS_ENTITY.putArg(args, player);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.set_effect.desc.1", Component.translatable("item.legendary_relics.black_dragon_set_effect.name").append("(" + LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(this, 0) + "/4)").withColor(16733695)).withColor(16755200));
+        tooltipComponents.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.excellence.name").append("(" + LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(this, 0) + "/4)").withColor(16733695)).withColor(16755200));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.1",
                 ATTRIBUTE_MULTIPLIER.toPercentageComponent(tooltipFlag.hasShiftDown(), args)
         ).withColor(16733695));

@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.common.calculator;
 import com.chen1335.legendaryRelics.common.calculator.api.Unit;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -65,8 +66,12 @@ public class FinalCalculator implements Unit {
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
+    public MutableComponent toComponent(CalculatorArg calculatorArg) {
         return Component.empty().append(Component.literal(format(getValue(calculatorArg), i)).withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+    }
+
+    public MutableComponent toComponent(CalculatorArg calculatorArg, int color) {
+        return Component.empty().append(Component.literal(format(getValue(calculatorArg), i)).withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
     }
 
     @Override
@@ -78,36 +83,62 @@ public class FinalCalculator implements Unit {
         return Component.empty().append("(").append(unit.toComponent(CalculatorArg.emptyArg())).append(")").withColor(5592405);
     }
 
+
     public Component toRawComponent(CalculatorArg calculatorArg) {
         return Component.empty().append("(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
     }
 
-    public Component toComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
+    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
+        return toComponent(hasShiftDown, calculatorArg, -1);
+    }
+
+    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color) {
         if (hasShiftDown) {
-            return toComponent(calculatorArg);
+            if (color == -1) {
+                color = 16777215;
+            }
+            return Component.empty().append(Component.literal(format(getValue(calculatorArg), i)).withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
         } else {
-            return Component.literal(format(getValue(calculatorArg),i));
+            MutableComponent component = Component.literal(format(getValue(calculatorArg), i));
+            if (color != -1) {
+                component.withColor(color);
+            }
+            return component;
         }
     }
 
-    public Component toPercentageComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
+    public MutableComponent toPercentageComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
+        return toPercentageComponent(hasShiftDown, calculatorArg, -1);
+    }
+
+    public MutableComponent toPercentageComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color) {
         if (hasShiftDown) {
-            return Component.empty().append(Component.literal(format(getValue(calculatorArg) * 100, i) + "%").withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+            if (color == -1) {
+                color = 16777215;
+            }
+            return Component.empty().append(Component.literal(format(getValue(calculatorArg) * 100, i) + "%").withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
         } else {
-            return Component.literal(format(getValue(calculatorArg) * 100, i) + "%");
+            MutableComponent component = Component.literal(format(getValue(calculatorArg) * 100, i) + "%");
+            if (color != -1) {
+                component.withColor(color);
+            }
+            return component;
         }
     }
 
     public static FinalCalculator of(Unit unit) {
-        return new FinalCalculator(unit, 1);
+        return new FinalCalculator(unit, 2);
     }
 
     public static FinalCalculator of(Unit unit, int i) {
-
         return new FinalCalculator(unit, i);
     }
 
     public static String format(float value, int i) {
         return new BigDecimal(String.format("%." + i + "f", value)).stripTrailingZeros().toPlainString();
+    }
+
+    public static double castToDoubleStrict(float f) {
+        return new BigDecimal(String.valueOf(f)).doubleValue();
     }
 }

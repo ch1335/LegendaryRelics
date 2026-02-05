@@ -4,7 +4,7 @@ import com.chen1335.equipmentEffectLib.EquipmentEffectLib;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -22,8 +22,8 @@ public class EERegisterTypes {
     public static DeferredHolder<EffectType<?>, EffectType<BaseEffect>> DUMMY = EQUIPMENT_EFFECT_TYPES.register("dummy", () -> new EffectType<>(BaseEffect::new, EntityEquipmentEffectData.EquipmentType.MAIN_HIND));
 
 
-    public static final ResourceKey<Registry<SetsEffectBase>> SETS_EFFECT_TYPE_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(EquipmentEffectLib.MODID, "sets_effect"));
-    public static final Registry<SetsEffectBase> SETS_EFFECT_TYPE = new RegistryBuilder<>(SETS_EFFECT_TYPE_KEY)
+    public static final ResourceKey<Registry<SetEffect>> SETS_EFFECT_TYPE_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(EquipmentEffectLib.MODID, "sets_effect"));
+    public static final Registry<SetEffect> SETS_EFFECT_TYPE = new RegistryBuilder<>(SETS_EFFECT_TYPE_KEY)
             .sync(true)
             .create();
 }

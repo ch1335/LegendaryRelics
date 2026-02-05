@@ -7,7 +7,7 @@ import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -72,7 +72,7 @@ public final class EquipmentEffectAPI {
     }
 
     @Nullable
-    public static SetsEffectBase getItemSetEffect(ItemStack itemStack) {
+    public static SetEffect getItemSetEffect(ItemStack itemStack) {
         return ((IEEItemExtension) itemStack.getItem()).EE$GetSetsEffect();
     }
 

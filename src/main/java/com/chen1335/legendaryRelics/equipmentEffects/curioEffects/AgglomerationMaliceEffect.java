@@ -5,12 +5,11 @@ import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -19,14 +18,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class AgglomerationMaliceEffect extends LRCurioEffectBase {
     public AgglomerationMaliceEffect(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -74,14 +69,13 @@ public class AgglomerationMaliceEffect extends LRCurioEffectBase {
         return 1;
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public static void handleBeAttack(LivingIncomingDamageEvent event) {
+    public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         if (event.getSource().getEntity() instanceof Mob attacker) {
             LivingEntity livingEntity = event.getEntity();
             if (attacker.getSpawnType() == MobSpawnType.SPAWNER) {
                 EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value()).ifPresent(pair -> {
                     CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
-                    DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event,DAMAGE_MULTIPLIER.getValue(args));
+                    DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_MULTIPLIER.getValue(args));
                 });
             }
         }

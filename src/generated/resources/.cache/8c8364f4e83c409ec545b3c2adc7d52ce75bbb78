@@ -1,10 +1,10 @@
-// 1.21.1	2025-08-01T22:49:37.661418	Tags for minecraft:item mod id vanilla
+// 1.21.1	2026-02-02T15:23:46.1606439	Tags for minecraft:item mod id vanilla
 6ed2e73ff25cb233ed31b74819e6b9aea376d775 data/curios/tags/item/charm.json
 632df4625ff765e19e9925c4b1c2852056202cf5 data/curios/tags/item/hands.json
 56b8f6442e6cfccd9895cd3d2369db8398449d29 data/curios/tags/item/necklace.json
 1e71cf0067bc5c59cba728417699a2607f1db225 data/curios/tags/item/ring.json
-1bbd42b2b343adce7cf76a5bf2e0010c1f94da5a data/minecraft/tags/item/chest_armor.json
-5de21bd1c95a0c8c31affc6ddb755116ebddd381 data/minecraft/tags/item/foot_armor.json
-04b565f69f3a43928a6e6c88baa3e02ca8cf95f0 data/minecraft/tags/item/head_armor.json
-573e62dcb27e464d004c5794eb75d4b6347fe4a2 data/minecraft/tags/item/leg_armor.json
+26800309923f402a576edc2039d130a955ab749b data/minecraft/tags/item/chest_armor.json
+64bbab20ebd7e46ad8e4fa6858721f53dcace228 data/minecraft/tags/item/foot_armor.json
+00e967fa1ea34d5aefd9816f08a9f677e61386e1 data/minecraft/tags/item/head_armor.json
+8d589a43c49c6413663c3294be7029316f266a63 data/minecraft/tags/item/leg_armor.json
 cd42587d5338e07bd8c4720f42822db9cc865f15 data/minecraft/tags/item/swords.json

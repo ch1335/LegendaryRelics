@@ -6,10 +6,10 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
-import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,18 +21,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class AttributeBoostInNether extends LRCurioEffectBase {
 
     @Calculator
     public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.025F),3)
+            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.025F), 3)
     ));
 
     @Override
@@ -83,8 +80,7 @@ public class AttributeBoostInNether extends LRCurioEffectBase {
         return LegendaryRelics.id("nether_multiplier_" + this.hashCode());
     }
 
-    @SubscribeEvent
-    public static void HandleEntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
+    public static void EntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
 
         if (event.getEntity() instanceof LivingEntity livingEntity) {
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value()).ifPresent(pair -> {

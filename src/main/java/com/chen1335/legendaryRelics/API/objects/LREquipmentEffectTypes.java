@@ -48,4 +48,6 @@ public class LREquipmentEffectTypes {
 
     public static DeferredHolder<EffectType<?>, EffectType<SoulEater>> SOUL_EATER = EQUIPMENT_EFFECT_TYPES.register("soul_eater", () -> new EffectType<>(SoulEater::new, EntityEquipmentEffectData.EquipmentType.MAIN_HIND));
 
+    public static DeferredHolder<EffectType<?>, EffectType<FlameImmunity>> FLAME_IMMUNITY = EQUIPMENT_EFFECT_TYPES.register("flame_immunity", () -> new EffectType<>(FlameImmunity::new, EntityEquipmentEffectData.EquipmentType.CURIO));
+
 }

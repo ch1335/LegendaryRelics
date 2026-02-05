@@ -5,7 +5,6 @@ import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -17,14 +16,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class FireDamageReduce extends LRCurioEffectBase {
 
     public FireDamageReduce(EffectType<?> effectType, int level) {
@@ -48,8 +43,7 @@ public class FireDamageReduce extends LRCurioEffectBase {
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.fire_damage_reduce", FIRE_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void handleLivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
+    public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.FIRE_DAMAGE_REDUCE.value()).ifPresent(pair -> {
             if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
                 DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.itemStack(), pair.effect())));

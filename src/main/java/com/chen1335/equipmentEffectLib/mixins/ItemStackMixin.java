@@ -7,7 +7,7 @@ import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetsEffectBase;
+import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -50,7 +50,7 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
             list.add(Component.empty());
         }
 
-        SetsEffectBase setsEffect = ((IEEItemExtension) this.getItem()).EE$GetSetsEffect();
+        SetEffect setsEffect = ((IEEItemExtension) this.getItem()).EE$GetSetsEffect();
         if (setsEffect != null) {
             setsEffect.appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
         }

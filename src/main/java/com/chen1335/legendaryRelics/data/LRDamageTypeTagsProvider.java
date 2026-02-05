@@ -23,14 +23,18 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
         this.tag(DamageTypeTags.BYPASSES_COOLDOWN).
                 add(
                         LRDamageTypes.EROSION,
-                        LRDamageTypes.FLYING_REAPER
+                        LRDamageTypes.FLYING_REAPER,
+                        LRDamageTypes.INFERNO_SCORCH
                 );
 
         this.tag(Tags.DamageTypes.IS_MAGIC)
                 .add(LRDamageTypes.EROSION);
 
         this.tag(Tags.DamageTypes.IS_PHYSICAL)
-                .add(LRDamageTypes.FLYING_REAPER);
+                .add(
+                        LRDamageTypes.FLYING_REAPER,
+                        LRDamageTypes.INFERNO_SCORCH
+                );
 
         this.tag(DamageTypeTags.IS_PROJECTILE)
                 .add(LRDamageTypes.FLYING_REAPER);
@@ -38,7 +42,8 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
         this.tag(DamageTypeTags.NO_KNOCKBACK)
                 .add(
                         LRDamageTypes.EROSION,
-                        LRDamageTypes.FLYING_REAPER
+                        LRDamageTypes.FLYING_REAPER,
+                        LRDamageTypes.INFERNO_SCORCH
                 );
     }
 }

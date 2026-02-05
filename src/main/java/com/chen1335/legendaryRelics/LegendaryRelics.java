@@ -5,6 +5,7 @@ import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.client.ClientExtensionsRegister;
 import com.chen1335.legendaryRelics.client.EntityRendererRegister;
 import com.chen1335.legendaryRelics.client.LegendaryTooltipsHandler;
+import com.chen1335.legendaryRelics.client.particlePlayer.ParticlePlayersHolder;
 import com.chen1335.legendaryRelics.common.calculator.AutoRegister;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
 import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
@@ -96,6 +97,7 @@ public class LegendaryRelics {
         if (ModList.get().isLoaded("legendarytooltips")) {
             LegendaryTooltipsHandler.init();
         }
+        ParticlePlayersHolder.init();
     }
 
 

@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.items.armor;
+package com.chen1335.legendaryRelics.items.armor.blackDragonSet;
 
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class BlackDragonBoots extends BlackDragonArmor {
     public BlackDragonBoots() {
-        super(LRArmorMaterials.BLACK_DRAGON, Type.BOOTS, new Properties().rarity(Rarity.EPIC));
+        super(Type.BOOTS, new Properties().rarity(Rarity.EPIC));
     }
 
     @Override

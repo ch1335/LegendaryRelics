@@ -4,7 +4,10 @@ import com.chen1335.specialEffectLib.API.objects.SEAttachmentTypes;
 import com.chen1335.specialEffectLib.attachmentDatas.EntityEffectData;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
+import com.chen1335.specialEffectLib.network.AddOrUpdateEffectPack;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.apache.logging.log4j.util.Cast;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,9 +27,17 @@ public class SpecialEffectAPI {
         }
         effectMap.put(effect.getEffectType(), effect);
         effect.onAddOrUpdate(target);
+
+        if (!target.level().isClientSide) {
+            if (target instanceof ServerPlayer serverPlayer) {
+                PacketDistributor.sendToPlayer(serverPlayer, new AddOrUpdateEffectPack(target.getId(), effect));
+            } else {
+                PacketDistributor.sendToPlayersTrackingEntity(target, new AddOrUpdateEffectPack(target.getId(), effect));
+            }
+        }
     }
 
-    public static EntityEffectData getEntityEffectData(LivingEntity livingEntity){
+    public static EntityEffectData getEntityEffectData(LivingEntity livingEntity) {
         return livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA);
     }
 }

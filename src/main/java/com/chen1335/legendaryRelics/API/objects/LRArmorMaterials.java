@@ -20,16 +20,29 @@ import java.util.function.Supplier;
 public class LRArmorMaterials {
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIAL_DEFERRED_REGISTER = DeferredRegister.create(Registries.ARMOR_MATERIAL, LegendaryRelics.MODID);
 
-    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> BLACK_DRAGON = register("black_dragon", Util.make(new EnumMap<>(ArmorItem.Type.class), p_323380_ -> {
-                p_323380_.put(ArmorItem.Type.BOOTS, 6);
-                p_323380_.put(ArmorItem.Type.LEGGINGS, 8);
-                p_323380_.put(ArmorItem.Type.CHESTPLATE, 10);
-                p_323380_.put(ArmorItem.Type.HELMET, 6);
-                p_323380_.put(ArmorItem.Type.BODY, 12);
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> BLACK_DRAGON = register("black_dragon", Util.make(new EnumMap<>(ArmorItem.Type.class), enumMap -> {
+                enumMap.put(ArmorItem.Type.BOOTS, 6);
+                enumMap.put(ArmorItem.Type.LEGGINGS, 8);
+                enumMap.put(ArmorItem.Type.CHESTPLATE, 10);
+                enumMap.put(ArmorItem.Type.HELMET, 6);
+                enumMap.put(ArmorItem.Type.BODY, 12);
             }), 20,
-            SoundEvents.ARMOR_EQUIP_DIAMOND,
+            SoundEvents.ARMOR_EQUIP_NETHERITE,
             5.0F,
             0.1F,
+            () -> Ingredient.EMPTY
+    );
+
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> INFERNO = register("inferno", Util.make(new EnumMap<>(ArmorItem.Type.class), enumMap -> {
+                enumMap.put(ArmorItem.Type.BOOTS, 3);
+                enumMap.put(ArmorItem.Type.LEGGINGS, 6);
+                enumMap.put(ArmorItem.Type.CHESTPLATE, 8);
+                enumMap.put(ArmorItem.Type.HELMET, 3);
+                enumMap.put(ArmorItem.Type.BODY, 11);
+            }), 20,
+            SoundEvents.ARMOR_EQUIP_NETHERITE,
+            2.5F,
+            0.05F,
             () -> Ingredient.EMPTY
     );
 

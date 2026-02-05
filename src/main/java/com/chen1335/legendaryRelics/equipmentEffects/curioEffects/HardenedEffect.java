@@ -21,14 +21,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class HardenedEffect extends LRCurioEffectBase {
     public HardenedEffect(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -78,8 +74,7 @@ public class HardenedEffect extends LRCurioEffectBase {
         ).withColor(0xaeaeae));
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void handleLivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
+    public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         if (!event.getEntity().level().isClientSide) {
             LREquipmentEffectTypes.HARDENED_EFFECT.value().findBestEffect(event.getEntity()).ifPresent(infoHolder -> {
                 LivingEntity living = event.getEntity();

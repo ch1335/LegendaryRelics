@@ -39,25 +39,31 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                         LRItems.DARK_STEEL_CLAW.asItem()
                 );
 
-        tag(ItemTags.HEAD_ARMOR).add(
-                LRItems.BLACK_DRAGON_HELMET.value()
-        );
 
         tag(CuriosTags.NECKLACE).add(
                 LRItems.SACRED_TALISMAN.asItem(),
                 LRItems.PERSEVERANCE_NECKLACE.asItem(),
                 LRItems.HEALING_TALISMAN.asItem()
         );
+
+        tag(ItemTags.HEAD_ARMOR).add(
+                LRItems.BLACK_DRAGON_HELMET.value(),
+                LRItems.INFERNO_HELMET.value()
+        );
+
         tag(ItemTags.CHEST_ARMOR).add(
-                LRItems.BLACK_DRAGON_CHEST_PLATE.value()
+                LRItems.BLACK_DRAGON_CHEST_PLATE.value(),
+                LRItems.INFERNO_CHEST_PLATE.value()
         );
 
         tag(ItemTags.LEG_ARMOR).add(
-                LRItems.BLACK_DRAGON_LEGGINGS.value()
+                LRItems.BLACK_DRAGON_LEGGINGS.value(),
+                LRItems.INFERNO_LEGGINGS.value()
         );
 
         tag(ItemTags.FOOT_ARMOR).add(
-                LRItems.BLACK_DRAGON_BOOTS.value()
+                LRItems.BLACK_DRAGON_BOOTS.value(),
+                LRItems.INFERNO_BOOTS.value()
         );
 
         tag(ItemTags.SWORDS).add(

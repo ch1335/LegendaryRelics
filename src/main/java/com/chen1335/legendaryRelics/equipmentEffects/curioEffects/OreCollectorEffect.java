@@ -21,13 +21,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class OreCollectorEffect extends LRCurioEffectBase {
     public OreCollectorEffect(EffectType<?> effectType, int level) {
         super(effectType, level);

@@ -21,14 +21,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import org.apache.logging.log4j.util.TriConsumer;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class SoulEater extends LRWeaponEffect {
     public SoulEater(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -60,8 +57,7 @@ public class SoulEater extends LRWeaponEffect {
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.soul_eater", HEAL.toPercentageComponent(tooltipFlag.hasShiftDown(), arg), GAIN_ATTACK_DAMAGE_PERCENT.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
     }
 
-    @SubscribeEvent
-    public static void onKill(LivingDeathEvent event) {
+    public static void LivingDeathEvent(LivingDeathEvent event) {
         Entity killer = event.getSource().getEntity();
         ItemStack weaponItem = null;
         LivingEntity livingKiller = null;

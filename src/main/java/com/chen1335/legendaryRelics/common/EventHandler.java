@@ -8,16 +8,13 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonArmor;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonArmor;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
 import com.chen1335.legendaryRelics.mixins.legendary_relics.CurioAttributeModifierEventInvoker;
-import com.chen1335.legendaryRelics.network.EffectCooldownPack;
-import com.chen1335.legendaryRelics.network.LootConfigPack;
-import com.chen1335.legendaryRelics.network.SetsInfoPack;
-import com.chen1335.legendaryRelics.network.UpdateCalculatorPack;
+import com.chen1335.legendaryRelics.network.*;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -93,10 +90,18 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void setItemSetsEffect(SetItemSetsEffectEvent event) {
-            event.set(LRItems.BLACK_DRAGON_HELMET.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
-            event.set(LRItems.BLACK_DRAGON_CHEST_PLATE.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
-            event.set(LRItems.BLACK_DRAGON_LEGGINGS.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
-            event.set(LRItems.BLACK_DRAGON_BOOTS.asItem(), LRSetsEffects.BLACK_DRAGON_ARMOR.value());
+            event.sets(LRSetsEffects.BLACK_DRAGON_ARMOR.value(),
+                    LRItems.BLACK_DRAGON_HELMET.asItem(),
+                    LRItems.BLACK_DRAGON_CHEST_PLATE.asItem(),
+                    LRItems.BLACK_DRAGON_LEGGINGS.asItem(),
+                    LRItems.BLACK_DRAGON_BOOTS.asItem()
+            );
+            event.sets(LRSetsEffects.INFERNO_ARMOR.value(),
+                    LRItems.INFERNO_HELMET.asItem(),
+                    LRItems.INFERNO_CHEST_PLATE.asItem(),
+                    LRItems.INFERNO_LEGGINGS.asItem(),
+                    LRItems.INFERNO_BOOTS.asItem()
+            );
         }
 
         @SubscribeEvent
@@ -200,7 +205,7 @@ public class EventHandler {
                     }
 
                     if (!isNeutral && i != 0) {
-                        event.addModifier(modifier.attribute(), new AttributeModifier(LegendaryRelics.id("dark_gold_improve_" + modifier.slot().getSerializedName()), i * modifier.modifier().amount(), AttributeModifier.Operation.ADD_VALUE), modifier.slot());
+                        event.addModifier(modifier.attribute(), new AttributeModifier(LegendaryRelics.id("dark_gold_improve_" + modifier.slot().getSerializedName()), i * modifier.modifier().amount(), modifier.modifier().operation()), modifier.slot());
                     }
                 }
             }
@@ -261,6 +266,8 @@ public class EventHandler {
             final PayloadRegistrar registrar = event.registrar("1");
             registrar.playToClient(EffectCooldownPack.TYPE, EffectCooldownPack.STREAM_CODEC, EffectCooldownPack::handler);
             registrar.playToClient(SetsInfoPack.TYPE, SetsInfoPack.STREAM_CODEC, SetsInfoPack::handler);
+            registrar.playToClient(PlayClientParticlePack.TYPE, PlayClientParticlePack.STREAM_CODEC, PlayClientParticlePack::handler);
+
             registrar.playBidirectional(LootConfigPack.TYPE, LootConfigPack.STREAM_CODEC, LootConfigPack::handler);
 
             registrar.playBidirectional(UpdateCalculatorPack.TYPE, UpdateCalculatorPack.STREAM_CODEC, UpdateCalculatorPack::handler);

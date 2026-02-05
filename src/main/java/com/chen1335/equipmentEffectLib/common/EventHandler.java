@@ -7,17 +7,17 @@ import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
-
-import java.util.List;
 
 public class EventHandler {
 
@@ -108,16 +108,7 @@ public class EventHandler {
         public static void onEntityTick(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity living) {
                 living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).tick(living);
-                EntityEquipmentEffectData entityEquipmentEffectData = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
-
-
-                for (List<EntityEquipmentEffectData.InfoHolder<?>> value : entityEquipmentEffectData.getEffects(EntityEquipmentEffectData.EquipmentType.CURIO).values()) {
-                    for (EntityEquipmentEffectData.InfoHolder<?> info : value) {
-                        if (info.effect() instanceof ICurioEffect curioEffect) {
-                            curioEffect.curioTick(info.itemStack(), living);
-                        }
-                    }
-                }
+                living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA).tick(living);
             }
         }
     }

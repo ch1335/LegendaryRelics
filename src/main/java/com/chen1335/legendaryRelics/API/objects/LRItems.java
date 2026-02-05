@@ -1,10 +1,14 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonBoots;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonChestPlate;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonHelmet;
-import com.chen1335.legendaryRelics.items.armor.BlackDragonLeggings;
+import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoBoots;
+import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoChestPlate;
+import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoHelmet;
+import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoLeggings;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonBoots;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonChestPlate;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
+import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.items.curios.*;
 import com.chen1335.legendaryRelics.items.misc.*;
 import com.chen1335.legendaryRelics.items.weapons.Reaper;
@@ -63,5 +67,13 @@ public class LRItems {
     public static final DeferredItem<Item> WITHER_SPIRIT = ITEM_DEFERRED_REGISTER.register("wither_spirit", WitherSpirit::new);
 
     public static final DeferredItem<Reaper> REAPER = ITEM_DEFERRED_REGISTER.register("reaper", Reaper::new);
+
+    public static final DeferredItem<InfernoHelmet> INFERNO_HELMET = ITEM_DEFERRED_REGISTER.register("inferno_helmet", InfernoHelmet::new);
+
+    public static final DeferredItem<InfernoChestPlate> INFERNO_CHEST_PLATE = ITEM_DEFERRED_REGISTER.register("inferno_chest_plate", InfernoChestPlate::new);
+
+    public static final DeferredItem<InfernoLeggings> INFERNO_LEGGINGS = ITEM_DEFERRED_REGISTER.register("inferno_leggings", InfernoLeggings::new);
+
+    public static final DeferredItem<InfernoBoots> INFERNO_BOOTS = ITEM_DEFERRED_REGISTER.register("inferno_boots", InfernoBoots::new);
 
 }

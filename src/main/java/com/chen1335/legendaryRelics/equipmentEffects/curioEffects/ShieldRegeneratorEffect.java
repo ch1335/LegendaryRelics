@@ -3,7 +3,6 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.API.objects.LRShieldType;
-import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -21,14 +20,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class ShieldRegeneratorEffect extends LRCurioEffectBase {
     public ShieldRegeneratorEffect(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -105,7 +101,6 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
         }
     }
 
-    @SubscribeEvent
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         LivingEntity entity = event.getEntity();
         EffectType<ShieldRegeneratorEffect> effectType = LREquipmentEffectTypes.SHIELD_REGENERATOR_EFFECT.get();

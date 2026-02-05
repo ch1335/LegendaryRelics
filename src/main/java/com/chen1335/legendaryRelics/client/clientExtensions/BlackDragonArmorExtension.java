@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.client.clientExtensions;
 
 import com.chen1335.legendaryRelics.client.EntityRendererRegister;
-import com.chen1335.legendaryRelics.client.module.armor.BlackDragonArmorModel;
+import com.chen1335.legendaryRelics.client.module.armor.blackDragonArmor.BlackDragonArmorModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.world.entity.EquipmentSlot;

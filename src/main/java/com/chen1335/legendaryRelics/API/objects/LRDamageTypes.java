@@ -8,9 +8,13 @@ import net.minecraft.world.damagesource.DamageType;
 
 public interface LRDamageTypes {
     ResourceKey<DamageType> EROSION = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("erosion"));
+    ResourceKey<DamageType> INFERNO_SCORCH = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("inferno_scorch"));
+
     ResourceKey<DamageType> FLYING_REAPER = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("flying_reaper"));
+
     static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(EROSION, new DamageType("erosion", 0.1F));
         context.register(FLYING_REAPER, new DamageType("flying_reaper", 0.1F));
+        context.register(INFERNO_SCORCH, new DamageType("inferno_scorch", 0.1F));
     }
 }

@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.client.module.armor;
+package com.chen1335.legendaryRelics.client.module.armor.blackDragonArmor;
 
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
