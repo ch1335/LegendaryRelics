@@ -1,10 +1,10 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoBoots;
-import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoChestPlate;
-import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoHelmet;
-import com.chen1335.legendaryRelics.items.armor.InfernoSet.InfernoLeggings;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoBoots;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoChestPlate;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoHelmet;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoLeggings;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonBoots;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonChestPlate;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;

@@ -14,11 +14,12 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ClientEventHandler {
     @EventBusSubscriber(value = {Dist.CLIENT})
@@ -55,8 +56,13 @@ public class ClientEventHandler {
                     );
                 }
             }
+
         }
 
+        @SubscribeEvent
+        public static void RenderLevelEvent(RenderLevelStageEvent event) {
+
+        }
 
         @SubscribeEvent
         public static void ClientInputEvent(InputEvent.Key event) {

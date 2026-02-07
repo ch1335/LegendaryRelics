@@ -42,7 +42,7 @@ public class TreatmentBall extends Entity {
             return;
         }
 
-        float a = 0.6F;
+        float a = 0.8F;
         Vec3 movement = targetEntity.getEyePosition().subtract(this.getEyePosition()).normalize().multiply(a, a, a);
         this.setDeltaMovement(movement);
         Vec3 deltaMovement = getDeltaMovement();

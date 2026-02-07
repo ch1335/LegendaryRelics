@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.items.armor.InfernoSet;
+package com.chen1335.legendaryRelics.items.armor.infernoSet;
 
 import com.chen1335.legendaryRelics.API.LRArmorHelper;
 import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
