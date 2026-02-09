@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.Random;
 
 public class Util {
+    //Random ResourceLocation
     public static ResourceLocation randomLocation(int count) {
         Random random = new Random();
 

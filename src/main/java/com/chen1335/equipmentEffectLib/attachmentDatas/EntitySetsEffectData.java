@@ -38,7 +38,7 @@ public class EntitySetsEffectData {
 
         newEffectInstances.forEach((setEffect, effectInstance) -> {
             EffectInstance oldOrCreated = effectInstances.getOrDefault(setEffect, effectInstance);
-            oldOrCreated.updatePiece(livingEntity,effectInstance.getPiece());
+            oldOrCreated.updatePiece(livingEntity, effectInstance.getPiece());
             newEffectInstances.put(setEffect, oldOrCreated);
         });
 
@@ -61,6 +61,19 @@ public class EntitySetsEffectData {
             return null;
         }
         return clazz.cast(livingEntity.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).effectInstances.get(setEffect));
+    }
+
+    @Nullable
+    public static EffectInstance getSetInstance(LivingEntity livingEntity, SetEffect setEffect) {
+        if (!livingEntity.hasData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get())) {
+            return null;
+        }
+        return livingEntity.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).effectInstances.get(setEffect);
+    }
+
+    public static int getPiece(LivingEntity livingEntity, SetEffect setEffect) {
+        EffectInstance setInstance = getSetInstance(livingEntity, setEffect);
+        return setInstance == null ? 0 : setInstance.getPiece();
     }
 
     public static void buildSets(List<ItemStack> itemStacks, Map<SetEffect, Set<Item>> map) {

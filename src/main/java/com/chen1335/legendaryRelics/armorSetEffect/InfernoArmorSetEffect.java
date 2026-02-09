@@ -97,11 +97,9 @@ public class InfernoArmorSetEffect extends SetEffect {
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, List<Component> list) {
-        CalculatorArg args = CalculatorArg.simpleArg(player);
-        int piece = LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(this, 0);
-        args.putArg(TieredBonus.TIER, piece - 1);
+        CalculatorArg args = buildArg(player);
         boolean shiftDown = tooltipFlag.hasShiftDown();
-        list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.inferno.name").append("(%s/4)".formatted(piece)).withColor(16733695)).withColor(16755200));
+        list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.inferno.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.1",
                 GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, ChatFormatting.YELLOW.getColor()),
                 doomComponent()
@@ -156,7 +154,7 @@ public class InfernoArmorSetEffect extends SetEffect {
             if (instance != null) {
                 CalculatorArg args = CalculatorArg.simpleArg(attacker);
                 int piece = LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(LRSetsEffects.INFERNO_ARMOR.value(), 0);
-                args.putArg(TieredBonus.TIER, piece - 1);
+                args.putArg(TieredBonus.TIER, piece);
                 if (instance.coolDown <= 0) {
                     instance.addDoomLevel(1);
                     float cooldownValueSecond = GAIN_STACK_COOLDOWN.getValue(args);

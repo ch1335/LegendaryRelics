@@ -1,4 +1,4 @@
-package com.chen1335.equipmentEffectLib.common;
+package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
@@ -39,12 +39,12 @@ public class GamePlayEventHandler {
 
     @SubscribeEvent
     public static void EntityTickPre(EntityTickEvent.Pre event) {
-        BlackDragonArmorSetEffect.EntityTickPre(event);
+
     }
 
     @SubscribeEvent
     public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
-        BlackDragonArmorSetEffect.LivingEquipmentChangeEvent(event);
+
     }
 
     @SubscribeEvent

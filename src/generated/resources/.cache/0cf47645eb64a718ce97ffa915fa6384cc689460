@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-02T15:23:46.1646332	Item Models: legendary_relics
+// 1.21.1	2026-02-09T23:11:54.2972988	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
@@ -25,5 +25,9 @@ ce897aa84218c27a8f2d068fd4fa6f0237e5b636 assets/legendary_relics/models/item/per
 e350612c536a90fa06fa508cdb490f2f1f2c3f87 assets/legendary_relics/models/item/sacred_talisman.json
 c210e24fbc9dc1a1f03f4939f3281a95d1e5736a assets/legendary_relics/models/item/shield_regenerator.json
 ceb76e23522c8c8c384c63d70b82a71166a097db assets/legendary_relics/models/item/the_ore_collectors_ring.json
+fa4c342a171b19108b223ed5646d50fc1aca4d4d assets/legendary_relics/models/item/twisted_boots.json
+680a448007303ec9f991739125b4a83e3004a8a1 assets/legendary_relics/models/item/twisted_chest_plate.json
+68436f06edae1c7802c46bb345906a860d7b6b8b assets/legendary_relics/models/item/twisted_helmet.json
+cfd2f10fac4b087659d393ad0fb5c935b643c060 assets/legendary_relics/models/item/twisted_leggings.json
 78374888c0c8e4c219e0dea7114ecf8e98295ba8 assets/legendary_relics/models/item/withering_blade.json
 4a4ecefa56621c25574fde6de856be59ca38ab2e assets/legendary_relics/models/item/wither_spirit.json

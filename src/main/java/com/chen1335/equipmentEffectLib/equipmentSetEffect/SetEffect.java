@@ -1,11 +1,16 @@
 package com.chen1335.equipmentEffectLib.equipmentSetEffect;
 
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
+import com.chen1335.equipmentEffectLib.attachmentDatas.EntitySetsEffectData;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
+import com.chen1335.legendaryRelics.client.LRClient;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.special.TieredBonus;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -24,5 +29,17 @@ public class SetEffect {
         return new EffectInstance(piece);
     }
 
+    public CalculatorArg buildArg(LivingEntity living) {
+        CalculatorArg args = CalculatorArg.simpleArg(living);
+        int piece = getPiece(living);
+        args.putArg(TieredBonus.TIER, piece);
+        return args;
+    }
 
+    public int getPiece(LivingEntity living) {
+        if (living.level().isClientSide) {
+            return LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(this, 0);
+        }
+        return EntitySetsEffectData.getPiece(living, this);
+    }
 }

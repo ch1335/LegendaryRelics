@@ -9,6 +9,7 @@ import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonBoots;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonChestPlate;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
+import com.chen1335.legendaryRelics.items.armor.twistedSet.*;
 import com.chen1335.legendaryRelics.items.curios.*;
 import com.chen1335.legendaryRelics.items.misc.*;
 import com.chen1335.legendaryRelics.items.weapons.Reaper;
@@ -75,5 +76,13 @@ public class LRItems {
     public static final DeferredItem<InfernoLeggings> INFERNO_LEGGINGS = ITEM_DEFERRED_REGISTER.register("inferno_leggings", InfernoLeggings::new);
 
     public static final DeferredItem<InfernoBoots> INFERNO_BOOTS = ITEM_DEFERRED_REGISTER.register("inferno_boots", InfernoBoots::new);
+
+    public static final DeferredItem<TwistedHelmet> TWISTED_HELMET= ITEM_DEFERRED_REGISTER.register("twisted_helmet", TwistedHelmet::new);
+
+    public static final DeferredItem<TwistedChestPlate> TWISTED_CHEST_PLATE = ITEM_DEFERRED_REGISTER.register("twisted_chest_plate", TwistedChestPlate::new);
+
+    public static final DeferredItem<TwistedLeggings> TWISTED_LEGGINGS = ITEM_DEFERRED_REGISTER.register("twisted_leggings", TwistedLeggings::new);
+
+    public static final DeferredItem<TwistedBoots> TWISTED_BOOTS = ITEM_DEFERRED_REGISTER.register("twisted_boots", TwistedBoots::new);
 
 }

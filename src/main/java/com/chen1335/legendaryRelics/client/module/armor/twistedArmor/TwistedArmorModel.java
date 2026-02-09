@@ -1,9 +1,7 @@
-package com.chen1335.legendaryRelics.client.module.armor.infernoArmor;
+package com.chen1335.legendaryRelics.client.module.armor.twistedArmor;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,10 +10,10 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class InfernoArmorModel<T extends LivingEntity> extends HumanoidModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(LegendaryRelics.id("inferno_armor_layer"), "main");
+public class TwistedArmorModel<T extends LivingEntity> extends HumanoidModel<T> {
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(LegendaryRelics.id("twisted_armor_layer"), "main");
 
-    public InfernoArmorModel(ModelPart root) {
+    public TwistedArmorModel(ModelPart root) {
         super(root);
     }
 

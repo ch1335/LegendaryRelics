@@ -41,6 +41,10 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.INFERNO_LEGGINGS.asItem());
         basicItem(LRItems.INFERNO_BOOTS.asItem());
 
+        basicItem(LRItems.TWISTED_HELMET.asItem());
+        basicItem(LRItems.TWISTED_CHEST_PLATE.asItem());
+        basicItem(LRItems.TWISTED_LEGGINGS.asItem());
+        basicItem(LRItems.TWISTED_BOOTS.asItem());
 
         handheldItem(LRItems.WITHERING_BLADE.asItem());
         basicItem(LegendaryRelics.id("book"));

@@ -48,14 +48,12 @@ public class InfernoEffectInstance extends EffectInstance {
     }
 
     @Override
-    public void updatePiece(LivingEntity livingEntity, int piece) {
-        super.updatePiece(livingEntity, piece);
+    public void onPieceUpdate(LivingEntity livingEntity, int piece) {
         updateAttribute(livingEntity, piece);
     }
 
     private void updateAttribute(LivingEntity living, int piece) {
-        CalculatorArg args = CalculatorArg.simpleArg(living);
-        args.putArg(TieredBonus.TIER, piece - 1);
+        CalculatorArg args = buildArgs(living);
         AttributeMap attributes = living.getAttributes();
         AttributeInstance attackRange = attributes.getInstance(Attributes.ENTITY_INTERACTION_RANGE);
         AttributeInstance attackDamage = attributes.getInstance(Attributes.ATTACK_DAMAGE);

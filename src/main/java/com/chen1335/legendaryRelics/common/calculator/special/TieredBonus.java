@@ -47,13 +47,13 @@ public record TieredBonus(List<Float> list) implements Unit {
 
         MutableComponent component = Component.empty();
         component.append("(");
-        for (int i = 0; i < list.size(); i++) {
-            MutableComponent component1 = Component.literal(FinalCalculator.format(list.get(i), 3));
+        for (int i = 1; i <= list.size(); i++) {
+            MutableComponent component1 = Component.literal(FinalCalculator.format(list.get(i-1), 3));
             if (i == tier) {
                 component1.withStyle(ChatFormatting.GRAY);
             }
             component.append(component1);
-            if (i != list.size() - 1) {
+            if (i != list.size()) {
                 component.append("|");
             }
         }

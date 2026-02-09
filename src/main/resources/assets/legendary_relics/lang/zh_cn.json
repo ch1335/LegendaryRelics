@@ -107,5 +107,9 @@
   "set_effect.legendary_relics.inferno.desc.3": "每层会提供%s攻击距离和%s攻击伤害",
   "set_effect.legendary_relics.inferno.desc.2": "超过%s秒没有获得%s后，每秒失去一层%s",
   "set_effect.legendary_relics.inferno.desc.4": "在10层时，攻击施加%s效果，每秒造成%s物理伤害",
-  "set_effect.legendary_relics.inferno.desc.5": "拥有%s效果的生物死亡时会对周围的生物施加%s并且造成%s物理伤害"
+  "set_effect.legendary_relics.inferno.desc.5": "拥有%s效果的生物死亡时会对周围的生物施加%s并且造成%s物理伤害",
+  "item.legendary_relics.twisted_helmet": "扭曲兜帽",
+  "item.legendary_relics.twisted_chest_plate": "扭曲胸甲",
+  "item.legendary_relics.twisted_leggings": "扭曲护裤",
+  "item.legendary_relics.twisted_boots": "扭曲靴子"
 }

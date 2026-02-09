@@ -75,6 +75,11 @@
   "item.legendary_relics.inferno_leggings": "Inferno Leggings",
   "item.legendary_relics.inferno_boots": "Inferno Boots",
 
+  "item.legendary_relics.twisted_helmet": "Twisted Helmet",
+  "item.legendary_relics.twisted_chest_plate": "Twisted Chestplate",
+  "item.legendary_relics.twisted_leggings": "Twisted Leggings",
+  "item.legendary_relics.twisted_boots": "Twisted Boots",
+
   "equipment_effect.legendary_relics.erosion.1": "§6Erosion§r:The target be attacked will be inflicted with up to 5 stacks of erosion, each stack:",
   "equipment_effect.legendary_relics.erosion.2": "Deals %s magic damage per second and heals you for 1%% of your lost health",
   "equipment_effect.legendary_relics.erosion.3": "Reduced the target's %s total armor",
