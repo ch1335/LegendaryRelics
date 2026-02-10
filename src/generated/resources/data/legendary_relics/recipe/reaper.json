@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "item": "legendary_relics:wither_spirit"
+    },
+    "C": {
+      "item": "minecraft:obsidian"
+    },
+    "D": {
+      "item": "legendary_relics:dark_gold_fragment"
+    }
+  },
+  "pattern": [
+    "AAB",
+    "DCC",
+    "CDC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:reaper"
+  }
+}

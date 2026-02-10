@@ -1,0 +1,6 @@
+// 1.21.1	2026-02-03T14:27:20.5645549	Tags for minecraft:damage_type mod id legendary_relics
+06b5f4b1f275cfa110bc3f1046c0eae155586189 data/minecraft/tags/damage_type/bypasses_cooldown.json
+561890b4b670ed22a6f3a6b44a070d61f99dddb1 data/minecraft/tags/damage_type/is_projectile.json
+06b5f4b1f275cfa110bc3f1046c0eae155586189 data/minecraft/tags/damage_type/no_knockback.json
+507f2a90630e31a4d7dfe0aa25a5c96e0e7c2f1c data/neoforge/tags/damage_type/is_magic.json
+f7df63f854d7179a5c7fbf5fbb680c29920ec48f data/neoforge/tags/damage_type/is_physical.json

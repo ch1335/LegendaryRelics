@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dark_gold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "legendary_relics:dark_gold"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "legendary_relics:withering_blade"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dark_gold"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "legendary_relics:withering_blade"
+    ]
+  }
+}
