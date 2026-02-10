@@ -143,7 +143,7 @@ public class InfernoArmorSetEffect extends SetEffect {
         return new InfernoEffectInstance(piece);
     }
 
-    private static InfernoEffectInstance getEffectInstance(LivingEntity living) {
+    public static InfernoEffectInstance getEffectInstance(LivingEntity living) {
         return EntitySetsEffectData.getSetInstance(living, LRSetsEffects.INFERNO_ARMOR.value(), InfernoEffectInstance.class);
     }
 
@@ -156,12 +156,12 @@ public class InfernoArmorSetEffect extends SetEffect {
                 int piece = LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(LRSetsEffects.INFERNO_ARMOR.value(), 0);
                 args.putArg(TieredBonus.TIER, piece);
                 if (instance.coolDown <= 0) {
-                    instance.addDoomLevel(1);
+                    instance.addStack(1);
                     float cooldownValueSecond = GAIN_STACK_COOLDOWN.getValue(args);
                     instance.coolDown = (int) (cooldownValueSecond * 20);
                     instance.keepTime = (int) (KEEP_TIME.getValue(args) * 20);
                 }
-                if (instance.doomLevel >= 10) {
+                if (instance.stack >= 10) {
                     InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args));
                     infernoScorch.setSourceEntity(attacker);
                     SpecialEffectAPI.addEffectToEntity(event.getEntity(), infernoScorch, InfernoScorch::getFinal);

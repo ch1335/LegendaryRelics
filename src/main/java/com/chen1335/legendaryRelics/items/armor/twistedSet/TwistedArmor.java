@@ -25,17 +25,13 @@ public class TwistedArmor extends LRArmorBase {
 
     @Override
     protected ItemAttributeModifiers buildAttributes() {
-        ResourceLocation resourcelocation = LegendaryRelics.id("armor.inferno." + type.getName());
+        ResourceLocation resourcelocation = LegendaryRelics.id("armor.twisted." + type.getName());
         EquipmentSlotGroup equipmentslotgroup = EquipmentSlotGroup.bySlot(type.getSlot());
         return this.getDefaultAttributeModifiers().withModifierAdded(
                 Attributes.MAX_HEALTH, new AttributeModifier(resourcelocation, 2, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup
         ).withModifierAdded(
-                AttributesGetter.arrowDamage(), new AttributeModifier(resourcelocation, 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), equipmentslotgroup
-
-        )
-
-
-                ;
+                AttributesGetter.arrowDamage(), new AttributeModifier(resourcelocation, 0.05, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), equipmentslotgroup
+        );
     }
 
     @Override

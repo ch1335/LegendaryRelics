@@ -111,5 +111,11 @@
   "item.legendary_relics.twisted_helmet": "扭曲兜帽",
   "item.legendary_relics.twisted_chest_plate": "扭曲胸甲",
   "item.legendary_relics.twisted_leggings": "扭曲护裤",
-  "item.legendary_relics.twisted_boots": "扭曲靴子"
+  "item.legendary_relics.twisted_boots": "扭曲靴子",
+  "legendary_relics.stack.phase_shooting": "相位射击",
+  "set_effect.legendary_relics.twisted.desc.1": "每%s秒，造成箭矢伤害获得一层%s，最多10层",
+  "set_effect.legendary_relics.twisted.desc.2": "超过%s秒没有获得%s后，每秒失去一层%s",
+  "set_effect.legendary_relics.twisted.desc.3": "每层会提供%s蓄力速度和%s箭矢伤害",
+  "set_effect.legendary_relics.twisted.desc.4": "在10层时，额外射出2支箭，每支箭有%s的基础伤害",
+  "set_effect.legendary_relics.twisted.name": "箭矢增强"
 }

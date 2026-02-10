@@ -88,7 +88,7 @@ public class EntitySetsEffectData {
     }
 
     public void sendToPlayer(ServerPlayer serverPlayer) {
-        PacketDistributor.sendToPlayer(serverPlayer, new SetsInfoPack(this.pieceInfo));
+        PacketDistributor.sendToPlayer(serverPlayer, new SetsInfoPack(Map.copyOf(this.pieceInfo)));
     }
 
     public void tick(LivingEntity living) {

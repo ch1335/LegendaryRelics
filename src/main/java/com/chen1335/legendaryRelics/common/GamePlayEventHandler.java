@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.common;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
 import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.FallImmunity;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.*;
@@ -21,6 +22,7 @@ public class GamePlayEventHandler {
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         InfernoArmorSetEffect.LivingIncomingDamageEvent(event);
         BlackDragonChestPlateEffect.LivingIncomingDamageEvent(event);
+        TwistedArmorSetEffect.LivingIncomingDamageEvent(event);
 
         ShieldRegeneratorEffect.LivingIncomingDamageEvent(event);
         InFireTargetDamageIncrease.LivingIncomingDamageEvent(event);
@@ -29,6 +31,11 @@ public class GamePlayEventHandler {
         FallImmunity.LivingIncomingDamageEvent(event);
         HardenedEffect.LivingIncomingDamageEvent(event);
         Redemption.LivingIncomingDamageEvent(event);
+    }
+
+    @SubscribeEvent
+    public static void LivingEntityUseItemEvent$Stop(LivingEntityUseItemEvent.Stop event){
+        TwistedArmorSetEffect.LivingEntityUseItemEvent$Stop(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

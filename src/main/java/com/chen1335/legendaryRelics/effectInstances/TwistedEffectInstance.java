@@ -2,18 +2,19 @@ package com.chen1335.legendaryRelics.effectInstances;
 
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
+import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 
-public class InfernoEffectInstance extends EffectInstance {
-    private static final ResourceLocation ATTACK_RANGE = LegendaryRelics.id("inferno.attack_range");
-    private static final ResourceLocation ATTACK_DAMAGE = LegendaryRelics.id("inferno.attack_damage");
+public class TwistedEffectInstance extends EffectInstance {
+    private static final ResourceLocation DRAW_SPEED = LegendaryRelics.id("twisted.attack_range");
+    private static final ResourceLocation ARROW_DAMAGE = LegendaryRelics.id("twisted.attack_damage");
     public int stack = 0;
     public int coolDown = 0;
     public int keepTime = 0;
@@ -21,9 +22,12 @@ public class InfernoEffectInstance extends EffectInstance {
 
     private int tickCounter = 0;
 
-    public InfernoEffectInstance(int piece) {
+    public boolean isDoingAdditionShoot = false;
+
+    public TwistedEffectInstance(int piece) {
         super(piece);
     }
+
 
     @Override
     public void tick(LivingEntity living) {
@@ -54,19 +58,19 @@ public class InfernoEffectInstance extends EffectInstance {
     private void updateAttribute(LivingEntity living, int piece) {
         CalculatorArg args = buildArgs(living);
         AttributeMap attributes = living.getAttributes();
-        AttributeInstance attackRange = attributes.getInstance(Attributes.ENTITY_INTERACTION_RANGE);
-        AttributeInstance attackDamage = attributes.getInstance(Attributes.ATTACK_DAMAGE);
-        if (attackRange != null) {
-            attackRange.removeModifier(ATTACK_RANGE);
+        AttributeInstance drawSpeed = attributes.getInstance(AttributesGetter.drawSpeed());
+        AttributeInstance arrowDamage = attributes.getInstance(AttributesGetter.arrowDamage());
+        if (drawSpeed != null) {
+            drawSpeed.removeModifier(DRAW_SPEED);
             if (piece >= 2) {
-                attackRange.addPermanentModifier(new AttributeModifier(ATTACK_RANGE, stack * InfernoArmorSetEffect.ATTACK_RANGE_PER_STACK.getValue(args), AttributeModifier.Operation.ADD_VALUE));
+                drawSpeed.addPermanentModifier(new AttributeModifier(DRAW_SPEED, stack * TwistedArmorSetEffect.DRAW_SPEED_PER_STACK.getValue(args), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
             }
         }
 
-        if (attackDamage != null) {
-            attackDamage.removeModifier(ATTACK_DAMAGE);
+        if (arrowDamage != null) {
+            arrowDamage.removeModifier(ARROW_DAMAGE);
             if (piece >= 2) {
-                attackDamage.addPermanentModifier(new AttributeModifier(ATTACK_DAMAGE, stack * InfernoArmorSetEffect.DAMAGE_PER_STACK.getValue(args), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+                arrowDamage.addPermanentModifier(new AttributeModifier(ARROW_DAMAGE, stack * TwistedArmorSetEffect.ARROW_DAMAGE_PER_STACK.getValue(args), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
             }
         }
     }
@@ -75,12 +79,18 @@ public class InfernoEffectInstance extends EffectInstance {
         this.stack = Math.max(Math.min(10, stack + add), 0);
     }
 
-    public int getStack() {
+    public int getDoomLevel() {
         return stack;
     }
 
     @Override
     public void onRemove(LivingEntity livingEntity) {
         updateAttribute(livingEntity, 0);
+    }
+
+    public void modifyArrow(AbstractArrow arrow, LivingEntity owner) {
+        if (isDoingAdditionShoot) {
+            arrow.setBaseDamage(arrow.getBaseDamage() * TwistedArmorSetEffect.ADDITION_ARROW_BASE_DAMAGE.getValue(buildArgs(owner)));
+        }
     }
 }

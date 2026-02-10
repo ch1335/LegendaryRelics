@@ -34,11 +34,11 @@ public record TieredBonus(List<Float> list) implements Unit {
 
     @Override
     public float getValue(CalculatorArg calculatorArg) {
-        int tier = Math.max(calculatorArg.getArgElse(TIER, 0), 0);
-        if (tier >= list.size()) {
+        int tier = Math.max(calculatorArg.getArgElse(TIER, 1), 1);
+        if (tier >= list.size()+1) {
             return list.getLast();
         }
-        return list.get(tier);
+        return list.get(tier-1);
     }
 
     @Override

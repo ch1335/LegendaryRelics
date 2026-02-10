@@ -102,6 +102,12 @@ public class EventHandler {
                     LRItems.INFERNO_LEGGINGS.asItem(),
                     LRItems.INFERNO_BOOTS.asItem()
             );
+            event.sets(LRSetsEffects.TWISTED_ARMOR.value(),
+                    LRItems.TWISTED_HELMET.asItem(),
+                    LRItems.TWISTED_CHEST_PLATE.asItem(),
+                    LRItems.TWISTED_LEGGINGS.asItem(),
+                    LRItems.TWISTED_BOOTS.asItem()
+            );
         }
 
         @SubscribeEvent
