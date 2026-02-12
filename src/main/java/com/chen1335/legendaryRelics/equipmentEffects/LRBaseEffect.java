@@ -5,6 +5,7 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class LRBaseEffect extends BaseEffect {
@@ -18,7 +19,7 @@ public class LRBaseEffect extends BaseEffect {
     }
 
     @Override
-    public int getEffectLevel(@Nullable LivingEntity livingEntity, ItemStack itemStack) {
+    public int getEffectLevel(@Nullable LivingEntity livingEntity, @NotNull ItemStack itemStack) {
         if (itemStack.getRarity().equals(LRRarities.DARK_GOLD.getValue())) {
             return getRawEffectLevel() + getDarkGoldLevelAdd();
         }

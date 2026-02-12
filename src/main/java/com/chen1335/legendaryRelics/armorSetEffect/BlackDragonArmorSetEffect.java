@@ -4,6 +4,7 @@ import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Add;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
@@ -20,11 +21,11 @@ import net.minecraft.world.item.TooltipFlag;
 import java.util.List;
 
 public class BlackDragonArmorSetEffect extends SetEffect {
-
+    @Calculator
     public static FinalCalculator ATTRIBUTE_MULTIPLIER = FinalCalculator.of(
             TieredBonus.of(List.of(0.04F, 0.06F, 0.08F, 0.1F))
     );
-
+    @Calculator
     public static FinalCalculator HEALTH_REGAIN = FinalCalculator.of(
             Add.of(
                     Constant.of(1),

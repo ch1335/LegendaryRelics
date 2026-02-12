@@ -13,6 +13,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
@@ -61,10 +62,9 @@ public class GamePlayEventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void LivingDeathEvent$Lowest(LivingDeathEvent event) {
-        if (!event.isCanceled()) {
             SoulEater.LivingDeathEvent(event);
             InfernoArmorSetEffect.LivingDeathEvent(event);
-        }
+            GameTaskEffect.LivingDeathEvent(event);
     }
 
     @SubscribeEvent
@@ -72,6 +72,10 @@ public class GamePlayEventHandler {
         AttributeBoostInNether.EntityTravelToDimensionEvent(event);
     }
 
+    @SubscribeEvent
+    public static void PlayerChangedDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event){
+        GameTaskEffect.PlayerChangedDimensionEvent(event);
+    }
     @SubscribeEvent
     public static void LivingHealEvent(LivingHealEvent event) {
         HealIncreaseEffect.LivingHealEvent(event);

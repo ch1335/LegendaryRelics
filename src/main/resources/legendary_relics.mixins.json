@@ -9,7 +9,7 @@
     "legendary_relics.CurioInventoryCapabilityMixin",
     "legendary_relics.EnchantedCountIncreaseFunctionMixin",
     "legendary_relics.ItemStackMixin",
-    "legendary_relics.LootItemRandomChanceWithEnchantedBonusConditionMixin", "legendary_relics.LootModifierManagerMixin", "legendary_relics.ServerLevelMixin"
+    "legendary_relics.LootItemRandomChanceWithEnchantedBonusConditionMixin", "legendary_relics.LootModifierManagerMixin", "legendary_relics.ServerLevelMixin", "legendary_relics.ServerPlayerMixin"
   ],
   "client": ["legendary_relics.client.ElytraLayerMixin", "legendary_relics.client.GameRendererInvoker", "legendary_relics.client.HumanoidArmorLayerMixin"],
   "minVersion": "0.8"

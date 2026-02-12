@@ -8,9 +8,11 @@ import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
+import com.chen1335.legendaryRelics.API.objects.LRTags;
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentHolder;
 import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.network.chat.Component;
@@ -53,6 +55,10 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
         SetEffect setsEffect = ((IEEItemExtension) this.getItem()).EE$GetSetsEffect();
         if (setsEffect != null) {
             setsEffect.appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
+        }
+
+        if (itemStack.is(LRTags.Items.CAN_ONLY_WEAR_ONE)) {
+            list.add(Component.translatable("legendary_relics.can_only_wear_one").withStyle(ChatFormatting.DARK_GRAY));
         }
     }
 

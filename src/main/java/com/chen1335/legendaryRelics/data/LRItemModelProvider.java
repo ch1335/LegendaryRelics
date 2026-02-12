@@ -49,5 +49,7 @@ public class LRItemModelProvider extends ItemModelProvider {
         handheldItem(LRItems.WITHERING_BLADE.asItem());
         basicItem(LegendaryRelics.id("book"));
 
+
+
     }
 }

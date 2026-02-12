@@ -50,4 +50,8 @@ public class LREquipmentEffectTypes {
 
     public static DeferredHolder<EffectType<?>, EffectType<FlameImmunity>> FLAME_IMMUNITY = EQUIPMENT_EFFECT_TYPES.register("flame_immunity", () -> new EffectType<>(FlameImmunity::new, EntityEquipmentEffectData.EquipmentType.CURIO));
 
+    public static DeferredHolder<EffectType<?>, EffectType<GameTaskEffect>> GAME_TASK_CURIO = EQUIPMENT_EFFECT_TYPES.register("game_task", () -> new EffectType<>(GameTaskEffect::new, EntityEquipmentEffectData.EquipmentType.CURIO, true));
+
+    public static DeferredHolder<EffectType<?>, EffectType<AllAttributeBoost>> ALL_ATTRIBUTE_BOOST = EQUIPMENT_EFFECT_TYPES.register("all_attribute_boost", () -> new EffectType<>(AllAttributeBoost::new, EntityEquipmentEffectData.EquipmentType.CURIO, true));
+
 }

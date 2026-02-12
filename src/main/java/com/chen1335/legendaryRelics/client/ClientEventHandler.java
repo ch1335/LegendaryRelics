@@ -58,16 +58,6 @@ public class ClientEventHandler {
             }
 
         }
-
-        @SubscribeEvent
-        public static void RenderLevelEvent(RenderLevelStageEvent event) {
-
-        }
-
-        @SubscribeEvent
-        public static void ClientInputEvent(InputEvent.Key event) {
-
-        }
     }
 
     @EventBusSubscriber(value = {Dist.CLIENT})

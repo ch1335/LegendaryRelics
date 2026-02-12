@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics;
 
+import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.EquipmentEffectLib;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.client.ClientExtensionsRegister;
@@ -12,8 +13,10 @@ import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.Config;
 import com.chen1335.legendaryRelics.config.LootConfig;
+import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.GameTaskEffect;
 import com.chen1335.specialEffectLib.SpecialEffectLib;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,12 +27,15 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforgespi.Environment;
 import org.slf4j.Logger;
+
+import java.nio.file.Path;
 
 @Mod(LegendaryRelics.MODID)
 public class LegendaryRelics {
@@ -48,9 +54,10 @@ public class LegendaryRelics {
 
     public static boolean APOTHIC_ATTRIBUTES_EXTENSION_LOADED = false;
 
+    public static final Path CONFIGS_PATH = FMLPaths.CONFIGDIR.get().resolve("legendary_relics");
 
     public LegendaryRelics(IEventBus modEventBus, ModContainer modContainer) {
-        Config.load();
+        CONFIGS_PATH.toFile().mkdirs();
 
         EquipmentEffectLib.init(modEventBus, modContainer);
         SpecialEffectLib.init(modEventBus, modContainer);
@@ -98,10 +105,17 @@ public class LegendaryRelics {
             LegendaryTooltipsHandler.init();
         }
         ParticlePlayersHolder.init();
+
+        ItemProperties.register(LRItems.CHARM_OF_FRESH_START.asItem(), id("task_finished"), (stack, level, entity, seed) -> {
+            GameTaskEffect effect = EquipmentEffectAPI.getEffect(stack, LREquipmentEffectTypes.GAME_TASK_CURIO.get());
+            return effect == null ? 0 : effect.getRawEffectLevel();
+        });
     }
 
 
     public void setup(FMLCommonSetupEvent event) {
+        GameTaskEffect.initTasks();
+        Config.load();
         event.enqueueWork(LootEntries::init);
         event.enqueueWork(LootConfig::load);
     }

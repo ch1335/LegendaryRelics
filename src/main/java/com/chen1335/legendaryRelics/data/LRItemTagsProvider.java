@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.data;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.API.objects.LRTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -18,12 +19,16 @@ public class LRItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
+        tag(LRTags.Items.CAN_ONLY_WEAR_ONE).add(
+                LRItems.CHARM_OF_FRESH_START.asItem()
+        );
+
         tag(CuriosTags.CHARM)
                 .add(
                         LRItems.AGGLOMERATION_MALICE.asItem(),
-                        LRItems.SHIELD_REGENERATOR.asItem(),
                         LRItems.NETHER_TALISMAN.asItem(),
-                        LRItems.PURGATORY_TALISMAN.asItem()
+                        LRItems.PURGATORY_TALISMAN.asItem(),
+                        LRItems.CHARM_OF_FRESH_START.asItem()
                 );
 
         tag(CuriosTags.RING)
@@ -39,6 +44,10 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                         LRItems.DARK_STEEL_CLAW.asItem()
                 );
 
+        tag(CuriosTags.BELT)
+                .add(
+                        LRItems.SHIELD_REGENERATOR.asItem()
+                );
 
         tag(CuriosTags.NECKLACE).add(
                 LRItems.SACRED_TALISMAN.asItem(),

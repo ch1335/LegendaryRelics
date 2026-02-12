@@ -20,4 +20,24 @@ public class AttributesGetter {
     public static Holder<Attribute> arrowDamage() {
         return ALObjects.Attributes.ARROW_DAMAGE;
     }
+
+    public static Holder<Attribute> armorPierce() {
+        return ALObjects.Attributes.ARMOR_PIERCE;
+    }
+
+    public static Holder<Attribute> lifeSteal() {
+        return ALObjects.Attributes.LIFE_STEAL;
+    }
+
+    public static Holder<Attribute> miningSpeed() {
+        return ALObjects.Attributes.MINING_SPEED;
+    }
+
+    public static Holder<Attribute> critDamame() {
+        return ALObjects.Attributes.CRIT_DAMAGE;
+    }
+
+    public static Holder<Attribute> critChance() {
+        return ALObjects.Attributes.CRIT_CHANCE;
+    }
 }

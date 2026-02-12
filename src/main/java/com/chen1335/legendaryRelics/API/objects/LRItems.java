@@ -1,15 +1,18 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoBoots;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoChestPlate;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoHelmet;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoLeggings;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonBoots;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonChestPlate;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
-import com.chen1335.legendaryRelics.items.armor.twistedSet.*;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoBoots;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoChestPlate;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoHelmet;
+import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoLeggings;
+import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedBoots;
+import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedChestPlate;
+import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedHelmet;
+import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedLeggings;
 import com.chen1335.legendaryRelics.items.curios.*;
 import com.chen1335.legendaryRelics.items.misc.*;
 import com.chen1335.legendaryRelics.items.weapons.Reaper;
@@ -77,7 +80,7 @@ public class LRItems {
 
     public static final DeferredItem<InfernoBoots> INFERNO_BOOTS = ITEM_DEFERRED_REGISTER.register("inferno_boots", InfernoBoots::new);
 
-    public static final DeferredItem<TwistedHelmet> TWISTED_HELMET= ITEM_DEFERRED_REGISTER.register("twisted_helmet", TwistedHelmet::new);
+    public static final DeferredItem<TwistedHelmet> TWISTED_HELMET = ITEM_DEFERRED_REGISTER.register("twisted_helmet", TwistedHelmet::new);
 
     public static final DeferredItem<TwistedChestPlate> TWISTED_CHEST_PLATE = ITEM_DEFERRED_REGISTER.register("twisted_chest_plate", TwistedChestPlate::new);
 
@@ -85,4 +88,5 @@ public class LRItems {
 
     public static final DeferredItem<TwistedBoots> TWISTED_BOOTS = ITEM_DEFERRED_REGISTER.register("twisted_boots", TwistedBoots::new);
 
+    public static final DeferredItem<CharmOfFreshStart> CHARM_OF_FRESH_START = ITEM_DEFERRED_REGISTER.register("charm_of_fresh_start", CharmOfFreshStart::new);
 }

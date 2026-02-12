@@ -34,9 +34,9 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
@@ -45,7 +45,10 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotAttribute;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
+import top.theillusivec4.curios.api.event.CurioCanEquipEvent;
 import vazkii.patchouli.common.item.ItemModBook;
 
 import java.util.ArrayList;
@@ -112,8 +115,7 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void heal(LivingHealEvent event) {
-            CalculatorArg arg = CalculatorArg.emptyArg();
-            CalculatorArg.ArgType.THIS_ENTITY.putArg(arg, event.getEntity());
+            CalculatorArg arg = CalculatorArg.simpleArg(event.getEntity());
             LRItems.BLACK_DRAGON_LEGGINGS.get().runIfEquippedThis(event.getEntity(), arg, (itemStack, arg1) -> event.setAmount(event.getAmount() * (1 + BlackDragonLeggings.HEAL_INCREASE.getValue(arg1))));
         }
 
@@ -150,21 +152,9 @@ public class EventHandler {
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void LivingDamageEvent(LivingDamageEvent.Post event) {
-//            if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-//                ItemEffectsData effectsData = serverPlayer.getMainHandItem().getOrDefault(EEItemDataComponentTypes.ITEM_EFFECT_DATA, ItemEffectsData.EMPTY);
-//                AttributeBoostInNether effect = effectsData.getEffect(LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value());
-//                if (effect != null) {
-//                    effect.set(EEItemEffectDataComponentTypes.EFFECT_LEVEL.value(), 10);
-//                }
-//            }
-        }
-
-        @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void LivingIncomingDamageEventLowest(LivingIncomingDamageEvent event) {
-            CalculatorArg args = new CalculatorArg();
             LivingEntity entity = event.getEntity();
-            CalculatorArg.ArgType.THIS_ENTITY.putArg(args, entity);
+            CalculatorArg args = CalculatorArg.simpleArg(entity);
             for (ItemStack armorSlot : entity.getArmorSlots()) {
                 if (armorSlot.getItem() instanceof BlackDragonArmor blackDragonArmor) {
                     CalculatorArg args1 = args.copy();
@@ -178,8 +168,7 @@ public class EventHandler {
         public static void LivingIncomingDamageEventHighest(LivingIncomingDamageEvent event) {
             if (event.getSource().getEntity() instanceof LivingEntity attacker) {
                 if (attacker instanceof Player) {
-                    CalculatorArg args = new CalculatorArg();
-                    CalculatorArg.ArgType.THIS_ENTITY.putArg(args, attacker);
+                    CalculatorArg args = CalculatorArg.simpleArg(attacker);
                 }
             }
         }
@@ -232,20 +221,32 @@ public class EventHandler {
             Multimap<Holder<Attribute>, AttributeModifier> old = ImmutableMultimap.copyOf(invoker.lr$getModifiableMap());
             for (Map.Entry<Holder<Attribute>, AttributeModifier> entry : old.entries()) {
                 Holder<Attribute> attributeHolder = entry.getKey();
+                Attribute value = attributeHolder.value();
                 AttributeModifier modifier = entry.getValue();
-                boolean isNeutral = false;
-                if (attributeHolder.value().sentiment == Attribute.Sentiment.NEUTRAL) {
-                    isNeutral = true;
-                } else if (attributeHolder.value().sentiment == Attribute.Sentiment.POSITIVE && modifier.amount() < 0) {
-                    i = 0;
-                } else if (attributeHolder.value().sentiment == Attribute.Sentiment.NEGATIVE && modifier.amount() > 0) {
-                    i = 0;
+                float j = i;
+                if (value.sentiment == Attribute.Sentiment.NEUTRAL) {
+                    j = 0;
+                } else if (value.sentiment == Attribute.Sentiment.POSITIVE && modifier.amount() < 0) {
+                    j = 0;
+                } else if (value.sentiment == Attribute.Sentiment.NEGATIVE && modifier.amount() > 0) {
+                    j = 0;
+                } else if (value instanceof SlotAttribute) {
+                    j = 0;
                 }
-                if (!isNeutral && i != 0) {
+                if (j != 0) {
                     event.removeModifier(attributeHolder, modifier);
-                    event.addModifier(attributeHolder, new AttributeModifier(modifier.id(), (1 + i) * modifier.amount(), modifier.operation()));
+                    event.addModifier(attributeHolder, new AttributeModifier(modifier.id(), (1 + j) * modifier.amount(), modifier.operation()));
                 }
             }
+        }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void CurioCanEquipEvent(CurioCanEquipEvent event) {
+            CuriosApi.getCuriosInventory(event.getEntity()).ifPresent(iCuriosItemHandler -> {
+                if (!iCuriosItemHandler.findCurios(event.getStack().getItem()).isEmpty() && event.getStack().is(LRTags.Items.CAN_ONLY_WEAR_ONE)) {
+                    event.setEquipResult(TriState.FALSE);
+                }
+            });
         }
 
         @SubscribeEvent

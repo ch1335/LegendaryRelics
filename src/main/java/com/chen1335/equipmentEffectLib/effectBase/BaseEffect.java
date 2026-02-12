@@ -7,6 +7,7 @@ import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.component.*;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -43,7 +44,8 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
 
     public static final Codec<BaseEffect> CODEC = RecordCodecBuilder.create(baseEffectInstance -> baseEffectInstance.group(
             EERegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec().fieldOf("EffectType").forGetter(BaseEffect::getType),
-            DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(BaseEffect::getDataComponentPatch)
+            DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(BaseEffect::getDataComponentPatch),
+            CompoundTag.CODEC.optionalFieldOf("simpleData", new CompoundTag()).forGetter(BaseEffect::saveSimpleData)
     ).apply(baseEffectInstance, BaseEffect::buildEffect));
 
 
@@ -52,12 +54,16 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
             BaseEffect::getType,
             DataComponentPatch.STREAM_CODEC,
             BaseEffect::getDataComponentPatch,
+            ByteBufCodecs.COMPOUND_TAG,
+            BaseEffect::saveSimpleData,
             BaseEffect::buildEffect
     );
 
-    private static BaseEffect buildEffect(EffectType<?> effectType, DataComponentPatch dataComponentPatch) {
+
+    private static BaseEffect buildEffect(EffectType<?> effectType, DataComponentPatch dataComponentPatch, CompoundTag simpleData) {
         BaseEffect effect = effectType.create(1);
         effect.applyComponents(dataComponentPatch);
+        effect.loadSimpleData(simpleData);
         return effect;
     }
 
@@ -73,6 +79,9 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
         return components.getOrDefault(EEItemEffectDataComponentTypes.EFFECT_LEVEL.get(), 1);
     }
 
+    public void setRawEffectLevel(int level) {
+        components.set(EEItemEffectDataComponentTypes.EFFECT_LEVEL.get(), level);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -144,5 +153,20 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
         BaseEffect effect = this.effectType.create(getRawEffectLevel());
         effect.components.setAll(components.copy());
         return effect;
+    }
+
+
+    /**
+     * 保存简单数据
+     */
+    public CompoundTag saveSimpleData() {
+        return new CompoundTag();
+    }
+
+    /**
+     * 加载简单数据
+     */
+    public void loadSimpleData(CompoundTag nbt) {
+
     }
 }

@@ -29,19 +29,19 @@ public class TwistedArmorSetEffect extends SetEffect {
     public static FinalCalculator GAIN_STACK_COOLDOWN = FinalCalculator.of(
             TieredBonus.of(List.of(1.5F, 1.5F, 0.75F, 0.5F))
     );
-
+    @Calculator
     public static FinalCalculator DRAW_SPEED_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.025F, 0.025F, 0.05F, 0.05F))
     );
-
+    @Calculator
     public static FinalCalculator ARROW_DAMAGE_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
     );
-
+    @Calculator
     public static FinalCalculator KEEP_TIME = FinalCalculator.of(
             TieredBonus.of(List.of(4F, 4F, 7F, 10F))
     );
-
+    @Calculator
     public static FinalCalculator ADDITION_ARROW_BASE_DAMAGE = FinalCalculator.of(
             TieredBonus.of(List.of(0.3F, 0.3F, 0.4F, 0.5F))
     );
