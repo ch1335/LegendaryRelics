@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.equipmentEffectLib.API.ISubEffectProvider;
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -14,6 +16,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,10 +42,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class GameTaskEffect extends LRCurioEffectBase {
+public class GameTaskEffect extends LRCurioEffectBase implements ISubEffectProvider {
     public static List<AttributeEntrie> ATTRIBUTES;
 
     public static List<ITask> TASKS;
+
+    private BaseEffect allAttributeBoost = LREquipmentEffectTypes.ALL_ATTRIBUTE_BOOST.get().create(1);
+
 
     public GameTaskEffect(EffectType<?> effectType, int level) {
         super(effectType, level);
@@ -64,25 +71,31 @@ public class GameTaskEffect extends LRCurioEffectBase {
     @Override
     public void onActive(LivingEntity entity, ItemStack itemStack) {
         if (entity instanceof Player player) {
-            finishTask(player, new CustomTask(LegendaryRelics.id("wear_curio")));
+            finishTask(player, new CustomTask(LegendaryRelics.id("wear_curio")),itemStack);
         }
     }
 
     public static void tryFinishTask(Player player, ITask task) {
         LREquipmentEffectTypes.GAME_TASK_CURIO.value().findBestEffect(player).ifPresent(infoHolder -> {
-            ((GameTaskEffect) infoHolder.effect()).finishTask(player, task);
+            ((GameTaskEffect) infoHolder.effect()).finishTask(player, task, infoHolder.itemStack());
         });
     }
 
-    public void finishTask(Player player, ITask task) {
+    public void finishTask(Player player, ITask task, ItemStack itemStack) {
         int rawEffectLevel = getRawEffectLevel();
         if (TASKS.size() > rawEffectLevel) {
             ITask task1 = TASKS.get(rawEffectLevel);
             if (task1.check(task)) {
                 setRawEffectLevel(rawEffectLevel + 1);
                 player.sendSystemMessage(Component.translatable("legendary_relics.task.has_finished", task1.getComponent().withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GOLD));
+                onTaskFinished(player, task, itemStack);
             }
         }
+    }
+
+
+    public void onTaskFinished(Player player, ITask task, ItemStack itemStack) {
+        
     }
 
     @Override
@@ -173,6 +186,32 @@ public class GameTaskEffect extends LRCurioEffectBase {
         return builder;
     }
 
+    @Override
+    public List<BaseEffect> getSubEffects(ItemStack itemStack) {
+        if (getRawEffectLevel() >= TASKS.size()) {
+           return List.of(allAttributeBoost);
+        }
+        return List.of();
+    }
+
+    @Override
+    public CompoundTag saveSimpleData() {
+        CompoundTag compoundTag = super.saveSimpleData();
+        BaseEffect.CODEC.encodeStart(NbtOps.INSTANCE, allAttributeBoost).ifSuccess(nbt -> {
+            compoundTag.put("allAttributeBoostEffect", nbt);
+        });
+        return compoundTag;
+    }
+
+    @Override
+    public void loadSimpleData(CompoundTag nbt) {
+        CompoundTag tag = nbt.getCompound("allAttributeBoostEffect");
+        if (!tag.isEmpty()) {
+            BaseEffect.CODEC.decode(NbtOps.INSTANCE, tag).ifSuccess(pair -> {
+                allAttributeBoost = pair.getFirst();
+            });
+        }
+    }
 
     public record AttributeEntrie(Holder<Attribute> attribute, List<Double> amounts,
                                   AttributeModifier.Operation operation) {

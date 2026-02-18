@@ -6,6 +6,7 @@ import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +18,8 @@ import net.neoforged.neoforge.registries.NewRegistryEvent;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
+import java.util.Map;
+
 public class EventHandler {
 
     @EventBusSubscriber(modid = LegendaryRelics.MODID)
@@ -24,22 +27,20 @@ public class EventHandler {
         @SubscribeEvent
         public static void onCurioChange(CurioChangeEvent event) {
             boolean updateTotal = false;
-            boolean updateSameItem = false;
 
             if (!event.getFrom().is(event.getTo().getItem())) {
                 if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
                     updateTotal = true;
                 }
             } else {
-                if (EquipmentEffectAPI.getEffects(event.getFrom()).values().hashCode() == EquipmentEffectAPI.getEffects(event.getTo()).values().hashCode()) {
-                    updateSameItem = true;
+                Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
+                Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
+                if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
+                    updateTotal = true;
                 }
             }
 
-            if (updateSameItem) {
-                EquipmentEffectAPI.updateEntityEquipmentEffectSameItem(event.getEntity(), EntityEquipmentEffectData.EquipmentType.CURIO, event.getFrom(), event.getTo());
-
-            } else if (updateTotal) {
+            if (updateTotal) {
                 EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EntityEquipmentEffectData.EquipmentType.CURIO);
             }
 
@@ -53,33 +54,25 @@ public class EventHandler {
         public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
             EquipmentSlot.Type type = event.getSlot().getType();
             boolean updateTotal = false;
-            boolean updateSameItem = false;
             if (!event.getFrom().is(event.getTo().getItem())) {
                 if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
                     updateTotal = true;
                 }
             } else {
-                if (EquipmentEffectAPI.getEffects(event.getFrom()).values().hashCode() == EquipmentEffectAPI.getEffects(event.getTo()).values().hashCode()) {
-                    updateSameItem = true;
+                Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
+                Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
+                if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
+                    updateTotal = true;
                 }
             }
 
-            if (updateSameItem) {
-                switch (type) {
-                    case HUMANOID_ARMOR -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffectSameItem(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR, event.getFrom(), event.getTo());
-                    }
-                    case HAND -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffectSameItem(event.getEntity(), EntityEquipmentEffectData.EquipmentType.MAIN_HIND, event.getFrom(), event.getTo());
-                    }
-                }
-            } else if (updateTotal) {
+            if (updateTotal) {
                 switch (type) {
                     case HUMANOID_ARMOR -> {
                         EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR);
                     }
                     case HAND -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EntityEquipmentEffectData.EquipmentType.MAIN_HIND);
+                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EntityEquipmentEffectData.EquipmentType.HAND);
                     }
                 }
             }

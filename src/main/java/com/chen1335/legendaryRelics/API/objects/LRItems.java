@@ -15,6 +15,7 @@ import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedHelmet;
 import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedLeggings;
 import com.chen1335.legendaryRelics.items.curios.*;
 import com.chen1335.legendaryRelics.items.misc.*;
+import com.chen1335.legendaryRelics.items.weapons.LastWhisper;
 import com.chen1335.legendaryRelics.items.weapons.Reaper;
 import com.chen1335.legendaryRelics.items.weapons.WitheringBlade;
 import net.minecraft.world.item.Item;
@@ -89,4 +90,7 @@ public class LRItems {
     public static final DeferredItem<TwistedBoots> TWISTED_BOOTS = ITEM_DEFERRED_REGISTER.register("twisted_boots", TwistedBoots::new);
 
     public static final DeferredItem<CharmOfFreshStart> CHARM_OF_FRESH_START = ITEM_DEFERRED_REGISTER.register("charm_of_fresh_start", CharmOfFreshStart::new);
+
+    public static final DeferredItem<LastWhisper> LAST_WHISPER = ITEM_DEFERRED_REGISTER.register("last_whisper", LastWhisper::new);
+
 }

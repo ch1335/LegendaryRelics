@@ -1,0 +1,28 @@
+{
+  "parent": "legendary_relics:item/bow_like",
+  "overrides": [
+    {
+      "model": "legendary_relics:item/last_whisper_0",
+      "predicate": {
+        "minecraft:pulling": 1.0
+      }
+    },
+    {
+      "model": "legendary_relics:item/last_whisper_1",
+      "predicate": {
+        "minecraft:pull": 0.65,
+        "minecraft:pulling": 1.0
+      }
+    },
+    {
+      "model": "legendary_relics:item/last_whisper_2",
+      "predicate": {
+        "minecraft:pull": 0.9,
+        "minecraft:pulling": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "legendary_relics:item/last_whisper"
+  }
+}

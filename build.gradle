@@ -209,6 +209,7 @@ dependencies {
     implementation "curse.maven:tslatentitystatus-tes-830420:7115952"
     implementation "curse.maven:geckolib-388172:7415496"
 
+    implementation "curse.maven:ultimate-enchantment-1136743:7634345"
     implementation "curse.maven:advanced-loot-info-1205426:7537434"
     runtimeOnly 'net.covers1624:DevLogin:0.1.0.5'
 }

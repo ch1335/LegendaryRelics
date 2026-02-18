@@ -19,7 +19,7 @@ public class EERegisterTypes {
             .create();
     public static DeferredRegister<EffectType<?>> EQUIPMENT_EFFECT_TYPES = DeferredRegister.create(EERegisterTypes.EQUIPMENT_EFFECT_TYPE, EquipmentEffectLib.MODID);
 
-    public static DeferredHolder<EffectType<?>, EffectType<BaseEffect>> DUMMY = EQUIPMENT_EFFECT_TYPES.register("dummy", () -> new EffectType<>(BaseEffect::new, EntityEquipmentEffectData.EquipmentType.MAIN_HIND));
+    public static DeferredHolder<EffectType<?>, EffectType<BaseEffect>> DUMMY = EQUIPMENT_EFFECT_TYPES.register("dummy", () -> new EffectType<>(BaseEffect::new, EntityEquipmentEffectData.EquipmentType.HAND));
 
 
     public static final ResourceKey<Registry<SetEffect>> SETS_EFFECT_TYPE_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(EquipmentEffectLib.MODID, "sets_effect"));

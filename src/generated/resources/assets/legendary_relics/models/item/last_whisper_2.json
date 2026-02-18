@@ -1,0 +1,6 @@
+{
+  "parent": "legendary_relics:item/bow_like",
+  "textures": {
+    "layer0": "legendary_relics:item/last_whisper_2"
+  }
+}

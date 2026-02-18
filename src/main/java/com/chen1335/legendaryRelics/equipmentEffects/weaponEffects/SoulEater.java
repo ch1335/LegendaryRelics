@@ -46,8 +46,8 @@ public class SoulEater extends LRWeaponEffect {
     @Calculator
     public static final FinalCalculator GAIN_ATTACK_DAMAGE_PERCENT = FinalCalculator.of(
             DarkGoldUpdateArg.of(
-                    Constant.of(1F),
-                    Constant.of(1.2F)
+                    Constant.of(0.5F),
+                    Constant.of(0.7F)
             )
     );
 

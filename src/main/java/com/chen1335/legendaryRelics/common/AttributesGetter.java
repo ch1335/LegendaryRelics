@@ -25,6 +25,14 @@ public class AttributesGetter {
         return ALObjects.Attributes.ARMOR_PIERCE;
     }
 
+    public static Holder<Attribute> armorShred() {
+        return ALObjects.Attributes.ARMOR_SHRED;
+    }
+
+    public static Holder<Attribute> arrowVelocity() {
+        return ALObjects.Attributes.ARROW_VELOCITY;
+    }
+
     public static Holder<Attribute> lifeSteal() {
         return ALObjects.Attributes.LIFE_STEAL;
     }

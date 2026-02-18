@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "legendary_relics:item/charm_of_end",
+      "predicate": {
+        "legendary_relics:all_task_finished": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "legendary_relics:item/charm_of_fresh_start"
+  }
+}

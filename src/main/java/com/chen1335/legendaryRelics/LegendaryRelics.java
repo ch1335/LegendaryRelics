@@ -106,10 +106,31 @@ public class LegendaryRelics {
         }
         ParticlePlayersHolder.init();
 
-        ItemProperties.register(LRItems.CHARM_OF_FRESH_START.asItem(), id("task_finished"), (stack, level, entity, seed) -> {
-            GameTaskEffect effect = EquipmentEffectAPI.getEffect(stack, LREquipmentEffectTypes.GAME_TASK_CURIO.get());
-            return effect == null ? 0 : effect.getRawEffectLevel();
-        });
+        ItemProperties.register(LRItems.CHARM_OF_FRESH_START.asItem(),
+                id("all_task_finished"),
+                (stack, level, entity, seed) -> {
+                    GameTaskEffect effect = EquipmentEffectAPI.getEffect(stack, LREquipmentEffectTypes.GAME_TASK_CURIO.get());
+                    if (effect == null) {
+                        return 0;
+                    }
+                    return effect.getRawEffectLevel() >= GameTaskEffect.TASKS.size() ? 1 : 0;
+                });
+
+        ItemProperties.register(
+                LRItems.LAST_WHISPER.asItem(),
+                ResourceLocation.withDefaultNamespace("pull"),
+                (stack, level, living, i) -> {
+                    if (living == null) {
+                        return 0.0F;
+                    } else {
+                        return living.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(living) - living.getUseItemRemainingTicks()) / 20.0F;
+                    }
+                });
+        ItemProperties.register(
+                LRItems.LAST_WHISPER.asItem(),
+                ResourceLocation.withDefaultNamespace("pulling"),
+                (stack, level, living, i) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F
+        );
     }
 
 

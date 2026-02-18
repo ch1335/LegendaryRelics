@@ -9,7 +9,7 @@ import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
-import com.chen1335.equipmentEffectLib.equipmentSources.MainHand;
+import com.chen1335.equipmentEffectLib.equipmentSources.Hand;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -174,8 +174,7 @@ public class EntityEquipmentEffectData {
     public enum EquipmentType implements IEquipmentType {
         CURIO(CuriosSource.INSTANCE),
         ARMOR(ArmorSource.INSTANCE),
-        MAIN_HIND(MainHand.INSTANCE);
-
+        HAND(Hand.INSTANCE);
         private final IEquipmentSource source;
 
         EquipmentType(IEquipmentSource source) {

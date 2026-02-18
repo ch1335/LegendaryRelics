@@ -1,17 +1,16 @@
 package com.chen1335.equipmentEffectLib.API;
 
+import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.util.Cast;
 
 import java.util.Optional;
 
 public interface IEffectHelper {
-    default <T extends BaseEffect> Optional<Pair<ItemStack, T>> findBestEffect(LivingEntity living) {
-        return Cast.cast(EquipmentEffectAPI.findBestEffect(living, ((BaseEffect) this).getType()));
+    default <T extends BaseEffect> Optional<EntityEquipmentEffectData.InfoHolder<T>> findBestEffect(LivingEntity living) {
+        return EquipmentEffectAPI.findBestEffect(living, Cast.cast(((BaseEffect) this).getType()));
     }
 
     default boolean isNotInCooldown(LivingEntity living) {

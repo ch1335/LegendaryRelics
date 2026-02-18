@@ -152,9 +152,9 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
             };
 
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory, EntityEquipmentEffectData.EquipmentType.MAIN_HIND).cooldownIcon(cooldownIcon);
+                return new CooldownAbleEffectType<>(factory, EntityEquipmentEffectData.EquipmentType.HAND).cooldownIcon(cooldownIcon);
             } else {
-                return new EffectType<>(factory, EntityEquipmentEffectData.EquipmentType.MAIN_HIND);
+                return new EffectType<>(factory, EntityEquipmentEffectData.EquipmentType.HAND);
             }
         }
     }

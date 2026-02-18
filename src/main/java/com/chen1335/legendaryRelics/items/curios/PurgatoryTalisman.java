@@ -5,6 +5,7 @@ import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.AttributeBoostInNether;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.FireDamageReduce;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.FlameImmunity;
+import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.InFireTargetDamageIncrease;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;
@@ -36,6 +37,6 @@ public class PurgatoryTalisman extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new AttributeBoostInNether(2), new FireDamageReduce(1), new FlameImmunity(1));
+        return List.of(new AttributeBoostInNether(2), new InFireTargetDamageIncrease(2), new FlameImmunity(1));
     }
 }

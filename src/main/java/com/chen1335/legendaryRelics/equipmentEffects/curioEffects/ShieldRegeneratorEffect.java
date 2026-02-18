@@ -6,6 +6,7 @@ import com.chen1335.legendaryRelics.API.objects.LRShieldType;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Add;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
@@ -41,12 +42,18 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
     ));
 
     @Calculator
-    public static final FinalCalculator MAX_SHIELD = FinalCalculator.of(Mul.of(
+    public static final FinalCalculator MAX_SHIELD = FinalCalculator.of(Add.of(
             DarkGoldUpdateArg.of(
-                    Constant.of(0.1F),
-                    Constant.of(0.15F)
+                    Constant.of(2),
+                    Constant.of(4)
             ),
-            EntityAttributeValue.of(Attributes.MAX_HEALTH)
+            Mul.of(
+                    DarkGoldUpdateArg.of(
+                            Constant.of(0.1F),
+                            Constant.of(0.15F)
+                    ),
+                    EntityAttributeValue.of(Attributes.MAX_HEALTH)
+            )
     ));
 
 
@@ -68,7 +75,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
             if (instance != null && instance.getTotalAmount() < MAX_SHIELD.getValue(args)) {
                 addCooldown(wearer, COOLDOWN.getInt(args) * 20, () -> {
                     this.findBestEffect(wearer).ifPresent(pair -> {
-                        CalculatorArg args1 = CalculatorArg.simpleArg(wearer, pair.getFirst(), pair.getSecond());
+                        CalculatorArg args1 = CalculatorArg.simpleArg(wearer, pair.itemStack(), pair.effect());
                         instance.getShield().setAmount(MAX_SHIELD.getValue(args1));
                     });
                 });
@@ -84,7 +91,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
             if (instance != null && instance.getTotalAmount() < MAX_SHIELD.getValue(args)) {
                 addCooldown(entity, COOLDOWN.getInt(args) * 20, () -> {
                     findBestEffect(entity).ifPresent(pair -> {
-                        CalculatorArg args1 = CalculatorArg.simpleArg(entity, pair.getFirst(), pair.getSecond());
+                        CalculatorArg args1 = CalculatorArg.simpleArg(entity, pair.itemStack(), pair.effect());
                         instance.getShield().setAmount(MAX_SHIELD.getValue(args1));
                     });
                 });
@@ -94,10 +101,8 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
 
     @Override
     public void onDeActive(LivingEntity entity, ItemStack itemStack) {
-        this.addCooldown(entity, 0);
-        @Nullable ShieldInstanceHolder<UnitShield> instance = ShieldAPI.getShieldInstance(entity, LRShieldType.SHIELD_REGENERATOR_SHIELD.get());
-        if (instance != null) {
-            instance.getShield().setAmount(0);
+        if (!isNotInCooldown(entity)) {
+            this.addCooldown(entity, 0);
         }
     }
 

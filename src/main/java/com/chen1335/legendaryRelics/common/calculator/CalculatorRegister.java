@@ -4,28 +4,21 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.api.Unit;
 import com.chen1335.legendaryRelics.common.calculator.normal.*;
 import com.chen1335.legendaryRelics.common.calculator.special.*;
+import com.google.common.collect.HashBiMap;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 public class CalculatorRegister {
 
-    private static final Map<ResourceLocation, StreamCodec<RegistryFriendlyByteBuf, ? extends Unit>> REGISTERED_CALCULATOR_STREAM_CODEC = new HashMap<>();
+    private static final HashBiMap<ResourceLocation, StreamCodec<RegistryFriendlyByteBuf, ? extends Unit>> REGISTERED_CALCULATOR_STREAM_CODEC = HashBiMap.create();
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, StreamCodec<RegistryFriendlyByteBuf, ? extends Unit>> STREAM_CODEC = StreamCodec.of(
-            (buffer, value) -> {
-                for (Map.Entry<ResourceLocation, StreamCodec<RegistryFriendlyByteBuf, ? extends Unit>> entry : REGISTERED_CALCULATOR_STREAM_CODEC.entrySet()) {
-                    if (entry.getValue() == value) {
-                        ResourceLocation.STREAM_CODEC.encode(buffer, entry.getKey());
-                        return;
-                    }
-                }
-            },
-            buffer -> REGISTERED_CALCULATOR_STREAM_CODEC.get(ResourceLocation.STREAM_CODEC.decode(buffer))
+    public static final StreamCodec<RegistryFriendlyByteBuf, StreamCodec<RegistryFriendlyByteBuf, ? extends Unit>> STREAM_CODEC = StreamCodec.composite(
+            ResourceLocation.STREAM_CODEC,
+            codec -> REGISTERED_CALCULATOR_STREAM_CODEC.inverse().get(codec),
+            REGISTERED_CALCULATOR_STREAM_CODEC::get
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, Unit> DISPATCH_STREAM_CODEC = STREAM_CODEC.dispatch(Unit::getStreamCodec, Function.identity());

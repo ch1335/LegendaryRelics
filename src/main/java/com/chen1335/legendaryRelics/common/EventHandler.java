@@ -8,6 +8,7 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
+import com.chen1335.legendaryRelics.dataComponentTypes.BowUsingArrow;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonArmor;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
@@ -28,6 +29,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.bus.api.EventPriority;
@@ -37,9 +39,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -67,6 +67,10 @@ public class EventHandler {
                     event.getEntity().addItem(ItemModBook.forBook(LegendaryRelics.id("legendary_relics_book")));
                     entityData.hasGiveBook = true;
                 }
+                if (!entityData.hasGiveCharmOfFreshStart) {
+                    event.getEntity().addItem(LRItems.CHARM_OF_FRESH_START.toStack());
+                    entityData.hasGiveCharmOfFreshStart = true;
+                }
             }
             if (!event.getEntity().level().isClientSide) {
                 PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
@@ -76,6 +80,8 @@ public class EventHandler {
                         PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new UpdateCalculatorPack(locateInfo, finalCalculator));
                     }
                 });
+
+
             }
         }
 
@@ -262,6 +268,34 @@ public class EventHandler {
                 event.setOutput(input);
                 event.setCost(10);
                 event.setMaterialCost(1);
+            }
+        }
+
+        @SubscribeEvent
+        public static void SetArrowInBow(LivingEntityUseItemEvent.Start event) {
+            ItemStack item = event.getItem();
+            if (item.is(LRItems.LAST_WHISPER)) {
+                ItemStack projectile = event.getEntity().getProjectile(item);
+                if (projectile.getItem() instanceof ArrowItem) {
+                    item.set(LRDataComponentTypes.BOW_USING_ARROW, new BowUsingArrow(projectile));
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void ClearArrowInBow(LivingEntityUseItemEvent.Stop event) {
+            ItemStack item = event.getItem();
+            if (item.is(LRItems.LAST_WHISPER)) {
+                item.remove(LRDataComponentTypes.BOW_USING_ARROW);
+            }
+        }
+
+        @SubscribeEvent
+        public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
+            ItemStack from = event.getFrom();
+            ItemStack eventTo = event.getTo();
+            if (!event.getFrom().is(eventTo.getItem()) && from.is(LRItems.LAST_WHISPER)) {
+                from.remove(LRDataComponentTypes.BOW_USING_ARROW);
             }
         }
     }

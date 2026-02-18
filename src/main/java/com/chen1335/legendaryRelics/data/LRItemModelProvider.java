@@ -3,13 +3,17 @@ package com.chen1335.legendaryRelics.data;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class LRItemModelProvider extends ItemModelProvider {
     public LRItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, LegendaryRelics.MODID, existingFileHelper);
     }
+
+    private static final ModelFile.UncheckedModelFile BOW = new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/bow_like"));
 
     @Override
     protected void registerModels() {
@@ -49,7 +53,16 @@ public class LRItemModelProvider extends ItemModelProvider {
         handheldItem(LRItems.WITHERING_BLADE.asItem());
         basicItem(LegendaryRelics.id("book"));
 
+        basicItem(LegendaryRelics.id("charm_of_end"));
+        basicItem(LRItems.CHARM_OF_FRESH_START.asItem()).override().predicate(LegendaryRelics.id("all_task_finished"), 1).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/charm_of_end")));
 
+        basicItem(LegendaryRelics.id("last_whisper_0")).parent(BOW);
+        basicItem(LegendaryRelics.id("last_whisper_1")).parent(BOW);
+        basicItem(LegendaryRelics.id("last_whisper_2")).parent(BOW);
+        basicItem(LRItems.LAST_WHISPER.asItem()).parent(BOW)
+                .override().predicate(ResourceLocation.withDefaultNamespace("pulling"), 1).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/last_whisper_0"))).end()
+                .override().predicate(ResourceLocation.withDefaultNamespace("pulling"), 1).predicate(ResourceLocation.withDefaultNamespace("pull"), 0.65F).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/last_whisper_1"))).end()
+                .override().predicate(ResourceLocation.withDefaultNamespace("pulling"), 1).predicate(ResourceLocation.withDefaultNamespace("pull"), 0.9F).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/last_whisper_2"))).end();
 
     }
 }

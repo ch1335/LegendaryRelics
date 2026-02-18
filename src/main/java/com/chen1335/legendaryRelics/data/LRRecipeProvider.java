@@ -147,5 +147,17 @@ public class LRRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
                 .showNotification(true)
                 .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, LRItems.CHARM_OF_FRESH_START)
+                .define('A', Items.STRING)
+                .define('B', LRItems.ANCIENT_FRAGMENT)
+                .pattern(" A ")
+                .pattern("A A")
+                .pattern(" B ")
+                .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
+                .showNotification(true)
+                .save(recipeOutput);
+
+        
     }
 }

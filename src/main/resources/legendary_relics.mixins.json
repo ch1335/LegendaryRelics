@@ -11,6 +11,6 @@
     "legendary_relics.ItemStackMixin",
     "legendary_relics.LootItemRandomChanceWithEnchantedBonusConditionMixin", "legendary_relics.LootModifierManagerMixin", "legendary_relics.ServerLevelMixin", "legendary_relics.ServerPlayerMixin"
   ],
-  "client": ["legendary_relics.client.ElytraLayerMixin", "legendary_relics.client.GameRendererInvoker", "legendary_relics.client.HumanoidArmorLayerMixin"],
+  "client": ["legendary_relics.client.ElytraLayerMixin", "legendary_relics.client.GameRendererInvoker", "legendary_relics.client.HumanoidArmorLayerMixin", "legendary_relics.client.ItemRendererMixin"],
   "minVersion": "0.8"
 }

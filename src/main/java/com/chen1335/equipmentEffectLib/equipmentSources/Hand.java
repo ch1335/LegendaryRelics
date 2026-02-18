@@ -6,11 +6,11 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
-public class MainHand implements IEquipmentSource {
-    public static final MainHand INSTANCE = new MainHand();
+public class Hand implements IEquipmentSource {
+    public static final Hand INSTANCE = new Hand();
 
     @Override
     public List<ItemStack> get(LivingEntity livingEntity) {
-        return List.of(livingEntity.getMainHandItem());
+        return List.of(livingEntity.getMainHandItem(), livingEntity.getOffhandItem());
     }
 }

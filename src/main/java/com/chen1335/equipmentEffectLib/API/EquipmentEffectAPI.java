@@ -63,6 +63,15 @@ public final class EquipmentEffectAPI {
         if (effectsData2 != null) {
             map.putAll(effectsData2.effects());
         }
+        Map<EffectType<?>, BaseEffect> subEffects = new LinkedHashMap<>();
+        for (BaseEffect value : map.values()) {
+            if (value instanceof ISubEffectProvider subEffectProvider) {
+                for (BaseEffect subEffect : subEffectProvider.getSubEffects(itemStack)) {
+                    subEffects.put(subEffect.getType(), subEffect);
+                }
+            }
+        }
+        map.putAll(subEffects);
         return ImmutableMap.copyOf(map);
     }
 
@@ -86,6 +95,6 @@ public final class EquipmentEffectAPI {
     }
 
     public static void updateEntityEquipmentEffectSameItem(@NotNull LivingEntity living, EntityEquipmentEffectData.IEquipmentType equipmentType, ItemStack from, ItemStack to) {
-        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).updateSameItem(equipmentType,from,to);
+        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).updateSameItem(equipmentType, from, to);
     }
 }

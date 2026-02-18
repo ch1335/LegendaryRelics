@@ -9,6 +9,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.equipmentEffects.LRBaseEffect;
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
 import com.chen1335.legendaryRelics.utils.Util;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +38,7 @@ public class AllAttributeBoost extends LRBaseEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.all_attribute_boost", AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args)));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.all_attribute_boost", AMOUNT.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withStyle(ChatFormatting.GOLD));
     }
 
     @Override

@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-09T23:11:54.2972988	Item Models: legendary_relics
+// 1.21.1	2026-02-18T23:12:26.1219644	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
@@ -6,6 +6,8 @@ fd747a44967559c141a3cfab103272ef10d2b66f assets/legendary_relics/models/item/bla
 03a6112f159a30b073c201811a40c51bd43525d1 assets/legendary_relics/models/item/black_dragon_helmet.json
 4177b78cd5b7c6a52648d1b8fff855c0d5ddab1d assets/legendary_relics/models/item/black_dragon_leggings.json
 7eabc86687963e39260741d3372be035b1bca639 assets/legendary_relics/models/item/book.json
+8fa7aae40827bd0ba48ce1ec7dc132cb8cebedbe assets/legendary_relics/models/item/charm_of_end.json
+2dde53a5ac3cf0e26a6d31e328e1a690cdc67bd4 assets/legendary_relics/models/item/charm_of_fresh_start.json
 83cf5cdcfa5575812a21970aada2cd9307bfc91f assets/legendary_relics/models/item/dark_gold.json
 6ce12388844edfa8ecc0ecfe9b8438f7abfe7c3e assets/legendary_relics/models/item/dark_gold_forging_tool.json
 3ebad738133b85ae64b62e48da42672addb8ee50 assets/legendary_relics/models/item/dark_gold_fragment.json
@@ -17,6 +19,10 @@ fd747a44967559c141a3cfab103272ef10d2b66f assets/legendary_relics/models/item/bla
 210ce0fef3a40ba41f1ff1e19ee1088689c8a514 assets/legendary_relics/models/item/inferno_chest_plate.json
 2537d2a8e0e941b82f89f76e9c0a20ec7088f25e assets/legendary_relics/models/item/inferno_helmet.json
 6ba261238e8402948e9ffe44d87ec27f228720f5 assets/legendary_relics/models/item/inferno_leggings.json
+1f1918cfa0c8b242876fa749a4879701c547d94e assets/legendary_relics/models/item/last_whisper.json
+c9afa366b445fae24e41f7277a88926c9cb1b984 assets/legendary_relics/models/item/last_whisper_0.json
+5dfe0ada98dca73565f125107a8dead26664391e assets/legendary_relics/models/item/last_whisper_1.json
+e3ceb364e971f2bcc3c6137be9c33d094dd8b6f8 assets/legendary_relics/models/item/last_whisper_2.json
 9ff3475e6bff96ace2b54a7a561125ae06585b49 assets/legendary_relics/models/item/lava_ring.json
 0b9237088e2b05cc66c5a27382e4f4d8f7b0deed assets/legendary_relics/models/item/nether_ring.json
 bea45be2ae0b11f78c990e239898c029ed02623e assets/legendary_relics/models/item/nether_talisman.json
