@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.items.weapons;
 
 import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.legendaryRelics.API.IRenderArrowBow;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.Perforation;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 import java.util.List;
 
-public class LastWhisper extends BowItem implements IEffectEquipment {
+public class LastWhisper extends BowItem implements IEffectEquipment, IRenderArrowBow {
     public LastWhisper() {
         super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
     }

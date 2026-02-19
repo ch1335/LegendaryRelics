@@ -1,6 +1,7 @@
 package com.chen1335.equipmentEffectLib.mixins;
 
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
+import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import net.minecraft.world.item.Item;
@@ -13,19 +14,19 @@ import java.util.List;
 public class ItemMixin implements IEEItemExtension {
 
     @Unique
-    private SetEffect EE$SetsEffect = null;
+    private SetEffectHolder EE$SetsEffectHolder = null;
 
     @Unique
     private List<BaseEffect> EE$ItemEffects = List.of();
 
     @Unique
-    public SetEffect EE$GetSetsEffect() {
-        return EE$SetsEffect;
+    public SetEffectHolder EE$GetSetsEffect() {
+        return EE$SetsEffectHolder;
     }
 
     @Unique
-    public void EE$SetSetsEffect(SetEffect EE$SetsEffect) {
-        this.EE$SetsEffect = EE$SetsEffect;
+    public void EE$SetSetsEffect(SetEffectHolder holder) {
+        this.EE$SetsEffectHolder = holder;
     }
 
     @Override

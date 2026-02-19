@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.API.objects;
 
 import com.chen1335.equipmentEffectLib.EquipmentEffectLib;
-import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
@@ -19,7 +19,7 @@ public class EERegisterTypes {
             .create();
     public static DeferredRegister<EffectType<?>> EQUIPMENT_EFFECT_TYPES = DeferredRegister.create(EERegisterTypes.EQUIPMENT_EFFECT_TYPE, EquipmentEffectLib.MODID);
 
-    public static DeferredHolder<EffectType<?>, EffectType<BaseEffect>> DUMMY = EQUIPMENT_EFFECT_TYPES.register("dummy", () -> new EffectType<>(BaseEffect::new, EntityEquipmentEffectData.EquipmentType.HAND));
+    public static DeferredHolder<EffectType<?>, EffectType<BaseEffect>> DUMMY = EQUIPMENT_EFFECT_TYPES.register("dummy", () -> new EffectType<>(BaseEffect::new, EquipmentType.HAND));
 
 
     public static final ResourceKey<Registry<SetEffect>> SETS_EFFECT_TYPE_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(EquipmentEffectLib.MODID, "sets_effect"));

@@ -1,6 +1,6 @@
 package com.chen1335.equipmentEffectLib.kubejs;
 
-import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import dev.latvian.mods.kubejs.registry.BuilderBase;
@@ -99,9 +99,9 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
             };
 
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory, EntityEquipmentEffectData.EquipmentType.CURIO).cooldownIcon(cooldownIcon);
+                return new CooldownAbleEffectType<>(factory, EquipmentType.CURIO).cooldownIcon(cooldownIcon);
             } else {
-                return new EffectType<>(factory, EntityEquipmentEffectData.EquipmentType.CURIO);
+                return new EffectType<>(factory, EquipmentType.CURIO);
             }
         }
     }
@@ -117,9 +117,9 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
         public EffectType<?> createObject() {
             EffectType.EffectFactory<BaseEffectJS.ArmorEffectJS> factory = (effectType, level) -> createBase(new BaseEffectJS.ArmorEffectJS(effectType, level));
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory, EntityEquipmentEffectData.EquipmentType.ARMOR).cooldownIcon(cooldownIcon);
+                return new CooldownAbleEffectType<>(factory, EquipmentType.ARMOR).cooldownIcon(cooldownIcon);
             } else {
-                return new EffectType<>(factory, EntityEquipmentEffectData.EquipmentType.ARMOR);
+                return new EffectType<>(factory, EquipmentType.ARMOR);
             }
         }
     }
@@ -152,9 +152,9 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
             };
 
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory, EntityEquipmentEffectData.EquipmentType.HAND).cooldownIcon(cooldownIcon);
+                return new CooldownAbleEffectType<>(factory, EquipmentType.HAND).cooldownIcon(cooldownIcon);
             } else {
-                return new EffectType<>(factory, EntityEquipmentEffectData.EquipmentType.HAND);
+                return new EffectType<>(factory, EquipmentType.HAND);
             }
         }
     }

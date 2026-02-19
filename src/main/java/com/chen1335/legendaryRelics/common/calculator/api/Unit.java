@@ -10,8 +10,5 @@ public interface Unit {
 
     Component toComponent(CalculatorArg calculatorArg);
 
-    default StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
-        //未完成
-        return null;
-    }
+    StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec();
 }

@@ -1,10 +1,10 @@
 package com.chen1335.equipmentEffectLib.attachmentDatas;
 
-import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
-import com.chen1335.equipmentEffectLib.EquipmentEffectLib;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.network.SetsInfoPack;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,8 +24,8 @@ public class EntitySetsEffectData {
 
     public void update(LivingEntity livingEntity) {
         Map<SetEffect, Set<Item>> setMap = new HashMap<>();
-        for (IEquipmentSource equipmentSource : EquipmentEffectLib.EQUIPMENT_SOURCES) {
-            buildSets(equipmentSource.get(livingEntity), setMap);
+        for (EquipmentType equipmentType : EquipmentType.getUnits().values()) {
+            buildSets(equipmentType,equipmentType.source().get(livingEntity), setMap);
         }
         pieceInfo.clear();
         setMap.forEach((setsEffectBase, items) -> {
@@ -76,12 +76,12 @@ public class EntitySetsEffectData {
         return setInstance == null ? 0 : setInstance.getPiece();
     }
 
-    public static void buildSets(List<ItemStack> itemStacks, Map<SetEffect, Set<Item>> map) {
+    public static void buildSets(EquipmentType equipmentType, List<ItemStack> itemStacks, Map<SetEffect, Set<Item>> map) {
         for (ItemStack itemStack : itemStacks) {
             if (!itemStack.isEmpty()) {
-                SetEffect setsEffectBase = ((IEEItemExtension) itemStack.getItem()).EE$GetSetsEffect();
-                if (setsEffectBase != null) {
-                    map.computeIfAbsent(setsEffectBase, setsEffectBase1 -> new HashSet<>()).add(itemStack.getItem());
+                SetEffectHolder setEffectHolder = ((IEEItemExtension) itemStack.getItem()).EE$GetSetsEffect();
+                if (setEffectHolder != null && setEffectHolder.equipmentType() == equipmentType) {
+                    map.computeIfAbsent(setEffectHolder.setEffect(), setsEffectBase1 -> new HashSet<>()).add(itemStack.getItem());
                 }
             }
         }

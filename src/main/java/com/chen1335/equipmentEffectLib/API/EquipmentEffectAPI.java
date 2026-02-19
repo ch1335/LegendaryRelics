@@ -4,10 +4,11 @@ import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
+import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -81,7 +82,7 @@ public final class EquipmentEffectAPI {
     }
 
     @Nullable
-    public static SetEffect getItemSetEffect(ItemStack itemStack) {
+    public static SetEffectHolder getItemSetEffect(ItemStack itemStack) {
         return ((IEEItemExtension) itemStack.getItem()).EE$GetSetsEffect();
     }
 
@@ -90,11 +91,7 @@ public final class EquipmentEffectAPI {
         living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(living);
     }
 
-    public static void updateEntityEquipmentEffect(@NotNull LivingEntity living, EntityEquipmentEffectData.IEquipmentType equipmentType) {
+    public static void updateEntityEquipmentEffect(@NotNull LivingEntity living, IEquipmentType equipmentType) {
         living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(living, equipmentType);
-    }
-
-    public static void updateEntityEquipmentEffectSameItem(@NotNull LivingEntity living, EntityEquipmentEffectData.IEquipmentType equipmentType, ItemStack from, ItemStack to) {
-        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).updateSameItem(equipmentType, from, to);
     }
 }

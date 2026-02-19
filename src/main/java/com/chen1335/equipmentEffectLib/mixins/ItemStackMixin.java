@@ -4,10 +4,10 @@ import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
+import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.API.objects.LRTags;
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -52,9 +52,9 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
             list.add(Component.empty());
         }
 
-        SetEffect setsEffect = ((IEEItemExtension) this.getItem()).EE$GetSetsEffect();
-        if (setsEffect != null) {
-            setsEffect.appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
+        SetEffectHolder setEffectHolder = ((IEEItemExtension) this.getItem()).EE$GetSetsEffect();
+        if (setEffectHolder != null) {
+            setEffectHolder.setEffect().appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
         }
 
         if (itemStack.is(LRTags.Items.CAN_ONLY_WEAR_ONE)) {

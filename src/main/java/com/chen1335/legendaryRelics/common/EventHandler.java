@@ -1,6 +1,9 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
+import com.chen1335.legendaryRelics.API.IRenderArrowBow;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.attachmentDatas.LREntityData;
@@ -99,19 +102,19 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void setItemSetsEffect(SetItemSetsEffectEvent event) {
-            event.sets(LRSetsEffects.BLACK_DRAGON_ARMOR.value(),
+            event.sets(LRSetsEffects.BLACK_DRAGON_ARMOR.value(), EquipmentType.ARMOR,
                     LRItems.BLACK_DRAGON_HELMET.asItem(),
                     LRItems.BLACK_DRAGON_CHEST_PLATE.asItem(),
                     LRItems.BLACK_DRAGON_LEGGINGS.asItem(),
                     LRItems.BLACK_DRAGON_BOOTS.asItem()
             );
-            event.sets(LRSetsEffects.INFERNO_ARMOR.value(),
+            event.sets(LRSetsEffects.INFERNO_ARMOR.value(), EquipmentType.ARMOR,
                     LRItems.INFERNO_HELMET.asItem(),
                     LRItems.INFERNO_CHEST_PLATE.asItem(),
                     LRItems.INFERNO_LEGGINGS.asItem(),
                     LRItems.INFERNO_BOOTS.asItem()
             );
-            event.sets(LRSetsEffects.TWISTED_ARMOR.value(),
+            event.sets(LRSetsEffects.TWISTED_ARMOR.value(), EquipmentType.ARMOR,
                     LRItems.TWISTED_HELMET.asItem(),
                     LRItems.TWISTED_CHEST_PLATE.asItem(),
                     LRItems.TWISTED_LEGGINGS.asItem(),
@@ -274,10 +277,10 @@ public class EventHandler {
         @SubscribeEvent
         public static void SetArrowInBow(LivingEntityUseItemEvent.Start event) {
             ItemStack item = event.getItem();
-            if (item.is(LRItems.LAST_WHISPER)) {
+            if (item.getItem() instanceof IRenderArrowBow) {
                 ItemStack projectile = event.getEntity().getProjectile(item);
-                if (projectile.getItem() instanceof ArrowItem) {
-                    item.set(LRDataComponentTypes.BOW_USING_ARROW, new BowUsingArrow(projectile));
+                if (projectile.getItem() instanceof ArrowItem arrowItem) {
+                    item.set(LRDataComponentTypes.BOW_USING_ARROW, new BowUsingArrow(arrowItem));
                 }
             }
         }
@@ -285,7 +288,7 @@ public class EventHandler {
         @SubscribeEvent
         public static void ClearArrowInBow(LivingEntityUseItemEvent.Stop event) {
             ItemStack item = event.getItem();
-            if (item.is(LRItems.LAST_WHISPER)) {
+            if (item.getItem() instanceof IRenderArrowBow) {
                 item.remove(LRDataComponentTypes.BOW_USING_ARROW);
             }
         }
@@ -294,8 +297,9 @@ public class EventHandler {
         public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
             ItemStack from = event.getFrom();
             ItemStack eventTo = event.getTo();
-            if (!event.getFrom().is(eventTo.getItem()) && from.is(LRItems.LAST_WHISPER)) {
+            if (!event.getFrom().is(eventTo.getItem()) && (from.getItem() instanceof IRenderArrowBow || eventTo.getItem() instanceof IRenderArrowBow)) {
                 from.remove(LRDataComponentTypes.BOW_USING_ARROW);
+                eventTo.remove(LRDataComponentTypes.BOW_USING_ARROW);
             }
         }
     }

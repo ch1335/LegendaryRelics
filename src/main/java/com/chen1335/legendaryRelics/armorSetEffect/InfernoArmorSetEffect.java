@@ -54,24 +54,24 @@ import java.util.UUID;
 public class InfernoArmorSetEffect extends SetEffect {
 
     @Calculator
-    public static FinalCalculator GAIN_STACK_COOLDOWN = FinalCalculator.of(
+    public static final FinalCalculator GAIN_STACK_COOLDOWN = FinalCalculator.of(
             TieredBonus.of(List.of(1.5F, 1.5F, 0.75F, 0.5F))
     );
     @Calculator
-    public static FinalCalculator ATTACK_RANGE_PER_STACK = FinalCalculator.of(
+    public static final FinalCalculator ATTACK_RANGE_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.05F, 0.05F, 0.1F, 0.1F))
     );
     @Calculator
-    public static FinalCalculator DAMAGE_PER_STACK = FinalCalculator.of(
+    public static final FinalCalculator DAMAGE_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
     );
     @Calculator
-    public static FinalCalculator KEEP_TIME = FinalCalculator.of(
+    public static final FinalCalculator KEEP_TIME = FinalCalculator.of(
             TieredBonus.of(List.of(4F, 4F, 7F, 10F))
     );
 
     @Calculator
-    public static FinalCalculator INFERNO_SCORCH_DAMAGE = FinalCalculator.of(
+    public static final FinalCalculator INFERNO_SCORCH_DAMAGE = FinalCalculator.of(
             Mul.of(
                     MultiAdd.of(
                             Constant.of(2F),
@@ -85,7 +85,7 @@ public class InfernoArmorSetEffect extends SetEffect {
     );
 
     @Calculator
-    public static FinalCalculator INFERNO_EXPLOSION_DAMAGE = FinalCalculator.of(
+    public static final FinalCalculator INFERNO_EXPLOSION_DAMAGE = FinalCalculator.of(
             Mul.of(
                     MultiAdd.of(
                             Constant.of(5F),

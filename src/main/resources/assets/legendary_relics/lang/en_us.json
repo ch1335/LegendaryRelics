@@ -76,6 +76,8 @@
   "item.legendary_relics.twisted_leggings": "Twisted Leggings",
   "item.legendary_relics.wither_spirit": "Wither Spirit",
   "item.legendary_relics.withering_blade": "Withering Blade",
+  "item.legendary_relics.last_whisper": "Last Whisper",
+
   "item.the_ore_collectors_ring.sacred_talisman.desc.1": "Grants %s Fortune levels. If you've collected %s types of ores, grants an additional +1 Fortune level.",
   "item.the_ore_collectors_ring.sacred_talisman.desc.2": "Ore types collected: %s.",
   "itemGroup.legendary_relics": "Legendary Relics",
@@ -126,10 +128,10 @@
   "set_effect_type.legendary_relics.full_set_bonus": "Full Set Bonus: %s",
   "set_effect_type.legendary_relics.tiered_bonus": "Tiered Bonus: %s",
   "legendary_relics.task.transfer": "§6Reward:§rConvert this item into another item...",
-  "legendary_relics.task.gain_item": "获得%s",
-  "legendary_relics.task.kill_entity": "击杀%s",
-  "legendary_relics.task.travel_to_dim": "前往%s",
-  "legendary_relics.task.has_finished": "任务 %s 已经完成",
-  "equipment_effect.legendary_relics.all_attribute_boost": "使你的大部分属性提升%s",
-  "legendary_relics.task.custom.wear_curio": "装备这件饰品"
+  "legendary_relics.task.gain_item": "Obtain %s",
+  "legendary_relics.task.kill_entity": "Kill the %s",
+  "legendary_relics.task.travel_to_dim": "Go to %s",
+  "legendary_relics.task.has_finished": "Task %s has finished",
+  "equipment_effect.legendary_relics.all_attribute_boost": "Boosts most of your attributes by %s",
+  "legendary_relics.task.custom.wear_curio": "Equip this curio"
 }

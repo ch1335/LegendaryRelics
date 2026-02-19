@@ -126,5 +126,11 @@
   "set_effect_type.legendary_relics.full_set_bonus": "全套效果:%s",
   "set_effect_type.legendary_relics.tiered_bonus": "分级奖励:%s",
   "legendary_relics.task.transfer": "§6奖励:§r把这件物品转换成另外一个物品...",
-  "legendary_relics.task.custom.wear_curio": "装备这件饰品"
+  "legendary_relics.task.custom.wear_curio": "装备这件饰品",
+  "legendary_relics.task.gain_item": "获得%s",
+  "legendary_relics.task.kill_entity": "击杀%s",
+  "legendary_relics.task.travel_to_dim": "前往%s",
+  "legendary_relics.task.has_finished": "任务 %s 已经完成",
+  "equipment_effect.legendary_relics.all_attribute_boost": "使你的大部分属性提升%s",
+  "item.legendary_relics.last_whisper": "最后的轻语"
 }

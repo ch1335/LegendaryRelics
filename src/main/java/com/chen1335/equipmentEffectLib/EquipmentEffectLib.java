@@ -9,7 +9,7 @@ import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
-import com.chen1335.equipmentEffectLib.equipmentSources.Hand;
+import com.chen1335.equipmentEffectLib.equipmentSources.HandSource;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.events.AttachItemEffectEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -36,9 +36,6 @@ public class EquipmentEffectLib {
     }
 
     public static void onSetup(FMLCommonSetupEvent event) {
-        EQUIPMENT_SOURCES.add(ArmorSource.INSTANCE);
-        EQUIPMENT_SOURCES.add(CuriosSource.INSTANCE);
-        EQUIPMENT_SOURCES.add(Hand.INSTANCE);
         NeoForge.EVENT_BUS.post(new SetItemSetsEffectEvent());
         event.enqueueWork(() -> {
             BuiltInRegistries.ITEM.forEach(item -> {

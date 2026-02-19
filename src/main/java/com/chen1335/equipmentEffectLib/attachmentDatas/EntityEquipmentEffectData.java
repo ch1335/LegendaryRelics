@@ -3,13 +3,11 @@ package com.chen1335.equipmentEffectLib.attachmentDatas;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.IArmorEffect;
 import com.chen1335.equipmentEffectLib.API.ICurioEffect;
-import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
-import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
-import com.chen1335.equipmentEffectLib.equipmentSources.Hand;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -71,18 +69,6 @@ public class EntityEquipmentEffectData {
         return Cast.cast(getEffects(effectType.getEquipmentType()).get(effectType));
     }
 
-    //快速更新同一个itemStack的效果
-    public void updateSameItem(IEquipmentType equipmentType, ItemStack from, ItemStack to) {
-        for (Map.Entry<EffectType<?>, List<InfoHolder<?>>> entry : getEffects(equipmentType).entrySet()) {
-            for (InfoHolder<?> infoHolder : entry.getValue()) {
-                if (ItemStack.matches(infoHolder.itemStack, from)) {
-                    infoHolder.setItemStack(to);
-                }
-            }
-        }
-
-    }
-
     public void tick(LivingEntity living) {
         for (List<EntityEquipmentEffectData.InfoHolder<?>> value : getEffects(EquipmentType.CURIO).values()) {
             for (EntityEquipmentEffectData.InfoHolder<?> info : value) {
@@ -103,12 +89,11 @@ public class EntityEquipmentEffectData {
 
     //更新所有效果
     public void update(LivingEntity entity, IEquipmentType equipmentType) {
-        if (equipmentType.getSource() == null) {
+        if (equipmentType.source() == null) {
             return;
         }
-        List<ItemStack> itemStacks = equipmentType.getSource().get(entity);
+        List<ItemStack> itemStacks = equipmentType.source().get(entity);
         Map<EffectType<?>, List<InfoHolder<?>>> newEffects = new HashMap<>();
-
 
         for (ItemStack itemStack : itemStacks) {
             if (!itemStack.isEmpty() && itemStack.has(EEItemDataComponentTypes.ITEM_EFFECT_DATA)) {
@@ -167,23 +152,4 @@ public class EntityEquipmentEffectData {
         effects.put(equipmentType, newEffects);
     }
 
-    public interface IEquipmentType {
-        IEquipmentSource getSource();
-    }
-
-    public enum EquipmentType implements IEquipmentType {
-        CURIO(CuriosSource.INSTANCE),
-        ARMOR(ArmorSource.INSTANCE),
-        HAND(Hand.INSTANCE);
-        private final IEquipmentSource source;
-
-        EquipmentType(IEquipmentSource source) {
-            this.source = source;
-        }
-
-        @Override
-        public IEquipmentSource getSource() {
-            return source;
-        }
-    }
 }

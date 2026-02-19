@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.client;
 
+import com.chen1335.legendaryRelics.API.IRenderArrowBow;
 import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
-import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.dataComponentTypes.BowUsingArrow;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -24,12 +24,12 @@ public class ArrowInBowRender {
     public static final Map<Item, AbstractArrow> ABSTRACT_ARROW_MAP = new HashMap<>();
 
     public static void onRenderItem(ItemStack itemStack, ItemDisplayContext displayContext, boolean leftHand, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay, BakedModel pModel) {
-        if (itemStack.is(LRItems.LAST_WHISPER)) {
+        if (itemStack.getItem() instanceof IRenderArrowBow) {
             if (0 < displayContext.getId() && displayContext.getId() < 5) {
                 BowUsingArrow bowUsingArrow = itemStack.get(LRDataComponentTypes.BOW_USING_ARROW);
                 if (bowUsingArrow != null) {
-                    if (bowUsingArrow.itemStack().getItem() instanceof ArrowItem arrowItem) {
-                        AbstractArrow abstractArrow = ABSTRACT_ARROW_MAP.computeIfAbsent(arrowItem, item -> arrowItem.createArrow(Minecraft.getInstance().level, bowUsingArrow.itemStack(), Minecraft.getInstance().player, null));
+                    if (bowUsingArrow.item() instanceof ArrowItem arrowItem) {
+                        AbstractArrow abstractArrow = ABSTRACT_ARROW_MAP.computeIfAbsent(arrowItem, item -> arrowItem.createArrow(Minecraft.getInstance().level, arrowItem.getDefaultInstance(), Minecraft.getInstance().player, null));
                         poseStack.pushPose();
                         transform(itemStack, displayContext, poseStack);
                         EntityRenderer<? super AbstractArrow> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(abstractArrow);
@@ -42,11 +42,12 @@ public class ArrowInBowRender {
     }
 
     private static void transform(ItemStack itemStack, ItemDisplayContext displayContext, PoseStack poseStack) {
+        IRenderArrowBow renderArrowBow = (IRenderArrowBow) itemStack.getItem();
         float z;
         float pull = ItemProperties.getProperty(itemStack, ResourceLocation.withDefaultNamespace("pull")).call(itemStack, Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
-        if (pull >= 0.9) {
+        if (pull >= renderArrowBow.pull2()) {
             z = 0.1F;
-        } else if (pull >= 0.65) {
+        } else if (pull >= renderArrowBow.pull1()) {
             z = 0.3F;
         } else {
             z = 0.4F;

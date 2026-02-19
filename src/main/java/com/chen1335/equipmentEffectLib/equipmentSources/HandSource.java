@@ -6,8 +6,8 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
-public class Hand implements IEquipmentSource {
-    public static final Hand INSTANCE = new Hand();
+public class HandSource implements IEquipmentSource {
+    public static final HandSource INSTANCE = new HandSource();
 
     @Override
     public List<ItemStack> get(LivingEntity livingEntity) {

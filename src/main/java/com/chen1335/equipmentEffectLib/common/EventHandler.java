@@ -4,7 +4,6 @@ import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.ICurioEffect;
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
-import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -19,6 +18,7 @@ import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class EventHandler {
 
@@ -41,11 +41,11 @@ public class EventHandler {
             }
 
             if (updateTotal) {
-                EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EntityEquipmentEffectData.EquipmentType.CURIO);
+                EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EquipmentType.CURIO);
             }
 
 
-            if (EquipmentEffectAPI.getItemSetEffect(event.getFrom()) != EquipmentEffectAPI.getItemSetEffect(event.getTo())) {
+            if (!Objects.equals(EquipmentEffectAPI.getItemSetEffect(event.getFrom()), EquipmentEffectAPI.getItemSetEffect(event.getTo()))) {
                 EquipmentEffectAPI.updateEntitySetEffect(event.getEntity());
             }
         }
@@ -69,15 +69,15 @@ public class EventHandler {
             if (updateTotal) {
                 switch (type) {
                     case HUMANOID_ARMOR -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EntityEquipmentEffectData.EquipmentType.ARMOR);
+                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EquipmentType.ARMOR);
                     }
                     case HAND -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EntityEquipmentEffectData.EquipmentType.HAND);
+                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EquipmentType.HAND);
                     }
                 }
             }
 
-            if (EquipmentEffectAPI.getItemSetEffect(event.getFrom()) != EquipmentEffectAPI.getItemSetEffect(event.getTo())) {
+            if (!Objects.equals(EquipmentEffectAPI.getItemSetEffect(event.getFrom()), EquipmentEffectAPI.getItemSetEffect(event.getTo()))) {
                 EquipmentEffectAPI.updateEntitySetEffect(event.getEntity());
             }
         }
