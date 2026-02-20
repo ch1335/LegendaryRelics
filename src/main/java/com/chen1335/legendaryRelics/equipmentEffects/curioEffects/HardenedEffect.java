@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -25,14 +26,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-public class HardenedEffect extends LRCurioEffectBase {
-    public HardenedEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public HardenedEffect(int level) {
-        this(LREquipmentEffectTypes.HARDENED_EFFECT.value(), level);
-    }
+public class HardenedEffect extends LRCurioEffect {
 
 
     @Calculator
@@ -63,6 +57,10 @@ public class HardenedEffect extends LRCurioEffectBase {
             Constant.of(15),
             Constant.of(12.5F)
     ));
+
+    public HardenedEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {

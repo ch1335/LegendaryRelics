@@ -12,6 +12,7 @@ import com.chen1335.legendaryRelics.effectInstances.TwistedEffectInstance;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
@@ -131,4 +133,15 @@ public class TwistedArmorSetEffect extends SetEffect {
         }
     }
 
+    public static void EntityJoinLevelEvent(EntityJoinLevelEvent event) {
+        Entity entity = event.getEntity();
+        if (!entity.level().isClientSide) {
+            if (entity instanceof AbstractArrow arrow && arrow.getOwner() instanceof LivingEntity owner) {
+                TwistedEffectInstance effectInstance = TwistedArmorSetEffect.getEffectInstance(owner);
+                if (effectInstance != null) {
+                    effectInstance.modifyArrow(arrow,owner);
+                }
+            }
+        }
+    }
 }

@@ -1,7 +1,8 @@
 package com.chen1335.legendaryRelics.items.curios;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.ShieldRegeneratorEffect;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import net.minecraft.world.item.Rarity;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public class ShieldRegenerator extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new ShieldRegeneratorEffect(1));
+        return List.of(LREquipmentEffectTypes.SHIELD_REGENERATOR_EFFECT.value().create(1, EquipmentType.CURIO));
     }
 }

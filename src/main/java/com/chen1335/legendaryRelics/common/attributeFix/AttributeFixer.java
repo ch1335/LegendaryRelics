@@ -1,8 +1,7 @@
 package com.chen1335.legendaryRelics.common.attributeFix;
 
 import com.chen1335.legendaryRelics.common.attributeFix.fixTypes.BaseFix;
-import com.chen1335.legendaryRelics.mixinsAPI.IAttributeInstanceMixin;
-import com.google.common.util.concurrent.AtomicDouble;
+import com.chen1335.legendaryRelics.mixinsAPI.IAttributeInstanceExtension;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -14,15 +13,15 @@ public class AttributeFixer {
         if (attributeInstance == null) {
             return;
         }
-        ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(fix);
+        ((IAttributeInstanceExtension) attributeInstance).lr$setValueFix(fix);
 
         try {
             runnable.run();
-            ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(null);
+            ((IAttributeInstanceExtension) attributeInstance).lr$setValueFix(null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            ((IAttributeInstanceMixin) attributeInstance).lr$setValueFix(null);
+            ((IAttributeInstanceExtension) attributeInstance).lr$setValueFix(null);
         }
     }
 

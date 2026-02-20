@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.API.objects.LRShieldType;
@@ -26,14 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ShieldRegeneratorEffect extends LRCurioEffectBase {
-    public ShieldRegeneratorEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public ShieldRegeneratorEffect(int level) {
-        this(LREquipmentEffectTypes.SHIELD_REGENERATOR_EFFECT.value(), level);
-    }
+public class ShieldRegeneratorEffect extends LRCurioEffect {
 
     @Calculator
     public static final FinalCalculator COOLDOWN = FinalCalculator.of(DarkGoldUpdateArg.of(
@@ -56,6 +50,10 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
             )
     ));
 
+    public ShieldRegeneratorEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
+
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
@@ -68,7 +66,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffectBase {
 
 
     @Override
-    public void curioTick(ItemStack itemStack, LivingEntity wearer) {
+    public void effectTick(ItemStack itemStack, LivingEntity wearer) {
         if (isNotInCooldown(wearer)) {
             CalculatorArg args = CalculatorArg.simpleArg(wearer, itemStack, this);
             @Nullable ShieldInstanceHolder<UnitShield> instance = ShieldAPI.getShieldInstance(wearer, LRShieldType.SHIELD_REGENERATOR_SHIELD.get());

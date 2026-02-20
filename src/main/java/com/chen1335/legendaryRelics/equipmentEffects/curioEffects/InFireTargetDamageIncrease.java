@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -20,19 +21,18 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-public class InFireTargetDamageIncrease extends LRCurioEffectBase {
-    public InFireTargetDamageIncrease(EffectType<InFireTargetDamageIncrease> effectType, int level) {
-        super(effectType, level);
-    }
+public class InFireTargetDamageIncrease extends LRCurioEffect {
 
-    public InFireTargetDamageIncrease(int level) {
-        this(LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value(), level);
-    }
+
 
     @Calculator
     public static final FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(DarkGoldUpdateArg.of(
             EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.1F, 0.05F), 3)
     ));
+
+    public InFireTargetDamageIncrease(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {

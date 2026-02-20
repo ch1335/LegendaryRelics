@@ -1,8 +1,9 @@
 package com.chen1335.legendaryRelics.items.curios;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.DarkSteelClawEffect;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;
@@ -30,6 +31,8 @@ public class DarkSteelClaw extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new DarkSteelClawEffect(1));
+        return List.of(
+                LREquipmentEffectTypes.DARK_STEEL_CLAW_EFFECT.value().create(1, EquipmentType.CURIO)
+        );
     }
 }

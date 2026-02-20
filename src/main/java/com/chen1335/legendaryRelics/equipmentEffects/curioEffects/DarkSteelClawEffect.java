@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.attributeFix.AttributeFixer;
 import com.chen1335.legendaryRelics.common.attributeFix.fixTypes.ConstantValueFix;
@@ -26,18 +26,12 @@ import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.List;
 
-public class DarkSteelClawEffect extends LRCurioEffectBase {
+public class DarkSteelClawEffect extends LRCurioEffect {
     public static final ResourceLocation ATTACK_MODIFIER_ID = LegendaryRelics.id("dark_steel_claw_effect");
 
-    public DarkSteelClawEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
 
     public double oldArmor = 0;
 
-    public DarkSteelClawEffect(int level) {
-        this(LREquipmentEffectTypes.DARK_STEEL_CLAW_EFFECT.value(), level);
-    }
 
     @Calculator
     public static final FinalCalculator DAMAGE_ADD = FinalCalculator.of(
@@ -53,8 +47,12 @@ public class DarkSteelClawEffect extends LRCurioEffectBase {
             )
     );
 
+    public DarkSteelClawEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
+
     @Override
-    public void curioTick(ItemStack itemStack, LivingEntity wearer) {
+    public void effectTick(ItemStack itemStack, LivingEntity wearer) {
         double currentArmor = wearer.getAttributeValue(Attributes.ARMOR);
         if (oldArmor != currentArmor) {
             oldArmor = currentArmor;

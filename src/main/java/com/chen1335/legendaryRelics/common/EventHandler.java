@@ -1,12 +1,12 @@
 package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
-import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.IRenderArrowBow;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.attachmentDatas.LREntityData;
+import com.chen1335.legendaryRelics.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -32,9 +32,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
@@ -42,6 +46,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -169,6 +174,13 @@ public class EventHandler {
                     CalculatorArg args1 = args.copy();
                     CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(args1, armorSlot);
                     blackDragonArmor.handleDamageReduce(event, args1, armorSlot);
+                }
+            }
+
+            if (event.getSource().getDirectEntity() instanceof Projectile projectile) {
+                LRProjectileData data = projectile.getData(LRAttachmentTypes.PROJECTILE_DATA.get());
+                if (data.damageMul != 1) {
+                    event.setAmount(event.getAmount() * data.damageMul);
                 }
             }
         }
@@ -300,6 +312,21 @@ public class EventHandler {
             if (!event.getFrom().is(eventTo.getItem()) && (from.getItem() instanceof IRenderArrowBow || eventTo.getItem() instanceof IRenderArrowBow)) {
                 from.remove(LRDataComponentTypes.BOW_USING_ARROW);
                 eventTo.remove(LRDataComponentTypes.BOW_USING_ARROW);
+            }
+        }
+
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void ProjectileImpactEvent(ProjectileImpactEvent event) {
+            if (event.getProjectile() instanceof AbstractArrow arrow && event.getRayTraceResult().getType() == HitResult.Type.ENTITY) {
+                LRProjectileData data = arrow.getData(LRAttachmentTypes.PROJECTILE_DATA.get());
+                EntityHitResult rayTraceResult = (EntityHitResult) event.getRayTraceResult();
+
+                if (data.lastHitEntity == rayTraceResult.getEntity() && data.pierceLevel > 0) {
+                    event.setCanceled(true);
+                    return;
+                }
+                data.lastHitEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
             }
         }
     }

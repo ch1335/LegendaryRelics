@@ -4,6 +4,10 @@ import com.chen1335.equipmentEffectLib.API.IEffectHelper;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.LRArmorEffect;
+import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.LRCurioEffect;
+import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.LRWeaponEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.component.*;
@@ -23,19 +27,24 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class BaseEffect implements DataComponentHolder, MutableDataComponentHolder, IEffectHelper {
+    public UUID activeId = null;
 
     private final PatchedDataComponentMap components;
 
     private final EffectType<?> effectType;
 
-    public BaseEffect(EffectType<?> effectType, int level) {
-        this(effectType, level, DataComponentPatch.EMPTY);
+    private final EquipmentType equipmentType;
+
+    public BaseEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        this(effectType, level, equipmentType, DataComponentPatch.EMPTY);
     }
 
-    public BaseEffect(EffectType<?> effectType, int level, DataComponentPatch dataComponentPatch) {
+    public BaseEffect(EffectType<?> effectType, int level, EquipmentType equipmentType, DataComponentPatch dataComponentPatch) {
         this.effectType = effectType;
+        this.equipmentType = equipmentType;
         DataComponentMap.Builder builder = DataComponentMap.builder();
         builder.set(EEItemEffectDataComponentTypes.EFFECT_LEVEL, 1);
         components = PatchedDataComponentMap.fromPatch(builder.build(), dataComponentPatch);
@@ -44,6 +53,7 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
 
     public static final Codec<BaseEffect> CODEC = RecordCodecBuilder.create(baseEffectInstance -> baseEffectInstance.group(
             EERegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec().fieldOf("EffectType").forGetter(BaseEffect::getType),
+            EquipmentType.CODEC.optionalFieldOf("equipment_type", EquipmentType.NON).forGetter(BaseEffect::getEquipmentType),
             DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(BaseEffect::getDataComponentPatch),
             CompoundTag.CODEC.optionalFieldOf("simpleData", new CompoundTag()).forGetter(BaseEffect::saveSimpleData)
     ).apply(baseEffectInstance, BaseEffect::buildEffect));
@@ -52,6 +62,8 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
     public static final StreamCodec<RegistryFriendlyByteBuf, BaseEffect> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.registry(EERegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY),
             BaseEffect::getType,
+            EquipmentType.STREAM_CODEC,
+            BaseEffect::getEquipmentType,
             DataComponentPatch.STREAM_CODEC,
             BaseEffect::getDataComponentPatch,
             ByteBufCodecs.COMPOUND_TAG,
@@ -60,8 +72,18 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
     );
 
 
-    private static BaseEffect buildEffect(EffectType<?> effectType, DataComponentPatch dataComponentPatch, CompoundTag simpleData) {
-        BaseEffect effect = effectType.create(1);
+    private static BaseEffect buildEffect(EffectType<?> effectType, EquipmentType equipmentType, DataComponentPatch dataComponentPatch, CompoundTag simpleData) {
+        BaseEffect effect = effectType.create(1, equipmentType);
+        if (equipmentType == EquipmentType.NON) {
+            if (effect instanceof LRCurioEffect) {
+                equipmentType = EquipmentType.CURIO;
+            } else if (effect instanceof LRArmorEffect) {
+                equipmentType = EquipmentType.ARMOR;
+            } else if (effect instanceof LRWeaponEffect) {
+                equipmentType = EquipmentType.HAND;
+            }
+        }
+        effect = effectType.create(1, equipmentType);
         effect.applyComponents(dataComponentPatch);
         effect.loadSimpleData(simpleData);
         return effect;
@@ -150,8 +172,9 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
     }
 
     public BaseEffect copy() {
-        BaseEffect effect = this.effectType.create(getRawEffectLevel());
+        BaseEffect effect = this.effectType.create(getRawEffectLevel(), getEquipmentType());
         effect.components.setAll(components.copy());
+        effect.activeId = activeId;
         return effect;
     }
 
@@ -168,5 +191,9 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
      */
     public void loadSimpleData(CompoundTag nbt) {
 
+    }
+
+    public EquipmentType getEquipmentType() {
+        return equipmentType;
     }
 }

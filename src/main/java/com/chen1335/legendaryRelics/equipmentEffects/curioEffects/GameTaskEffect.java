@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.ISubEffectProvider;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -42,17 +43,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class GameTaskEffect extends LRCurioEffectBase implements ISubEffectProvider {
+public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider {
     public static List<AttributeEntrie> ATTRIBUTES;
 
     public static List<ITask> TASKS;
 
-    private BaseEffect allAttributeBoost = LREquipmentEffectTypes.ALL_ATTRIBUTE_BOOST.get().create(1);
+    private BaseEffect allAttributeBoost = LREquipmentEffectTypes.ALL_ATTRIBUTE_BOOST.get().create(1, EquipmentType.CURIO);
 
-
-    public GameTaskEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
+    public GameTaskEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
     }
+
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
@@ -71,7 +72,7 @@ public class GameTaskEffect extends LRCurioEffectBase implements ISubEffectProvi
     @Override
     public void onActive(LivingEntity entity, ItemStack itemStack) {
         if (entity instanceof Player player) {
-            finishTask(player, new CustomTask(LegendaryRelics.id("wear_curio")),itemStack);
+            finishTask(player, new CustomTask(LegendaryRelics.id("wear_curio")), itemStack);
         }
     }
 
@@ -95,7 +96,7 @@ public class GameTaskEffect extends LRCurioEffectBase implements ISubEffectProvi
 
 
     public void onTaskFinished(Player player, ITask task, ItemStack itemStack) {
-        
+
     }
 
     @Override
@@ -189,7 +190,7 @@ public class GameTaskEffect extends LRCurioEffectBase implements ISubEffectProvi
     @Override
     public List<BaseEffect> getSubEffects(ItemStack itemStack) {
         if (getRawEffectLevel() >= TASKS.size()) {
-           return List.of(allAttributeBoost);
+            return List.of(allAttributeBoost);
         }
         return List.of();
     }

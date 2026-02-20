@@ -1,6 +1,8 @@
 package com.chen1335.legendaryRelics.items.curios;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.Redemption;
 import net.minecraft.world.item.Rarity;
 
@@ -13,6 +15,6 @@ public class SacredTalisman extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new Redemption(1));
+        return List.of(LREquipmentEffectTypes.REDEMPTION.value().create(1, EquipmentType.CURIO));
     }
 }

@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -22,13 +23,10 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-public class AgglomerationMaliceEffect extends LRCurioEffectBase {
-    public AgglomerationMaliceEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
+public class AgglomerationMaliceEffect extends LRCurioEffect {
 
-    public AgglomerationMaliceEffect(int level) {
-        this(LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value(), level);
+    public AgglomerationMaliceEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
     }
 
     @Calculator

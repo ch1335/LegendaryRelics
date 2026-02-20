@@ -133,5 +133,6 @@
   "legendary_relics.task.travel_to_dim": "Go to %s",
   "legendary_relics.task.has_finished": "Task %s has finished",
   "equipment_effect.legendary_relics.all_attribute_boost": "Boosts most of your attributes by %s",
-  "legendary_relics.task.custom.wear_curio": "Equip this curio"
+  "legendary_relics.task.custom.wear_curio": "Equip this curio",
+  "equipment_effect.legendary_relics.perforation": "你的箭可以额外穿透%s个实体"
 }

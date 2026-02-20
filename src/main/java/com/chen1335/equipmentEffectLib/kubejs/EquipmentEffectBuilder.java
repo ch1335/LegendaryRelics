@@ -39,6 +39,13 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
         super(id);
     }
 
+    protected EquipmentType equipmentType = EquipmentType.ALL;
+
+    public T effectEquipmentType(EquipmentType equipmentType) {
+        this.equipmentType = equipmentType;
+        return Cast.cast(this);
+    }
+
     public T onActive(TriConsumer<BaseEffectJS, LivingEntity, ItemStack> onActive) {
         this.onActive = onActive;
         return Cast.cast(this);
@@ -91,17 +98,17 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
 
         @Override
         public EffectType<?> createObject() {
-            EffectType.EffectFactory<BaseEffectJS.CurioEffectJS> factory = (effectType, level) -> {
-                BaseEffectJS.CurioEffectJS baseEffect = createBase(new BaseEffectJS.CurioEffectJS(effectType, level));
+            EffectType.EffectFactory<BaseEffectJS.CurioEffectJS> factory = (effectType, level, equipmentType) -> {
+                BaseEffectJS.CurioEffectJS baseEffect = createBase(new BaseEffectJS.CurioEffectJS(effectType, level, equipmentType));
                 baseEffect.curioTick = this.curioTick;
                 baseEffect.modifyCurioAttribute = this.modifyCurioAttribute;
                 return baseEffect;
             };
 
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory, EquipmentType.CURIO).cooldownIcon(cooldownIcon);
+                return new CooldownAbleEffectType<>(factory).cooldownIcon(cooldownIcon);
             } else {
-                return new EffectType<>(factory, EquipmentType.CURIO);
+                return new EffectType<>(factory);
             }
         }
     }
@@ -115,11 +122,11 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
 
         @Override
         public EffectType<?> createObject() {
-            EffectType.EffectFactory<BaseEffectJS.ArmorEffectJS> factory = (effectType, level) -> createBase(new BaseEffectJS.ArmorEffectJS(effectType, level));
+            EffectType.EffectFactory<BaseEffectJS.ArmorEffectJS> factory = (effectType, level, equipmentType) -> createBase(new BaseEffectJS.ArmorEffectJS(effectType, level, equipmentType));
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory, EquipmentType.ARMOR).cooldownIcon(cooldownIcon);
+                return new CooldownAbleEffectType<>(factory).cooldownIcon(cooldownIcon);
             } else {
-                return new EffectType<>(factory, EquipmentType.ARMOR);
+                return new EffectType<>(factory);
             }
         }
     }
@@ -145,16 +152,16 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
 
         @Override
         public EffectType<?> createObject() {
-            EffectType.EffectFactory<BaseEffectJS.MainHandEffectJS> factory = (effectType, level) -> {
-                BaseEffectJS.MainHandEffectJS baseEffect = createBase(new BaseEffectJS.MainHandEffectJS(effectType, level));
+            EffectType.EffectFactory<BaseEffectJS.MainHandEffectJS> factory = (effectType, level, equipmentType) -> {
+                BaseEffectJS.MainHandEffectJS baseEffect = createBase(new BaseEffectJS.MainHandEffectJS(effectType, level, equipmentType));
                 baseEffect.hurtEnemy = this.hurtEnemy;
                 return baseEffect;
             };
 
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory, EquipmentType.HAND).cooldownIcon(cooldownIcon);
+                return new CooldownAbleEffectType<>(factory).cooldownIcon(cooldownIcon);
             } else {
-                return new EffectType<>(factory, EquipmentType.HAND);
+                return new EffectType<>(factory);
             }
         }
     }

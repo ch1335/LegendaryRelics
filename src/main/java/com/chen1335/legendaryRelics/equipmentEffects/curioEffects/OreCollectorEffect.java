@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.apothicAttributesExtension.API.objects.ModAttributes;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
@@ -26,14 +27,7 @@ import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.List;
 
-public class OreCollectorEffect extends LRCurioEffectBase {
-    public OreCollectorEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public OreCollectorEffect(int level) {
-        this(LREquipmentEffectTypes.ORE_COLLECTOR_EFFECT.value(), level);
-    }
+public class OreCollectorEffect extends LRCurioEffect {
 
     @Calculator
     public static final FinalCalculator DEFAULT = FinalCalculator.of(DarkGoldUpdateArg.of(
@@ -44,6 +38,10 @@ public class OreCollectorEffect extends LRCurioEffectBase {
 
     @Calculator
     public static final FinalCalculator COLLECTED_MINERALS_REQUIRE = FinalCalculator.of(Constant.of(10, 0), 0);
+
+    public OreCollectorEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
 
 
     @Override

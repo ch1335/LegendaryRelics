@@ -2,13 +2,14 @@ package com.chen1335.legendaryRelics.items.armor.blackDragonSet;
 
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.FallImmunity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +29,7 @@ public class BlackDragonBoots extends BlackDragonArmor {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new FallImmunity(1));
+        return List.of(LREquipmentEffectTypes.FALL_IMMUNITY.value().create(1, EquipmentType.ARMOR));
     }
 
     @Calculator

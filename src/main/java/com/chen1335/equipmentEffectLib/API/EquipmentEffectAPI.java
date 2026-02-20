@@ -4,7 +4,7 @@ import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
-import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
@@ -23,13 +23,13 @@ import java.util.Optional;
 
 public final class EquipmentEffectAPI {
     public static <T extends BaseEffect> Optional<EntityEquipmentEffectData.InfoHolder<T>> findBestEffect(LivingEntity living, EffectType<T> effectType) {
-        @Nullable List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
-        return list == null ? Optional.empty() : Optional.of(list.getFirst());
+        List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
+        return list.isEmpty() ? Optional.empty() : Optional.of(list.getFirst());
     }
 
     public static <T extends BaseEffect> Optional<List<EntityEquipmentEffectData.InfoHolder<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
-        @Nullable List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
-        return list == null ? Optional.empty() : Optional.of(list);
+        List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
+        return list.isEmpty() ? Optional.empty() : Optional.of(list);
     }
 
 
@@ -91,7 +91,7 @@ public final class EquipmentEffectAPI {
         living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(living);
     }
 
-    public static void updateEntityEquipmentEffect(@NotNull LivingEntity living, IEquipmentType equipmentType) {
-        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(living, equipmentType);
+    public static void updateEntityEquipmentEffect(@NotNull LivingEntity living, ItemStack from, ItemStack to, EquipmentType matchType) {
+        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(living, from, to, matchType);
     }
 }

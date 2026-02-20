@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.equipmentEffects.weaponEffects;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -23,13 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class ErosionEffect extends LRWeaponEffect {
-    public ErosionEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public ErosionEffect(int level) {
-        this(LREquipmentEffectTypes.EROSION_EFFECT.value(), level);
-    }
 
     @Calculator
     public static final FinalCalculator DAMAGE_PER_LAYER = FinalCalculator.of(
@@ -60,6 +54,11 @@ public class ErosionEffect extends LRWeaponEffect {
                     EntityAttributeValue.of(Attributes.ATTACK_DAMAGE)
             )
     );
+
+    public ErosionEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
+
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {

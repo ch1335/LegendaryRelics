@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.items.curios;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.HealIncreaseEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.HealPerSecondEffect;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import net.minecraft.world.item.Rarity;
 
 import java.util.List;
@@ -14,7 +14,9 @@ public class HealingTalisman extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new HealIncreaseEffect(1), new HealPerSecondEffect(1));
+        return List.of(
+                LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value().create(1, EquipmentType.CURIO),
+                LREquipmentEffectTypes.HEAL_PER_SECOND_EFFECT.value().create(1, EquipmentType.CURIO));
     }
 
 }

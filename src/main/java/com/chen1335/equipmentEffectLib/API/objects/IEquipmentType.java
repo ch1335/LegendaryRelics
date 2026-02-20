@@ -4,4 +4,6 @@ import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 
 public interface IEquipmentType {
     IEquipmentSource source();
+
+    boolean match(IEquipmentType equipmentType);
 }

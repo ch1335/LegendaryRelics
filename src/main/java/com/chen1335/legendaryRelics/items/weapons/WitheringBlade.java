@@ -1,7 +1,8 @@
 package com.chen1335.legendaryRelics.items.weapons;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.ErosionEffect;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.items.LRSwordItem;
 import net.minecraft.world.item.*;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +17,7 @@ public class WitheringBlade extends LRSwordItem {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new ErosionEffect(1));
+        return List.of(LREquipmentEffectTypes.EROSION_EFFECT.value().create(1, EquipmentType.HAND));
     }
 
     @Override

@@ -1,16 +1,17 @@
 package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
 import com.chen1335.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
 import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.FallImmunity;
 import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.*;
+import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.Perforation;
 import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.SoulEater;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -35,7 +36,7 @@ public class GamePlayEventHandler {
     }
 
     @SubscribeEvent
-    public static void LivingEntityUseItemEvent$Stop(LivingEntityUseItemEvent.Stop event){
+    public static void LivingEntityUseItemEvent$Stop(LivingEntityUseItemEvent.Stop event) {
         TwistedArmorSetEffect.LivingEntityUseItemEvent$Stop(event);
     }
 
@@ -56,15 +57,21 @@ public class GamePlayEventHandler {
     }
 
     @SubscribeEvent
+    public static void EntityJoinLevelEvent(EntityJoinLevelEvent event) {
+        TwistedArmorSetEffect.EntityJoinLevelEvent(event);
+        Perforation.EntityJoinLevelEvent(event);
+    }
+
+    @SubscribeEvent
     public static void BlockBreakEvent(BlockEvent.BreakEvent event) {
         OreCollectorEffect.countOres(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void LivingDeathEvent$Lowest(LivingDeathEvent event) {
-            SoulEater.LivingDeathEvent(event);
-            InfernoArmorSetEffect.LivingDeathEvent(event);
-            GameTaskEffect.LivingDeathEvent(event);
+        SoulEater.LivingDeathEvent(event);
+        InfernoArmorSetEffect.LivingDeathEvent(event);
+        GameTaskEffect.LivingDeathEvent(event);
     }
 
     @SubscribeEvent
@@ -73,9 +80,10 @@ public class GamePlayEventHandler {
     }
 
     @SubscribeEvent
-    public static void PlayerChangedDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event){
+    public static void PlayerChangedDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event) {
         GameTaskEffect.PlayerChangedDimensionEvent(event);
     }
+
     @SubscribeEvent
     public static void LivingHealEvent(LivingHealEvent event) {
         HealIncreaseEffect.LivingHealEvent(event);

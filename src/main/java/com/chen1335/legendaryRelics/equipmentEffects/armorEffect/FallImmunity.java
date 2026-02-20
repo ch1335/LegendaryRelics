@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.equipmentEffects.armorEffect;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import net.minecraft.network.chat.Component;
@@ -14,12 +15,10 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import java.util.List;
 
 public class FallImmunity extends LRArmorEffect {
-    public FallImmunity(int level) {
-        super(LREquipmentEffectTypes.FALL_IMMUNITY.value(), level);
-    }
 
-    public FallImmunity(EffectType<?> effectType, int level) {
-        super(effectType, level);
+
+    public FallImmunity(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
     }
 
     @Override

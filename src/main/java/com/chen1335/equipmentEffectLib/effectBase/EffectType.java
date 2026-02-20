@@ -3,7 +3,7 @@ package com.chen1335.equipmentEffectLib.effectBase;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
-import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.util.Cast;
@@ -15,7 +15,6 @@ public class EffectType<T extends BaseEffect> {
     private int cachedHashCode = 0;
 
     private final EffectFactory<T> factory;
-    private final IEquipmentType equipmentType;
     private final boolean stackable;
 
     @Override
@@ -26,27 +25,23 @@ public class EffectType<T extends BaseEffect> {
         return cachedHashCode;
     }
 
-    public EffectType(EffectFactory<T> factory, IEquipmentType equipmentType, boolean stackable) {
+    public EffectType(EffectFactory<T> factory, boolean stackable) {
         this.factory = factory;
-        this.equipmentType = equipmentType;
         this.stackable = stackable;
     }
 
-    public EffectType(EffectFactory<T> factory, IEquipmentType equipmentType) {
-        this(factory, equipmentType, false);
+    public EffectType(EffectFactory<T> factory) {
+        this(factory, false);
     }
 
 
-    public T create(int level) {
-        return factory.create(this, level);
+    public T create(int level, EquipmentType equipmentType) {
+        return factory.create(this, level, equipmentType);
     }
 
-    public IEquipmentType getEquipmentType() {
-        return equipmentType;
-    }
 
     public interface EffectFactory<T extends BaseEffect> {
-        T create(EffectType<T> effectType, int level);
+        T create(EffectType<T> effectType, int level, EquipmentType equipmentType);
     }
 
 

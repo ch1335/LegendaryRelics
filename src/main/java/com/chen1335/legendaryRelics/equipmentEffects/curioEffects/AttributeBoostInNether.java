@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -25,24 +26,20 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 
 import java.util.List;
 
-public class AttributeBoostInNether extends LRCurioEffectBase {
+public class AttributeBoostInNether extends LRCurioEffect {
 
     @Calculator
     public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
             EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.025F), 3)
     ));
 
+    public AttributeBoostInNether(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
+
     @Override
     public int getDarkGoldLevelAdd() {
         return getRawEffectLevel();
-    }
-
-    public AttributeBoostInNether(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public AttributeBoostInNether(int level) {
-        this(LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value(), level);
     }
 
 

@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -17,14 +17,8 @@ import net.minecraft.world.item.enchantment.LevelBasedValue;
 
 import java.util.List;
 
-public class HealPerSecondEffect extends LRCurioEffectBase {
-    public HealPerSecondEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
+public class HealPerSecondEffect extends LRCurioEffect {
 
-    public HealPerSecondEffect(int level) {
-        this(LREquipmentEffectTypes.HEAL_PER_SECOND_EFFECT.value(), level);
-    }
 
     @Calculator
     public static final FinalCalculator HEAL_PER_5S = FinalCalculator.of(
@@ -36,8 +30,12 @@ public class HealPerSecondEffect extends LRCurioEffectBase {
             2
     );
 
+    public HealPerSecondEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
+
     @Override
-    public void curioTick(ItemStack itemStack, LivingEntity wearer) {
+    public void effectTick(ItemStack itemStack, LivingEntity wearer) {
         CalculatorArg calculatorArg = CalculatorArg.simpleArg(wearer, itemStack, this);
         if (wearer.level().getGameTime() % 10 == 0) {
             wearer.heal(HEAL_PER_5S.getValue(calculatorArg) / 10);

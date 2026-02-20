@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
@@ -28,14 +29,8 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-public class Redemption extends LRCurioEffectBase {
-    public Redemption(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
+public class Redemption extends LRCurioEffect {
 
-    public Redemption(int level) {
-        this(LREquipmentEffectTypes.REDEMPTION.value(), level);
-    }
 
     @Calculator
     public static final FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
@@ -69,6 +64,10 @@ public class Redemption extends LRCurioEffectBase {
                     Constant.of(0.2F)
             )
     );
+
+    public Redemption(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
 
 
     @Override

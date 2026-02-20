@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import net.minecraft.network.chat.Component;
@@ -15,13 +16,10 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
 
-public class FlameImmunity extends LRCurioEffectBase {
-    public FlameImmunity(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
+public class FlameImmunity extends LRCurioEffect {
 
-    public FlameImmunity(int level) {
-        super(LREquipmentEffectTypes.FLAME_IMMUNITY.value(), level);
+    public FlameImmunity(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
     }
 
     @Override

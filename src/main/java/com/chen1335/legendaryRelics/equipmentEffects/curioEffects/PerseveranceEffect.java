@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -19,14 +20,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import java.util.List;
 
-public class PerseveranceEffect extends LRCurioEffectBase {
-    public PerseveranceEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public PerseveranceEffect(int level) {
-        this(LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value(), level);
-    }
+public class PerseveranceEffect extends LRCurioEffect {
 
     @Calculator
     public static final FinalCalculator TIME = FinalCalculator.of(DarkGoldUpdateArg.of(
@@ -39,6 +33,10 @@ public class PerseveranceEffect extends LRCurioEffectBase {
             Constant.of(0.15F),
             Constant.of(0.20F)
     ));
+
+    public PerseveranceEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {

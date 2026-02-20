@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.equipmentEffects.weaponEffects;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
@@ -27,13 +28,6 @@ import org.apache.logging.log4j.util.TriConsumer;
 import java.util.List;
 
 public class SoulEater extends LRWeaponEffect {
-    public SoulEater(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public SoulEater(int level) {
-        super(LREquipmentEffectTypes.SOUL_EATER.value(), level);
-    }
 
     @Calculator
     public static final FinalCalculator HEAL = FinalCalculator.of(
@@ -50,6 +44,10 @@ public class SoulEater extends LRWeaponEffect {
                     Constant.of(0.7F)
             )
     );
+
+    public SoulEater(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {

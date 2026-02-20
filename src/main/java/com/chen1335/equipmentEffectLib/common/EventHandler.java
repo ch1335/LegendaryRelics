@@ -41,7 +41,7 @@ public class EventHandler {
             }
 
             if (updateTotal) {
-                EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EquipmentType.CURIO);
+                EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.CURIO);
             }
 
 
@@ -69,10 +69,10 @@ public class EventHandler {
             if (updateTotal) {
                 switch (type) {
                     case HUMANOID_ARMOR -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EquipmentType.ARMOR);
+                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.ARMOR);
                     }
                     case HAND -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), EquipmentType.HAND);
+                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(),EquipmentType.HAND);
                     }
                 }
             }

@@ -93,4 +93,5 @@ public class LRItems {
 
     public static final DeferredItem<LastWhisper> LAST_WHISPER = ITEM_DEFERRED_REGISTER.register("last_whisper", LastWhisper::new);
 
+
 }

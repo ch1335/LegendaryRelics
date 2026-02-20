@@ -1,10 +1,9 @@
 package com.chen1335.legendaryRelics.items.curios;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.HealIncreaseEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.HealPerSecondEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.PerseveranceEffect;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Holder;
@@ -33,6 +32,10 @@ public class PerseveranceNecklace extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new HealIncreaseEffect(2), new HealPerSecondEffect(2), new PerseveranceEffect(1));
+        return List.of(
+                LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value().create(2, EquipmentType.CURIO),
+                LREquipmentEffectTypes.HEAL_PER_SECOND_EFFECT.value().create(2, EquipmentType.CURIO),
+                LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value().create(2, EquipmentType.CURIO)
+        );
     }
 }

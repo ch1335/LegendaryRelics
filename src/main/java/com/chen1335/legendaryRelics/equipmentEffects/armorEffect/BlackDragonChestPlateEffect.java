@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.equipmentEffects.armorEffect;
 
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
@@ -27,13 +28,6 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import java.util.List;
 
 public class BlackDragonChestPlateEffect extends LRArmorEffect {
-    public BlackDragonChestPlateEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
-
-    public BlackDragonChestPlateEffect(int level) {
-        this(LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value(), level);
-    }
 
     @Calculator
     public static final FinalCalculator PHYSICAL_DAMAGE_REDUCE = FinalCalculator.of(
@@ -89,6 +83,10 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
                     Constant.of(7F)
             )
     );
+
+    public BlackDragonChestPlateEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {

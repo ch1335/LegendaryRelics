@@ -68,7 +68,7 @@ public class LegendaryRelics {
         LRAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
         LRDataComponentTypes.DATA_COMPONENTS.register(modEventBus);
         LRArmorMaterials.ARMOR_MATERIAL_DEFERRED_REGISTER.register(modEventBus);
-        LREquipmentEffectTypes.EQUIPMENT_EFFECT_TYPES.register(modEventBus);
+        LREquipmentEffectTypes.register(modEventBus);
         LRSpecialMobEffect.SPECIAL_MOB_EFFECT_TYPES.register(modEventBus);
         LREntityTypes.ENTITY_TYPES.register(modEventBus);
         LRSetsEffects.SETS_EFFECTS.register(modEventBus);

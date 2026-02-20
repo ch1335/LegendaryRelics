@@ -3,6 +3,7 @@ package com.chen1335.equipmentEffectLib.kubejs;
 import com.chen1335.equipmentEffectLib.API.IArmorEffect;
 import com.chen1335.equipmentEffectLib.API.ICurioEffect;
 import com.chen1335.equipmentEffectLib.API.IMainHandEffect;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import net.minecraft.core.component.DataComponents;
@@ -31,6 +32,10 @@ public class BaseEffectJS extends BaseEffect {
     Consumer<EquipmentEffectBuilder.AppendToolTipContext> appendToolTip = context -> {
     };
 
+    public BaseEffectJS(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
+    }
+
     CompoundTag getEffectNbt() {
         if (!has(DataComponents.CUSTOM_DATA)) {
             set(DataComponents.CUSTOM_DATA, CustomData.of(new CompoundTag()));
@@ -38,9 +43,6 @@ public class BaseEffectJS extends BaseEffect {
         return get(DataComponents.CUSTOM_DATA).getUnsafe();
     }
 
-    public BaseEffectJS(EffectType<?> effectType, int level) {
-        super(effectType, level);
-    }
 
     @Override
     public void onActive(LivingEntity entity, ItemStack itemStack) {
@@ -64,12 +66,13 @@ public class BaseEffectJS extends BaseEffect {
         BiConsumer<CurioEffectJS, CurioAttributeModifierEvent> modifyCurioAttribute = (curioEffectJS, event) -> {
         };
 
-        public CurioEffectJS(EffectType<?> effectType, int level) {
-            super(effectType, level);
+        public CurioEffectJS(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+            super(effectType, level, equipmentType);
         }
 
+
         @Override
-        public void curioTick(ItemStack itemStack, LivingEntity wearer) {
+        public void effectTick(ItemStack itemStack, LivingEntity wearer) {
             curioTick.accept(this, itemStack, wearer);
         }
 
@@ -81,24 +84,25 @@ public class BaseEffectJS extends BaseEffect {
 
     public static class ArmorEffectJS extends BaseEffectJS implements IArmorEffect {
 
-        public ArmorEffectJS(EffectType<?> effectType, int level) {
-            super(effectType, level);
-        }
 
+        public ArmorEffectJS(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+            super(effectType, level, equipmentType);
+        }
     }
 
     public static class MainHandEffectJS extends BaseEffectJS implements IMainHandEffect {
         Consumer<EquipmentEffectBuilder.MainHandEffectBuilder.HurtEnemyContext> hurtEnemy = hurtEnemyContext -> {
         };
 
+        public MainHandEffectJS(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+            super(effectType, level, equipmentType);
+        }
+
         @Override
         public void hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
             hurtEnemy.accept(new EquipmentEffectBuilder.MainHandEffectBuilder.HurtEnemyContext(this, stack, target, attacker));
         }
 
-        public MainHandEffectJS(EffectType<?> effectType, int level) {
-            super(effectType, level);
-        }
 
     }
 

@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.equipmentEffects.curioEffects;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -31,9 +32,10 @@ public class AllAttributeBoost extends LRBaseEffect {
             Constant.of(0.035F)
     ));
 
-    public AllAttributeBoost(EffectType<?> effectType, int level) {
-        super(effectType, level);
+    public AllAttributeBoost(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
     }
+
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {

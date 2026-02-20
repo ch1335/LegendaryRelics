@@ -56,4 +56,5 @@ public class EquipmentEffectLib {
     public static ResourceLocation id(String id) {
         return ResourceLocation.fromNamespaceAndPath(MODID, id);
     }
+
 }

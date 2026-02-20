@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.equipmentEffects;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
@@ -9,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class LRBaseEffect extends BaseEffect {
-    public LRBaseEffect(EffectType<?> effectType, int level) {
-        super(effectType, level);
+    public LRBaseEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        super(effectType, level, equipmentType);
     }
 
     @Override

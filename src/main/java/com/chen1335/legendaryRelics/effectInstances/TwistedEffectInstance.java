@@ -1,8 +1,10 @@
 package com.chen1335.legendaryRelics.effectInstances;
 
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
+import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
+import com.chen1335.legendaryRelics.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import net.minecraft.resources.ResourceLocation;
@@ -90,7 +92,8 @@ public class TwistedEffectInstance extends EffectInstance {
 
     public void modifyArrow(AbstractArrow arrow, LivingEntity owner) {
         if (isDoingAdditionShoot) {
-            arrow.setBaseDamage(arrow.getBaseDamage() * TwistedArmorSetEffect.ADDITION_ARROW_BASE_DAMAGE.getValue(buildArgs(owner)));
+            LRProjectileData data = arrow.getData(LRAttachmentTypes.PROJECTILE_DATA.get());
+            data.damageMul = data.damageMul * TwistedArmorSetEffect.ADDITION_ARROW_BASE_DAMAGE.getValue(buildArgs(owner));
         }
     }
 }

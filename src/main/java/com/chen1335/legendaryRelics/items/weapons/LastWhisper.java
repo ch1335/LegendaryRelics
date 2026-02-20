@@ -1,14 +1,14 @@
 package com.chen1335.legendaryRelics.items.weapons;
 
 import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.IRenderArrowBow;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.Perforation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -28,14 +28,8 @@ public class LastWhisper extends BowItem implements IEffectEquipment, IRenderArr
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(new Perforation(1));
+        return List.of(LREquipmentEffectTypes.PERFORATION.value().create(1, EquipmentType.HAND));
     }
-
-    @Override
-    public AbstractArrow customArrow(AbstractArrow arrow, ItemStack projectileStack, ItemStack weaponStack) {
-        return super.customArrow(arrow, projectileStack, weaponStack);
-    }
-
 
     @Override
     public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {

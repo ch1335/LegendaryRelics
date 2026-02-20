@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.events;
 
+import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import net.minecraft.world.item.Item;
@@ -20,8 +21,8 @@ public class AttachItemEffectEvent extends Event {
         return effectType;
     }
 
-    public void addEffect(Item item, EffectType<?> effectType, int level) {
-        getEffects(item).add(effectType.create(level));
+    public void addEffect(Item item, EffectType<?> effectType, int level, EquipmentType equipmentType) {
+        getEffects(item).add(effectType.create(level, equipmentType));
     }
 
     public void addEffect(Item item, BaseEffect baseEffect) {
