@@ -32,7 +32,6 @@ public class LRKubeJSPlugin implements KubeJSPlugin {
         bindings.add("CalculatorMul", Mul.class);
         bindings.add("CalculatorMultiMul", MultiMul.class);
         bindings.add("CalculatorSingleCustomArg", SingleCustomArg.class);
-
         Set<Class<?>> classes = new HashSet<>();
         for (CalculatorsHolder.LocateInfo locateInfo : CalculatorsHolder.getCalculators().keySet()) {
             try {
