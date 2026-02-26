@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -18,7 +19,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class LRArmorMaterials {
-    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIAL_DEFERRED_REGISTER = DeferredRegister.create(Registries.ARMOR_MATERIAL, LegendaryRelics.MODID);
+    private static final DeferredRegister<ArmorMaterial> ARMOR_MATERIAL_DEFERRED_REGISTER = DeferredRegister.create(Registries.ARMOR_MATERIAL, LegendaryRelics.MODID);
+
+    public static void register(IEventBus modEventBus) {
+        ARMOR_MATERIAL_DEFERRED_REGISTER.register(modEventBus);
+    }
 
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> BLACK_DRAGON = register("black_dragon", Util.make(new EnumMap<>(ArmorItem.Type.class), enumMap -> {
                 enumMap.put(ArmorItem.Type.BOOTS, 6);

@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.client.particlePlayer;
 
-import com.chen1335.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
 import com.chen1335.legendaryRelics.network.PlayClientParticlePack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;

@@ -1,0 +1,36 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "minecraft:netherite_boots"
+  },
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:black_dragon_boots"
+  },
+  "secondaryItems": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:dark_gold_fragment"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "legendary_relics:ancient_fragment"
+      }
+    },
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "legendary_relics:dragon_scale"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:obsidian"
+      }
+    }
+  ]
+}

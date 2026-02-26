@@ -1,12 +1,12 @@
 package com.chen1335.legendaryRelics.effectInstances;
 
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
-import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
-import com.chen1335.legendaryRelics.attachmentDatas.LRProjectileData;
+import com.chen1335.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
+import com.chen1335.legendaryRelics.registers.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -81,19 +81,18 @@ public class TwistedEffectInstance extends EffectInstance {
         this.stack = Math.max(Math.min(10, stack + add), 0);
     }
 
-    public int getDoomLevel() {
-        return stack;
-    }
-
     @Override
     public void onRemove(LivingEntity livingEntity) {
         updateAttribute(livingEntity, 0);
     }
 
     public void modifyArrow(AbstractArrow arrow, LivingEntity owner) {
+        LRProjectileData projectileData = LRUtil.getProjectileData(arrow);
+        if (stack >= 10) {
+            projectileData.ignoreHitCooldown = true;
+        }
         if (isDoingAdditionShoot) {
-            LRProjectileData data = arrow.getData(LRAttachmentTypes.PROJECTILE_DATA.get());
-            data.damageMul = data.damageMul * TwistedArmorSetEffect.ADDITION_ARROW_BASE_DAMAGE.getValue(buildArgs(owner));
+            projectileData.damageMul = projectileData.damageMul * TwistedArmorSetEffect.ADDITION_ARROW_BASE_DAMAGE.getValue(buildArgs(owner));
         }
     }
 }

@@ -169,6 +169,17 @@ repositories {
         name = "Curios"
         url = uri("https://maven.theillusivec4.top/")
     }
+
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
 }
 
 dependencies {
@@ -202,16 +213,19 @@ dependencies {
     implementation "curse.maven:attributefix-280510:7115922"
     implementation "curse.maven:better-combat-by-daedelus-639842:7348161"
     implementation "curse.maven:iceberg-520110:6423863"
-    implementation "curse.maven:jei-238222:7364648"
     implementation "curse.maven:legendary-tooltips-532127:6400660"
     implementation "curse.maven:overflowing-bars-852662:5770623"
     implementation "curse.maven:prism-lib-638111:6372979"
     implementation "curse.maven:tslatentitystatus-tes-830420:7115952"
     implementation "curse.maven:geckolib-388172:7415496"
 
-    implementation "curse.maven:ultimate-enchantment-1136743:7634345"
+    implementation "curse.maven:ultimate-enchantment-1136743:7653349"
     implementation "curse.maven:advanced-loot-info-1205426:7537434"
     runtimeOnly 'net.covers1624:DevLogin:0.1.0.5'
+
+
+//    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+    implementation("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

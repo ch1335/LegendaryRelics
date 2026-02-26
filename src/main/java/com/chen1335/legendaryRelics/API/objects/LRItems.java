@@ -1,29 +1,44 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonBoots;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonChestPlate;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoBoots;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoChestPlate;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoHelmet;
-import com.chen1335.legendaryRelics.items.armor.infernoSet.InfernoLeggings;
-import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedBoots;
-import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedChestPlate;
-import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedHelmet;
-import com.chen1335.legendaryRelics.items.armor.twistedSet.TwistedLeggings;
-import com.chen1335.legendaryRelics.items.curios.*;
-import com.chen1335.legendaryRelics.items.misc.*;
-import com.chen1335.legendaryRelics.items.weapons.LastWhisper;
-import com.chen1335.legendaryRelics.items.weapons.Reaper;
-import com.chen1335.legendaryRelics.items.weapons.WitheringBlade;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonBoots;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonChestPlate;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonHelmet;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonLeggings;
+import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoBoots;
+import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoChestPlate;
+import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoHelmet;
+import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoLeggings;
+import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedBoots;
+import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedChestPlate;
+import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedHelmet;
+import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedLeggings;
+import com.chen1335.legendaryRelics.registers.items.curios.*;
+import com.chen1335.legendaryRelics.registers.items.misc.*;
+import com.chen1335.legendaryRelics.registers.items.weapons.LastWhisper;
+import com.chen1335.legendaryRelics.registers.items.weapons.Reaper;
+import com.chen1335.legendaryRelics.registers.items.weapons.SkeletonThrowingKnife;
+import com.chen1335.legendaryRelics.registers.items.weapons.WitheringBlade;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Collection;
+
 public class LRItems {
-    public static final DeferredRegister.Items ITEM_DEFERRED_REGISTER = DeferredRegister.createItems(LegendaryRelics.MODID);
+    private static final DeferredRegister.Items ITEM_DEFERRED_REGISTER = DeferredRegister.createItems(LegendaryRelics.MODID);
+
+    public static void register(IEventBus modEventBus) {
+        ITEM_DEFERRED_REGISTER.register(modEventBus);
+    }
+
+    public static Collection<DeferredHolder<Item, ? extends Item>> getEntries() {
+        return ITEM_DEFERRED_REGISTER.getEntries();
+    }
 
     public static final DeferredItem<SacredTalisman> SACRED_TALISMAN = ITEM_DEFERRED_REGISTER.register("sacred_talisman", SacredTalisman::new);
 
@@ -93,5 +108,9 @@ public class LRItems {
 
     public static final DeferredItem<LastWhisper> LAST_WHISPER = ITEM_DEFERRED_REGISTER.register("last_whisper", LastWhisper::new);
 
+    public static final DeferredItem<Item> TYRANNICAL_ESSENCE = ITEM_DEFERRED_REGISTER.register("tyrannical_essence", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
 
+    public static final DeferredItem<SkeletonThrowingKnife> SKELETON_THROWING_KNIFE = ITEM_DEFERRED_REGISTER.register("skeleton_throwing_knife", () -> new SkeletonThrowingKnife(new Item.Properties().rarity(Rarity.RARE)));
+
+    public static final DeferredItem<BlockItem> EQUIPMENT_WORKBENCH = ITEM_DEFERRED_REGISTER.register("equipment_workbench", () -> new BlockItem(LRBlocks.EQUIPMENT_WORKBENCH.value(), new Item.Properties()));
 }

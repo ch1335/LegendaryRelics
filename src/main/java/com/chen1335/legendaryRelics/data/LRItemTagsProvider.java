@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosTags;
 
@@ -82,9 +83,16 @@ public class LRItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemTags.SWORDS).add(
                 LRItems.WITHERING_BLADE.value(),
-                LRItems.REAPER.value()
+                LRItems.REAPER.value(),
+                LRItems.SKELETON_THROWING_KNIFE.asItem()
         );
 
+        tag(Tags.Items.TOOLS_BOW).add(
+                LRItems.LAST_WHISPER.asItem()
+        );
 
+        tag(ItemTags.BOW_ENCHANTABLE).add(
+                LRItems.LAST_WHISPER.asItem()
+        );
     }
 }

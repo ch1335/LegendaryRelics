@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.data;
 
+import com.chen1335.legendaryRelics.API.objects.LRBlocks;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import net.minecraft.data.PackOutput;
@@ -64,5 +65,9 @@ public class LRItemModelProvider extends ItemModelProvider {
                 .override().predicate(ResourceLocation.withDefaultNamespace("pulling"), 1).predicate(ResourceLocation.withDefaultNamespace("pull"), 0.65F).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/last_whisper_1"))).end()
                 .override().predicate(ResourceLocation.withDefaultNamespace("pulling"), 1).predicate(ResourceLocation.withDefaultNamespace("pull"), 0.9F).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/last_whisper_2"))).end();
 
+        basicItem(LRItems.TYRANNICAL_ESSENCE.asItem());
+        handheldItem(LRItems.SKELETON_THROWING_KNIFE.asItem());
+
+        simpleBlockItem(LRBlocks.EQUIPMENT_WORKBENCH.get());
     }
 }

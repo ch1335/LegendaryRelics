@@ -1,0 +1,30 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "legendary_relics:wither_spirit"
+  },
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:withering_blade"
+  },
+  "secondaryItems": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:crying_obsidian"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:netherite_ingot"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "legendary_relics:dark_gold_fragment"
+      }
+    }
+  ]
+}

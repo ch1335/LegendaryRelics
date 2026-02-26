@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics.client;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonChestPlate;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonChestPlate;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.resources.ResourceLocation;

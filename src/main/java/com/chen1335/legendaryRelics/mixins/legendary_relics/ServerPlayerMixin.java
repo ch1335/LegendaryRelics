@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.GameTaskEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
 import com.chen1335.legendaryRelics.misc.gameTask.taskTypes.GainItemTask;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;

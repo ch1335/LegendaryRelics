@@ -2,7 +2,12 @@
   "required": true,
   "package": "com.chen1335.legendaryRelics.mixins",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["legendary_relics.AbstractArrowMixin", "legendary_relics.AttributeInstanceMixin", "legendary_relics.CommonHooksMixin", "legendary_relics.CurioAttributeModifierEventInvoker", "legendary_relics.CurioInventoryCapabilityMixin", "legendary_relics.EnchantedCountIncreaseFunctionMixin", "legendary_relics.EntityMixin", "legendary_relics.ItemStackMixin", "legendary_relics.LootItemRandomChanceWithEnchantedBonusConditionMixin", "legendary_relics.LootModifierManagerMixin", "legendary_relics.ServerPlayerMixin"],
-  "client": ["legendary_relics.client.ElytraLayerMixin", "legendary_relics.client.GameRendererInvoker", "legendary_relics.client.HumanoidArmorLayerMixin", "legendary_relics.client.ItemRendererMixin"],
+  "mixins": ["legendary_relics.AbstractArrowMixin", "legendary_relics.AttributeInstanceMixin", "legendary_relics.CommonHooksMixin", "legendary_relics.CurioAttributeModifierEventInvoker", "legendary_relics.CurioInventoryCapabilityMixin", "legendary_relics.DamageSourceMixin", "legendary_relics.EnchantedCountIncreaseFunctionMixin", "legendary_relics.EntityMixin", "legendary_relics.ItemStackMixin", "legendary_relics.LootItemRandomChanceWithEnchantedBonusConditionMixin", "legendary_relics.LootModifierManagerMixin", "legendary_relics.ProjectileMixin", "legendary_relics.ReloadableServerRegistriesMixin", "legendary_relics.ServerPlayerMixin"],
+  "client": [
+    "legendary_relics.client.ElytraLayerMixin",
+    "legendary_relics.client.GameRendererInvoker",
+    "legendary_relics.client.HumanoidArmorLayerMixin",
+    "legendary_relics.client.ItemRendererMixin", "legendary_relics.client.MinecraftMixin"
+  ],
   "minVersion": "0.8"
 }

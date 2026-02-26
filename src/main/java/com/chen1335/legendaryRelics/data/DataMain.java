@@ -32,6 +32,9 @@ public class DataMain {
         ));
         LRBlockTagsProvider blockTagsProvider = generator.addProvider(event.includeServer(), new LRBlockTagsProvider(generator.getPackOutput(), builtinEntriesProvider.getRegistryProvider(), event.getExistingFileHelper()));
 
+        generator.addProvider(event.includeServer(), new LRBlockStateProvider(
+                generator.getPackOutput(),
+                event.getExistingFileHelper()));
 
         generator.addProvider(event.includeServer(), new LRItemTagsProvider(generator.getPackOutput(), builtinEntriesProvider.getRegistryProvider(), blockTagsProvider.contentsGetter()));
 

@@ -1,0 +1,42 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "minecraft:netherite_boots"
+  },
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:inferno_boots"
+  },
+  "secondaryItems": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:wither_spirit"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:tyrannical_essence"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:blaze_rod"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:nether_wart_block"
+      }
+    }
+  ]
+}

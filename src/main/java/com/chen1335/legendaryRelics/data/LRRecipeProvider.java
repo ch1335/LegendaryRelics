@@ -1,9 +1,13 @@
 package com.chen1335.legendaryRelics.data;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.data.recipeBuilders.EquipmentWorkbenchCraftBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +21,13 @@ public class LRRecipeProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput, HolderLookup.@NotNull Provider holderLookup) {
 
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.LAST_WHISPER, LRItems.WITHER_SPIRIT)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT, 2)
+                .addSecondary(Items.OBSIDIAN, 2)
+                .addSecondary(Items.STRING, 3)
+                .save(recipeOutput);
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.SHIELD_REGENERATOR)
                 .define('A', Items.OBSIDIAN)
                 .define('B', Items.REDSTONE)
@@ -29,77 +40,44 @@ public class LRRecipeProvider extends RecipeProvider {
                 .showNotification(false)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.PURGATORY_TALISMAN)
-                .define('A', LRItems.ANCIENT_FRAGMENT)
-                .define('B', LRItems.LAVA_RING)
-                .define('C', LRItems.NETHER_TALISMAN)
-                .define('D', LRItems.NETHER_RING)
-                .define('E', Items.GOLD_INGOT)
-                .pattern(" A ")
-                .pattern("BCD")
-                .pattern(" E ")
-                .unlockedBy("has_nether_talisman", has(LRItems.NETHER_TALISMAN))
-                .showNotification(false)
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.PURGATORY_TALISMAN, LRItems.NETHER_TALISMAN)
+                .addSecondary(LRItems.LAVA_RING, LRItems.NETHER_RING, LRItems.ANCIENT_FRAGMENT)
+                .addSecondary(Items.GOLD_INGOT, 2)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.PERSEVERANCE_NECKLACE)
-                .define('A', LRItems.ANCIENT_FRAGMENT)
-                .define('B', Items.DIAMOND)
-                .define('C', LRItems.HEALING_TALISMAN)
-                .define('D', Items.STRING)
-                .pattern("DAD")
-                .pattern("BCB")
-                .pattern(" B ")
-                .unlockedBy("has_healing_talisman", has(LRItems.HEALING_TALISMAN))
-                .showNotification(false)
+
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.PERSEVERANCE_NECKLACE, LRItems.HEALING_TALISMAN)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT)
+                .addSecondary(Items.DIAMOND, 3)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_HELMET)
-                .define('A', LRItems.DRAGON_SCALE)
-                .define('B', Items.NETHERITE_HELMET)
-                .define('C', LRItems.ANCIENT_FRAGMENT)
-                .define('D', LRItems.DARK_GOLD_FRAGMENT)
-                .pattern("CAC")
-                .pattern("ABA")
-                .pattern(" D ")
-                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
-                .showNotification(false)
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_HELMET, Items.NETHERITE_HELMET)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_CHEST_PLATE)
-                .define('A', LRItems.DRAGON_SCALE)
-                .define('B', Items.NETHERITE_CHESTPLATE)
-                .define('C', LRItems.ANCIENT_FRAGMENT)
-                .define('D', LRItems.DARK_GOLD_FRAGMENT)
-                .pattern("CAC")
-                .pattern("ABA")
-                .pattern(" D ")
-                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
-                .showNotification(false)
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Items.OBSIDIAN, 4)
+                .addSecondary(Items.PHANTOM_MEMBRANE, 4)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_LEGGINGS)
-                .define('A', LRItems.DRAGON_SCALE)
-                .define('B', Items.NETHERITE_LEGGINGS)
-                .define('C', LRItems.ANCIENT_FRAGMENT)
-                .define('D', LRItems.DARK_GOLD_FRAGMENT)
-                .pattern("CAC")
-                .pattern("ABA")
-                .pattern(" D ")
-                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
-                .showNotification(false)
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_LEGGINGS, Items.NETHERITE_LEGGINGS)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.BLACK_DRAGON_BOOTS)
-                .define('A', LRItems.DRAGON_SCALE)
-                .define('B', Items.NETHERITE_BOOTS)
-                .define('C', LRItems.ANCIENT_FRAGMENT)
-                .define('D', LRItems.DARK_GOLD_FRAGMENT)
-                .pattern("CAC")
-                .pattern("ABA")
-                .pattern(" D ")
-                .unlockedBy("has_dark_gold_fragment", has(LRItems.DARK_GOLD_FRAGMENT))
-                .showNotification(false)
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_BOOTS, Items.NETHERITE_BOOTS)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.DARK_GOLD)
@@ -124,28 +102,16 @@ public class LRRecipeProvider extends RecipeProvider {
                 .showNotification(false)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, LRItems.WITHERING_BLADE)
-                .define('A', Items.CRYING_OBSIDIAN)
-                .define('B', Items.NETHERITE_INGOT)
-                .define('C', LRItems.WITHER_SPIRIT)
-                .define('D', LRItems.DARK_GOLD_FRAGMENT)
-                .pattern(" DC")
-                .pattern(" BD")
-                .pattern("A  ")
-                .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
-                .showNotification(true)
+
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.WITHERING_BLADE, LRItems.WITHER_SPIRIT)
+                .addSecondary(Items.CRYING_OBSIDIAN, Items.NETHERITE_INGOT)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT, 2)
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, LRItems.REAPER)
-                .define('A', Items.NETHERITE_INGOT)
-                .define('B', LRItems.WITHER_SPIRIT)
-                .define('C', Items.OBSIDIAN)
-                .define('D', LRItems.DARK_GOLD_FRAGMENT)
-                .pattern("AAB")
-                .pattern("DCC")
-                .pattern("CDC")
-                .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
-                .showNotification(true)
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.REAPER, LRItems.WITHER_SPIRIT)
+                .addSecondary(Items.NETHERITE_INGOT, 2)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT, 2)
+                .addSecondary(Items.OBSIDIAN, 3)
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, LRItems.CHARM_OF_FRESH_START)
@@ -155,9 +121,70 @@ public class LRRecipeProvider extends RecipeProvider {
                 .pattern("A A")
                 .pattern(" B ")
                 .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
+                .showNotification(false)
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.EQUIPMENT_WORKBENCH)
+                .define('A', LRItems.ANCIENT_FRAGMENT)
+                .define('B', Items.SMITHING_TABLE)
+                .define('C', Items.DIAMOND)
+                .define('D', Items.GOLD_INGOT)
+                .pattern(" A ")
+                .pattern("CBC")
+                .pattern("DDD")
+                .unlockedBy("has_dark_gold", has(LRItems.DARK_GOLD))
                 .showNotification(true)
                 .save(recipeOutput);
 
-        
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_HELMET, Items.NETHERITE_HELMET)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.BLAZE_ROD, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.NETHER_WART_BLOCK, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.BLAZE_ROD, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.NETHER_WART_BLOCK, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_LEGGINGS, Items.NETHERITE_LEGGINGS)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.BLAZE_ROD, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.NETHER_WART_BLOCK, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_BOOTS, Items.NETHERITE_BOOTS)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.BLAZE_ROD, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.NETHER_WART_BLOCK, 4)
+                .save(recipeOutput);
+
+
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_HELMET, Items.NETHERITE_HELMET)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.ENDER_PEARL, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.WARPED_WART_BLOCK, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.ENDER_PEARL, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.WARPED_WART_BLOCK, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_LEGGINGS, Items.NETHERITE_LEGGINGS)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.ENDER_PEARL, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.WARPED_WART_BLOCK, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_BOOTS, Items.NETHERITE_BOOTS)
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.ENDER_PEARL, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.WARPED_WART_BLOCK, 4)
+                .save(recipeOutput);
     }
 }

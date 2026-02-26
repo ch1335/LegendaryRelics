@@ -1,0 +1,24 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "legendary_relics:healing_talisman"
+  },
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:perseverance_necklace"
+  },
+  "secondaryItems": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:ancient_fragment"
+      }
+    },
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "minecraft:diamond"
+      }
+    }
+  ]
+}

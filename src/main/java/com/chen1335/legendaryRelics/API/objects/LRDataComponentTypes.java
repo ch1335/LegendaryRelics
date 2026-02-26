@@ -1,18 +1,23 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.dataComponentTypes.BowUsingArrow;
-import com.chen1335.legendaryRelics.dataComponentTypes.CollectedMinerals;
-import com.chen1335.legendaryRelics.dataComponentTypes.ItemTask;
+import com.chen1335.legendaryRelics.registers.dataComponentTypes.BowUsingArrow;
+import com.chen1335.legendaryRelics.registers.dataComponentTypes.CollectedMinerals;
+import com.chen1335.legendaryRelics.registers.dataComponentTypes.ItemTask;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class LRDataComponentTypes {
     public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.DataComponents.createDataComponents(Registries.DATA_COMPONENT_TYPE, LegendaryRelics.MODID);
+
+    public static void register(IEventBus modEventBus) {
+        DATA_COMPONENTS.register(modEventBus);
+    }
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> ANCIENT_FRAGMENT_UPDATED = DATA_COMPONENTS.register("ancient_fragment_updated", () -> DataComponentType.<Boolean>builder().networkSynchronized(ByteBufCodecs.BOOL).persistent(Codec.BOOL).build());
 

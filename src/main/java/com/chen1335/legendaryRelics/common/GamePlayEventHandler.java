@@ -1,13 +1,13 @@
 package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
-import com.chen1335.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.FallImmunity;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.*;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.Perforation;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.SoulEater;
+import com.chen1335.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.*;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

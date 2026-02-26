@@ -1,0 +1,36 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "legendary_relics:nether_talisman"
+  },
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:purgatory_talisman"
+  },
+  "secondaryItems": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:lava_ring"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:nether_ring"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:ancient_fragment"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      }
+    }
+  ]
+}

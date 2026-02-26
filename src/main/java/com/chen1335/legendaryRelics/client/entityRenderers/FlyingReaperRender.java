@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.client.entityRenderers;
 
-import com.chen1335.legendaryRelics.entities.projectiles.misc.FlyingReaper;
+import com.chen1335.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;

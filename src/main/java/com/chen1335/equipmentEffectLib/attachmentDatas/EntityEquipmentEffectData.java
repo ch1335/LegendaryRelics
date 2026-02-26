@@ -6,6 +6,8 @@ import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.util.Cast;
@@ -15,30 +17,11 @@ import java.util.*;
 public class EntityEquipmentEffectData {
 
 
-    public static class InfoHolder<T extends BaseEffect> {
-        private ItemStack itemStack;
-        private T effect;
-
-        public InfoHolder(ItemStack itemStack, T effect) {
-            this.itemStack = itemStack;
-            this.effect = effect;
-        }
-
-        public T effect() {
-            return effect;
-        }
-
-        public ItemStack itemStack() {
-            return itemStack;
-        }
-
-        private void setEffect(T effect) {
-            this.effect = effect;
-        }
-
-        private void setItemStack(ItemStack itemStack) {
-            this.itemStack = itemStack;
-        }
+    public record InfoHolder<T extends BaseEffect>(ItemStack itemStack, T effect) {
+        public static final Codec<InfoHolder<? extends BaseEffect>> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ItemStack.CODEC.fieldOf("itemStack").forGetter(InfoHolder::itemStack),
+                BaseEffect.CODEC.fieldOf("effect").forGetter(InfoHolder::effect)
+        ).apply(instance, InfoHolder::new));
     }
 
     private final Map<EffectType<?>, List<InfoHolder<?>>> effects = new HashMap<>();
@@ -81,6 +64,8 @@ public class EntityEquipmentEffectData {
             }
         });
 
+        Map<EffectType<?>, BaseEffect> toDeActive = new HashMap<>();
+        Map<EffectType<?>, BaseEffect> toActive = new HashMap<>();
         fromEffects.forEach((effectType, baseEffect) -> {
             if (effectType.isStackable()) {
                 getEffectsByType(effectType).removeIf(holder -> {
@@ -96,8 +81,7 @@ public class EntityEquipmentEffectData {
                 if (!orDefault.isEmpty()) {
                     InfoHolder<?> first = orDefault.getFirst();
                     if (first.effect.activeId == baseEffect.activeId) {
-                        baseEffect.onDeActive(entity, from);
-                        first.effect.activeId = null;
+                        toDeActive.put(effectType, first.effect);
                         orDefault.removeFirst();
                     }
                 }
@@ -117,10 +101,29 @@ public class EntityEquipmentEffectData {
                     InfoHolder<?> first = effectsByType.getFirst();
                     if (baseEffect.isBetterThan(entity, to, first.effect(), first.itemStack)) {
                         effectsByType.set(0, Cast.cast(new InfoHolder<>(to, baseEffect)));
-                        baseEffect.onActive(entity, to);
-                        baseEffect.activeId = UUID.randomUUID();
+                        toActive.put(effectType, baseEffect);
                     }
                 }
+            }
+        });
+
+        toDeActive.forEach((effectType, baseEffect) -> {
+            if (!toActive.containsKey(effectType)) {
+                baseEffect.onDeActive(entity, from);
+                baseEffect.activeId = null;
+            } else if (baseEffect.activeId != toActive.get(effectType).activeId) {
+                baseEffect.onDeActive(entity, from);
+                baseEffect.activeId = null;
+            }
+        });
+
+        toActive.forEach((effectType, baseEffect) -> {
+            if (!toDeActive.containsKey(effectType)) {
+                baseEffect.onActive(entity, from);
+                baseEffect.activeId = UUID.randomUUID();
+            } else if (baseEffect.activeId != toDeActive.get(effectType).activeId) {
+                baseEffect.onDeActive(entity, from);
+                baseEffect.activeId = UUID.randomUUID();
             }
         });
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "legendary_relics:item/skeleton_throwing_knife"
+  }
+}

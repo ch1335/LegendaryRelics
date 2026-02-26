@@ -2,11 +2,14 @@ package com.chen1335.legendaryRelics.client;
 
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.API.objects.LRMenus;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.client.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.entityRenderers.FlyingReaperRender;
 import com.chen1335.legendaryRelics.client.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
 import com.chen1335.legendaryRelics.config.LootConfig;
+import com.chen1335.legendaryRelics.registers.screens.EquipmentWorkbenchCraftScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -14,12 +17,11 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class ClientEventHandler {
     @EventBusSubscriber(value = {Dist.CLIENT})
@@ -71,6 +73,12 @@ public class ClientEventHandler {
         public static void RegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(LREntityTypes.TREATMENT_BALL.value(), TreatmentBallRenderer::new);
             event.registerEntityRenderer(LREntityTypes.FLYING_REAPER.value(), FlyingReaperRender::new);
+            event.registerEntityRenderer(LREntityTypes.FLYING_KNIFE.value(), FlyingKnifeRender::new);
+        }
+
+        @SubscribeEvent
+        public static void RegisterMenuScreensEvent(RegisterMenuScreensEvent event) {
+            event.register(LRMenus.EQUIPMENT_WORKBENCH_CRAFT.value(), EquipmentWorkbenchCraftScreen::new);
         }
     }
 }

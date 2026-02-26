@@ -49,7 +49,7 @@ public class EffectType<T extends BaseEffect> {
         return stackable;
     }
 
-    public <A extends BaseEffect> Optional<EntityEquipmentEffectData.InfoHolder<A>> findBestEffect(LivingEntity living) {
+    public Optional<EntityEquipmentEffectData.InfoHolder<T>> findBestEffect(LivingEntity living) {
         return Cast.cast(EquipmentEffectAPI.findBestEffect(living, this));
     }
 

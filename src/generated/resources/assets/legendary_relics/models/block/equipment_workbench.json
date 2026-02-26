@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "legendary_relics:block/equipment_workbench_bottom",
+    "front": "legendary_relics:block/equipment_workbench_front",
+    "side": "legendary_relics:block/equipment_workbench_side",
+    "top": "legendary_relics:block/equipment_workbench_top"
+  }
+}

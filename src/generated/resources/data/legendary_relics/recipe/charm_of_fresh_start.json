@@ -17,5 +17,6 @@
   "result": {
     "count": 1,
     "id": "legendary_relics:charm_of_fresh_start"
-  }
+  },
+  "show_notification": false
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "legendary_relics:block/equipment_workbench",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "legendary_relics:block/equipment_workbench"
+    },
+    "facing=south": {
+      "model": "legendary_relics:block/equipment_workbench",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "legendary_relics:block/equipment_workbench",
+      "y": 270
+    }
+  }
+}

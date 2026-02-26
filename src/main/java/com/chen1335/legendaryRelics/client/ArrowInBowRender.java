@@ -2,7 +2,7 @@ package com.chen1335.legendaryRelics.client;
 
 import com.chen1335.legendaryRelics.API.IRenderArrowBow;
 import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
-import com.chen1335.legendaryRelics.dataComponentTypes.BowUsingArrow;
+import com.chen1335.legendaryRelics.registers.dataComponentTypes.BowUsingArrow;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

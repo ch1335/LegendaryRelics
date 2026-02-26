@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "legendary_relics:ancient_fragment"
+    },
+    "B": {
+      "item": "minecraft:smithing_table"
+    },
+    "C": {
+      "item": "minecraft:diamond"
+    },
+    "D": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " A ",
+    "CBC",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:equipment_workbench"
+  }
+}

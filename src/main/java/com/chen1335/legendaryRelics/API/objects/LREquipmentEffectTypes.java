@@ -5,12 +5,12 @@ import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.FallImmunity;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.*;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.ErosionEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.Perforation;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.SoulEater;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.*;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.ErosionEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -19,6 +19,14 @@ import java.util.function.Supplier;
 
 public class LREquipmentEffectTypes {
     private static final DeferredRegister<EffectType<?>> EQUIPMENT_EFFECT_TYPES = DeferredRegister.create(EERegisterTypes.EQUIPMENT_EFFECT_TYPE, LegendaryRelics.MODID);
+
+    private static <T extends BaseEffect> DeferredHolder<EffectType<?>, EffectType<T>> register(final String name, final Supplier<EffectType<T>> sup) {
+        return EQUIPMENT_EFFECT_TYPES.register(name, sup);
+    }
+
+    public static void register(IEventBus modEventBus) {
+        EQUIPMENT_EFFECT_TYPES.register(modEventBus);
+    }
 
     public static final DeferredHolder<EffectType<?>, EffectType<Redemption>> REDEMPTION = register("redemption", () -> new CooldownAbleEffectType<>(Redemption::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/sacred_talisman.png")));
 
@@ -60,11 +68,4 @@ public class LREquipmentEffectTypes {
 
     public static final DeferredHolder<EffectType<?>, EffectType<Perforation>> PERFORATION = register("perforation", () -> new EffectType<>(Perforation::new));
 
-    private static <T extends BaseEffect> DeferredHolder<EffectType<?>, EffectType<T>> register(final String name, final Supplier<EffectType<T>> sup) {
-        return EQUIPMENT_EFFECT_TYPES.register(name, sup);
-    }
-
-    public static void register(IEventBus modEventBus) {
-        EQUIPMENT_EFFECT_TYPES.register(modEventBus);
-    }
 }

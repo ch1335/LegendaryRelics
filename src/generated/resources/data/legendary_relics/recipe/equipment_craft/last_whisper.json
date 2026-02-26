@@ -1,0 +1,30 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "legendary_relics:wither_spirit"
+  },
+  "result": {
+    "count": 1,
+    "id": "legendary_relics:last_whisper"
+  },
+  "secondaryItems": [
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "legendary_relics:dark_gold_fragment"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:obsidian"
+      }
+    },
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "minecraft:string"
+      }
+    }
+  ]
+}

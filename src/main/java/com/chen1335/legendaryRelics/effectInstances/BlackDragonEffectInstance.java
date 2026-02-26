@@ -2,7 +2,7 @@ package com.chen1335.legendaryRelics.effectInstances;
 
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.armorSetEffect.BlackDragonArmorSetEffect;
+import com.chen1335.legendaryRelics.registers.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;

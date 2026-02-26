@@ -5,20 +5,22 @@ import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.IRenderArrowBow;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.attachmentDatas.LREntityData;
-import com.chen1335.legendaryRelics.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
-import com.chen1335.legendaryRelics.dataComponentTypes.BowUsingArrow;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonArmor;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
-import com.chen1335.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
-import com.chen1335.legendaryRelics.items.misc.AncientFragment;
-import com.chen1335.legendaryRelics.items.misc.DarkGoldForgingTool;
+import com.chen1335.legendaryRelics.compat.jei.network.TransferItem;
 import com.chen1335.legendaryRelics.mixins.legendary_relics.CurioAttributeModifierEventInvoker;
 import com.chen1335.legendaryRelics.network.*;
+import com.chen1335.legendaryRelics.registers.attachmentDatas.LREntityData;
+import com.chen1335.legendaryRelics.registers.attachmentDatas.LRProjectileData;
+import com.chen1335.legendaryRelics.registers.dataComponentTypes.BowUsingArrow;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonArmor;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonHelmet;
+import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonLeggings;
+import com.chen1335.legendaryRelics.registers.items.misc.AncientFragment;
+import com.chen1335.legendaryRelics.registers.items.misc.DarkGoldForgingTool;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -31,14 +33,10 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
@@ -46,7 +44,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
-import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -178,7 +175,7 @@ public class EventHandler {
             }
 
             if (event.getSource().getDirectEntity() instanceof Projectile projectile) {
-                LRProjectileData data = projectile.getData(LRAttachmentTypes.PROJECTILE_DATA.get());
+                LRProjectileData data = LRUtil.getProjectileData(projectile);
                 if (data.damageMul != 1) {
                     event.setAmount(event.getAmount() * data.damageMul);
                 }
@@ -187,11 +184,7 @@ public class EventHandler {
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void LivingIncomingDamageEventHighest(LivingIncomingDamageEvent event) {
-            if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-                if (attacker instanceof Player) {
-                    CalculatorArg args = CalculatorArg.simpleArg(attacker);
-                }
-            }
+
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -314,21 +307,6 @@ public class EventHandler {
                 eventTo.remove(LRDataComponentTypes.BOW_USING_ARROW);
             }
         }
-
-
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void ProjectileImpactEvent(ProjectileImpactEvent event) {
-            if (event.getProjectile() instanceof AbstractArrow arrow && event.getRayTraceResult().getType() == HitResult.Type.ENTITY) {
-                LRProjectileData data = arrow.getData(LRAttachmentTypes.PROJECTILE_DATA.get());
-                EntityHitResult rayTraceResult = (EntityHitResult) event.getRayTraceResult();
-
-                if (data.lastHitEntity == rayTraceResult.getEntity() && data.pierceLevel > 0) {
-                    event.setCanceled(true);
-                    return;
-                }
-                data.lastHitEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
-            }
-        }
     }
 
     @EventBusSubscriber(modid = LegendaryRelics.MODID)
@@ -343,6 +321,11 @@ public class EventHandler {
             registrar.playBidirectional(LootConfigPack.TYPE, LootConfigPack.STREAM_CODEC, LootConfigPack::handler);
 
             registrar.playBidirectional(UpdateCalculatorPack.TYPE, UpdateCalculatorPack.STREAM_CODEC, UpdateCalculatorPack::handler);
+
+            PayloadRegistrar optional = registrar.optional();
+            if (ModList.get().isLoaded("jei")) {
+                optional.playToServer(TransferItem.TYPE, TransferItem.STREAM_CODEC, TransferItem::handler);
+            }
         }
     }
 }

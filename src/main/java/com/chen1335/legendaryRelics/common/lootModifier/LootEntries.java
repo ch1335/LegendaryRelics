@@ -1,20 +1,15 @@
 package com.chen1335.legendaryRelics.common.lootModifier;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 import java.util.List;
 
 public class LootEntries {
 
-    public static LootEntry WITHER_SPIRIT = LootEntry.ofSimpleItem(1, List.of(
-            EntityType.WITHER.getDefaultLootTable().location()
-    ), LRItems.WITHER_SPIRIT).rolls(2);
-
-    public static LootEntry DRAGON_SCALE = LootEntry.ofSimpleItem(1, List.of(
-            EntityType.ENDER_DRAGON.getDefaultLootTable().location()
-    ), LRItems.DRAGON_SCALE).rolls(4);
+    public static LootEntry SKELETON_THROWING_KNIFE = LootEntry.ofSimpleItem(0.3, List.of(
+            BuiltInLootTables.DESERT_PYRAMID.location()
+    ), LRItems.SKELETON_THROWING_KNIFE);
 
     public static LootEntry HEALING_TALISMAN = LootEntry.ofSimpleItem(0.2, List.of(
             BuiltInLootTables.JUNGLE_TEMPLE.location(),

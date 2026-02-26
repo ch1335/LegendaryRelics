@@ -10,10 +10,11 @@ import com.chen1335.legendaryRelics.client.particlePlayer.ParticlePlayersHolder;
 import com.chen1335.legendaryRelics.common.calculator.AutoRegister;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
 import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
+import com.chen1335.legendaryRelics.common.lootModifier.lootInject.LootInjectors;
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.Config;
 import com.chen1335.legendaryRelics.config.LootConfig;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.GameTaskEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
 import com.chen1335.specialEffectLib.SpecialEffectLib;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -30,6 +31,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforgespi.Environment;
@@ -47,7 +49,7 @@ public class LegendaryRelics {
             .title(Component.translatable("itemGroup.legendary_relics"))
             .icon(() -> LRItems.SACRED_TALISMAN.value().getDefaultInstance())
             .displayItems((parameters, output) -> {
-                LRItems.ITEM_DEFERRED_REGISTER.getEntries().forEach(itemDeferredHolder -> {
+                LRItems.getEntries().forEach(itemDeferredHolder -> {
                     output.accept(itemDeferredHolder.value().getDefaultInstance());
                 });
             }).build());
@@ -63,21 +65,26 @@ public class LegendaryRelics {
         SpecialEffectLib.init(modEventBus, modContainer);
 
         CREATIVE_MODE_TABS.register(modEventBus);
-        LRItems.ITEM_DEFERRED_REGISTER.register(modEventBus);
-        LRShieldType.SHIELD_TYPE_DEFERRED_REGISTER.register(modEventBus);
-        LRAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
-        LRDataComponentTypes.DATA_COMPONENTS.register(modEventBus);
-        LRArmorMaterials.ARMOR_MATERIAL_DEFERRED_REGISTER.register(modEventBus);
+        LRItems.register(modEventBus);
+        LRShieldType.register(modEventBus);
+        LRAttachmentTypes.register(modEventBus);
+        LRDataComponentTypes.register(modEventBus);
+        LRArmorMaterials.register(modEventBus);
         LREquipmentEffectTypes.register(modEventBus);
-        LRSpecialMobEffect.SPECIAL_MOB_EFFECT_TYPES.register(modEventBus);
-        LREntityTypes.ENTITY_TYPES.register(modEventBus);
-        LRSetsEffects.SETS_EFFECTS.register(modEventBus);
+        LRSpecialMobEffect.register(modEventBus);
+        LREntityTypes.register(modEventBus);
+        LRSetsEffects.register(modEventBus);
+        LREntityDataSerializers.register(modEventBus);
+        LRBlocks.register(modEventBus);
+        LRRecipe.register(modEventBus);
+        LRMenus.register(modEventBus);
         modEventBus.addListener(ClientExtensionsRegister::register);
         modEventBus.addListener(EntityRendererRegister::registerLayerDefinitions);
         modEventBus.addListener(EntityRendererRegister::addLayers);
         modEventBus.addListener(this::clientInit);
         modEventBus.addListener(this::setup);
         NeoForge.EVENT_BUS.addListener(this::serverAboutToStartEvent);
+        NeoForge.EVENT_BUS.addListener(this::serverStartedEvent);
         if (ModList.get().isLoaded("cloth_config")) {
             if (Environment.get().getDist().isClient()) {
                 ClothConfig.build(modContainer);
@@ -133,7 +140,6 @@ public class LegendaryRelics {
         );
     }
 
-
     public void setup(FMLCommonSetupEvent event) {
         GameTaskEffect.initTasks();
         Config.load();
@@ -143,5 +149,9 @@ public class LegendaryRelics {
 
     public void serverAboutToStartEvent(ServerAboutToStartEvent event) {
 
+    }
+
+    public void serverStartedEvent(ServerStartedEvent event) {
+        LootInjectors.INJECTORS.clear();
     }
 }

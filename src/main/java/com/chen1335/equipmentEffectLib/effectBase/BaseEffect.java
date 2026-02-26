@@ -5,9 +5,9 @@ import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentType
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
-import com.chen1335.legendaryRelics.equipmentEffects.armorEffect.LRArmorEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.curioEffects.LRCurioEffect;
-import com.chen1335.legendaryRelics.equipmentEffects.weaponEffects.LRWeaponEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.LRArmorEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.LRCurioEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.LRWeaponEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.component.*;
@@ -73,8 +73,9 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
 
 
     private static BaseEffect buildEffect(EffectType<?> effectType, EquipmentType equipmentType, DataComponentPatch dataComponentPatch, CompoundTag simpleData) {
-        BaseEffect effect = effectType.create(1, equipmentType);
+        BaseEffect effect;
         if (equipmentType == EquipmentType.NON) {
+            effect = effectType.create(1, equipmentType);
             if (effect instanceof LRCurioEffect) {
                 equipmentType = EquipmentType.CURIO;
             } else if (effect instanceof LRArmorEffect) {

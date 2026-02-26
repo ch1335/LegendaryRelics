@@ -24,8 +24,15 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                 add(
                         LRDamageTypes.EROSION,
                         LRDamageTypes.FLYING_REAPER,
-                        LRDamageTypes.INFERNO_SCORCH
+                        LRDamageTypes.INFERNO_SCORCH,
+                        LRDamageTypes.FLYING_KNIFE
                 );
+
+        this.tag(DamageTypeTags.IS_PLAYER_ATTACK).
+                add(
+                        LRDamageTypes.FLYING_KNIFE
+                );
+
 
         this.tag(Tags.DamageTypes.IS_MAGIC)
                 .add(LRDamageTypes.EROSION);
@@ -33,11 +40,15 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
         this.tag(Tags.DamageTypes.IS_PHYSICAL)
                 .add(
                         LRDamageTypes.FLYING_REAPER,
-                        LRDamageTypes.INFERNO_SCORCH
+                        LRDamageTypes.INFERNO_SCORCH,
+                        LRDamageTypes.FLYING_KNIFE
                 );
 
         this.tag(DamageTypeTags.IS_PROJECTILE)
-                .add(LRDamageTypes.FLYING_REAPER);
+                .add(
+                        LRDamageTypes.FLYING_REAPER,
+                        LRDamageTypes.FLYING_KNIFE
+                );
 
         this.tag(DamageTypeTags.NO_KNOCKBACK)
                 .add(
