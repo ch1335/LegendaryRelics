@@ -7,6 +7,7 @@ import com.chen1335.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
 import com.chen1335.legendaryRelics.registers.recipes.ingredients.IngredientWithSize;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -57,13 +58,22 @@ public record TransferItem(ResourceLocation recipeId) implements CustomPacketPay
                     require.add(new IngredientWithSize(craft.mainItem(), 1));
                     require.addAll(craft.secondaryItems());
 
-                    for (ItemStack itemStack : availableItemStack) {
+                    if (player.isCreative()) {
                         for (int i = 0; i < require.size(); i++) {
                             IngredientWithSize ingredientWithSize = require.get(i);
-                            if (ingredientWithSize.test(itemStack)) {
-                                containerMenu.craftSlots.setItem(i, itemStack.copyWithCount(ingredientWithSize.count()));
-                                itemStack.shrink(ingredientWithSize.count());
-                                break;
+                            if (!ingredientWithSize.getItemStacks().isEmpty()) {
+                                containerMenu.craftSlots.setItem(i, ingredientWithSize.getItemStacks().getFirst().copyWithCount(ingredientWithSize.count()));
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < require.size(); i++) {
+                            for (ItemStack itemStack : availableItemStack) {
+                                IngredientWithSize ingredientWithSize = require.get(i);
+                                if (ingredientWithSize.test(itemStack)) {
+                                    containerMenu.craftSlots.setItem(i, itemStack.copyWithCount(ingredientWithSize.count()));
+                                    itemStack.shrink(ingredientWithSize.count());
+                                    break;
+                                }
                             }
                         }
                     }

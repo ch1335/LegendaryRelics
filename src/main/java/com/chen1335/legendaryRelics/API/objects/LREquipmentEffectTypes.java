@@ -8,9 +8,7 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.*;
-import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.ErosionEffect;
-import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
-import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -68,4 +66,7 @@ public class LREquipmentEffectTypes {
 
     public static final DeferredHolder<EffectType<?>, EffectType<Perforation>> PERFORATION = register("perforation", () -> new EffectType<>(Perforation::new));
 
+    public static final DeferredHolder<EffectType<?>, EffectType<Backstab>> BACKSTAB = register("backstab", () -> new EffectType<>(Backstab::new));
+
+    public static final DeferredHolder<EffectType<?>, EffectType<Ambush>> AMBUSH = register("ambush", () -> new EffectType<>(Ambush::new));
 }

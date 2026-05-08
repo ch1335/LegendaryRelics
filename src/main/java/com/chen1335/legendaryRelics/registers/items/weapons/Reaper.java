@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
 import com.chen1335.legendaryRelics.registers.items.LRSwordItem;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -53,10 +54,16 @@ public class Reaper extends LRSwordItem {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
-            tooltipComponents.add(Component.translatable("item.legendary_relics.reaper.desc.1", DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg)).withColor(0xaeaeae));
-            tooltipComponents.add(Component.translatable("item.legendary_relics.reaper.desc.2").withColor(5592405));
-            tooltipComponents.add(Component.translatable("item.legendary_relics.reaper.desc.3").withColor(5592405));
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg)).withColor(0xaeaeae), maxToolTipWith());
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.2").withColor(5592405), maxToolTipWith());
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.3").withColor(5592405), maxToolTipWith());
+
         }
+    }
+
+    @Override
+    public int maxToolTipWith() {
+        return 250;
     }
 
     @Override

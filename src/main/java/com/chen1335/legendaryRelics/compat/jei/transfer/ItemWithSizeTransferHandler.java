@@ -101,7 +101,7 @@ public class ItemWithSizeTransferHandler implements IUniversalRecipeTransferHand
             }
         }
 
-        if (!missing.isEmpty()) {
+        if (!missing.isEmpty() && !player.isCreative()) {
             Component message = Component.translatable("jei.tooltip.error.recipe.transfer.missing");
             return transferHelper.createUserErrorForMissingSlots(message, missing);
         }

@@ -1,6 +1,9 @@
 {
+  "block.legendary_relics.equipment_workbench": "强化锻造台",
   "equipment_effect.legendary_relics.all_attribute_boost": "使你的大部分属性提升%s",
+  "equipment_effect.legendary_relics.ambush": "§6突袭§r:按住右键进行最多%s秒的蓄力，释放时对瞄准的目标进行一次攻击，此次攻击基于蓄力时间获得至多%s的%s",
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "在下界时，你的大部分属性提升%s",
+  "equipment_effect.legendary_relics.backstab": "§6背刺§r:攻击一个没有面向你的目标时，此次攻击必定暴击并且造成额外%s暴击伤害",
   "equipment_effect.legendary_relics.dark_steel_claw": "这件饰品获得%s攻击伤害。",
   "equipment_effect.legendary_relics.erosion.1": "§6侵蚀§r:攻击目标会附加最多叠加5层的侵蚀效果，每层效果:",
   "equipment_effect.legendary_relics.erosion.2": "每秒造成%s魔法伤害并且恢复你1%%已损失生命值",
@@ -71,6 +74,7 @@
   "item.legendary_relics.reaper.desc.3": "每个镰刀在命中目标后都会损失20%的伤害，命中5次后会损坏，并且落地后最多存在30秒",
   "item.legendary_relics.sacred_talisman": "神圣护符",
   "item.legendary_relics.set_effect.equipped_armor": "套装部件数",
+  "item.legendary_relics.shadow_dagger": "暗影匕首",
   "item.legendary_relics.shield_regenerator": "护盾腰带",
   "item.legendary_relics.skeleton_throwing_knife": "骸骨飞刀",
   "item.legendary_relics.skeleton_throwing_knife.desc.1": "右键扔出一把骸骨飞刀，造成%s物理伤害",
@@ -93,10 +97,12 @@
   "legendary_relics.config.lootTable": "战利品表设置",
   "legendary_relics.config.lootTable.cant_edit": "您当前正在非本地服务器游玩，由于权限过低，无法编辑配置，但是您可以查看由服务端发送的配置信息。",
   "legendary_relics.config.server": "服务端配置",
+  "legendary_relics.container.equipment_crafting": "物品锻造",
   "legendary_relics.cooldown": "冷却:%ss",
   "legendary_relics.cooldown.x": "装备效果冷却渲染占总屏幕的x轴的百分比",
   "legendary_relics.cooldown.y": "装备效果冷却渲染占总屏幕的y轴的百分比",
   "legendary_relics.cooldown_affected_by_attack_speed": "冷却时间受攻击速度影响",
+  "legendary_relics.keep_data": "保留数据",
   "legendary_relics.loot_config.ancient_fragment_high": "高概率远古碎片",
   "legendary_relics.loot_config.ancient_fragment_normal": "常规远古碎片",
   "legendary_relics.loot_config.chance": "概率",
@@ -137,8 +143,5 @@
   "set_effect.legendary_relics.twisted.desc.4": "在10层时，额外射出2支箭，每支箭有%s的基础伤害",
   "set_effect.legendary_relics.twisted.name": "箭矢增强",
   "set_effect_type.legendary_relics.full_set_bonus": "全套效果:%s",
-  "set_effect_type.legendary_relics.tiered_bonus": "分级奖励:%s",
-  "legendary_relics.container.equipment_crafting": "物品锻造",
-  "legendary_relics.keep_data": "保留数据",
-  "block.legendary_relics.equipment_workbench": "强化锻造台"
+  "set_effect_type.legendary_relics.tiered_bonus": "分级奖励:%s"
 }

@@ -29,7 +29,7 @@ public class EntityAttributeValue implements Unit {
         LivingEntity entity = CalculatorArg.ArgType.THIS_ENTITY.getArg(calculatorArg);
 
         if (entity == null) {
-            return 0;
+            return (float) attributeHolder.value().getDefaultValue();
         }
         return (float) entity.getAttributeValue(attributeHolder);
     }

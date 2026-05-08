@@ -4,8 +4,11 @@
     "item": "legendary_relics:nether_talisman"
   },
   "result": {
-    "count": 1,
-    "id": "legendary_relics:purgatory_talisman"
+    "type": "legendary_relics:craft_item",
+    "item": {
+      "count": 1,
+      "id": "legendary_relics:purgatory_talisman"
+    }
   },
   "secondaryItems": [
     {

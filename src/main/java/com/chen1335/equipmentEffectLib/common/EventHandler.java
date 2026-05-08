@@ -72,7 +72,7 @@ public class EventHandler {
                         EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.ARMOR);
                     }
                     case HAND -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(),EquipmentType.HAND);
+                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.HAND);
                     }
                 }
             }

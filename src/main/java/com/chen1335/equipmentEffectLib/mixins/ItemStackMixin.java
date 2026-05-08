@@ -49,7 +49,6 @@ public abstract class ItemStackMixin implements DataComponentHolder, IEEItemStac
             effects.values().forEach(effect -> {
                 effect.appendToolTip(itemStack, tooltipContext, player, tooltipFlag, list);
             });
-            list.add(Component.empty());
         }
 
         SetEffectHolder setEffectHolder = ((IEEItemExtension) this.getItem()).EE$GetSetsEffect();

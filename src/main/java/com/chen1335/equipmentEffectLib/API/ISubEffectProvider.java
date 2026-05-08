@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ISubEffectProvider {
     List<BaseEffect> getSubEffects(ItemStack itemStack);
+
+    void copyFrom(ISubEffectProvider provider);
 }

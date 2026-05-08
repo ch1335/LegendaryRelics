@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -60,10 +61,18 @@ public class AllAttributeBoost extends LRBaseEffect {
     public void onActive(LivingEntity entity, ItemStack itemStack) {
         CalculatorArg arg = CalculatorArg.simpleArg(entity, itemStack, this);
         AttributeModifyHelper.addAllPositive(entity, modifierId, AMOUNT.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+
     }
 
     @Override
     public void onDeActive(LivingEntity entity, ItemStack itemStack) {
         AttributeModifyHelper.removeAllPositive(entity, modifierId);
+    }
+
+    @Override
+    public BaseEffect copy() {
+        AllAttributeBoost copy = (AllAttributeBoost) super.copy();
+        copy.modifierId = modifierId;
+        return copy;
     }
 }

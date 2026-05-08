@@ -6,6 +6,7 @@ import com.chen1335.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffe
 import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.*;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.Backstab;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
 import net.neoforged.bus.api.EventPriority;
@@ -14,6 +15,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -32,7 +34,14 @@ public class GamePlayEventHandler {
         AgglomerationMaliceEffect.LivingIncomingDamageEvent(event);
         FallImmunity.LivingIncomingDamageEvent(event);
         HardenedEffect.LivingIncomingDamageEvent(event);
+
+
         Redemption.LivingIncomingDamageEvent(event);
+    }
+
+    @SubscribeEvent
+    public static void CriticalHitEvent(CriticalHitEvent event) {
+        Backstab.CriticalHitEvent(event);
     }
 
     @SubscribeEvent

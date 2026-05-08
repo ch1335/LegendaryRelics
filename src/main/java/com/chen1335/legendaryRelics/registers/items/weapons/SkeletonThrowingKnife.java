@@ -22,10 +22,7 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -54,8 +51,8 @@ public class SkeletonThrowingKnife extends LRSwordItem {
             )
     );
 
-    public SkeletonThrowingKnife(Properties properties) {
-        super(TIER, properties);
+    public SkeletonThrowingKnife() {
+        super(TIER, new Item.Properties().rarity(Rarity.RARE));
     }
 
     @Override
@@ -65,13 +62,12 @@ public class SkeletonThrowingKnife extends LRSwordItem {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
             tooltipComponents.add(Component.translatable("item.legendary_relics.skeleton_throwing_knife.desc.1", DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg)).withStyle(ChatFormatting.GRAY));
             tooltipComponents.add(Component.translatable("legendary_relics.cooldown_affected_by_attack_speed").withStyle(ChatFormatting.DARK_GRAY));
-
         }
     }
 
     @Override
     public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
-        return SwordItem.createAttributes(SkeletonThrowingKnife.TIER, 0, -2).withModifierAdded(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(LegendaryRelics.id("skeleton_throwing_knife"), -1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HAND);
+        return SwordItem.createAttributes(SkeletonThrowingKnife.TIER, 0, -2);
     }
 
     @Override

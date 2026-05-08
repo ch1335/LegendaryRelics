@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.registers.equipmentEffects;
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -29,5 +30,9 @@ public class LRBaseEffect extends BaseEffect {
 
     public int getDarkGoldLevelAdd() {
         return 1;
+    }
+
+    public int getMaxToolTipWith(ItemStack itemStack) {
+        return itemStack.getItem() instanceof ILRItemExtension extension ? extension.maxToolTipWith() : 1000;
     }
 }

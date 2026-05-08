@@ -4,8 +4,11 @@
     "item": "minecraft:netherite_helmet"
   },
   "result": {
-    "count": 1,
-    "id": "legendary_relics:twisted_helmet"
+    "type": "legendary_relics:craft_item",
+    "item": {
+      "count": 1,
+      "id": "legendary_relics:twisted_helmet"
+    }
   },
   "secondaryItems": [
     {

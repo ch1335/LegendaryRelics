@@ -1,6 +1,7 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
 import com.chen1335.equipmentEffectLib.API.IEffectHelper;
+import com.chen1335.equipmentEffectLib.API.ISubEffectProvider;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
@@ -176,6 +177,10 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
         BaseEffect effect = this.effectType.create(getRawEffectLevel(), getEquipmentType());
         effect.components.setAll(components.copy());
         effect.activeId = activeId;
+
+        if (effect instanceof ISubEffectProvider copyTo && this instanceof ISubEffectProvider copyFrom) {
+            copyTo.copyFrom(copyFrom);
+        }
         return effect;
     }
 

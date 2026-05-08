@@ -97,6 +97,7 @@ public class EntityEquipmentEffectData {
                 List<? extends InfoHolder<?>> effectsByType = getEffectsByType(effectType);
                 if (effectsByType.isEmpty()) {
                     effectsByType.add(Cast.cast(new InfoHolder<>(to, baseEffect)));
+                    toActive.put(effectType, baseEffect);
                 } else {
                     InfoHolder<?> first = effectsByType.getFirst();
                     if (baseEffect.isBetterThan(entity, to, first.effect(), first.itemStack)) {
@@ -122,7 +123,7 @@ public class EntityEquipmentEffectData {
                 baseEffect.onActive(entity, from);
                 baseEffect.activeId = UUID.randomUUID();
             } else if (baseEffect.activeId != toDeActive.get(effectType).activeId) {
-                baseEffect.onDeActive(entity, from);
+                baseEffect.onActive(entity, from);
                 baseEffect.activeId = UUID.randomUUID();
             }
         });

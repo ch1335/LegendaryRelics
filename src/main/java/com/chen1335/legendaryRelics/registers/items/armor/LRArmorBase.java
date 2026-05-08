@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.registers.items.armor;
 
+import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.LRArmorHelper;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import com.google.common.base.Suppliers;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public class LRArmorBase extends ArmorItem implements LRArmorHelper {
+public class LRArmorBase extends ArmorItem implements LRArmorHelper, ILRItemExtension {
     private final Supplier<ItemAttributeModifiers> defaultModifiers;
 
     public LRArmorBase(Holder<ArmorMaterial> material, Type type, Properties properties) {
@@ -30,6 +31,7 @@ public class LRArmorBase extends ArmorItem implements LRArmorHelper {
     public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(@NotNull ItemStack stack) {
         return defaultModifiers.get();
     }
+
 
     @Override
     public @NotNull Component getName(@NotNull ItemStack stack) {

@@ -1,6 +1,8 @@
 package com.chen1335.legendaryRelics.registers.entities.projectiles.misc;
 
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
+import com.chen1335.legendaryRelics.client.renderUtils.trail.TrailHolder;
+import com.chen1335.legendaryRelics.client.renderUtils.trail.TrailHolderManager;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -29,6 +31,11 @@ public class TreatmentBall extends Entity {
         this.targetEntity = targetEntity;
         this.multiplier = multiplier;
         entityData.set(TARGET_ID, targetEntity.getId());
+    }
+
+    @Override
+    public void onAddedToLevel() {
+        super.onAddedToLevel();
     }
 
     @Override

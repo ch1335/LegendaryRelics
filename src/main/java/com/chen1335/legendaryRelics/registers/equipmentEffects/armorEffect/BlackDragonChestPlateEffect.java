@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -94,12 +95,12 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
         if (getRawEffectLevel() > 1) {
             tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", PHYSICAL_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
         }
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
+        LRUtil.splitAndAdd(tooltipComponents,Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
                 DAMAGE_INCREASE.toComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
                 COOL_DOWN.toComponent(tooltipFlag.hasShiftDown(), args)
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae),getMaxToolTipWith(itemStack));
 
     }
 

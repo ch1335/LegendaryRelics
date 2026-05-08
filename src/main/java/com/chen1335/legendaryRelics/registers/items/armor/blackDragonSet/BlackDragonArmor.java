@@ -40,6 +40,11 @@ public class BlackDragonArmor extends LRArmorBase {
     }
 
     @Override
+    public int maxToolTipWith() {
+        return 270;
+    }
+
+    @Override
     public boolean isDamageable(@NotNull ItemStack stack) {
         return false;
     }

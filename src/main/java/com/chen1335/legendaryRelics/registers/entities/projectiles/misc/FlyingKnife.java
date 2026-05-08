@@ -3,7 +3,10 @@ package com.chen1335.legendaryRelics.registers.entities.projectiles.misc;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityDataSerializers;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
+import com.chen1335.legendaryRelics.client.renderUtils.trail.TrailHolder;
+import com.chen1335.legendaryRelics.client.renderUtils.trail.TrailHolderManager;
 import com.chen1335.legendaryRelics.registers.entities.projectiles.LRProjectile;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -43,6 +46,13 @@ public class FlyingKnife extends LRProjectile {
         }
     }
 
+    @Override
+    public void onAddedToLevel() {
+        super.onAddedToLevel();
+        if (level().isClientSide) {
+            TrailHolderManager.add(new TrailHolder(this::isRemoved, this::getPosition, 16,10));
+        }
+    }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {

@@ -1,6 +1,5 @@
 package com.chen1335.legendaryRelics.misc.gameTask.taskTypes;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;

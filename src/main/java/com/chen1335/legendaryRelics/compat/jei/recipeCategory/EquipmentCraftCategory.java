@@ -7,6 +7,8 @@ import com.chen1335.legendaryRelics.compat.jei.LRJeiPlugin;
 import com.chen1335.legendaryRelics.events.CraftResultJeiTooltipEvent;
 import com.chen1335.legendaryRelics.registers.blocks.EquipmentWorkbench;
 import com.chen1335.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.registers.recipes.craftType.CraftItem;
+import com.chen1335.legendaryRelics.registers.recipes.craftType.ModifyItem;
 import com.chen1335.legendaryRelics.registers.recipes.ingredients.IngredientWithSize;
 import com.mojang.serialization.Codec;
 import mezz.jei.api.constants.VanillaTypes;
@@ -94,10 +96,17 @@ public class EquipmentCraftCategory implements IRecipeCategory<RecipeHolder<Equi
 
         EquipmentWorkbenchCraft craft = holder.value();
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, x + 80, y + 4).addItemStack(craft.result()).addRichTooltipCallback((iRecipeSlotView, iTooltipBuilder) -> {
-            iTooltipBuilder.add(Component.translatable("legendary_relics.keep_data"));
-            NeoForge.EVENT_BUS.post(new CraftResultJeiTooltipEvent(holder, iRecipeSlotView, iTooltipBuilder));
-        });
+        if (craft.result() instanceof CraftItem craftItem) {
+            builder.addSlot(RecipeIngredientRole.OUTPUT, x + 80, y + 4).addItemStack(craftItem.itemStack()).addRichTooltipCallback((iRecipeSlotView, iTooltipBuilder) -> {
+                iTooltipBuilder.add(Component.translatable("legendary_relics.keep_data"));
+                NeoForge.EVENT_BUS.post(new CraftResultJeiTooltipEvent(holder, iRecipeSlotView, iTooltipBuilder));
+            });
+        } else if (craft.result() instanceof ModifyItem modifyItem) {
+            builder.addSlot(RecipeIngredientRole.OUTPUT, x + 80, y + 4).addIngredients(craft.mainItem()).addRichTooltipCallback((iRecipeSlotView, iTooltipBuilder) -> {
+                iTooltipBuilder.add(Component.translatable("legendary_relics.keep_data"));
+                NeoForge.EVENT_BUS.post(new CraftResultJeiTooltipEvent(holder, iRecipeSlotView, iTooltipBuilder));
+            });
+        }
 
         builder.addSlot(RecipeIngredientRole.INPUT, x, y + 4).addIngredients(craft.mainItem());
 

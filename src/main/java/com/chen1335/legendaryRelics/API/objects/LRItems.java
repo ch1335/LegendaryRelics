@@ -15,10 +15,7 @@ import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedHelm
 import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedLeggings;
 import com.chen1335.legendaryRelics.registers.items.curios.*;
 import com.chen1335.legendaryRelics.registers.items.misc.*;
-import com.chen1335.legendaryRelics.registers.items.weapons.LastWhisper;
-import com.chen1335.legendaryRelics.registers.items.weapons.Reaper;
-import com.chen1335.legendaryRelics.registers.items.weapons.SkeletonThrowingKnife;
-import com.chen1335.legendaryRelics.registers.items.weapons.WitheringBlade;
+import com.chen1335.legendaryRelics.registers.items.weapons.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -110,7 +107,9 @@ public class LRItems {
 
     public static final DeferredItem<Item> TYRANNICAL_ESSENCE = ITEM_DEFERRED_REGISTER.register("tyrannical_essence", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
 
-    public static final DeferredItem<SkeletonThrowingKnife> SKELETON_THROWING_KNIFE = ITEM_DEFERRED_REGISTER.register("skeleton_throwing_knife", () -> new SkeletonThrowingKnife(new Item.Properties().rarity(Rarity.RARE)));
+    public static final DeferredItem<SkeletonThrowingKnife> SKELETON_THROWING_KNIFE = ITEM_DEFERRED_REGISTER.register("skeleton_throwing_knife", SkeletonThrowingKnife::new);
 
     public static final DeferredItem<BlockItem> EQUIPMENT_WORKBENCH = ITEM_DEFERRED_REGISTER.register("equipment_workbench", () -> new BlockItem(LRBlocks.EQUIPMENT_WORKBENCH.value(), new Item.Properties()));
+
+    public static final DeferredItem<ShadowDagger> SHADOW_DAGGER = ITEM_DEFERRED_REGISTER.register("shadow_dagger", ShadowDagger::new);
 }

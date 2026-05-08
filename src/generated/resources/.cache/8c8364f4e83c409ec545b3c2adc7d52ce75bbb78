@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-24T15:49:53.8229437	Tags for minecraft:item mod id vanilla
+// 1.21.1	2026-04-30T16:42:53.1161388	Tags for minecraft:item mod id vanilla
 a3150a97326d85500aad6a14885d6d99ad2f8ad5 data/curios/tags/item/belt.json
 ca85f5a54a0563a4163d64e3fb3b2b9ac5e3df54 data/curios/tags/item/charm.json
 632df4625ff765e19e9925c4b1c2852056202cf5 data/curios/tags/item/hands.json
@@ -11,4 +11,4 @@ dee111014b97882a21d200b15347fea206aad9e5 data/minecraft/tags/item/enchantable/bo
 b78671e61d7da17de1fd1627a82532d8adcd346c data/minecraft/tags/item/foot_armor.json
 8402dc90ddea9ee26efbe5b923270365d0bf7314 data/minecraft/tags/item/head_armor.json
 724e14aa596f60b7261e9106fabd728a92366db7 data/minecraft/tags/item/leg_armor.json
-eefdbe6b8271ec7fe0b6a0f7104be38cc45f0b44 data/minecraft/tags/item/swords.json
+cb2a414190ac188989eb67d8049d75639f83d60b data/minecraft/tags/item/swords.json

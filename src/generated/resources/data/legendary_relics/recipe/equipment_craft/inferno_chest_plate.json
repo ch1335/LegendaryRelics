@@ -4,8 +4,11 @@
     "item": "minecraft:netherite_chestplate"
   },
   "result": {
-    "count": 1,
-    "id": "legendary_relics:inferno_chest_plate"
+    "type": "legendary_relics:craft_item",
+    "item": {
+      "count": 1,
+      "id": "legendary_relics:inferno_chest_plate"
+    }
   },
   "secondaryItems": [
     {

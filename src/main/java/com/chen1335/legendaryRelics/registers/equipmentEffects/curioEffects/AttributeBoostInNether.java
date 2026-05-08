@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -12,6 +13,7 @@ import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -27,6 +29,7 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import java.util.List;
 
 public class AttributeBoostInNether extends LRCurioEffect {
+    private ResourceLocation modifierId = LRUtil.randomLocation(10);
 
     @Calculator
     public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
@@ -51,12 +54,12 @@ public class AttributeBoostInNether extends LRCurioEffect {
 
     private void addAttribute(LivingEntity living, ItemStack itemStack) {
         CalculatorArg arg = CalculatorArg.simpleArg(living, itemStack, this);
-        AttributeModifyHelper.addAllPositive(living, getModifierId(), ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        AttributeModifyHelper.addAllPositive(living, modifierId, ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
     }
 
     private void removeAttribute(LivingEntity living, ItemStack itemStack) {
-        AttributeModifyHelper.removeAllPositive(living, getModifierId());
+        AttributeModifyHelper.removeAllPositive(living, modifierId);
     }
 
     @Override
@@ -73,8 +76,11 @@ public class AttributeBoostInNether extends LRCurioEffect {
         }
     }
 
-    public ResourceLocation getModifierId() {
-        return LegendaryRelics.id("nether_multiplier_" + this.hashCode());
+    @Override
+    public BaseEffect copy() {
+        AttributeBoostInNether copy = (AttributeBoostInNether) super.copy();
+        copy.modifierId = modifierId;
+        return copy;
     }
 
     public static void EntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {

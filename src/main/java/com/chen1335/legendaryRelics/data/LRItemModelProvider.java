@@ -16,6 +16,8 @@ public class LRItemModelProvider extends ItemModelProvider {
 
     private static final ModelFile.UncheckedModelFile BOW = new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/bow_like"));
 
+    private static final ModelFile.UncheckedModelFile REVERSE_HANDHELD = new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/reverse_handheld"));
+
     @Override
     protected void registerModels() {
         basicItem(LRItems.SACRED_TALISMAN.asItem());
@@ -69,5 +71,12 @@ public class LRItemModelProvider extends ItemModelProvider {
         handheldItem(LRItems.SKELETON_THROWING_KNIFE.asItem());
 
         simpleBlockItem(LRBlocks.EQUIPMENT_WORKBENCH.get());
+
+
+        handheldItem(LRItems.SHADOW_DAGGER.asItem()).override().predicate(LegendaryRelics.id("charging"), 1).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/shadow_dagger_reverse")));
+
+        getBuilder(LegendaryRelics.id("shadow_dagger_reverse").toString())
+                .parent(REVERSE_HANDHELD)
+                .texture("layer0", LegendaryRelics.id("item/shadow_dagger"));
     }
 }

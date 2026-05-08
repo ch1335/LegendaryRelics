@@ -15,6 +15,8 @@ import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.Config;
 import com.chen1335.legendaryRelics.config.LootConfig;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
+import com.chen1335.legendaryRelics.registers.recipes.craftType.CraftItem;
+import com.chen1335.legendaryRelics.registers.recipes.craftType.CraftTypes;
 import com.chen1335.specialEffectLib.SpecialEffectLib;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -97,6 +99,8 @@ public class LegendaryRelics {
 
         CalculatorRegister.init();
         AutoRegister.init();
+
+        CraftTypes.register(id("craft_item"), CraftItem.CODEC, CraftItem.STREAM_CODEC);
     }
 
     public static boolean isApothicAttributesExtensionLoaded() {
@@ -136,6 +140,12 @@ public class LegendaryRelics {
         ItemProperties.register(
                 LRItems.LAST_WHISPER.asItem(),
                 ResourceLocation.withDefaultNamespace("pulling"),
+                (stack, level, living, i) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F
+        );
+
+        ItemProperties.register(
+                LRItems.SHADOW_DAGGER.asItem(),
+                id("charging"),
                 (stack, level, living, i) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F
         );
     }

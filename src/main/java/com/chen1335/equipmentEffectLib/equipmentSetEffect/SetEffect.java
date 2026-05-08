@@ -30,6 +30,9 @@ public class SetEffect {
     }
 
     public CalculatorArg buildArg(LivingEntity living) {
+        if (living == null) {
+            return CalculatorArg.emptyArg();
+        }
         CalculatorArg args = CalculatorArg.simpleArg(living);
         int piece = getPiece(living);
         args.putArg(TieredBonus.TIER, piece);
@@ -37,6 +40,9 @@ public class SetEffect {
     }
 
     public int getPiece(LivingEntity living) {
+        if (living == null) {
+            return 0;
+        }
         if (living.level().isClientSide) {
             return LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(this, 0);
         }

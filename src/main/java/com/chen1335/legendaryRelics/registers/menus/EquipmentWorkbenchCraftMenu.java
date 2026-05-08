@@ -102,7 +102,7 @@ public class EquipmentWorkbenchCraftMenu extends AbstractContainerMenu {
             if (recipeFor.isPresent()) {
                 EquipmentWorkbenchCraft value = recipeFor.get().value();
                 ItemStack item = getSlot(1).getItem();
-                ItemStack result = value.result().copy();
+                ItemStack result = value.result().assemble(input, level.registryAccess());
                 DataComponentPatch componentsPatch = item.getComponentsPatch();
                 ((PatchedDataComponentMap) result.getComponents()).applyPatch(componentsPatch);
                 PlayerCraftEvent post = NeoForge.EVENT_BUS.post(new PlayerCraftEvent(player, recipeFor.get(), result));
@@ -182,8 +182,10 @@ public class EquipmentWorkbenchCraftMenu extends AbstractContainerMenu {
         public void onTake(Player player, ItemStack stack) {
             super.onTake(player, stack);
             if (currentRecipe != null) {
-                craftSlots.getItem(0).shrink(1);
-                ArrayList<IngredientWithSize> ingredientWithSizes = new ArrayList<>(currentRecipe.value().secondaryItems());
+                RecipeHolder<EquipmentWorkbenchCraft> recipeHolder = currentRecipe;
+                stack.onCraftedBy(player.level(), player, stack.getCount());
+                craftSlots.setItem(0, ItemStack.EMPTY);
+                ArrayList<IngredientWithSize> ingredientWithSizes = new ArrayList<>(recipeHolder.value().secondaryItems());
                 for (int i = 1; i < 9; i++) {
                     Iterator<IngredientWithSize> iterator = ingredientWithSizes.iterator();
                     while (iterator.hasNext()) {

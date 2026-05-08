@@ -264,7 +264,7 @@ public class LRProjectile extends Projectile {
         }
     }
 
-    public int maxLife(){
+    public int maxLife() {
         return 1200;
     }
 

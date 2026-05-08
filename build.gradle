@@ -184,7 +184,7 @@ repositories {
 
 dependencies {
     implementation fileTree("libs")
-    jarJar(implementation("blank:damage_controller:2101.1.1"))
+    jarJar(implementation("blank:damage_controller:2101.1.2"))
     jarJar(implementation("blank:shield_system:2101.1.3"))
 
     implementation "curse.maven:patchouli-306770:6164617"
@@ -194,7 +194,7 @@ dependencies {
     api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
     implementation "curse.maven:rhino-416294:6184623"
     implementation "curse.maven:apothic-attributes-extension-1327218:6911429"
-    implementation "curse.maven:probejs-585406:7105159"
+//    implementation "curse.maven:probejs-585406:7105159"
 
 
     implementation "curse.maven:apothic-attributes-898963:6751650"

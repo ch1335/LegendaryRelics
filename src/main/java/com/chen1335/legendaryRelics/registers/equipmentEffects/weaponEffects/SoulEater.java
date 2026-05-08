@@ -13,6 +13,7 @@ import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,7 +53,7 @@ public class SoulEater extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.soul_eater", HEAL.toPercentageComponent(tooltipFlag.hasShiftDown(), arg), GAIN_ATTACK_DAMAGE_PERCENT.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.soul_eater", HEAL.toPercentageComponent(tooltipFlag.hasShiftDown(), arg), GAIN_ATTACK_DAMAGE_PERCENT.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae), getMaxToolTipWith(itemStack));
     }
 
     public static void LivingDeathEvent(LivingDeathEvent event) {

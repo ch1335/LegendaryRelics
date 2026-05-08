@@ -28,11 +28,10 @@ public class FlyingKnifeRender extends EntityRenderer<FlyingKnife> {
         ItemStack weaponItem = flyingKnife.getRenderItem();
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, flyingKnife.yRotO, flyingKnife.getYRot()) - 90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTick, flyingKnife.xRotO, flyingKnife.getXRot())-45));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTick, flyingKnife.xRotO, flyingKnife.getXRot()) - 45));
         itemRenderer.renderStatic(weaponItem, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, flyingKnife.level(), 0);
         poseStack.popPose();
         super.render(flyingKnife, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-
     }
 
     @Override

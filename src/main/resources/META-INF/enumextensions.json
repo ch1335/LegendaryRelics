@@ -8,6 +8,15 @@
         "class": "com/chen1335/legendaryRelics/API/objects/LRRarities",
         "field": "DARK_GOLD"
       }
+    },
+    {
+      "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
+      "name": "LEGENDARY_RELICS_DAGGER_CHARGE",
+      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+      "parameters": {
+        "class": "com/chen1335/legendaryRelics/client/LRArmPose",
+        "field": "DAGGER_CHARGE"
+      }
     }
   ]
 }

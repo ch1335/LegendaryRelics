@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
+import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.IRenderArrowBow;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -302,9 +303,11 @@ public class EventHandler {
         public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
             ItemStack from = event.getFrom();
             ItemStack eventTo = event.getTo();
-            if (!event.getFrom().is(eventTo.getItem()) && (from.getItem() instanceof IRenderArrowBow || eventTo.getItem() instanceof IRenderArrowBow)) {
-                from.remove(LRDataComponentTypes.BOW_USING_ARROW);
-                eventTo.remove(LRDataComponentTypes.BOW_USING_ARROW);
+            if (from.getItem() instanceof ILRItemExtension extension) {
+                extension.onEquipmentChangeFrom(from,eventTo,event.getEntity());
+            }
+            if (eventTo.getItem() instanceof ILRItemExtension extension) {
+                extension.onEquipmentChangeTo(from,eventTo,event.getEntity());
             }
         }
     }

@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.client;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.client.clientExtensions.BlackDragonArmorExtension;
 import com.chen1335.legendaryRelics.client.clientExtensions.InfernoArmorExtension;
+import com.chen1335.legendaryRelics.client.clientExtensions.ShadowDaggerExtension;
 import com.chen1335.legendaryRelics.client.clientExtensions.TwistedArmorExtension;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
@@ -27,6 +28,10 @@ public class ClientExtensionsRegister {
                 LRItems.TWISTED_CHEST_PLATE,
                 LRItems.TWISTED_LEGGINGS,
                 LRItems.TWISTED_BOOTS
+        );
+
+        event.registerItem(new ShadowDaggerExtension(),
+                LRItems.SHADOW_DAGGER
         );
     }
 

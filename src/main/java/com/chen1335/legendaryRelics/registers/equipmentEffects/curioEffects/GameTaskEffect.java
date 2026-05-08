@@ -196,6 +196,13 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
     }
 
     @Override
+    public void copyFrom(ISubEffectProvider provider) {
+        if (provider instanceof GameTaskEffect gameTaskEffect) {
+            allAttributeBoost = gameTaskEffect.allAttributeBoost.copy();
+        }
+    }
+
+    @Override
     public CompoundTag saveSimpleData() {
         CompoundTag compoundTag = super.saveSimpleData();
         BaseEffect.CODEC.encodeStart(NbtOps.INSTANCE, allAttributeBoost).ifSuccess(nbt -> {

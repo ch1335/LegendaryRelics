@@ -1,6 +1,8 @@
 package com.chen1335.legendaryRelics.data.recipeBuilders;
 
 import com.chen1335.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.registers.recipes.craftType.CraftItem;
+import com.chen1335.legendaryRelics.registers.recipes.craftType.ICraftType;
 import com.chen1335.legendaryRelics.registers.recipes.ingredients.IngredientWithSize;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.NonNullList;
@@ -10,15 +12,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
 
 
-    private ItemStack result;
+    private ICraftType result;
     private final NonNullList<IngredientWithSize> secondaryItems = NonNullList.create();
     private Ingredient mainItem;
 
@@ -28,7 +30,7 @@ public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
 
     public static EquipmentWorkbenchCraftBuilder builder(ItemStack result) {
         EquipmentWorkbenchCraftBuilder equipmentWorkbenchCraftBuilder = new EquipmentWorkbenchCraftBuilder();
-        equipmentWorkbenchCraftBuilder.result = result;
+        equipmentWorkbenchCraftBuilder.result = CraftItem.of(result);
         return equipmentWorkbenchCraftBuilder;
     }
 
@@ -74,7 +76,18 @@ public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
 
     @Override
     public Item getResult() {
-        return result.getItem();
+        if (result instanceof CraftItem craftItem) {
+            return craftItem.itemStack().getItem();
+        }
+        return Items.AIR;
+    }
+
+
+    @Override
+    public void save(RecipeOutput recipeOutput) {
+        if (result instanceof CraftItem) {
+            RecipeBuilder.super.save(recipeOutput);
+        }
     }
 
     @Override

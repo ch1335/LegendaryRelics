@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.common.calculator.special;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.api.Unit;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -45,7 +46,7 @@ public class EquipmentEffectLevelArg implements Unit {
 
     @Override
     public Component toComponent(CalculatorArg calculatorArg) {
-        return Component.literal(String.format("%." + i + "f", getValue(calculatorArg)));
+        return Component.literal(FinalCalculator.format(getValue(calculatorArg), i));
     }
 
     @Override

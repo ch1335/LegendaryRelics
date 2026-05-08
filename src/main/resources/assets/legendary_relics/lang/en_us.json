@@ -1,6 +1,9 @@
 {
+  "block.legendary_relics.equipment_workbench": "Strengthening forging table",
   "equipment_effect.legendary_relics.all_attribute_boost": "Boosts most of your attributes by %s",
+  "equipment_effect.legendary_relics.ambush": "§6Ambush§r:Hold down the right button to charge for up to %s seconds, and when released, attack the target once, and this attack will gain up to %s of %s based on the charge time",
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "While in the Nether, most of your attributes are increased by %s.",
+  "equipment_effect.legendary_relics.backstab": "§6Backstab§r:When attacking a target that is not facing you, This attack is guaranteed to be a critical hit and deal additional %s critical damage",
   "equipment_effect.legendary_relics.dark_steel_claw": "This curio gain %s attack damage",
   "equipment_effect.legendary_relics.erosion.1": "§6Erosion§r:The target be attacked will be inflicted with up to 5 stacks of erosion, each stack:",
   "equipment_effect.legendary_relics.erosion.2": "Deals %s magic damage per second and heals you for 1%% of your lost health",
@@ -71,6 +74,7 @@
   "item.legendary_relics.reaper.desc.3": "Each scythe loses 20% damage per hit, breaks after 5 hits, and lasts up to 30 seconds after landing.",
   "item.legendary_relics.sacred_talisman": "Sacred Talisman",
   "item.legendary_relics.set_effect.equipped_armor": "Equipment pieces",
+  "item.legendary_relics.shadow_dagger": "Shadow Dagger",
   "item.legendary_relics.shield_regenerator": "Shield Belt",
   "item.legendary_relics.skeleton_throwing_knife": "Skeleton Throwing Knife",
   "item.legendary_relics.skeleton_throwing_knife.desc.1": "Right-click to throw a skeleton throwing knife, dealing %s physical damage",
@@ -93,10 +97,12 @@
   "legendary_relics.config.lootTable": "LootTable Config",
   "legendary_relics.config.lootTable.cant_edit": "You are currently playing on a non-local server and cannot edit the configuration due to low permissions, but you can view the configuration information sent by the server.",
   "legendary_relics.config.server": "Server Config",
+  "legendary_relics.container.equipment_crafting": "Item Forging",
   "legendary_relics.cooldown": "cooldown:%ss",
   "legendary_relics.cooldown.x": "Equipment effect cooldown render X-axis percentage",
   "legendary_relics.cooldown.y": "Equipment effect cooldown render Y-axis percentage",
   "legendary_relics.cooldown_affected_by_attack_speed": "Cooldown is affected by attack speed",
+  "legendary_relics.keep_data": "Keep old item data",
   "legendary_relics.loot_config.ancient_fragment_high": "High probability of Ancient fragments",
   "legendary_relics.loot_config.ancient_fragment_normal": "Normal probability of Ancient fragments",
   "legendary_relics.loot_config.chance": "Chance",
@@ -137,9 +143,5 @@
   "set_effect.legendary_relics.twisted.desc.4": "At 10 stacks, shoot 2 additional arrows, each arrow has %s base damage",
   "set_effect.legendary_relics.twisted.name": "Arrow enhance",
   "set_effect_type.legendary_relics.full_set_bonus": "Full Set Bonus: %s",
-  "set_effect_type.legendary_relics.tiered_bonus": "Tiered Bonus: %s",
-  "legendary_relics.container.equipment_crafting": "Item Forging",
-  "legendary_relics.keep_data": "Keep old item data",
-  "block.legendary_relics.equipment_workbench": "Strengthening forging table"
-
+  "set_effect_type.legendary_relics.tiered_bonus": "Tiered Bonus: %s"
 }
