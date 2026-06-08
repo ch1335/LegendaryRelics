@@ -3,10 +3,11 @@ package com.chen1335.legendaryRelics.registers.entities.projectiles.misc;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityDataSerializers;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
+import com.chen1335.legendaryRelics.client.renderUtils.trail.ProjectileTrail;
+import com.chen1335.legendaryRelics.client.renderUtils.trail.ProjectileTrailManager;
 import com.chen1335.legendaryRelics.client.renderUtils.trail.TrailHolder;
 import com.chen1335.legendaryRelics.client.renderUtils.trail.TrailHolderManager;
 import com.chen1335.legendaryRelics.registers.entities.projectiles.LRProjectile;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -14,6 +15,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -50,7 +52,8 @@ public class FlyingKnife extends LRProjectile {
     public void onAddedToLevel() {
         super.onAddedToLevel();
         if (level().isClientSide) {
-            TrailHolderManager.add(new TrailHolder(this::isRemoved, this::getPosition, 16,10));
+//            ProjectileTrailManager.add(new ProjectileTrail(this::isRemoved, this::getPosition, 16, 0.25F, FastColor.ARGB32.color(100, 255, 255, 255),0.7F));
+//            TrailHolderManager.add(new TrailHolder(this::isRemoved, this::getPosition, 16,10));
         }
     }
 
