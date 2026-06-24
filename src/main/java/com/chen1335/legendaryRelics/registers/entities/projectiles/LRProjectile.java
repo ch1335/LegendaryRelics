@@ -55,8 +55,7 @@ public class LRProjectile extends Projectile {
     public IntOpenHashSet piercingIgnoreEntityIds;
     @Nullable
     public List<Entity> piercedAndKilledEntities;
-    @Nullable
-    private ItemStack firedFromWeapon = null;
+    private ItemStack firedFromWeapon = ItemStack.EMPTY;
 
     protected LRProjectile(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
@@ -93,12 +92,6 @@ public class LRProjectile extends Projectile {
     public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
         super.shoot(x, y, z, velocity, inaccuracy);
         this.life = 0;
-    }
-
-    @Override
-    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
-        this.setPos(x, y, z);
-        this.setRot(yRot, xRot);
     }
 
     @Override
@@ -308,10 +301,9 @@ public class LRProjectile extends Projectile {
     }
 
     protected void doKnockback(LivingEntity entity, DamageSource damageSource) {
-        double d0 = (double) (
-                this.firedFromWeapon != null && this.level() instanceof ServerLevel serverlevel
-                        ? EnchantmentHelper.modifyKnockback(serverlevel, this.firedFromWeapon, entity, damageSource, 0.0F)
-                        : 0.0F
+        double d0 = (this.level() instanceof ServerLevel serverlevel
+                ? EnchantmentHelper.modifyKnockback(serverlevel, this.firedFromWeapon, entity, damageSource, 0.0F)
+                : 0.0F
         );
         if (d0 > 0.0) {
             double d1 = Math.max(0.0, 1.0 - entity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
@@ -339,6 +331,7 @@ public class LRProjectile extends Projectile {
     }
 
 
+    @Nullable
     @Override
     public ItemStack getWeaponItem() {
         return this.firedFromWeapon;
@@ -376,10 +369,10 @@ public class LRProjectile extends Projectile {
         compound.putBoolean("inGround", this.inGround);
         compound.putFloat("damage", this.baseDamage);
         compound.putByte("PierceLevel", this.getPierceLevel());
-        compound.putString("SoundEvent", BuiltInRegistries.SOUND_EVENT.getKey(this.soundEvent).toString());
-        if (this.firedFromWeapon != null) {
-            compound.put("weapon", this.firedFromWeapon.save(this.registryAccess(), new CompoundTag()));
-        }
+        BuiltInRegistries.SOUND_EVENT.getResourceKey(this.soundEvent).ifPresent(holder -> {
+            compound.putString("SoundEvent", holder.location().toString());
+        });
+        compound.put("weapon", this.firedFromWeapon.saveOptional(this.registryAccess()));
     }
 
     /**
@@ -406,12 +399,7 @@ public class LRProjectile extends Projectile {
                     .orElse(this.getDefaultHitGroundSoundEvent());
         }
 
-
-        if (compound.contains("weapon", 10)) {
-            this.firedFromWeapon = ItemStack.parse(this.registryAccess(), compound.getCompound("weapon")).orElse(null);
-        } else {
-            this.firedFromWeapon = null;
-        }
+        this.firedFromWeapon = ItemStack.parseOptional(this.registryAccess(), compound.getCompound("weapon"));
     }
 
     @Override

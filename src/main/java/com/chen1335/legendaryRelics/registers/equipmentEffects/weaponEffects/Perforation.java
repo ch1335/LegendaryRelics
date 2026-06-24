@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
+import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -42,15 +43,16 @@ public class Perforation extends LRBaseEffect {
 
     public static void EntityJoinLevelEvent(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof AbstractArrow arrow && arrow.getWeaponItem() != null && arrow.getOwner() instanceof LivingEntity living && !living.level().isClientSide) {
-            LREquipmentEffectTypes.PERFORATION.value().findBestEffect(living).ifPresent(infoHolder -> {
-                if (arrow.getWeaponItem().is(infoHolder.itemStack().getItem())) {
-                    CalculatorArg arg = CalculatorArg.simpleArg(living, infoHolder.itemStack(), infoHolder.effect());
-                    if (!arrow.getTags().contains("perforation_modified")) {
-                        arrow.setPierceLevel((byte) PIERCE_LEVEL.getValue(arg));
-                        arrow.addTag("perforation_modified");
-                    }
+            ItemStack weaponItem = arrow.getWeaponItem();
+            Perforation effect = EquipmentEffectAPI.getEffect(weaponItem, LREquipmentEffectTypes.PERFORATION.value());
+            if (effect != null) {
+                CalculatorArg arg = CalculatorArg.simpleArg(living, weaponItem, effect);
+                if (!arrow.getTags().contains("perforation_modified")) {
+                    arrow.setPierceLevel((byte) PIERCE_LEVEL.getValue(arg));
+                    arrow.addTag("perforation_modified");
                 }
-            });
+
+            }
         }
     }
 

@@ -24,7 +24,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import org.apache.logging.log4j.util.TriConsumer;
 
 import java.util.List;
 
@@ -58,40 +57,29 @@ public class SoulEater extends LRWeaponEffect {
 
     public static void LivingDeathEvent(LivingDeathEvent event) {
         Entity killer = event.getSource().getEntity();
-        ItemStack weaponItem = null;
+        ItemStack weaponItem = ItemStack.EMPTY;
         LivingEntity livingKiller = null;
         if (killer != null && killer.getType() == LREntityTypes.FLYING_REAPER.value()) {
-            if (((FlyingReaper) killer).getOwner() instanceof LivingEntity entity) {
+            FlyingReaper flyingReaper = (FlyingReaper) killer;
+            if (flyingReaper.getOwner() instanceof LivingEntity entity) {
                 livingKiller = entity;
             }
-            ItemStack itemStack = killer.getWeaponItem();
-            if (itemStack != null && !itemStack.isEmpty()) {
-                weaponItem = itemStack;
-            }
+            weaponItem = killer.getWeaponItem();
+        } else if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            livingKiller = attacker;
+            weaponItem = attacker.getWeaponItem();
         }
-        if (killer instanceof LivingEntity entity) {
-            livingKiller = entity;
-        }
-        if (livingKiller != null) {
-            TriConsumer<LivingEntity, ItemStack, SoulEater> consumer = (entity, itemStack, soulEater) -> {
-                CalculatorArg arg = CalculatorArg.simpleArg(entity, itemStack, soulEater);
-                entity.heal(entity.getMaxHealth() * HEAL.getValue(arg));
-                if (event.getEntity().getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
-                    double attack = event.getEntity().getAttributeValue(Attributes.ATTACK_DAMAGE);
-                    entity.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
-                            .addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(LegendaryRelics.id("soul_eater_" + event.getEntity().getId()), attack * GAIN_ATTACK_DAMAGE_PERCENT.getValue(arg), AttributeModifier.Operation.ADD_VALUE), 10 * 20);
-                }
-            };
 
-            if (weaponItem != null) {
-                SoulEater soulEater = EquipmentEffectAPI.getEffect(weaponItem, LREquipmentEffectTypes.SOUL_EATER.value());
-                consumer.accept(livingKiller, weaponItem, soulEater);
-            } else {
-                LivingEntity finalLivingKiller = livingKiller;
-                LREquipmentEffectTypes.SOUL_EATER.value().findBestEffect(livingKiller).ifPresent(info -> {
-                    consumer.accept(finalLivingKiller, info.itemStack(), (SoulEater) info.effect());
-                });
+        if (livingKiller != null && !weaponItem.isEmpty()) {
+            SoulEater soulEater = EquipmentEffectAPI.getEffect(weaponItem, LREquipmentEffectTypes.SOUL_EATER.value());
+            CalculatorArg arg = CalculatorArg.simpleArg(livingKiller, weaponItem, soulEater);
+            livingKiller.heal(livingKiller.getMaxHealth() * HEAL.getValue(arg));
+            if (event.getEntity().getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
+                double attack = event.getEntity().getAttributeValue(Attributes.ATTACK_DAMAGE);
+                livingKiller.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
+                        .addAttributeModifier(livingKiller, Attributes.ATTACK_DAMAGE, new AttributeModifier(LegendaryRelics.id("soul_eater_" + event.getEntity().getId()), attack * GAIN_ATTACK_DAMAGE_PERCENT.getValue(arg), AttributeModifier.Operation.ADD_VALUE), 10 * 20);
             }
         }
     }
+
 }

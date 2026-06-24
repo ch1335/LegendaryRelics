@@ -60,12 +60,20 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
 
     @Calculator
     public static final FinalCalculator SHIELD_AMOUNT = FinalCalculator.of(
-            Mul.of(
-                    DarkGoldUpdateArg.of(
-                            Constant.of(0.3F),
-                            Constant.of(0.4F)
+            Add.of(Mul.of(
+                            DarkGoldUpdateArg.of(
+                                    Constant.of(0.2F),
+                                    Constant.of(0.3F)
+                            ),
+                            EntityAttributeValue.of(Attributes.ATTACK_DAMAGE)
                     ),
-                    EntityAttributeValue.of(Attributes.MAX_HEALTH)
+                    Mul.of(
+                            DarkGoldUpdateArg.of(
+                                    Constant.of(0.3F),
+                                    Constant.of(0.4F)
+                            ),
+                            EntityAttributeValue.of(Attributes.MAX_HEALTH)
+                    )
             )
     );
 
@@ -95,12 +103,12 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
         if (getRawEffectLevel() > 1) {
             tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", PHYSICAL_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
         }
-        LRUtil.splitAndAdd(tooltipComponents,Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
                 DAMAGE_INCREASE.toComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
                 COOL_DOWN.toComponent(tooltipFlag.hasShiftDown(), args)
-        ).withColor(0xaeaeae),getMaxToolTipWith(itemStack));
+        ).withColor(0xaeaeae), getMaxToolTipWith(itemStack));
 
     }
 
@@ -123,7 +131,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
             effectType.findBestEffect(livingEntity).ifPresent(pair -> {
                 if (event.getSource().is(Tags.DamageTypes.IS_PHYSICAL)) {
                     CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
-                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -PHYSICAL_DAMAGE_REDUCE.getValue(args));
+                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, 1 - PHYSICAL_DAMAGE_REDUCE.getValue(args));
                 }
             });
         }

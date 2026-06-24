@@ -26,21 +26,21 @@ public class EventHandler {
     public static class Game {
         @SubscribeEvent
         public static void onCurioChange(CurioChangeEvent event) {
-            boolean updateTotal = false;
+            boolean needUpdate = false;
 
             if (!event.getFrom().is(event.getTo().getItem())) {
                 if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
-                    updateTotal = true;
+                    needUpdate = true;
                 }
             } else {
                 Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
                 Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
                 if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
-                    updateTotal = true;
+                    needUpdate = true;
                 }
             }
 
-            if (updateTotal) {
+            if (needUpdate) {
                 EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.CURIO);
             }
 

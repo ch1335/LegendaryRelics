@@ -59,6 +59,7 @@ public class LRRecipeProvider extends RecipeProvider {
                 .save(recipeOutput);
 
         EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
+                .addSecondary(Items.ELYTRA)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(LRItems.DRAGON_SCALE, 3)

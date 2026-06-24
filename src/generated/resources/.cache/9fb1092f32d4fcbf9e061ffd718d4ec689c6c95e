@@ -1,4 +1,4 @@
-// 1.21.1	2026-04-30T01:56:44.2171111	Recipes
+// 1.21.1	2026-06-12T22:30:08.4947278	Recipes
 798c652ecb971671ce69b3e6bda0e9a06f41c8a1 data/legendary_relics/advancement/recipes/misc/dark_gold.json
 281b8eb1be65bc35f174bf6ddb7126918f78ece9 data/legendary_relics/advancement/recipes/misc/dark_gold_forging_tool.json
 ecbba623ad13f7809342d86540af46284237cdfc data/legendary_relics/advancement/recipes/misc/equipment_workbench.json
@@ -8,7 +8,7 @@ f6d4fd0e1def41d9661acfd4b28b5720b7a606e3 data/legendary_relics/advancement/recip
 4dc2864771eaa3067ba0a9aa7685ffebf9b95cb8 data/legendary_relics/recipe/dark_gold.json
 aa2027825448bee67436da527e23d368e76528ed data/legendary_relics/recipe/dark_gold_forging_tool.json
 56aa1bf0fd33409084ac526698530d777c640842 data/legendary_relics/recipe/equipment_craft/black_dragon_boots.json
-6bbb32cdf385173c877d4cf76e2abaca2af78904 data/legendary_relics/recipe/equipment_craft/black_dragon_chestplate.json
+43960a469b85ec235a027d567d63ac71a721c0c3 data/legendary_relics/recipe/equipment_craft/black_dragon_chestplate.json
 3db81def9df8f80d7e275255d352726204a905e3 data/legendary_relics/recipe/equipment_craft/black_dragon_helmet.json
 83579b60fe24ab91ac6868de8ff520773127562a data/legendary_relics/recipe/equipment_craft/black_dragon_leggings.json
 4a6ab42a552e1838d391d301ad3c6af3be0f697e data/legendary_relics/recipe/equipment_craft/inferno_boots.json
