@@ -42,7 +42,7 @@ public class BlackDragonChestPlate extends BlackDragonArmor {
         return true;
     }
 
-    public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
+    public boolean elytraFlightTick(@NotNull ItemStack stack, LivingEntity entity, int flightTicks) {
         if (!entity.level().isClientSide) {
             int nextFlightTick = flightTicks + 1;
             if (nextFlightTick % 10 == 0) {

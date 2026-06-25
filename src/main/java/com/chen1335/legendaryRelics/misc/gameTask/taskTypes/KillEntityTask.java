@@ -18,7 +18,7 @@ public record KillEntityTask(EntityType<?> entityType) implements ITask {
 
     @Override
     public boolean check(ITask task) {
-        return task instanceof KillEntityTask killEntityTask && killEntityTask.entityType == entityType;
+        return task instanceof KillEntityTask(EntityType<?> type) && type == entityType;
     }
 
     @Override

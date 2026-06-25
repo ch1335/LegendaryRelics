@@ -134,8 +134,8 @@
   "set_effect.legendary_relics.inferno.desc.1": "Every %s second, attacks gain 1 stack of %s, up to 10 stacks",
   "set_effect.legendary_relics.inferno.desc.2": "If you don't get %2$s for more than %1$s seconds, you lose one stack of %3$s every second",
   "set_effect.legendary_relics.inferno.desc.3": "Each stack provides %s attack range and %s attack damage",
-  "set_effect.legendary_relics.inferno.desc.4": "At 10 stacks, attack applies %s effect, dealing %s physical damage per second",
-  "set_effect.legendary_relics.inferno.desc.5": "When a creature with %s effect dies, it applies %s to nearby creatures and deals %s physical damage",
+  "set_effect.legendary_relics.inferno.desc.4": "At 10 stacks, attack applies %s effect, dealing %s per second",
+  "set_effect.legendary_relics.inferno.desc.5": "When a creature with %s effect dies, it applies %s to nearby creatures and deals %s",
   "set_effect.legendary_relics.inferno.name": "Inferno",
   "set_effect.legendary_relics.twisted.desc.1": "Every %s second, cause arrow damage to gain 1 stack of %s, up to 10 stacks",
   "set_effect.legendary_relics.twisted.desc.2": "If you don't get %2$s for more than %1$s seconds, you lose one stack of %3$s every second",
@@ -143,5 +143,8 @@
   "set_effect.legendary_relics.twisted.desc.4": "At 10 stacks, shoot 2 additional arrows, each arrow has %s base damage",
   "set_effect.legendary_relics.twisted.name": "Arrow enhance",
   "set_effect_type.legendary_relics.full_set_bonus": "Full Set Bonus: %s",
-  "set_effect_type.legendary_relics.tiered_bonus": "Tiered Bonus: %s"
+  "set_effect_type.legendary_relics.tiered_bonus": "Tiered Bonus: %s",
+  "legendary_relics.damage_type.physical_damage": "Physical Damage",
+  "legendary_relics.damage_type.format": "%s %s"
+
 }

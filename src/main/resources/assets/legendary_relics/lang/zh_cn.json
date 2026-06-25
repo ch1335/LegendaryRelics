@@ -1,7 +1,7 @@
 {
   "block.legendary_relics.equipment_workbench": "强化锻造台",
   "equipment_effect.legendary_relics.all_attribute_boost": "使你的大部分属性提升%s",
-  "equipment_effect.legendary_relics.ambush": "§6突袭§r:按住右键进行最多%s秒的蓄力，释放时对瞄准的目标进行一次攻击，此次攻击基于蓄力时间获得至多%s的%s",
+  "equipment_effect.legendary_relics.ambush": "§6突袭§r:按住右键进行最多%s秒的蓄力，释放时对瞄准的目标进行一次强力攻击，此次攻击基于蓄力时间获得至多%s的%s",
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "在下界时，你的大部分属性提升%s",
   "equipment_effect.legendary_relics.backstab": "§6背刺§r:攻击一个没有面向你的目标时，此次攻击必定暴击并且造成额外%s暴击伤害",
   "equipment_effect.legendary_relics.dark_steel_claw": "这件饰品获得%s攻击伤害。",
@@ -134,8 +134,8 @@
   "set_effect.legendary_relics.inferno.desc.1": "每%s秒，攻击获得1层%s，最多10层",
   "set_effect.legendary_relics.inferno.desc.2": "超过%s秒没有获得%s后，每秒失去一层%s",
   "set_effect.legendary_relics.inferno.desc.3": "每层会提供%s攻击距离和%s攻击伤害",
-  "set_effect.legendary_relics.inferno.desc.4": "在10层时，攻击施加%s效果，每秒造成%s物理伤害",
-  "set_effect.legendary_relics.inferno.desc.5": "拥有%s效果的生物死亡时会对周围的生物施加%s并且造成%s物理伤害",
+  "set_effect.legendary_relics.inferno.desc.4": "在10层时，攻击施加%s效果，每秒造成%s",
+  "set_effect.legendary_relics.inferno.desc.5": "拥有%s效果的生物死亡时会对周围的生物施加%s并且造成%s",
   "set_effect.legendary_relics.inferno.name": "炼狱",
   "set_effect.legendary_relics.twisted.desc.1": "每%s秒，造成箭矢伤害获得一层%s，最多10层",
   "set_effect.legendary_relics.twisted.desc.2": "超过%s秒没有获得%s后，每秒失去一层%s",
@@ -143,5 +143,7 @@
   "set_effect.legendary_relics.twisted.desc.4": "在10层时，额外射出2支箭，每支箭有%s的基础伤害",
   "set_effect.legendary_relics.twisted.name": "箭矢增强",
   "set_effect_type.legendary_relics.full_set_bonus": "全套效果:%s",
-  "set_effect_type.legendary_relics.tiered_bonus": "分级奖励:%s"
+  "set_effect_type.legendary_relics.tiered_bonus": "分级奖励:%s",
+  "legendary_relics.damage_type.physical_damage": "物理伤害",
+  "legendary_relics.damage_type.format": "%s%s"
 }

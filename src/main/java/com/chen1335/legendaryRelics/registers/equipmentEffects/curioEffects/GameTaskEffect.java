@@ -10,6 +10,7 @@ import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.misc.gameTask.taskTypes.*;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
@@ -44,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider {
-    public static List<AttributeEntrie> ATTRIBUTES;
+    public static List<AttributeEntire> ATTRIBUTES;
 
     public static List<ITask> TASKS;
 
@@ -101,7 +102,7 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
 
     @Override
     public void modifyCurioAttribute(CurioAttributeModifierEvent event) {
-        for (AttributeEntrie attribute : ATTRIBUTES) {
+        for (AttributeEntire attribute : ATTRIBUTES) {
             double amount;
             if (getRawEffectLevel() < attribute.amounts().size()) {
                 amount = attribute.amounts.get(getRawEffectLevel());
@@ -123,7 +124,7 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
     }
 
     public static void initTasks() {
-        ImmutableList.Builder<AttributeEntrie> builder = getAttributeEntriesBuilder();
+        ImmutableList.Builder<AttributeEntire> builder = getAttributeEntriesBuilder();
 
         ATTRIBUTES = builder.build();
 
@@ -143,47 +144,57 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
         if (file.exists()) {
             try (FileReader fileReader = new FileReader(file)) {
                 JsonObject jsonElement = JsonParser.parseReader(fileReader).getAsJsonObject();
-                JsonObject tasks = jsonElement.getAsJsonObject("tasks");
-                JsonArray attributes = jsonElement.getAsJsonArray("attributes");
-                ImmutableList.Builder<ITask> builder1 = ImmutableList.builder();
-                for (Map.Entry<String, JsonElement> entry : tasks.entrySet()) {
-                    builder1.add(ITask.Tasks.CODEC.decode(JsonOps.INSTANCE, entry.getValue()).getOrThrow().getFirst());
+                JsonElement tasks = jsonElement.get("tasks");
+                JsonElement attributes = jsonElement.get("attributes");
+
+
+                DataResult<Pair<List<ITask>, JsonElement>> decode1 = ITask.Tasks.CODEC.listOf().decode(JsonOps.INSTANCE, tasks);
+                if (decode1.isSuccess()) {
+                    TASKS = decode1.getOrThrow().getFirst();
+                }else {
+                    saveToFile(file);
+                    return;
                 }
-                TASKS = builder1.build();
-                ATTRIBUTES = AttributeEntrie.CODEC.listOf().decode(JsonOps.INSTANCE, attributes).getOrThrow().getFirst();
+                DataResult<Pair<List<AttributeEntire>, JsonElement>> decode = AttributeEntire.CODEC.listOf().decode(JsonOps.INSTANCE, attributes);
+                if (decode.isSuccess()) {
+                    ATTRIBUTES = decode.getOrThrow().getFirst();
+                }else {
+                    saveToFile(file);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
         } else {
-            JsonObject main = new JsonObject();
-            JsonObject tasks = new JsonObject();
-            main.add("tasks", tasks);
-            for (int i = 0; i < TASKS.size(); i++) {
-                DataResult<JsonElement> result = ITask.Tasks.CODEC.encodeStart(JsonOps.INSTANCE, TASKS.get(i));
-                tasks.add(String.valueOf(i), result.getOrThrow());
-            }
-            JsonArray attributes = AttributeEntrie.CODEC.listOf().encodeStart(JsonOps.INSTANCE, ATTRIBUTES).getOrThrow().getAsJsonArray();
-            main.add("attributes", attributes);
-            try (FileWriter fileWriter = new FileWriter(file)) {
-                new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create().toJson(main, fileWriter);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            saveToFile(file);
         }
     }
 
-    private static ImmutableList.@NotNull Builder<AttributeEntrie> getAttributeEntriesBuilder() {
-        ImmutableList.Builder<AttributeEntrie> builder = ImmutableList.builder();
-        builder.add(new AttributeEntrie(Attributes.MAX_HEALTH, List.of(0D, 0.5D, 1D, 2D, 3D, 4D, 5D), AttributeModifier.Operation.ADD_VALUE));
-        builder.add(new AttributeEntrie(Attributes.ARMOR, List.of(0D, 0.5D, 1D, 2D, 3D, 4D, 5D), AttributeModifier.Operation.ADD_VALUE));
-        builder.add(new AttributeEntrie(Attributes.ATTACK_DAMAGE, List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-        builder.add(new AttributeEntrie(AttributesGetter.projectDamage(), List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-        builder.add(new AttributeEntrie(AttributesGetter.armorPierce(), List.of(0D, 0.25D, 0.5D, 1D, 1.5D, 2D, 2.5D), AttributeModifier.Operation.ADD_VALUE));
-        builder.add(new AttributeEntrie(AttributesGetter.lifeSteal(), List.of(0D, 0.0025D, 0.005D, 0.01D, 0.015D, 0.02D, 0.025D), AttributeModifier.Operation.ADD_VALUE));
-        builder.add(new AttributeEntrie(AttributesGetter.critDamame(), List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_VALUE));
-        builder.add(new AttributeEntrie(AttributesGetter.critChance(), List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_VALUE));
-        builder.add(new AttributeEntrie(AttributesGetter.miningSpeed(), List.of(0D, 0.01D, 0.02D, 0.04D, 0.06D, 0.08D, 0.1D), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+    public static void saveToFile(File file) {
+        JsonObject main = new JsonObject();
+        JsonElement tasks = ITask.Tasks.CODEC.listOf().encodeStart(JsonOps.INSTANCE,TASKS).getOrThrow();
+        main.add("tasks", tasks);
+        JsonElement attributes = AttributeEntire.CODEC.listOf().encodeStart(JsonOps.INSTANCE, ATTRIBUTES).getOrThrow();
+        main.add("attributes", attributes);
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create().toJson(main, fileWriter);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private static ImmutableList.@NotNull Builder<AttributeEntire> getAttributeEntriesBuilder() {
+        ImmutableList.Builder<AttributeEntire> builder = ImmutableList.builder();
+        builder.add(new AttributeEntire(Attributes.MAX_HEALTH, List.of(0D, 0.5D, 1D, 2D, 3D, 4D, 5D), AttributeModifier.Operation.ADD_VALUE));
+        builder.add(new AttributeEntire(Attributes.ARMOR, List.of(0D, 0.5D, 1D, 2D, 3D, 4D, 5D), AttributeModifier.Operation.ADD_VALUE));
+        builder.add(new AttributeEntire(Attributes.ATTACK_DAMAGE, List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        builder.add(new AttributeEntire(AttributesGetter.projectDamage(), List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        builder.add(new AttributeEntire(AttributesGetter.armorPierce(), List.of(0D, 0.25D, 0.5D, 1D, 1.5D, 2D, 2.5D), AttributeModifier.Operation.ADD_VALUE));
+        builder.add(new AttributeEntire(AttributesGetter.lifeSteal(), List.of(0D, 0.0025D, 0.005D, 0.01D, 0.015D, 0.02D, 0.025D), AttributeModifier.Operation.ADD_VALUE));
+        builder.add(new AttributeEntire(AttributesGetter.critDamame(), List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_VALUE));
+        builder.add(new AttributeEntire(AttributesGetter.critChance(), List.of(0D, 0.005D, 0.01D, 0.02D, 0.03D, 0.04D, 0.05D), AttributeModifier.Operation.ADD_VALUE));
+        builder.add(new AttributeEntire(AttributesGetter.miningSpeed(), List.of(0D, 0.01D, 0.02D, 0.04D, 0.06D, 0.08D, 0.1D), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         return builder;
     }
 
@@ -221,14 +232,14 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
         }
     }
 
-    public record AttributeEntrie(Holder<Attribute> attribute, List<Double> amounts,
+    public record AttributeEntire(Holder<Attribute> attribute, List<Double> amounts,
                                   AttributeModifier.Operation operation) {
-        public static Codec<AttributeEntrie> CODEC = RecordCodecBuilder.create(
+        public static Codec<AttributeEntire> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                        BuiltInRegistries.ATTRIBUTE.holderByNameCodec().fieldOf("atribute").forGetter(AttributeEntrie::attribute),
-                        Codec.DOUBLE.listOf().fieldOf("amounts").forGetter(AttributeEntrie::amounts),
-                        AttributeModifier.Operation.CODEC.fieldOf("operation").forGetter(AttributeEntrie::operation)
-                ).apply(instance, AttributeEntrie::new)
+                        BuiltInRegistries.ATTRIBUTE.holderByNameCodec().fieldOf("attribute").forGetter(AttributeEntire::attribute),
+                        Codec.DOUBLE.listOf().fieldOf("amounts").forGetter(AttributeEntire::amounts),
+                        AttributeModifier.Operation.CODEC.fieldOf("operation").forGetter(AttributeEntire::operation)
+                ).apply(instance, AttributeEntire::new)
         );
     }
 }

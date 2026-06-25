@@ -19,7 +19,7 @@ public record CustomTask(ResourceLocation location) implements ITask {
 
     @Override
     public boolean check(ITask task) {
-        return task instanceof CustomTask customTask && customTask.location.equals(location);
+        return task instanceof CustomTask(ResourceLocation location1) && location1.equals(location);
     }
 
     @Override

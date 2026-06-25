@@ -17,7 +17,7 @@ public record GainItemTask(Item item) implements ITask {
 
     @Override
     public boolean check(ITask task) {
-        return task instanceof GainItemTask gainItemTask && gainItemTask.item == this.item;
+        return task instanceof GainItemTask(Item item1) && item1 == this.item;
     }
 
     @Override

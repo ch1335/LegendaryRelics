@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 public record TravelToDimTask(ResourceKey<Level> resourceKey) implements ITask {
@@ -18,12 +19,13 @@ public record TravelToDimTask(ResourceKey<Level> resourceKey) implements ITask {
 
     @Override
     public boolean check(ITask task) {
-        return task instanceof TravelToDimTask travelToDimTask && travelToDimTask.resourceKey == resourceKey;
+        return task instanceof TravelToDimTask(ResourceKey<Level> key) && key == resourceKey;
     }
 
     @Override
     public MutableComponent getComponent() {
-        return Component.translatable("legendary_relics.task.travel_to_dim", Component.translatable(resourceKey.location().toString())).withStyle(ChatFormatting.GRAY);
+        ResourceLocation location = resourceKey.location();
+        return Component.translatable("legendary_relics.task.travel_to_dim", Component.translatable("dimension." + location.getNamespace() + "." + location.getPath())).withStyle(ChatFormatting.GRAY);
     }
 
     @Override

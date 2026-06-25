@@ -11,10 +11,17 @@ public class ComponentHolders {
     }
 
     public static class Misc {
-        public static Component tieredBonus(Component arg) {
-            return Component.translatable("legendary_relics.special_effect.inferno_scorch").withStyle(ChatFormatting.GOLD);
+
+
+    }
+
+    public static class Combat {
+        public static Component physicalDamage(Component component) {
+            return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage()).withStyle(ChatFormatting.GOLD);
         }
 
-
+        public static Component physicalDamage() {
+            return Component.translatable("legendary_relics.damage_type.physical_damage").withStyle(ChatFormatting.RED);
+        }
     }
 }
