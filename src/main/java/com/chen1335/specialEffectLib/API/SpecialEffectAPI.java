@@ -8,7 +8,7 @@ import com.chen1335.specialEffectLib.network.AddOrUpdateEffectPack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;

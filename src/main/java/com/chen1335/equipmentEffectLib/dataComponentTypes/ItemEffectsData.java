@@ -9,7 +9,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

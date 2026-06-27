@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.common.calculator;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

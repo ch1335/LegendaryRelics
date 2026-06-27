@@ -8,7 +8,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.RegistryOps;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.client;
 import com.anthonyhilyard.iceberg.util.Selectors;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import net.minecraft.world.item.Rarity;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 
 import java.lang.reflect.Field;
 import java.util.Map;

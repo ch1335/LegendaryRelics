@@ -44,8 +44,6 @@ public class EventHandler {
             }
 
             if (needUpdate) {
-                EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.CURIO);
-
                 EntityEquipmentEffectData data = event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
                 CurioSlotEffectManager slotEffectManager = data.getSlotEffectManager(CurioSlotEffectManager.class);
                 slotEffectManager.onCurioChanged(event.getEntity(), event.getIdentifier(), event.getSlotIndex(), event.getFrom(), event.getTo());
@@ -74,15 +72,6 @@ public class EventHandler {
             }
 
             if (updateTotal) {
-                switch (type) {
-                    case HUMANOID_ARMOR -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.ARMOR);
-                    }
-                    case HAND -> {
-                        EquipmentEffectAPI.updateEntityEquipmentEffect(event.getEntity(), event.getFrom(), event.getTo(), EquipmentType.HANDS);
-                    }
-                }
-
                 EntityEquipmentEffectData data = event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
                 EquipmentSlotEffectManager slotEffectManager = data.getSlotEffectManager(EquipmentSlotEffectManager.class);
                 slotEffectManager.onEquipmentChanged(event.getEntity(), event.getSlot(), event.getFrom(), event.getTo());

@@ -12,10 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class SlotEffectManager {
     private static final List<SlotEffectManager> REGISTERED = new ArrayList<>();
@@ -36,18 +33,21 @@ public abstract class SlotEffectManager {
     protected void onChanged(LivingEntity living, ISlotContext context, @Nonnull ItemStack from, @Nonnull ItemStack to) {
         Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(from, getEquipmentType());
 
+        Set<EffectType<?>> changedTypes = new HashSet<>();
         for (Map.Entry<EffectType<?>, BaseEffect> entry : fromEffects.entrySet()) {
             TreeMultimap<Integer, SlotEffectHolder<?>> effectsByType = data.getEffectHoldersByType(entry.getKey());
             effectsByType.values().removeIf(slotEffectHolder -> slotEffectHolder.context().equals(context));
+            changedTypes.add(entry.getKey());
         }
 
         Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(to, getEquipmentType());
         for (Map.Entry<EffectType<?>, BaseEffect> entry : toEffects.entrySet()) {
             TreeMultimap<Integer, SlotEffectHolder<?>> effectsByType = data.getEffectHoldersByType(entry.getKey());
             effectsByType.put(entry.getValue().getEffectLevel(living, to), new SlotEffectHolder<>(context, new InfoHolder<>(to, entry.getValue())));
+            changedTypes.add(entry.getKey());
         }
 
-
+        data.onUpdated( living,changedTypes);
     }
 
     protected abstract IEquipmentType getEquipmentType();

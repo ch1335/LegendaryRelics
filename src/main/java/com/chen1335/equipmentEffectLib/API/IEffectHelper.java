@@ -4,7 +4,7 @@ import com.chen1335.equipmentEffectLib.common.InfoHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import net.minecraft.world.entity.LivingEntity;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 
 import java.util.Optional;
 

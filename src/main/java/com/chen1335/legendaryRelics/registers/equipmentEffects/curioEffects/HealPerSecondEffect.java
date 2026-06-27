@@ -5,10 +5,13 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,11 +26,14 @@ public class HealPerSecondEffect extends LRCurioEffect {
     @Calculator
     public static final FinalCalculator HEAL_PER_5S = FinalCalculator.of(
             DarkGoldUpdateArg.of(
-                    EquipmentEffectLevelArg.of(
-                            LevelBasedValue.perLevel(1F)
+                    Mul.of(
+                            EntityAttributeValue.of(Attributes.MAX_HEALTH),
+                            EquipmentEffectLevelArg.of(
+                                    LevelBasedValue.perLevel(0.07F, 0.03F)
+                            )
                     )
             ),
-            2
+            1
     );
 
     public HealPerSecondEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {

@@ -13,7 +13,7 @@ import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -99,7 +99,4 @@ public final class EquipmentEffectAPI {
         living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(living);
     }
 
-    public static void updateEntityEquipmentEffect(@NotNull LivingEntity living, ItemStack from, ItemStack to, EquipmentType matchType) {
-        living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).update(living, from, to, matchType);
-    }
 }

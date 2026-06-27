@@ -2,7 +2,7 @@ package com.chen1335.legendaryRelics.common;
 
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.EventPriority;
-import org.apache.logging.log4j.util.Cast;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 
 import java.util.*;
 
