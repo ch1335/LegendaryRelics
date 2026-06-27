@@ -4,7 +4,7 @@ import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
 import com.chen1335.equipmentEffectLib.equipmentSources.ArmorSource;
 import com.chen1335.equipmentEffectLib.equipmentSources.CuriosSource;
-import com.chen1335.equipmentEffectLib.equipmentSources.HandSource;
+import com.chen1335.equipmentEffectLib.equipmentSources.HandsSource;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EquipmentType implements IEquipmentType {
     private static final BiMap<ResourceLocation, EquipmentType> ALL_TYPES = HashBiMap.create();
@@ -43,7 +44,9 @@ public class EquipmentType implements IEquipmentType {
 
     public static final EquipmentType ARMOR = getOrRegister("armor", ArmorSource.INSTANCE);
 
-    public static final EquipmentType HAND = getOrRegister("hand", HandSource.INSTANCE);
+    public static final EquipmentType HANDS = getOrRegister("hands", HandsSource.INSTANCE);
+
+    public static final EquipmentType ARMOR_AND_HANDS = getOrRegisterCombine("armor_and_hands", ARMOR, HANDS);
 
     public static final EquipmentType ALL = getOrRegisterCombine("all", ALLType.INSTANCE);
 
@@ -102,6 +105,8 @@ public class EquipmentType implements IEquipmentType {
     }
 
     public static class CombineType extends EquipmentType {
+        private final Set<IEquipmentType> types;
+
         public CombineType(ResourceLocation id, IEquipmentType... types) {
             super(id, livingEntity -> {
                 ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
@@ -110,6 +115,12 @@ public class EquipmentType implements IEquipmentType {
                 }
                 return builder.build();
             });
+            this.types = Set.of(types);
+        }
+
+        @Override
+        public boolean match(IEquipmentType equipmentType) {
+            return types.contains(equipmentType);
         }
     }
 
@@ -141,7 +152,7 @@ public class EquipmentType implements IEquipmentType {
         private final IEquipmentSource source = livingEntity -> {
             ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
             for (EquipmentType value : UNIT_TYPES.values()) {
-                if (value != EquipmentType.HAND) {
+                if (value != EquipmentType.HANDS) {
                     builder.addAll(value.source().get(livingEntity));
                 }
             }
@@ -155,7 +166,7 @@ public class EquipmentType implements IEquipmentType {
 
         @Override
         public boolean match(IEquipmentType equipmentType) {
-            return !(equipmentType == EquipmentType.HAND);
+            return !(equipmentType == EquipmentType.HANDS);
         }
     }
 }

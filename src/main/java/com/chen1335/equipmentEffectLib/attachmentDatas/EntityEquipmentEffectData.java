@@ -3,11 +3,16 @@ package com.chen1335.equipmentEffectLib.attachmentDatas;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.ITickAbleEffect;
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.common.InfoHolder;
+import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.SlotEffectManager;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.curio.CurioSlotEffectManager;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.equipment.EquipmentSlotEffectManager;
 import com.google.common.collect.ImmutableList;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.common.collect.TreeMultimap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.util.Cast;
@@ -17,14 +22,49 @@ import java.util.*;
 public class EntityEquipmentEffectData {
 
 
-    public record InfoHolder<T extends BaseEffect>(ItemStack itemStack, T effect) {
-        public static final Codec<InfoHolder<? extends BaseEffect>> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ItemStack.CODEC.fieldOf("itemStack").forGetter(InfoHolder::itemStack),
-                BaseEffect.CODEC.fieldOf("effect").forGetter(InfoHolder::effect)
-        ).apply(instance, InfoHolder::new));
+    private final Map<EffectType<?>, List<InfoHolder<?>>> effects = new HashMap<>();
+
+    private final Map<Class<? extends SlotEffectManager>, SlotEffectManager> managerMap = new HashMap<>();
+
+
+    private final Map<EffectType<?>, Optional<InfoHolder<?>>> oldBestEffects = new HashMap<>();
+
+    private final Map<EffectType<?>, TreeMultimap<Integer, SlotEffectHolder<?>>> effectHolders = new HashMap<>();
+
+    public TreeMultimap<Integer, SlotEffectHolder<?>> getEffectHoldersByType(EffectType<?> type) {
+        return effectHolders.computeIfAbsent(type, t -> TreeMultimap.create());
     }
 
-    private final Map<EffectType<?>, List<InfoHolder<?>>> effects = new HashMap<>();
+    public Map<EffectType<?>, TreeMultimap<Integer, SlotEffectHolder<?>>> getEffectHolders() {
+        return effectHolders;
+    }
+
+    public <T extends SlotEffectManager> T getSlotEffectManager(Class<T> clazz) {
+        return (T) managerMap.get(clazz);
+    }
+
+    public Map<EffectType<?>, BaseEffect> findEffectsBySlot(ISlotContext slotContext) {
+        SlotEffectManager slotEffectManager = managerMap.get(slotContext.getManagerClass());
+        if (slotEffectManager != null) {
+            return slotEffectManager.getEffectsBySlot(slotContext);
+        }
+        return Map.of();
+    }
+
+    public <T extends BaseEffect> Optional<InfoHolder<T>> getBestEffect(EffectType<T> type) {
+        TreeMultimap<Integer, SlotEffectHolder<T>> effectHoldersByType = Cast.cast(getEffectHoldersByType(type));
+        if (effectHoldersByType.isEmpty()) {
+            return Optional.empty();
+        } else {
+            Integer lastKey = effectHoldersByType.keySet().last();
+            NavigableSet<SlotEffectHolder<T>> slotEffectHolders = effectHoldersByType.get(lastKey);
+            if (slotEffectHolders.isEmpty()) {
+                return Optional.empty();
+            } else {
+                return Optional.of(slotEffectHolders.getLast().infoHolder());
+            }
+        }
+    }
 
     public List<InfoHolder<?>> collectAllEffects() {
         List<InfoHolder<?>> list = new ArrayList<>();
@@ -39,8 +79,8 @@ public class EntityEquipmentEffectData {
     }
 
     public void tick(LivingEntity living) {
-        for (List<EntityEquipmentEffectData.InfoHolder<?>> value : effects.values()) {
-            for (EntityEquipmentEffectData.InfoHolder<?> info : value) {
+        for (List<InfoHolder<?>> value : effects.values()) {
+            for (InfoHolder<?> info : value) {
                 if (info.effect() instanceof ITickAbleEffect tickAbleEffect) {
                     tickAbleEffect.effectTick(info.itemStack(), living);
                 }
@@ -71,7 +111,7 @@ public class EntityEquipmentEffectData {
                 getEffectsByType(effectType).removeIf(holder -> {
                     if (holder.effect().activeId == baseEffect.activeId) {
                         baseEffect.onDeActive(entity, from);
-                        holder.effect.activeId = null;
+                        holder.effect().activeId = null;
                         return true;
                     }
                     return false;
@@ -80,8 +120,8 @@ public class EntityEquipmentEffectData {
                 List<InfoHolder<?>> orDefault = Cast.cast(getEffectsByType(effectType));
                 if (!orDefault.isEmpty()) {
                     InfoHolder<?> first = orDefault.getFirst();
-                    if (first.effect.activeId == baseEffect.activeId) {
-                        toDeActive.put(effectType, first.effect);
+                    if (first.effect().activeId == baseEffect.activeId) {
+                        toDeActive.put(effectType, first.effect());
                         orDefault.removeFirst();
                     }
                 }
@@ -100,7 +140,7 @@ public class EntityEquipmentEffectData {
                     toActive.put(effectType, baseEffect);
                 } else {
                     InfoHolder<?> first = effectsByType.getFirst();
-                    if (baseEffect.isBetterThan(entity, to, first.effect(), first.itemStack)) {
+                    if (baseEffect.isBetterThan(entity, to, first.effect(), first.itemStack())) {
                         effectsByType.set(0, Cast.cast(new InfoHolder<>(to, baseEffect)));
                         toActive.put(effectType, baseEffect);
                     }
@@ -129,4 +169,8 @@ public class EntityEquipmentEffectData {
         });
     }
 
+    {
+        managerMap.put(CurioSlotEffectManager.class, new CurioSlotEffectManager(this));
+        managerMap.put(EquipmentSlotEffectManager.class, new EquipmentSlotEffectManager(this));
+    }
 }

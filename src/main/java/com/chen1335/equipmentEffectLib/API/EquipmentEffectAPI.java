@@ -2,8 +2,9 @@ package com.chen1335.equipmentEffectLib.API;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
-import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.chen1335.equipmentEffectLib.common.InfoHolder;
 import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
@@ -22,13 +23,13 @@ import java.util.Map;
 import java.util.Optional;
 
 public final class EquipmentEffectAPI {
-    public static <T extends BaseEffect> Optional<EntityEquipmentEffectData.InfoHolder<T>> findBestEffect(LivingEntity living, EffectType<T> effectType) {
-        List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
+    public static <T extends BaseEffect> Optional<InfoHolder<T>> findBestEffect(LivingEntity living, EffectType<T> effectType) {
+        List<InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
         return list.isEmpty() ? Optional.empty() : Optional.of(list.getFirst());
     }
 
-    public static <T extends BaseEffect> Optional<List<EntityEquipmentEffectData.InfoHolder<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
-        List<EntityEquipmentEffectData.InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
+    public static <T extends BaseEffect> Optional<List<InfoHolder<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
+        List<InfoHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
         return list.isEmpty() ? Optional.empty() : Optional.of(list);
     }
 
@@ -51,6 +52,10 @@ public final class EquipmentEffectAPI {
     }
 
     public static Map<EffectType<?>, BaseEffect> getEffects(ItemStack itemStack) {
+        return getEffects(itemStack, EquipmentType.ALL);
+    }
+
+    public static Map<EffectType<?>, BaseEffect> getEffects(ItemStack itemStack, IEquipmentType equipmentType) {
         if (itemStack.isEmpty()) {
             return Map.of();
         }
@@ -73,6 +78,9 @@ public final class EquipmentEffectAPI {
             }
         }
         map.putAll(subEffects);
+        if (equipmentType != EquipmentType.ALL) {
+            map.values().removeIf(baseEffect -> !equipmentType.match(baseEffect.getEquipmentType()));
+        }
         return ImmutableMap.copyOf(map);
     }
 

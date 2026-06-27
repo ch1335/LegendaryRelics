@@ -22,6 +22,7 @@ public class EntitySetsEffectData {
     public final Map<SetEffect, EffectInstance> effectInstances = new HashMap<>();
 
 
+
     public void update(LivingEntity livingEntity) {
         Map<SetEffect, Set<Item>> setMap = new HashMap<>();
         for (EquipmentType equipmentType : EquipmentType.getUnits().values()) {

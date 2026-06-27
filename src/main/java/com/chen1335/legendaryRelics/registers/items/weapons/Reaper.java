@@ -35,7 +35,7 @@ public class Reaper extends LRSwordItem {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.SOUL_EATER.value().create(1, EquipmentType.HAND));
+        return List.of(LREquipmentEffectTypes.SOUL_EATER.value().create(1, EquipmentType.HANDS));
     }
 
     @Calculator

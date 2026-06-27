@@ -82,7 +82,7 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
             } else if (effect instanceof LRArmorEffect) {
                 equipmentType = EquipmentType.ARMOR;
             } else if (effect instanceof LRWeaponEffect) {
-                equipmentType = EquipmentType.HAND;
+                equipmentType = EquipmentType.HANDS;
             }
         }
         effect = effectType.create(1, equipmentType);

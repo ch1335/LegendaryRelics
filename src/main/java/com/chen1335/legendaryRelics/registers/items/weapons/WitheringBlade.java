@@ -17,7 +17,7 @@ public class WitheringBlade extends LRSwordItem {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.EROSION_EFFECT.value().create(1, EquipmentType.HAND));
+        return List.of(LREquipmentEffectTypes.EROSION_EFFECT.value().create(1, EquipmentType.HANDS));
     }
 
     @Override

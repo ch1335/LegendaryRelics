@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.registers.attachmentDatas;
 
-import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.chen1335.equipmentEffectLib.common.InfoHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.common.EffectInfoHolder;
@@ -40,12 +40,12 @@ public class LRProjectileData implements INBTSerializable<CompoundTag> {
         ignoreHitCooldown = nbt.getBoolean("ignoreHitCooldown");
     }
 
-    public void attachEffect(EntityEquipmentEffectData.InfoHolder<? extends BaseEffect> infoHolder) {
+    public void attachEffect(InfoHolder<? extends BaseEffect> infoHolder) {
         attachedEffects.effectMap().put(infoHolder.effect().getType(), infoHolder);
     }
 
 
-    public <T extends BaseEffect> Optional<EntityEquipmentEffectData.InfoHolder<T>> getEffect(EffectType<T> effectType) {
+    public <T extends BaseEffect> Optional<InfoHolder<T>> getEffect(EffectType<T> effectType) {
         return Optional.ofNullable(attachedEffects.get(effectType));
     }
 

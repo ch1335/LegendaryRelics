@@ -32,8 +32,8 @@ public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
     @Override
     public List<BaseEffect> getDefaultEffects() {
         return List.of(
-                LREquipmentEffectTypes.BACKSTAB.value().create(1, EquipmentType.HAND),
-                LREquipmentEffectTypes.AMBUSH.value().create(1, EquipmentType.HAND)
+                LREquipmentEffectTypes.BACKSTAB.value().create(1, EquipmentType.HANDS),
+                LREquipmentEffectTypes.AMBUSH.value().create(1, EquipmentType.HANDS)
         );
     }
 

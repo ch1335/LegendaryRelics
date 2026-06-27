@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
-import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
+import com.chen1335.equipmentEffectLib.common.InfoHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.mojang.serialization.Codec;
@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public record EffectInfoHolder(
-        Map<EffectType<?>, EntityEquipmentEffectData.InfoHolder<? extends BaseEffect>> effectMap) {
+        Map<EffectType<?>, InfoHolder<? extends BaseEffect>> effectMap) {
     public static final Codec<EffectInfoHolder> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(EERegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec(), EntityEquipmentEffectData.InfoHolder.CODEC).fieldOf("effects").forGetter(EffectInfoHolder::effectMap)
+            Codec.unboundedMap(EERegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec(), InfoHolder.CODEC).fieldOf("effects").forGetter(EffectInfoHolder::effectMap)
     ).apply(instance, EffectInfoHolder::new));
 
-    public EffectInfoHolder(Map<EffectType<?>, EntityEquipmentEffectData.InfoHolder<? extends BaseEffect>> effectMap) {
+    public EffectInfoHolder(Map<EffectType<?>, InfoHolder<? extends BaseEffect>> effectMap) {
         this.effectMap = new HashMap<>(effectMap);
     }
 
@@ -33,7 +33,7 @@ public record EffectInfoHolder(
         effectMap.putAll(first.effectMap());
     }
 
-    public <T extends BaseEffect> EntityEquipmentEffectData.InfoHolder<T> get(EffectType<T> effectType) {
+    public <T extends BaseEffect> InfoHolder<T> get(EffectType<T> effectType) {
         return Cast.cast(effectMap.get(effectType));
     }
 }

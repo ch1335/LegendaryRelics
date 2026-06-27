@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.util.FastColor;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -25,7 +26,7 @@ public class RenderUtils {
             c = (float) (halfSize * (a - 12.5) / 12.5);
             b = -halfSize;
         }
-        int color = Integer.MAX_VALUE;
+        int color = FastColor.ARGB32.color(100,255,255,255);
 
 
         float centerX = x + halfSize;

@@ -31,7 +31,7 @@ public class LastWhisper extends BowItem implements IEffectEquipment, ILRItemExt
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.PERFORATION.value().create(1, EquipmentType.HAND));
+        return List.of(LREquipmentEffectTypes.PERFORATION.value().create(1, EquipmentType.HANDS));
     }
 
     @Override
