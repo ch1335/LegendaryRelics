@@ -1,6 +1,8 @@
 package com.chen1335.legendaryRelics.common.lootModifier;
 
 import com.chen1335.legendaryRelics.config.LootConfig;
+import com.chen1335.legendaryRelics.utils.valueHolder.DefaultValueHolder;
+import com.chen1335.legendaryRelics.utils.valueHolder.ValueHolderWrapper;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,16 +26,16 @@ import java.util.regex.Pattern;
 
 public class LootEntry {
     private final String id;
-    public DefaultValueHolder<Double> chance;
-    public DefaultValueHolder<Integer> rolls = new DefaultValueHolder<>(1);
-    public DefaultValueHolder<List<String>> lootTables;
+    public final ValueHolderWrapper<Double> chance = new ValueHolderWrapper<>(new DefaultValueHolder<>(0D));
+    public final ValueHolderWrapper<Integer> rolls = new ValueHolderWrapper<>(new DefaultValueHolder<>(1));
+    public final ValueHolderWrapper<List<String>> lootTables = new ValueHolderWrapper<>(new DefaultValueHolder<>(List.of()));
     public final Consumer<ObjectArrayList<ItemStack>> stackGetter;
     public boolean isCreatedByRemote = false;
     public static final StreamCodec<ByteBuf, LootEntry> STREAM_CODEC = StreamCodec.of((byteBuf, lootEntry) -> {
         ByteBufCodecs.STRING_UTF8.encode(byteBuf, lootEntry.id);
-        byteBuf.writeDouble(lootEntry.chance.value);
-        byteBuf.writeInt(lootEntry.rolls.value);
-        ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(byteBuf, lootEntry.lootTables.value);
+        byteBuf.writeDouble(lootEntry.chance.get());
+        byteBuf.writeInt(lootEntry.rolls.get());
+        ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(byteBuf, lootEntry.lootTables.get());
     }, byteBuf -> {
         String id = ByteBufCodecs.STRING_UTF8.decode(byteBuf);
         double chance = byteBuf.readDouble();
@@ -44,9 +46,9 @@ public class LootEntry {
             return new LootEntry(id, chance, lootTables, itemStacks -> {
             }).rolls(rolls).markCreatedByRemote();
         }
-        lootEntry.chance.value = chance;
-        lootEntry.rolls.value = rolls;
-        lootEntry.lootTables.value = lootTables;
+        lootEntry.chance.set(chance);
+        lootEntry.rolls.set(rolls);
+        lootEntry.lootTables.set(lootTables);
         return lootEntry;
     });
 
@@ -57,14 +59,14 @@ public class LootEntry {
 
     public LootEntry(String id, double chance, List<String> lootTables, Consumer<ObjectArrayList<ItemStack>> consumer) {
         this.id = id;
-        this.chance = new DefaultValueHolder<>(Double.parseDouble(String.format("%.2f", chance)));
-        this.lootTables = new DefaultValueHolder<>(lootTables, List.copyOf(lootTables));
+        this.chance.setInnerHolder(new DefaultValueHolder<>(Double.parseDouble(String.format("%.2f", chance))));
+        this.lootTables.setInnerHolder(new DefaultValueHolder<>(lootTables, List.copyOf(lootTables)));
         this.stackGetter = consumer;
         LootModifier.LOOT_ENTRIES.put(id, this);
     }
 
     public LootEntry rolls(int rolls) {
-        this.rolls = new DefaultValueHolder<>(rolls);
+        this.rolls.setInnerHolder(new DefaultValueHolder<>(rolls));
         return this;
     }
 
@@ -72,24 +74,24 @@ public class LootEntry {
         CompoundTag compoundTag = new CompoundTag();
         ListTag listTag = new ListTag();
 
-        for (String resourceLocation : lootTables.value) {
+        for (String resourceLocation : lootTables.get()) {
             listTag.add(StringTag.valueOf(resourceLocation));
         }
-        compoundTag.putDouble("chance", chance.value);
-        compoundTag.putDouble("rolls", rolls.value);
+        compoundTag.putDouble("chance", chance.get());
+        compoundTag.putDouble("rolls", rolls.get());
         compoundTag.put("lootTables", listTag);
         return compoundTag;
     }
 
     public void load(CompoundTag compoundTag) {
-        chance.value = compoundTag.getDouble("chance");
-        rolls.value = compoundTag.getInt("rolls");
+        chance.set(compoundTag.getDouble("chance"));
+        rolls.set(compoundTag.getInt("rolls"));
         ListTag listTag = compoundTag.getList("lootTables", Tag.TAG_STRING);
         List<String> resourceLocations = new ArrayList<>();
         for (int i = 0; i < listTag.size(); i++) {
             resourceLocations.add(listTag.getString(i));
         }
-        lootTables.value = resourceLocations;
+        lootTables.set(resourceLocations);
     }
 
     public Component getComponent() {
@@ -129,15 +131,15 @@ public class LootEntry {
 
     public void run(ResourceLocation lootTableId, ObjectArrayList<ItemStack> generatedLoot) {
         String tableIdString = lootTableId.toString();
-        for (String string : lootTables.value) {
+        for (String string : lootTables.get()) {
             if (Pattern.matches(string, tableIdString)) {
-                for (int r = 0; r < rolls.value; r++) {
-                    double i = Math.floor(chance.value);
+                for (int r = 0; r < rolls.get(); r++) {
+                    double i = Math.floor(chance.get());
                     for (int j = 0; j < i; j++) {
                         stackGetter.accept(generatedLoot);
                     }
 
-                    double i2 = chance.value - i;
+                    double i2 = chance.get() - i;
                     if (i2 >= Math.random()) {
                         stackGetter.accept(generatedLoot);
                     }
@@ -151,18 +153,5 @@ public class LootEntry {
         return id;
     }
 
-    public static class DefaultValueHolder<T> {
-        public T value;
-        public T defaultValue;
-
-        public DefaultValueHolder(T value, T defaultValue) {
-            this.value = value;
-            this.defaultValue = defaultValue;
-        }
-
-        public DefaultValueHolder(T value) {
-            this(value, value);
-        }
-    }
 
 }

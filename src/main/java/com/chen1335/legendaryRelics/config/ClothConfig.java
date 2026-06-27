@@ -26,22 +26,20 @@ public class ClothConfig {
             configBuilder.setTitle(Component.translatable("legendary_relics.config"));
             configBuilder.setParentScreen(parent);
             ConfigCategory clientConfig = configBuilder.getOrCreateCategory(Component.translatable("legendary_relics.config.client"));
-            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.x"), LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X)
+            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.x"), LRClientConfig.HUD.equipment_effect_cooldown_x.getAsDouble())
                     .setDefaultValue(0)
                     .setSaveConsumer(d -> {
-                        LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X = d;
+                        LRClientConfig.HUD.equipment_effect_cooldown_x.set(d);
                     })
                     .build()
             );
-
-            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.y"), LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y)
+            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.y"), LRClientConfig.HUD.equipment_effect_cooldown_y.getAsDouble())
                     .setDefaultValue(0.5F)
                     .setSaveConsumer(d -> {
-                        LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y = d;
+                        LRClientConfig.HUD.equipment_effect_cooldown_y.set(d);
                     })
                     .build()
             );
-
 
             ConfigCategory lootTableConfig = configBuilder.getOrCreateCategory(Component.translatable("legendary_relics.config.lootTable"));
             if (!canEdit(parent.getMinecraft())) {
@@ -50,28 +48,22 @@ public class ClothConfig {
             LootModifier.LOOT_ENTRIES.forEach((id, lootEntry) -> {
                 SubCategoryBuilder subCategoryBuilder = entryBuilder.startSubCategory(lootEntry.getComponent());
 
-                @NotNull StringListListEntry lootTables = entryBuilder.startStrList(Component.translatable("legendary_relics.loot_config.loot_tables"), lootEntry.lootTables.value)
-                        .setDefaultValue(lootEntry.lootTables.defaultValue)
-                        .setSaveConsumer(strings -> {
-                            lootEntry.lootTables.value = strings;
-                        })
+                @NotNull StringListListEntry lootTables = entryBuilder.startStrList(Component.translatable("legendary_relics.loot_config.loot_tables"), lootEntry.lootTables.get())
+                        .setDefaultValue(lootEntry.lootTables.geDefault())
+                        .setSaveConsumer(lootEntry.lootTables::set)
                         .build();
                 lootTables.setEditable(canEdit(parent.getMinecraft()));
                 subCategoryBuilder.add(lootTables);
 
-                @NotNull DoubleListEntry chance = entryBuilder.startDoubleField(Component.translatable("legendary_relics.loot_config.chance"), lootEntry.chance.value)
-                        .setDefaultValue(lootEntry.chance.defaultValue)
-                        .setSaveConsumer(d -> {
-                            lootEntry.chance.value = d;
-                        }).build();
+                @NotNull DoubleListEntry chance = entryBuilder.startDoubleField(Component.translatable("legendary_relics.loot_config.chance"), lootEntry.chance.get())
+                        .setDefaultValue(lootEntry.chance.geDefault())
+                        .setSaveConsumer(lootEntry.chance::set).build();
                 chance.setEditable(canEdit(parent.getMinecraft()));
                 subCategoryBuilder.add(chance);
 
-                @NotNull IntegerListEntry rolls = entryBuilder.startIntField(Component.translatable("legendary_relics.loot_config.rolls"), lootEntry.rolls.value)
-                        .setDefaultValue(lootEntry.rolls.defaultValue)
-                        .setSaveConsumer(i -> {
-                            lootEntry.rolls.value = i;
-                        }).build();
+                @NotNull IntegerListEntry rolls = entryBuilder.startIntField(Component.translatable("legendary_relics.loot_config.rolls"), lootEntry.rolls.get())
+                        .setDefaultValue(lootEntry.rolls.geDefault())
+                        .setSaveConsumer(lootEntry.rolls::set).build();
                 rolls.setEditable(canEdit(parent.getMinecraft()));
                 subCategoryBuilder.add(rolls);
 
@@ -80,11 +72,11 @@ public class ClothConfig {
             });
 
             configBuilder.setSavingRunnable(() -> {
-                Config.save();
+                LRClientConfig.CONFIG_SPEC.save();
                 LocalPlayer player = parent.getMinecraft().player;
                 if (player != null) {
                     if (parent.getMinecraft().getSingleplayerServer() != null) {
-                        LootConfig.save();
+                        LootConfig.CONFIG_SPEC.save();
                         if (ModList.get().isLoaded("ali")) {
                             player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.info.ali"));
                         }

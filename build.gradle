@@ -144,13 +144,13 @@ repositories {
         }
     }
 
-    maven {
-        url "https://maven.latvian.dev/releases"
-        content {
-            includeGroup "dev.latvian.mods"
-            includeGroup "dev.latvian.apps"
-        }
-    }
+//    maven {
+//        url "https://maven.latvian.dev/releases"
+//        content {
+//            includeGroup "dev.latvian.mods"
+//            includeGroup "dev.latvian.apps"
+//        }
+//    }
 
     maven {
         url 'https://jitpack.io'
@@ -191,8 +191,8 @@ dependencies {
     implementation "curse.maven:cloth-config-348521:5729127"
     implementation "curse.maven:lendercataclysm-551586:6849033"
     implementation "curse.maven:lionfish-api-1001614:6168249"
-    api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
-    implementation "curse.maven:rhino-416294:6184623"
+    implementation "curse.maven:kubejs-238086:8083208"
+    implementation "curse.maven:rhino-416294:8218748"
     implementation "curse.maven:apothic-attributes-extension-1327218:6911429"
 //    implementation "curse.maven:probejs-585406:7105159"
 

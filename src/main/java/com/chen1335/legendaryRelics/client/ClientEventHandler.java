@@ -29,7 +29,7 @@ public class ClientEventHandler {
         @SubscribeEvent
         public static void PlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
             if (Minecraft.getInstance().getSingleplayerServer() != null) {
-                LootConfig.load();
+
             }
         }
 

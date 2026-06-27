@@ -20,7 +20,7 @@ public class LegendaryRelicPlugin implements IPlugin {
     public void registerServer(@NotNull IServerRegistry registry) {
         Map<String, List<LootEntry>> combine = new HashMap<>();
         LootModifier.LOOT_ENTRIES.values().forEach(lootEntry -> {
-            for (String string : lootEntry.lootTables.value) {
+            for (String string : lootEntry.lootTables.get()) {
                 combine.computeIfAbsent(string, s -> new ArrayList<>()).add(lootEntry);
             }
         });

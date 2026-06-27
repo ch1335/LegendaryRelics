@@ -12,7 +12,6 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
 import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
 import com.chen1335.legendaryRelics.common.lootModifier.lootInject.LootInjectors;
 import com.chen1335.legendaryRelics.config.ClothConfig;
-import com.chen1335.legendaryRelics.config.Config;
 import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.config.LootConfig;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
@@ -90,7 +89,10 @@ public class LegendaryRelics {
         NeoForge.EVENT_BUS.addListener(this::serverAboutToStartEvent);
         NeoForge.EVENT_BUS.addListener(this::serverStartedEvent);
 
-        modContainer.registerConfig(ModConfig.Type.CLIENT, LRClientConfig.CONFIG_SPEC);
+
+
+        modContainer.registerConfig(ModConfig.Type.CLIENT, LRClientConfig.CONFIG_SPEC,"legendary_relics/client.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, LootConfig.CONFIG_SPEC,"legendary_relics/loots.toml");
         if (ModList.get().isLoaded("cloth_config")) {
             if (Environment.get().getDist().isClient()) {
                 ClothConfig.build(modContainer);
@@ -156,9 +158,6 @@ public class LegendaryRelics {
 
     public void setup(FMLCommonSetupEvent event) {
         GameTaskEffect.initTasks();
-        Config.load();
-        event.enqueueWork(LootEntries::init);
-        event.enqueueWork(LootConfig::load);
     }
 
     public void serverAboutToStartEvent(ServerAboutToStartEvent event) {

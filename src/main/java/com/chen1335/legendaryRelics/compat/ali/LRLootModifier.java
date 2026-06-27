@@ -37,8 +37,8 @@ public class LRLootModifier implements ILootModifier<ResourceLocation> {
             ObjectArrayList<ItemStack> itemStacks = new ObjectArrayList<>();
             lootEntry.stackGetter.accept(itemStacks);
             for (ItemStack itemStack : itemStacks) {
-                LootPoolEntryContainer entry = LootItem.lootTableItem(itemStack.getItem()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(lootEntry.rolls.value))).build();
-                ItemNode itemNode = (ItemNode) utils.getEntryFactory(utils, entry).create(utils, entry, lootEntry.chance.value.floatValue(), 1, List.of(), List.of());
+                LootPoolEntryContainer entry = LootItem.lootTableItem(itemStack.getItem()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(lootEntry.rolls.get()))).build();
+                ItemNode itemNode = (ItemNode) utils.getEntryFactory(utils, entry).create(utils, entry, lootEntry.chance.get().floatValue(), 1, List.of(), List.of());
                 groupNode.addChildren(itemNode);
             }
         }

@@ -22,8 +22,8 @@ public class EffectCooldownRender implements LayeredDraw.Layer {
         EquipmentEffectCooldownManager clientCooldownManager = LRClient.getClientCooldownManager();
         int width = guiGraphics.guiWidth();
         int height = guiGraphics.guiHeight();
-        float xPercentage = (float) LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X;
-        float yPercentage = (float) LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y;
+        float xPercentage = LRClientConfig.HUD.equipment_effect_cooldown_x.get().floatValue();
+        float yPercentage = LRClientConfig.HUD.equipment_effect_cooldown_y.get().floatValue();
         int x = (int) (width * xPercentage);
         int y = (int) (height * yPercentage) - 16;
         for (Map.Entry<EffectType<?>, EquipmentEffectCooldownManager.CooldownHolder> entry : clientCooldownManager.getCooldownHolders().entrySet()) {
