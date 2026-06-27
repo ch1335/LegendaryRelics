@@ -5,12 +5,11 @@ import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.client.RenderUtils;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
-import com.chen1335.legendaryRelics.config.Config;
+import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
-import net.minecraft.client.renderer.RenderBuffers;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -23,8 +22,8 @@ public class EffectCooldownRender implements LayeredDraw.Layer {
         EquipmentEffectCooldownManager clientCooldownManager = LRClient.getClientCooldownManager();
         int width = guiGraphics.guiWidth();
         int height = guiGraphics.guiHeight();
-        float xPercentage = (float) Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X;
-        float yPercentage = (float) Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y;
+        float xPercentage = (float) LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X;
+        float yPercentage = (float) LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y;
         int x = (int) (width * xPercentage);
         int y = (int) (height * yPercentage) - 16;
         for (Map.Entry<EffectType<?>, EquipmentEffectCooldownManager.CooldownHolder> entry : clientCooldownManager.getCooldownHolders().entrySet()) {

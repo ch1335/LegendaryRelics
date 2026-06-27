@@ -12,7 +12,6 @@ import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -27,18 +26,18 @@ public class ClothConfig {
             configBuilder.setTitle(Component.translatable("legendary_relics.config"));
             configBuilder.setParentScreen(parent);
             ConfigCategory clientConfig = configBuilder.getOrCreateCategory(Component.translatable("legendary_relics.config.client"));
-            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.x"), com.chen1335.legendaryRelics.config.Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X)
+            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.x"), LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X)
                     .setDefaultValue(0)
                     .setSaveConsumer(d -> {
-                        com.chen1335.legendaryRelics.config.Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X = d;
+                        LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_X = d;
                     })
                     .build()
             );
 
-            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.y"), Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y)
+            clientConfig.addEntry(entryBuilder.startDoubleField(Component.translatable("legendary_relics.cooldown.y"), LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y)
                     .setDefaultValue(0.5F)
                     .setSaveConsumer(d -> {
-                        com.chen1335.legendaryRelics.config.Config.ClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y = d;
+                        LRClientConfig.EQUIPMENT_EFFECT_COOLDOWN_Y = d;
                     })
                     .build()
             );

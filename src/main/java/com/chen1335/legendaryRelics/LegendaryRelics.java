@@ -13,6 +13,7 @@ import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
 import com.chen1335.legendaryRelics.common.lootModifier.lootInject.LootInjectors;
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.Config;
+import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.config.LootConfig;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
 import com.chen1335.legendaryRelics.registers.recipes.craftType.CraftItem;
@@ -28,6 +29,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
@@ -87,6 +89,8 @@ public class LegendaryRelics {
         modEventBus.addListener(this::setup);
         NeoForge.EVENT_BUS.addListener(this::serverAboutToStartEvent);
         NeoForge.EVENT_BUS.addListener(this::serverStartedEvent);
+
+        modContainer.registerConfig(ModConfig.Type.CLIENT, LRClientConfig.CONFIG_SPEC);
         if (ModList.get().isLoaded("cloth_config")) {
             if (Environment.get().getDist().isClient()) {
                 ClothConfig.build(modContainer);
