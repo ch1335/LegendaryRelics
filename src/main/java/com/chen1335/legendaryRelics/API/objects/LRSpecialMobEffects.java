@@ -6,6 +6,7 @@ import com.chen1335.legendaryRelics.registers.specialMobEffects.Erosion;
 import com.chen1335.legendaryRelics.registers.specialMobEffects.InfernoScorch;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -17,9 +18,20 @@ public class LRSpecialMobEffects {
         SPECIAL_MOB_EFFECT_TYPES.register(eventBus);
     }
 
-    public static final DeferredHolder<MobEffectType<?>, MobEffectType<Erosion>> EROSION = SPECIAL_MOB_EFFECT_TYPES.register("erosion", MobEffectType.Builder.<Erosion>builder().factory(Erosion::new).renderIcon().build());
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<Erosion>> EROSION = SPECIAL_MOB_EFFECT_TYPES.register("erosion", MobEffectType.Builder.<Erosion>builder()
+            .factory(Erosion::new)
+            .renderIcon()
+            .category(MobEffectCategory.HARMFUL)
+            .build());
 
-    public static final DeferredHolder<MobEffectType<?>, MobEffectType<InfernoScorch>> INFERNO_SCORCH = SPECIAL_MOB_EFFECT_TYPES.register("inferno_scorch", MobEffectType.Builder.<InfernoScorch>builder().factory(InfernoScorch::new).renderIcon().build());
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<InfernoScorch>> INFERNO_SCORCH = SPECIAL_MOB_EFFECT_TYPES.register("inferno_scorch", MobEffectType.Builder.<InfernoScorch>builder()
+            .factory(InfernoScorch::new)
+            .renderIcon()
+            .category(MobEffectCategory.HARMFUL)
+            .build());
 
-    public static final DeferredHolder<MobEffectType<?>, MobEffectType<Doom>> DOOM = SPECIAL_MOB_EFFECT_TYPES.register("doom", MobEffectType.Builder.<Doom>builder().factory(Doom::new).renderIcon().build());
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<Doom>> DOOM = SPECIAL_MOB_EFFECT_TYPES.register("doom", MobEffectType.Builder.<Doom>builder()
+            .factory(Doom::new)
+            .renderIcon()
+            .build());
 }

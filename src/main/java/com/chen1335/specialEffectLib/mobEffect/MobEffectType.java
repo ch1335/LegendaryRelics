@@ -1,16 +1,18 @@
 package com.chen1335.specialEffectLib.mobEffect;
 
-import com.chen1335.legendaryRelics.registers.specialMobEffects.Erosion;
+import net.minecraft.world.effect.MobEffectCategory;
 
 import java.util.function.Supplier;
 
 public class MobEffectType<T extends SpecialMobEffect> {
     private final MobEffectFactory<T> factory;
     private final boolean renderIcon;
+    private final MobEffectCategory category;
 
-    public MobEffectType(MobEffectFactory<T> factory, boolean renderIcon) {
+    public MobEffectType(MobEffectFactory<T> factory, boolean renderIcon, MobEffectCategory category) {
         this.factory = factory;
         this.renderIcon = renderIcon;
+        this.category = category;
     }
 
     public T create() {
@@ -21,6 +23,10 @@ public class MobEffectType<T extends SpecialMobEffect> {
         return renderIcon;
     }
 
+    public MobEffectCategory getCategory() {
+        return category;
+    }
+
     public interface MobEffectFactory<T extends SpecialMobEffect> {
         T create(MobEffectType<T> effectType);
     }
@@ -28,6 +34,7 @@ public class MobEffectType<T extends SpecialMobEffect> {
     public static class Builder<T extends SpecialMobEffect> {
         private MobEffectFactory<T> factory;
         private boolean renderIcon = false;
+        private MobEffectCategory category = MobEffectCategory.NEUTRAL;
 
         public static <BT extends SpecialMobEffect> Builder<BT> builder() {
             return new Builder<>();
@@ -43,8 +50,13 @@ public class MobEffectType<T extends SpecialMobEffect> {
             return this;
         }
 
+        public Builder<T> category(MobEffectCategory category) {
+            this.category = category;
+            return this;
+        }
+
         public Supplier<MobEffectType<T>> build() {
-            return () -> new MobEffectType<>(factory, renderIcon);
+            return () -> new MobEffectType<>(factory, renderIcon, category);
         }
     }
 }
