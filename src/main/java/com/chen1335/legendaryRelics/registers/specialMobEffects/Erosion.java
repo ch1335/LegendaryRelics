@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.registers.specialMobEffects;
 
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
-import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
+import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.registers.entities.projectiles.misc.TreatmentBall;
 import com.chen1335.legendaryRelics.utils.LRUtil;
@@ -31,7 +31,7 @@ public class Erosion extends TimeLimitEffect {
     }
 
     public Erosion(float perLayerDamage, float armorReducePerLayer) {
-        this(LRSpecialMobEffect.EROSION.value());
+        this(LRSpecialMobEffects.EROSION.value());
         this.initTime(100);
         this.perLayerDamage = perLayerDamage;
         this.armorReducePerLayer = FinalCalculator.castToDoubleStrict(armorReducePerLayer);

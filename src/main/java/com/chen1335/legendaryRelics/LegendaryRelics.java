@@ -9,7 +9,6 @@ import com.chen1335.legendaryRelics.client.LegendaryTooltipsHandler;
 import com.chen1335.legendaryRelics.client.particlePlayer.ParticlePlayersHolder;
 import com.chen1335.legendaryRelics.common.calculator.AutoRegister;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
-import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
 import com.chen1335.legendaryRelics.common.lootModifier.lootInject.LootInjectors;
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.LRClientConfig;
@@ -74,7 +73,7 @@ public class LegendaryRelics {
         LRDataComponentTypes.register(modEventBus);
         LRArmorMaterials.register(modEventBus);
         LREquipmentEffectTypes.register(modEventBus);
-        LRSpecialMobEffect.register(modEventBus);
+        LRSpecialMobEffects.register(modEventBus);
         LREntityTypes.register(modEventBus);
         LRSetsEffects.register(modEventBus);
         LREntityDataSerializers.register(modEventBus);

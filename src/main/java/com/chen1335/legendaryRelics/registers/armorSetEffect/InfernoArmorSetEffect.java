@@ -5,7 +5,7 @@ import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSetsEffects;
-import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
+import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.client.particlePlayer.ParticlePlayersHolder;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
@@ -185,7 +185,7 @@ public class InfernoArmorSetEffect extends SetEffect {
 
                 boolean flag = false;
                 for (Map<MobEffectType<?>, SpecialMobEffect> value : effects.values()) {
-                    InfernoScorch effect = (InfernoScorch) value.get(LRSpecialMobEffect.INFERNO_SCORCH.value());
+                    InfernoScorch effect = (InfernoScorch) value.get(LRSpecialMobEffects.INFERNO_SCORCH.value());
                     if (effect != null) {
                         Entity sourceEntity = effect.getSourceEntity(level);
                         for (LivingEntity nearbyEntity : nearbyEntities) {

@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.registers.specialMobEffects;
 
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
-import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffect;
+import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.common.attributeFix.AttributeFixer;
 import com.chen1335.legendaryRelics.common.attributeFix.fixTypes.MulFix;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
@@ -26,7 +26,7 @@ public class InfernoScorch extends TimeLimitEffect {
     }
 
     public InfernoScorch(float damagePerSecond,float explosionDamage) {
-        super(LRSpecialMobEffect.INFERNO_SCORCH.value());
+        super(LRSpecialMobEffects.INFERNO_SCORCH.value());
         this.damage = damagePerSecond;
         this.explosionDamage = explosionDamage;
         initTime(120);
