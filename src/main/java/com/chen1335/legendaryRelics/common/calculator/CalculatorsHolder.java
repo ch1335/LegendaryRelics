@@ -52,18 +52,5 @@ public class CalculatorsHolder {
                 LocateInfo::fieldName,
                 LocateInfo::new
         );
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            LocateInfo that = (LocateInfo) o;
-            return Objects.equals(className, that.className) && Objects.equals(fieldName, that.fieldName);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(className, fieldName);
-        }
     }
 }

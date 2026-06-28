@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
 import com.chen1335.legendaryRelics.utils.LRUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -77,10 +78,16 @@ public class AttributeBoostInNether extends LRCurioEffect {
     }
 
     @Override
-    public BaseEffect copy() {
-        AttributeBoostInNether copy = (AttributeBoostInNether) super.copy();
-        copy.modifierId = modifierId;
-        return copy;
+    public CompoundTag saveSimpleData() {
+        CompoundTag compoundTag = super.saveSimpleData();
+        compoundTag.putString("modifierId", modifierId.toString());
+        return compoundTag;
+    }
+
+    @Override
+    public void loadSimpleData(CompoundTag nbt) {
+        super.loadSimpleData(nbt);
+        modifierId = ResourceLocation.parse(nbt.getString("modifierId"));
     }
 
     public static void EntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {

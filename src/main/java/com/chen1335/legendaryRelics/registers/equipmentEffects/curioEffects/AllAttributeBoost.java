@@ -68,11 +68,4 @@ public class AllAttributeBoost extends LRBaseEffect {
     public void onDeActive(LivingEntity entity, ItemStack itemStack) {
         AttributeModifyHelper.removeAllPositive(entity, modifierId);
     }
-
-    @Override
-    public BaseEffect copy() {
-        AllAttributeBoost copy = (AllAttributeBoost) super.copy();
-        copy.modifierId = modifierId;
-        return copy;
-    }
 }

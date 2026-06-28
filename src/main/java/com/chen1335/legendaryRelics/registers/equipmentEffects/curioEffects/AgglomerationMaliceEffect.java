@@ -44,7 +44,7 @@ public class AgglomerationMaliceEffect extends LRCurioEffect {
     ));
 
     @Override
-    public int modifyLoot(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
+    public int modifyLootingLevel(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
         if (livingTarget instanceof Mob mob && mob.getSpawnType() == MobSpawnType.SPAWNER) {
             CalculatorArg args = CalculatorArg.simpleArg(livingAttacker, itemStack, this);
             int lootingLevelAddition = (int) LOOTING_LEVEL_ADD.getValue(args);

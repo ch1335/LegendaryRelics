@@ -31,7 +31,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class BaseEffect implements DataComponentHolder, MutableDataComponentHolder, IEffectHelper {
-    public UUID activeId = null;
 
     private final PatchedDataComponentMap components;
 
@@ -140,7 +139,7 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
         return this.getEffectLevel(entity, thisItemStack) > otherEffect.getEffectLevel(entity, otherStack);
     }
 
-    public int modifyLoot(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
+    public int modifyLootingLevel(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
         return lootingLevel;
     }
 
@@ -176,7 +175,6 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
     public BaseEffect copy() {
         BaseEffect effect = this.effectType.create(getRawEffectLevel(), getEquipmentType());
         effect.components.setAll(components.copy());
-        effect.activeId = activeId;
 
         if (effect instanceof ISubEffectProvider copyTo && this instanceof ISubEffectProvider copyFrom) {
             copyTo.copyFrom(copyFrom);

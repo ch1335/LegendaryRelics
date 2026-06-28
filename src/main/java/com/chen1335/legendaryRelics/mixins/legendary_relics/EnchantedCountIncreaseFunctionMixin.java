@@ -27,7 +27,7 @@ public class EnchantedCountIncreaseFunctionMixin {
             Entity attacker = context.getParamOrNull(LootContextParams.ATTACKING_ENTITY);
             if (entity instanceof LivingEntity mob && attacker instanceof LivingEntity livingAttacker) {
                 for (InfoHolder<?> collectAllEffect : livingAttacker.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA.get()).collectAllEffects()) {
-                    lootingLevel = collectAllEffect.effect().modifyLoot(collectAllEffect.itemStack(), mob, livingAttacker, lootingLevel);
+                    lootingLevel = collectAllEffect.effect().modifyLootingLevel(collectAllEffect.itemStack(), mob, livingAttacker, lootingLevel);
                 }
             }
         }
