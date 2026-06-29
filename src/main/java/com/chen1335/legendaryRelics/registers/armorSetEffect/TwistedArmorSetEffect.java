@@ -4,11 +4,14 @@ import com.chen1335.equipmentEffectLib.attachmentDatas.EntitySetsEffectData;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.API.objects.LRSetsEffects;
+import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.special.TieredBonus;
 import com.chen1335.legendaryRelics.effectInstances.TwistedEffectInstance;
+import com.chen1335.legendaryRelics.registers.specialMobEffects.PhaseShooting;
+import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -101,10 +104,14 @@ public class TwistedArmorSetEffect extends SetEffect {
             if (instance != null) {
                 CalculatorArg args = instance.buildArgs(attacker);
                 if (instance.coolDown <= 0) {
-                    instance.addStack(1);
                     float cooldownValueSecond = GAIN_STACK_COOLDOWN.getValue(args);
                     instance.coolDown = (int) (cooldownValueSecond * 20);
-                    instance.keepTime = (int) (KEEP_TIME.getValue(args) * 20);
+
+                    PhaseShooting effect = new PhaseShooting(DRAW_SPEED_PER_STACK.getValue(args), ARROW_DAMAGE_PER_STACK.getValue(args));
+                    effect.setDecayTime(20);
+                    effect.initTime((int) (KEEP_TIME.getValue(args) * 20));
+                    effect.setSourceEntity(attacker);
+                    SpecialEffectAPI.addEffectToEntity(attacker, effect, PhaseShooting::getFinal);
                 }
             }
         }
@@ -115,20 +122,24 @@ public class TwistedArmorSetEffect extends SetEffect {
         if (event.getItem().getItem() instanceof ProjectileWeaponItem) {
             LivingEntity entity = event.getEntity();
             TwistedEffectInstance effectInstance = getEffectInstance(entity);
-            if (effectInstance != null && effectInstance.stack >= 10) {
-                float yRotOld = entity.getYRot();
-                boolean damageableItem = event.getItem().isDamageableItem();
-                int damageValue = event.getItem().getDamageValue();
-                effectInstance.isDoingAdditionShoot = true;
-                entity.setYRot(yRotOld + 12);
-                event.getItem().releaseUsing(entity.level(), entity, event.getDuration());
-                entity.setYRot(yRotOld - 12);
-                event.getItem().releaseUsing(entity.level(), entity, event.getDuration());
-                entity.setYRot(yRotOld);
-                effectInstance.isDoingAdditionShoot = false;
-                if (damageableItem) {
-                    event.getItem().setDamageValue(damageValue);
-                }
+            if (effectInstance != null) {
+                SpecialEffectAPI.getEffect(entity, entity.getUUID(), LRSpecialMobEffects.PHASE_SHOOTING.value()).ifPresent(phaseShooting -> {
+                    if (phaseShooting.getStack() >= 10) {
+                        float yRotOld = entity.getYRot();
+                        boolean damageableItem = event.getItem().isDamageableItem();
+                        int damageValue = event.getItem().getDamageValue();
+                        effectInstance.isDoingAdditionShoot = true;
+                        entity.setYRot(yRotOld + 12);
+                        event.getItem().releaseUsing(entity.level(), entity, event.getDuration());
+                        entity.setYRot(yRotOld - 12);
+                        event.getItem().releaseUsing(entity.level(), entity, event.getDuration());
+                        entity.setYRot(yRotOld);
+                        effectInstance.isDoingAdditionShoot = false;
+                        if (damageableItem) {
+                            event.getItem().setDamageValue(damageValue);
+                        }
+                    }
+                });
             }
         }
     }
@@ -139,7 +150,7 @@ public class TwistedArmorSetEffect extends SetEffect {
             if (entity instanceof AbstractArrow arrow && arrow.getOwner() instanceof LivingEntity owner) {
                 TwistedEffectInstance effectInstance = TwistedArmorSetEffect.getEffectInstance(owner);
                 if (effectInstance != null) {
-                    effectInstance.modifyArrow(arrow,owner);
+                    effectInstance.modifyArrow(arrow, owner);
                 }
             }
         }

@@ -12,18 +12,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class EffectType<T extends BaseEffect> {
-    private int cachedHashCode = 0;
 
     private final EffectFactory<T> factory;
     private final boolean stackable;
-
-    @Override
-    public int hashCode() {
-        if (cachedHashCode == 0) {
-            cachedHashCode = Objects.requireNonNull(EERegisterTypes.EQUIPMENT_EFFECT_TYPE.getKey(this)).hashCode();
-        }
-        return cachedHashCode;
-    }
 
     public EffectType(EffectFactory<T> factory, boolean stackable) {
         this.factory = factory;

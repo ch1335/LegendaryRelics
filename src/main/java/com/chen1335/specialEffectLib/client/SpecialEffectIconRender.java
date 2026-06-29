@@ -63,14 +63,14 @@ public class SpecialEffectIconRender implements LayeredDraw.Layer {
         int x = guiWidth / 2 + (91 * i);
         RenderSystem.enableBlend();
         PoseStack pose = guiGraphics.pose();
-        pose.pushPose();
-        pose.translate(x, y + 9 - iconSize * scale, 0);
-        pose.scale(scale, scale, 0);
         for (SpecialMobEffect effect : effects) {
+            pose.pushPose();
+            pose.translate(x, y + 9 - iconSize * scale, 0);
+            pose.scale(scale, scale, 0);
             IconRenderer.renderIconRow(guiGraphics, 0, 0, iconSize, effect);
-            x = x + (iconSize + 1) * -i;
+            x = (int) (x + (iconSize ) * -i * scale)+2;
+            pose.popPose();
         }
-        pose.popPose();
         RenderSystem.disableBlend();
     }
 }

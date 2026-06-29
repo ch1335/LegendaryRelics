@@ -4,6 +4,7 @@ import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectCategory;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class MobEffectType<T extends SpecialMobEffect> {
@@ -27,7 +28,7 @@ public class MobEffectType<T extends SpecialMobEffect> {
         if (registryId == null) return null;
         icon = ResourceLocation.fromNamespaceAndPath(
                 registryId.getNamespace(),
-                "textures/gui/effects/" + registryId.getPath() + ".png"
+                "textures/icon/special_effects/" + registryId.getPath() + ".png"
         );
         return icon;
 

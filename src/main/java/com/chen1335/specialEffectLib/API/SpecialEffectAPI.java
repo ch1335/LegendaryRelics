@@ -44,6 +44,6 @@ public class SpecialEffectAPI {
     }
 
     public static <T extends SpecialMobEffect> Optional<T> getEffect(LivingEntity livingEntity, UUID uuid, MobEffectType<T> type) {
-        return Optional.of(livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA).getEffect(uuid, type));
+        return Optional.ofNullable(livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA).getEffect(uuid, type));
     }
 }
