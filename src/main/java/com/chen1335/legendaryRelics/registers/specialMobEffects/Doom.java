@@ -22,7 +22,7 @@ public class Doom extends StackAbleEffect {
     public Doom(MobEffectType<?> effectType) {
         super(effectType);
         registerModifier(Attributes.ENTITY_INTERACTION_RANGE, ATTACK_RANGE, AttributeModifier.Operation.ADD_VALUE, value -> value * attackRangePerStack);
-        registerModifier(Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE, AttributeModifier.Operation.ADD_VALUE, value -> value * damagePerStack);
+        registerModifier(Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE, AttributeModifier.Operation.ADD_MULTIPLIED_BASE, value -> value * damagePerStack);
     }
 
     public Doom(float attackRangePerStack, float damagePerStack) {

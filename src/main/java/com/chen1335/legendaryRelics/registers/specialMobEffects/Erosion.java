@@ -4,35 +4,30 @@ import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.registers.entities.projectiles.misc.TreatmentBall;
-import com.chen1335.legendaryRelics.utils.LRUtil;
+import com.chen1335.legendaryRelics.registers.specialMobEffects.common.StackAbleEffect;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
-import com.chen1335.specialEffectLib.mobEffect.TimeLimitEffect;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class Erosion extends TimeLimitEffect {
+public class Erosion extends StackAbleEffect {
 
-    public int layers = 1;
     private float perLayerDamage = 1;
 
     private double armorReducePerLayer = 0.03F;
-    private ResourceLocation modifierId = LRUtil.randomLocation(10);
 
     public Erosion(MobEffectType<?> effectType) {
         super(effectType);
+        registerModifier(Attributes.ARMOR, "erosion_armor_mdofier", AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, value -> value * armorReducePerLayer);
     }
 
     public Erosion(float perLayerDamage, float armorReducePerLayer) {
         this(LRSpecialMobEffects.EROSION.value());
-        this.initTime(100);
         this.perLayerDamage = perLayerDamage;
         this.armorReducePerLayer = FinalCalculator.castToDoubleStrict(armorReducePerLayer);
     }
@@ -43,8 +38,8 @@ public class Erosion extends TimeLimitEffect {
         if (livingEntity.level().getGameTime() % 20 == 0) {
             @Nullable Entity sourceEntity = getSourceEntity(livingEntity.level());
             if (sourceEntity instanceof LivingEntity sourceLiving) {
-                livingEntity.hurt(livingEntity.level().damageSources().source(LRDamageTypes.EROSION, sourceEntity), perLayerDamage * layers);
-                TreatmentBall treatmentBall = new TreatmentBall(sourceLiving.level(), sourceLiving, layers);
+                livingEntity.hurt(livingEntity.level().damageSources().source(LRDamageTypes.EROSION, sourceEntity), perLayerDamage * stack);
+                TreatmentBall treatmentBall = new TreatmentBall(sourceLiving.level(), sourceLiving, stack);
                 treatmentBall.setPos(livingEntity.getEyePosition());
                 sourceLiving.level().addFreshEntity(treatmentBall);
             }
@@ -52,54 +47,49 @@ public class Erosion extends TimeLimitEffect {
     }
 
     public Erosion getFinal(Erosion theOld) {
-        this.layers = Math.min(theOld.layers + this.layers, 5);
-        this.modifierId = theOld.modifierId;
-        return this;
+        Erosion aFinal = super.getFinal(theOld);
+        aFinal.perLayerDamage = perLayerDamage;
+        aFinal.armorReducePerLayer = armorReducePerLayer;
+        return aFinal;
+    }
+
+    @Override
+    public int getMaxStack() {
+        return 5;
     }
 
     @Override
     public CompoundTag save() {
         CompoundTag compoundTag = super.save();
-        compoundTag.putInt("Layers", layers);
         compoundTag.putFloat("PerLayerDamage", perLayerDamage);
-        compoundTag.putString("modifierId", modifierId.toString());
+        compoundTag.putDouble("ArmorReducePerLayer", armorReducePerLayer);
         return compoundTag;
     }
 
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
-        layers = compoundTag.getInt("Layers");
         perLayerDamage = compoundTag.getFloat("PerLayerDamage");
-        modifierId = ResourceLocation.parse(compoundTag.getString("modifierId"));
+        armorReducePerLayer = compoundTag.getDouble("ArmorReducePerLayer");
+    }
+
+    @Override
+    protected void onStackChange(LivingEntity livingEntity) {
+        addAttributeModifiers(livingEntity.getAttributes());
     }
 
     @Override
     public void onAddOrUpdate(LivingEntity livingEntity) {
-        AttributeInstance instance = livingEntity.getAttribute(Attributes.ARMOR);
-        if (instance != null) {
-            instance.removeModifier(modifierId);
-            instance.addPermanentModifier(new AttributeModifier(modifierId, -(armorReducePerLayer * layers), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-        }
+        addAttributeModifiers(livingEntity.getAttributes());
     }
 
     @Override
     public void onRemove(LivingEntity livingEntity) {
-        AttributeInstance instance = livingEntity.getAttribute(Attributes.ARMOR);
-        if (instance != null) {
-            instance.removeModifier(modifierId);
-        }
+        removeAttributeModifiers(livingEntity.getAttributes());
     }
 
     @Override
-    public void decode(@NotNull RegistryFriendlyByteBuf buffer) {
-        super.decode(buffer);
-        layers = buffer.readInt();
-    }
-
-    @Override
-    public void encode(@NotNull RegistryFriendlyByteBuf buffer) {
-        super.encode(buffer);
-        buffer.writeInt(layers);
+    public int getModifierAmplifier() {
+        return stack;
     }
 }

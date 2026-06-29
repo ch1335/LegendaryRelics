@@ -72,6 +72,7 @@ public class ErosionEffect extends LRWeaponEffect {
         CalculatorArg arg = CalculatorArg.simpleArg(attacker, stack,this);
         Erosion erosion = new Erosion(DAMAGE_PER_LAYER.getValue(arg),ARMOR_REDUCE_PER_LAYER.getValue(arg));
         erosion.setSourceEntity(attacker);
+        erosion.initTime(100);
         SpecialEffectAPI.addEffectToEntity(target, erosion, Erosion::getFinal);
     }
 }

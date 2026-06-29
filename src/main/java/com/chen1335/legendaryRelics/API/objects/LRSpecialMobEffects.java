@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.registers.specialMobEffects.Doom;
 import com.chen1335.legendaryRelics.registers.specialMobEffects.Erosion;
 import com.chen1335.legendaryRelics.registers.specialMobEffects.InfernoScorch;
+import com.chen1335.legendaryRelics.registers.specialMobEffects.PhaseShooting;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -32,6 +33,11 @@ public class LRSpecialMobEffects {
 
     public static final DeferredHolder<MobEffectType<?>, MobEffectType<Doom>> DOOM = SPECIAL_MOB_EFFECT_TYPES.register("doom", MobEffectType.Builder.<Doom>builder()
             .factory(Doom::new)
+            .renderIcon()
+            .build());
+
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<PhaseShooting>> PHASE_SHOOTING = SPECIAL_MOB_EFFECT_TYPES.register("phase_shooting", MobEffectType.Builder.<PhaseShooting>builder()
+            .factory(PhaseShooting::new)
             .renderIcon()
             .build());
 }

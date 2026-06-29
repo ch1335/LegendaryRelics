@@ -1,6 +1,5 @@
 package com.chen1335.specialEffectLib.mobEffect;
 
-import com.chen1335.equipmentEffectLib.utils.Cast;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.attachmentDatas.EntityEffectData;
@@ -11,7 +10,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +31,7 @@ public class SpecialMobEffect {
         ByteBufCodecs.registry(RegisterTypes.SPECIAL_EFFECT_KEY).encode(buffer, value.getEffectType());
         value.encode(buffer);
     }, buffer -> {
-        SpecialMobEffect object = Cast.cast(ByteBufCodecs.registry(RegisterTypes.SPECIAL_EFFECT_KEY).decode(buffer).create());
+        SpecialMobEffect object = ByteBufCodecs.registry(RegisterTypes.SPECIAL_EFFECT_KEY).decode(buffer).create();
         object.decode(buffer);
         return object;
     });
@@ -180,7 +177,6 @@ public class SpecialMobEffect {
     public int getModifierAmplifier() {
         return 1;
     }
-
 
 
     private static class ModifierEntry {

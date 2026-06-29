@@ -25,10 +25,12 @@ public class StackAbleEffect extends TimeLimitEffect {
     public void tick(LivingEntity livingEntity) {
         super.tick(livingEntity);
         if (timeLeft <= 0) {
-            if (stack > 1) {
+            if (stack > 1 && decayTime > 0) {
                 initTime(decayTime);
                 stack--;
                 onStackChange(livingEntity);
+            } else {
+                stack = 1;
             }
         }
     }

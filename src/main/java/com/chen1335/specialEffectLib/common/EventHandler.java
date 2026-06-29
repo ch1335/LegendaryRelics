@@ -49,7 +49,7 @@ public class EventHandler {
 
 
         @SubscribeEvent
-        public static void EntityJoinLevelEvent(EntityLeaveLevelEvent event) {
+        public static void EntityLeaveLevelEvent(EntityLeaveLevelEvent event) {
             if (event.getEntity() instanceof LivingEntity livingEntity) {
                 for (Map<MobEffectType<?>, SpecialMobEffect> value : livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA).getEffects().values()) {
                     for (SpecialMobEffect effect : value.values()) {
