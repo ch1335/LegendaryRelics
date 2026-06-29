@@ -41,6 +41,11 @@ public class LRUtil {
         return randomLocation(LegendaryRelics.MODID, count);
     }
 
+    //Random ResourceLocation
+    public static ResourceLocation randomLocationWithPrefix(String Prefix,int count) {
+        return randomLocation(LegendaryRelics.MODID, count).withPrefix(Prefix);
+    }
+
     public static ResourceLocation randomLocation(String nameSpace, int count) {
         Random random = new Random();
 

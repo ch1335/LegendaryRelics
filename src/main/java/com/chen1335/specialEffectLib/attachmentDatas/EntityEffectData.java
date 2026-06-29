@@ -1,5 +1,6 @@
 package com.chen1335.specialEffectLib.attachmentDatas;
 
+import com.chen1335.equipmentEffectLib.utils.Cast;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
@@ -47,6 +48,10 @@ public class EntityEffectData implements INBTSerializable<CompoundTag> {
 
     public Map<UUID, Map<MobEffectType<?>, SpecialMobEffect>> getEffects() {
         return effects;
+    }
+
+    public <T extends SpecialMobEffect> T getEffect(UUID source,MobEffectType<T> type){
+        return Cast.cast(effects.getOrDefault(source,Map.of()).get(type));
     }
 
     public void tick(LivingEntity livingEntity) {

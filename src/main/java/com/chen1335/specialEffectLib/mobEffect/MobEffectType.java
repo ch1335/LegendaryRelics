@@ -1,5 +1,7 @@
 package com.chen1335.specialEffectLib.mobEffect;
 
+import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectCategory;
 
 import java.util.function.Supplier;
@@ -9,10 +11,26 @@ public class MobEffectType<T extends SpecialMobEffect> {
     private final boolean renderIcon;
     private final MobEffectCategory category;
 
+    private ResourceLocation icon;
+
     public MobEffectType(MobEffectFactory<T> factory, boolean renderIcon, MobEffectCategory category) {
         this.factory = factory;
         this.renderIcon = renderIcon;
         this.category = category;
+    }
+
+    public ResourceLocation getIcon() {
+        if (icon != null) {
+            return icon;
+        }
+        ResourceLocation registryId = RegisterTypes.SPECIAL_EFFECT_TYPE.getKey(this);
+        if (registryId == null) return null;
+        icon = ResourceLocation.fromNamespaceAndPath(
+                registryId.getNamespace(),
+                "textures/gui/effects/" + registryId.getPath() + ".png"
+        );
+        return icon;
+
     }
 
     public T create() {

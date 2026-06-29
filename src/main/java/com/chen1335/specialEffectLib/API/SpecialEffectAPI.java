@@ -1,5 +1,6 @@
 package com.chen1335.specialEffectLib.API;
 
+import com.chen1335.equipmentEffectLib.utils.Cast;
 import com.chen1335.specialEffectLib.API.objects.SEAttachmentTypes;
 import com.chen1335.specialEffectLib.attachmentDatas.EntityEffectData;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
@@ -8,10 +9,11 @@ import com.chen1335.specialEffectLib.network.AddOrUpdateEffectPack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.network.PacketDistributor;
-import com.chen1335.equipmentEffectLib.utils.Cast;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 public class SpecialEffectAPI {
     public interface FinalEffectGetter<T extends SpecialMobEffect> {
@@ -39,5 +41,9 @@ public class SpecialEffectAPI {
 
     public static EntityEffectData getEntityEffectData(LivingEntity livingEntity) {
         return livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA);
+    }
+
+    public static <T extends SpecialMobEffect> Optional<T> getEffect(LivingEntity livingEntity, UUID uuid, MobEffectType<T> type) {
+        return Optional.of(livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA).getEffect(uuid, type));
     }
 }

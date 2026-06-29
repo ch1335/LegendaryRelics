@@ -1,17 +1,18 @@
 package com.chen1335.legendaryRelics.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 public class RenderUtils {
-    public static void drawSector(@NotNull GuiGraphics guiGraphics, float x, float y,float size, float percentage) {
+    public static void drawSector(@NotNull GuiGraphics guiGraphics, float x, float y, float size, float percentage) {
         PoseStack poseStack = guiGraphics.pose();
         float halfSize = size / 2;
         int p = (int) (percentage * 100);
@@ -26,7 +27,7 @@ public class RenderUtils {
             c = (float) (halfSize * (a - 12.5) / 12.5);
             b = -halfSize;
         }
-        int color = FastColor.ARGB32.color(100,255,255,255);
+        int color = FastColor.ARGB32.color(100, 255, 255, 255);
 
 
         float centerX = x + halfSize;
@@ -61,6 +62,12 @@ public class RenderUtils {
         poseStack.pushPose();
         poseStack.translate(centerX, centerY, 0);
         switch (i) {
+            case 4:
+                drawSingleRectangle(guiGraphics, halfSize, 0, color);
+                drawSingleRectangle(guiGraphics, halfSize, 90, color);
+                drawSingleRectangle(guiGraphics, halfSize, 90, color);
+                drawSingleRectangle(guiGraphics, halfSize, 90, color);
+                break;
             case 3:
                 drawSingleRectangle(guiGraphics, halfSize, 0, color);
                 drawSingleRectangle(guiGraphics, halfSize, 90, color);
@@ -90,5 +97,17 @@ public class RenderUtils {
         vertexConsumer.addVertex(matrix4f, 0, size, 0).setColor(color);
         vertexConsumer.addVertex(matrix4f, size, size, 0).setColor(color);
         vertexConsumer.addVertex(matrix4f, size, 0, 0).setColor(color);
+    }
+
+    public static void drawTextureWithSize(ResourceLocation atlasLocation, PoseStack poseStack, float x, float y, float width, float height, float blitOffset) {
+        RenderSystem.setShaderTexture(0, atlasLocation);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        Matrix4f matrix4f = poseStack.last().pose();
+        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        bufferbuilder.addVertex(matrix4f, x, y, blitOffset).setUv(0, 0);
+        bufferbuilder.addVertex(matrix4f, x, y + height, blitOffset).setUv(0, 1);
+        bufferbuilder.addVertex(matrix4f, x + width, y + height, blitOffset).setUv(1, 1);
+        bufferbuilder.addVertex(matrix4f, x + width, y, blitOffset).setUv(1, 0);
+        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
     }
 }

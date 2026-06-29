@@ -65,4 +65,17 @@ public class TimeLimitEffect extends SpecialMobEffect {
         buffer.writeInt(totalTime);
         buffer.writeInt(timeLeft);
     }
+
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    @Override
+    public float getPercentage() {
+        return (float) getTimeLeft() / (float) getTotalTime();
+    }
 }

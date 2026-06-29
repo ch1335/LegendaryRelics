@@ -18,6 +18,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.MultiAdd;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.common.calculator.special.TieredBonus;
 import com.chen1335.legendaryRelics.effectInstances.InfernoEffectInstance;
+import com.chen1335.legendaryRelics.registers.specialMobEffects.Doom;
 import com.chen1335.legendaryRelics.registers.specialMobEffects.InfernoScorch;
 import com.chen1335.legendaryRelics.utils.LRColors;
 import com.chen1335.legendaryRelics.utils.SimpleSchedule;
@@ -154,20 +155,26 @@ public class InfernoArmorSetEffect extends SetEffect {
         if ((source.is(DamageTypeTags.IS_PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK)) && source.is(Tags.DamageTypes.IS_PHYSICAL) && source.getEntity() instanceof LivingEntity attacker) {
             InfernoEffectInstance instance = getEffectInstance(attacker);
             if (instance != null) {
-                CalculatorArg args = CalculatorArg.simpleArg(attacker);
-                int piece = LRClient.ENTITY_SETS_EFFECT_DATA.getOrDefault(LRSetsEffects.INFERNO_ARMOR.value(), 0);
-                args.putArg(TieredBonus.TIER, piece);
+                CalculatorArg args = instance.buildArgs(attacker);
                 if (instance.coolDown <= 0) {
-                    instance.addStack(1);
                     float cooldownValueSecond = GAIN_STACK_COOLDOWN.getValue(args);
                     instance.coolDown = (int) (cooldownValueSecond * 20);
-                    instance.keepTime = (int) (KEEP_TIME.getValue(args) * 20);
+
+                    Doom effect = new Doom(InfernoArmorSetEffect.ATTACK_RANGE_PER_STACK.getValue(args), InfernoArmorSetEffect.DAMAGE_PER_STACK.getValue(args));
+                    effect.setDecayTime(20);
+                    effect.initTime((int) (KEEP_TIME.getValue(args) * 20));
+                    effect.setSourceEntity(attacker);
+                    SpecialEffectAPI.addEffectToEntity(attacker, effect, Doom::getFinal);
                 }
-                if (instance.stack >= 10) {
-                    InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args));
-                    infernoScorch.setSourceEntity(attacker);
-                    SpecialEffectAPI.addEffectToEntity(event.getEntity(), infernoScorch, InfernoScorch::getFinal);
-                }
+
+                SpecialEffectAPI.getEffect(attacker,attacker.getUUID(),LRSpecialMobEffects.DOOM.value()).ifPresent(doom -> {
+                    if (doom.getStack() >=10) {
+                        InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args));
+                        infernoScorch.setSourceEntity(attacker);
+                        SpecialEffectAPI.addEffectToEntity(event.getEntity(), infernoScorch, InfernoScorch::getFinal);
+                    }
+                });
+
             }
         }
     }
@@ -201,7 +208,7 @@ public class InfernoArmorSetEffect extends SetEffect {
                 }
                 if (flag) {
                     ParticlePlayersHolder.sendToPlayersTrackingEntity(entity, "inferno_explosion", compoundTag);
-                    level.playSound(null,entity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS,0.5F,1F);
+                    level.playSound(null, entity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.5F, 1F);
                 }
             }, 5));
         }
