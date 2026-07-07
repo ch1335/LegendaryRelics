@@ -1,7 +1,8 @@
 package com.chen1335.legendaryRelics.registers.items.weapons;
 
 import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.IRenderArrowBow;
@@ -31,7 +32,7 @@ public class LastWhisper extends BowItem implements IEffectEquipment, ILRItemExt
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.PERFORATION.value().create(1, EquipmentType.HANDS));
+        return List.of(LREquipmentEffectTypes.PERFORATION.value().create(1, EquipmentTypes.HANDS));
     }
 
     @Override

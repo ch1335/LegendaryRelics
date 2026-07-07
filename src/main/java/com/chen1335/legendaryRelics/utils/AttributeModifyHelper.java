@@ -13,7 +13,7 @@ public class AttributeModifyHelper {
             if (instance != null && instance.getAttribute().value().sentiment == Attribute.Sentiment.POSITIVE) {
                 instance.removeModifier(resourceLocation);
                 if (multiplier > 0) {
-                    instance.addTransientModifier(new AttributeModifier(resourceLocation, multiplier, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                    instance.addTransientModifier(new AttributeModifier(resourceLocation, multiplier, operation));
                 }
             }
         }

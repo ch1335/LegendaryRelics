@@ -5,10 +5,9 @@ import com.chen1335.equipmentEffectLib.API.ISubEffectProvider;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
-import com.chen1335.legendaryRelics.registers.equipmentEffects.armorEffect.LRArmorEffect;
-import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.LRCurioEffect;
-import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.LRWeaponEffect;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.component.*;
@@ -28,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class BaseEffect implements DataComponentHolder, MutableDataComponentHolder, IEffectHelper {
 
@@ -53,7 +51,7 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
 
     public static final Codec<BaseEffect> CODEC = RecordCodecBuilder.create(baseEffectInstance -> baseEffectInstance.group(
             EERegisterTypes.EQUIPMENT_EFFECT_TYPE.byNameCodec().fieldOf("EffectType").forGetter(BaseEffect::getType),
-            EquipmentType.CODEC.optionalFieldOf("equipment_type", EquipmentType.NON).forGetter(BaseEffect::getEquipmentType),
+            EERegisterTypes.EQUIPMENT_TYPE.byNameCodec().optionalFieldOf("equipment_type", EquipmentTypes.NON).forGetter(BaseEffect::getEquipmentType),
             DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(BaseEffect::getDataComponentPatch),
             CompoundTag.CODEC.optionalFieldOf("simpleData", new CompoundTag()).forGetter(BaseEffect::saveSimpleData)
     ).apply(baseEffectInstance, BaseEffect::buildEffect));
@@ -62,7 +60,7 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
     public static final StreamCodec<RegistryFriendlyByteBuf, BaseEffect> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.registry(EERegisterTypes.EQUIPMENT_EFFECT_TYPE_KEY),
             BaseEffect::getType,
-            EquipmentType.STREAM_CODEC,
+            ByteBufCodecs.registry(EERegisterTypes.EQUIPMENT_TYPE_KEY),
             BaseEffect::getEquipmentType,
             DataComponentPatch.STREAM_CODEC,
             BaseEffect::getDataComponentPatch,
@@ -73,18 +71,7 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
 
 
     private static BaseEffect buildEffect(EffectType<?> effectType, EquipmentType equipmentType, DataComponentPatch dataComponentPatch, CompoundTag simpleData) {
-        BaseEffect effect;
-        if (equipmentType == EquipmentType.NON) {
-            effect = effectType.create(1, equipmentType);
-            if (effect instanceof LRCurioEffect) {
-                equipmentType = EquipmentType.CURIO;
-            } else if (effect instanceof LRArmorEffect) {
-                equipmentType = EquipmentType.ARMOR;
-            } else if (effect instanceof LRWeaponEffect) {
-                equipmentType = EquipmentType.HANDS;
-            }
-        }
-        effect = effectType.create(1, equipmentType);
+        BaseEffect effect = effectType.create(1, equipmentType);
         effect.applyComponents(dataComponentPatch);
         effect.loadSimpleData(simpleData);
         return effect;
@@ -127,11 +114,11 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
 
     }
 
-    public void onActive(LivingEntity entity, ItemStack itemStack) {
+    public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
 
     }
 
-    public void onDeActive(LivingEntity entity, ItemStack itemStack) {
+    public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
 
     }
 

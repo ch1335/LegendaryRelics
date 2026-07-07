@@ -1,16 +1,15 @@
 package com.chen1335.equipmentEffectLib.slotEffectManagers.curio;
 
-import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.SlotEffectManager;
-import com.google.common.collect.TreeMultimap;
 import io.netty.util.collection.IntObjectHashMap;
 import io.netty.util.collection.IntObjectMap;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -27,11 +26,11 @@ public class CurioSlotEffectManager extends SlotEffectManager {
 
     @Override
     protected IEquipmentType getEquipmentType() {
-        return EquipmentType.CURIO;
+        return EquipmentTypes.CURIO;
     }
 
     public void onCurioChanged(LivingEntity living, String type, int index, @Nonnull ItemStack from, @Nonnull ItemStack to) {
-        super.onChanged(living,new SlotContext(type, index),from,to);
+        super.onChanged(living, new SlotContext(type, index), from, to);
     }
 
     @Override
@@ -45,6 +44,10 @@ public class CurioSlotEffectManager extends SlotEffectManager {
         @Override
         public Class<? extends SlotEffectManager> getManagerClass() {
             return CurioSlotEffectManager.class;
+        }
+
+        public ResourceLocation pathRL(ResourceLocation resourceLocation) {
+            return resourceLocation.withSuffix("_" + type + "_" + index);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.chen1335.equipmentEffectLib.kubejs;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import dev.latvian.mods.kubejs.registry.BuilderBase;
@@ -39,7 +40,7 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
         super(id);
     }
 
-    protected EquipmentType equipmentType = EquipmentType.ALL;
+    protected EquipmentType equipmentType = EquipmentTypes.ARMOR_AND_HANDS;
 
     public T effectEquipmentType(EquipmentType equipmentType) {
         this.equipmentType = equipmentType;

@@ -2,10 +2,11 @@ package com.chen1335.equipmentEffectLib.API;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.common.InfoHolder;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
@@ -52,7 +53,7 @@ public final class EquipmentEffectAPI {
     }
 
     public static Map<EffectType<?>, BaseEffect> getEffects(ItemStack itemStack) {
-        return getEffects(itemStack, EquipmentType.ALL);
+        return getEffects(itemStack, EquipmentTypes.ALL);
     }
 
     public static Map<EffectType<?>, BaseEffect> getEffects(ItemStack itemStack, IEquipmentType equipmentType) {
@@ -78,7 +79,7 @@ public final class EquipmentEffectAPI {
             }
         }
         map.putAll(subEffects);
-        if (equipmentType != EquipmentType.ALL) {
+        if (equipmentType != EquipmentTypes.ALL) {
             map.values().removeIf(baseEffect -> !equipmentType.match(baseEffect.getEquipmentType()));
         }
         return ImmutableMap.copyOf(map);

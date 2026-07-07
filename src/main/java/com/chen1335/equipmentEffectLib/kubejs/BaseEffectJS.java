@@ -3,9 +3,10 @@ package com.chen1335.equipmentEffectLib.kubejs;
 import com.chen1335.equipmentEffectLib.API.IArmorEffect;
 import com.chen1335.equipmentEffectLib.API.ICurioEffect;
 import com.chen1335.equipmentEffectLib.API.IMainHandEffect;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -45,12 +46,12 @@ public class BaseEffectJS extends BaseEffect {
 
 
     @Override
-    public void onActive(LivingEntity entity, ItemStack itemStack) {
+    public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         onActive.accept(this, entity, itemStack);
     }
 
     @Override
-    public void onDeActive(LivingEntity entity, ItemStack itemStack) {
+    public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         onDeActive.accept(this, entity, itemStack);
     }
 

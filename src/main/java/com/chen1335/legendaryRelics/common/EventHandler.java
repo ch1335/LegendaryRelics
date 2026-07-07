@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.IRenderArrowBow;
@@ -105,19 +106,19 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void setItemSetsEffect(SetItemSetsEffectEvent event) {
-            event.sets(LRSetsEffects.BLACK_DRAGON_ARMOR.value(), EquipmentType.ARMOR,
+            event.sets(LRSetsEffects.BLACK_DRAGON_ARMOR.value(), EquipmentTypes.HUMANOID_ARMOR,
                     LRItems.BLACK_DRAGON_HELMET.asItem(),
                     LRItems.BLACK_DRAGON_CHEST_PLATE.asItem(),
                     LRItems.BLACK_DRAGON_LEGGINGS.asItem(),
                     LRItems.BLACK_DRAGON_BOOTS.asItem()
             );
-            event.sets(LRSetsEffects.INFERNO_ARMOR.value(), EquipmentType.ARMOR,
+            event.sets(LRSetsEffects.INFERNO_ARMOR.value(), EquipmentTypes.HUMANOID_ARMOR,
                     LRItems.INFERNO_HELMET.asItem(),
                     LRItems.INFERNO_CHEST_PLATE.asItem(),
                     LRItems.INFERNO_LEGGINGS.asItem(),
                     LRItems.INFERNO_BOOTS.asItem()
             );
-            event.sets(LRSetsEffects.TWISTED_ARMOR.value(), EquipmentType.ARMOR,
+            event.sets(LRSetsEffects.TWISTED_ARMOR.value(), EquipmentTypes.HUMANOID_ARMOR,
                     LRItems.TWISTED_HELMET.asItem(),
                     LRItems.TWISTED_CHEST_PLATE.asItem(),
                     LRItems.TWISTED_LEGGINGS.asItem(),

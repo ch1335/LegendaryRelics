@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.registers.items.curios;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
@@ -26,7 +26,7 @@ public class HardenedRing extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.HARDENED_EFFECT.value().create(1, EquipmentType.CURIO));
+        return List.of(LREquipmentEffectTypes.HARDENED_EFFECT.value().create(1, EquipmentTypes.CURIO));
     }
 
     @Override

@@ -49,7 +49,7 @@ public class BlackDragonLeggings extends BlackDragonArmor {
     @Override
     public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
         if (event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
-            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -PROJECTILE_DAMAGE_REDUCE.getValue(arg));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -PROJECTILE_DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

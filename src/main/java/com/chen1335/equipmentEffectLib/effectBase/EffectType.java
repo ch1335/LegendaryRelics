@@ -1,14 +1,12 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.common.InfoHolder;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import net.minecraft.world.entity.LivingEntity;
 import com.chen1335.equipmentEffectLib.utils.Cast;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class EffectType<T extends BaseEffect> {

@@ -57,7 +57,7 @@ public class BlackDragonHelmet extends BlackDragonArmor {
     @Override
     public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
         if (event.getSource().is(Tags.DamageTypes.IS_MAGIC)) {
-            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -MAGIC_DAMAGE_REDUCE.getValue(arg));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -MAGIC_DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

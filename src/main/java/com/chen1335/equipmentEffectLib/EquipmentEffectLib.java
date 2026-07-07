@@ -5,6 +5,7 @@ import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
@@ -29,6 +30,7 @@ public class EquipmentEffectLib {
         EEItemDataComponentTypes.init();
         EEItemEffectDataComponentTypes.init();
         EEAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
+        EquipmentTypes.EQUIPMENT_TYPE.register(modEventBus);
         modEventBus.addListener(EquipmentEffectLib::onSetup);
     }
 

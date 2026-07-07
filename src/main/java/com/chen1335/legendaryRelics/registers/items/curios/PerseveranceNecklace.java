@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.registers.items.curios;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
@@ -33,9 +33,9 @@ public class PerseveranceNecklace extends LRCuriosBase {
     @Override
     public List<BaseEffect> getDefaultEffects() {
         return List.of(
-                LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value().create(2, EquipmentType.CURIO),
-                LREquipmentEffectTypes.HEAL_PER_SECOND_EFFECT.value().create(2, EquipmentType.CURIO),
-                LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value().create(2, EquipmentType.CURIO)
+                LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value().create(2, EquipmentTypes.CURIO),
+                LREquipmentEffectTypes.HEAL_PER_SECOND_EFFECT.value().create(2, EquipmentTypes.CURIO),
+                LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value().create(2, EquipmentTypes.CURIO)
         );
     }
 }

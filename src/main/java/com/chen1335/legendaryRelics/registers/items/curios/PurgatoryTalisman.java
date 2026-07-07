@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.registers.items.curios;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.AttributeModifierHolder;
@@ -36,9 +36,9 @@ public class PurgatoryTalisman extends LRCuriosBase {
     @Override
     public List<BaseEffect> getDefaultEffects() {
         return List.of(
-                LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value().create(2, EquipmentType.CURIO),
-                LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value().create(2, EquipmentType.CURIO),
-                LREquipmentEffectTypes.FLAME_IMMUNITY.value().create(1, EquipmentType.CURIO)
+                LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value().create(2, EquipmentTypes.CURIO),
+                LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value().create(2, EquipmentTypes.CURIO),
+                LREquipmentEffectTypes.FLAME_IMMUNITY.value().create(1, EquipmentTypes.CURIO)
         );
     }
 }

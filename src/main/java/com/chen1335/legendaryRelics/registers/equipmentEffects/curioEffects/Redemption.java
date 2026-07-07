@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
@@ -106,7 +106,7 @@ public class Redemption extends LRCurioEffect {
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get()).ifPresent(pair -> {
                 if (attacker.getType().is(EntityTypeTags.UNDEAD)) {
                     CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
-                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -UNDEAD_REDUCE.getValue(args));
+                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -UNDEAD_REDUCE.getValue(args));
                 }
             });
         }

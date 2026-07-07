@@ -41,7 +41,7 @@ public class BlackDragonEffectInstance extends EffectInstance {
                 if (piece >= 1) {
                     float multiplier = BlackDragonArmorSetEffect.ATTRIBUTE_MULTIPLIER.getValue(args);
                     if (multiplier > 0) {
-                        instance.addPermanentModifier(new AttributeModifier(BLACK_DRAGON_ATTRIBUTE_MULTIPLIER, multiplier, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                        instance.addTransientModifier(new AttributeModifier(BLACK_DRAGON_ATTRIBUTE_MULTIPLIER, multiplier, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
                     }
                 }
             }

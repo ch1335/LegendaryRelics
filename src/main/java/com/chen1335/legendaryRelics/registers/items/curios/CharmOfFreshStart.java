@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.registers.items.curios;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -28,7 +28,7 @@ public class CharmOfFreshStart extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        GameTaskEffect gameTaskEffect = LREquipmentEffectTypes.GAME_TASK_CURIO.value().create(0, EquipmentType.CURIO);
+        GameTaskEffect gameTaskEffect = LREquipmentEffectTypes.GAME_TASK_CURIO.value().create(0, EquipmentTypes.CURIO);
         return List.of(gameTaskEffect);
     }
 

@@ -1,7 +1,8 @@
 package com.chen1335.legendaryRelics.registers.items.weapons;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.IChargeAbleItem;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -32,8 +33,8 @@ public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
     @Override
     public List<BaseEffect> getDefaultEffects() {
         return List.of(
-                LREquipmentEffectTypes.BACKSTAB.value().create(1, EquipmentType.HANDS),
-                LREquipmentEffectTypes.AMBUSH.value().create(1, EquipmentType.HANDS)
+                LREquipmentEffectTypes.BACKSTAB.value().create(1, EquipmentTypes.MAIN_HAND),
+                LREquipmentEffectTypes.AMBUSH.value().create(1, EquipmentTypes.MAIN_HAND)
         );
     }
 

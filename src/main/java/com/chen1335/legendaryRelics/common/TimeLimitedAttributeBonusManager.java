@@ -56,7 +56,7 @@ public class TimeLimitedAttributeBonusManager implements INBTSerializable<Compou
             holderTag.putString("attribute", modifierHolder.attributeHolder.getKey().location().toString());
             holderTag.put("modifier", modifierHolder.modifier.save());
             holderTag.putInt("time", modifierHolder.time);
-            listTag.add(Tag.TAG_COMPOUND, holderTag);
+            listTag.add(holderTag);
         });
         compoundTag.put("modifiers", listTag);
         return compoundTag;

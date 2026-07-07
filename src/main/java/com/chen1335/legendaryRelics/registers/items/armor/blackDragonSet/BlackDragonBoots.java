@@ -2,7 +2,8 @@ package com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet;
 
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -29,7 +30,7 @@ public class BlackDragonBoots extends BlackDragonArmor {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.FALL_IMMUNITY.value().create(1, EquipmentType.ARMOR));
+        return List.of(LREquipmentEffectTypes.FALL_IMMUNITY.value().create(1, EquipmentTypes.HUMANOID_ARMOR));
     }
 
     @Calculator
@@ -69,10 +70,10 @@ public class BlackDragonBoots extends BlackDragonArmor {
     public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
         LivingEntity entity = event.getEntity();
         if (event.getSource().is(Tags.DamageTypes.IS_ENVIRONMENT) || event.getSource().is(DamageTypeTags.IS_FALL)) {
-            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -ENVIRONMENT_DAMAGE_REDUCE.getValue(arg));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -ENVIRONMENT_DAMAGE_REDUCE.getValue(arg));
         }
         if (entity.getHealth() < entity.getMaxHealth() * HEALTH_THRESHOLD.getValue(arg)) {
-            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, -DAMAGE_REDUCE.getValue(arg));
+            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

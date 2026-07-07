@@ -46,7 +46,7 @@ public class EntityEquipmentEffectData {
         return Map.of();
     }
 
-    public <T extends BaseEffect> Optional<InfoHolder<T>> getBestEffect(EffectType<T> type) {
+    public <T extends BaseEffect> Optional<SlotEffectHolder<T>> getBestEffect(EffectType<T> type) {
         TreeMultimap<Integer, SlotEffectHolder<T>> effectHoldersByType = Cast.cast(getEffectHoldersByType(type));
         if (effectHoldersByType.isEmpty()) {
             return Optional.empty();
@@ -56,7 +56,7 @@ public class EntityEquipmentEffectData {
             if (slotEffectHolders.isEmpty()) {
                 return Optional.empty();
             } else {
-                return Optional.of(slotEffectHolders.getLast().infoHolder());
+                return Optional.of(slotEffectHolders.getLast());
             }
         }
     }
@@ -98,14 +98,15 @@ public class EntityEquipmentEffectData {
 
     public void onUpdated(LivingEntity living, Set<EffectType<?>> changedTypes) {
         for (EffectType<?> changedType : changedTypes) {
-            getBestEffect(changedType).ifPresent(infoHolder -> {
+            getBestEffect(changedType).ifPresent(slotEffectHolder -> {
                 InfoHolder<?> old = oldBestEffects.get(changedType);
+                InfoHolder<?> infoHolder = slotEffectHolder.infoHolder();
                 if (old == null) {
-                    infoHolder.effect().onActive(living, infoHolder.itemStack());
+                    infoHolder.effect().onActive(slotEffectHolder.context(), living, infoHolder.itemStack());
                     oldBestEffects.put(changedType, infoHolder);
                 } else if (old != infoHolder) {
-                    old.effect().onDeActive(living, old.itemStack());
-                    infoHolder.effect().onActive(living, infoHolder.itemStack());
+                    old.effect().onDeActive(slotEffectHolder.context(), living, old.itemStack());
+                    infoHolder.effect().onActive(slotEffectHolder.context(), living, infoHolder.itemStack());
                     oldBestEffects.put(changedType, infoHolder);
                 }
             });

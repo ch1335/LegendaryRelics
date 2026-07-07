@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.registers.items.weapons;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
@@ -35,7 +36,7 @@ public class Reaper extends LRSwordItem {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.SOUL_EATER.value().create(1, EquipmentType.HANDS));
+        return List.of(LREquipmentEffectTypes.SOUL_EATER.value().create(1, EquipmentTypes.MAIN_HAND));
     }
 
     @Calculator

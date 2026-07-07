@@ -110,6 +110,7 @@ public class EventHandler {
         public static void registerRegistries(NewRegistryEvent event) {
             event.register(EERegisterTypes.EQUIPMENT_EFFECT_TYPE);
             event.register(EERegisterTypes.SETS_EFFECT_TYPE);
+            event.register(EERegisterTypes.EQUIPMENT_TYPE);
         }
     }
 }

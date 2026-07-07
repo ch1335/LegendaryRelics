@@ -2,9 +2,9 @@ package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
-import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -13,8 +13,6 @@ import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
-import com.chen1335.legendaryRelics.utils.LRUtil;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -30,7 +28,7 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import java.util.List;
 
 public class AttributeBoostInNether extends LRCurioEffect {
-    private ResourceLocation modifierId = LRUtil.randomLocation(10);
+    public static final ResourceLocation MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "attribute_boost_in_nether");
 
     @Calculator
     public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
@@ -53,7 +51,7 @@ public class AttributeBoostInNether extends LRCurioEffect {
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.attribute_boost_in_nether", ATTRIBUTE_BOOST.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
     }
 
-    private void addAttribute(LivingEntity living, ItemStack itemStack) {
+    private void addAttribute(ISlotContext slotContext, LivingEntity living, ItemStack itemStack) {
         CalculatorArg arg = CalculatorArg.simpleArg(living, itemStack, this);
         AttributeModifyHelper.addAllPositive(living, modifierId, ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
@@ -64,30 +62,17 @@ public class AttributeBoostInNether extends LRCurioEffect {
     }
 
     @Override
-    public void onDeActive(LivingEntity entity, ItemStack itemStack) {
+    public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (entity.level().dimension().equals(ServerLevel.NETHER)) {
             removeAttribute(entity, itemStack);
         }
     }
 
     @Override
-    public void onActive(LivingEntity entity, ItemStack itemStack) {
+    public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (entity.level().dimension().equals(ServerLevel.NETHER)) {
-            addAttribute(entity, itemStack);
+            addAttribute(slotContext,entity, itemStack);
         }
-    }
-
-    @Override
-    public CompoundTag saveSimpleData() {
-        CompoundTag compoundTag = super.saveSimpleData();
-        compoundTag.putString("modifierId", modifierId.toString());
-        return compoundTag;
-    }
-
-    @Override
-    public void loadSimpleData(CompoundTag nbt) {
-        super.loadSimpleData(nbt);
-        modifierId = ResourceLocation.parse(nbt.getString("modifierId"));
     }
 
     public static void EntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
@@ -96,7 +81,7 @@ public class AttributeBoostInNether extends LRCurioEffect {
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value()).ifPresent(pair -> {
                 AttributeBoostInNether effect = pair.effect();
                 if (event.getDimension().equals(ServerLevel.NETHER)) {
-                    effect.addAttribute(livingEntity, pair.itemStack());
+                    effect.addAttribute(slotContext, livingEntity, pair.itemStack());
                 } else {
                     effect.removeAttribute(livingEntity, pair.itemStack());
                 }

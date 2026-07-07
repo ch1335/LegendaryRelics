@@ -1,8 +1,7 @@
 package com.chen1335.equipmentEffectLib.events;
 
-import com.chen1335.equipmentEffectLib.API.IEquipmentSource;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import net.minecraft.world.item.Item;

@@ -1,7 +1,8 @@
 package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.API.objects.LRShieldType;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -82,7 +83,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
     }
 
     @Override
-    public void onActive(LivingEntity entity, ItemStack itemStack) {
+    public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (isNotInCooldown(entity)) {
             CalculatorArg args = CalculatorArg.simpleArg(entity, itemStack, this);
             @Nullable ShieldInstanceHolder<UnitShield> instance = ShieldAPI.getShieldInstance(entity, LRShieldType.SHIELD_REGENERATOR_SHIELD.get());
@@ -98,7 +99,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
     }
 
     @Override
-    public void onDeActive(LivingEntity entity, ItemStack itemStack) {
+    public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (!isNotInCooldown(entity)) {
             this.addCooldown(entity, 0);
         }

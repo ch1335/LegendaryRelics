@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.registers.items.curios;
 
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import net.minecraft.world.item.Rarity;
@@ -14,7 +14,7 @@ public class TheOreCollectorsRing extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(LREquipmentEffectTypes.ORE_COLLECTOR_EFFECT.value().create(1, EquipmentType.CURIO));
+        return List.of(LREquipmentEffectTypes.ORE_COLLECTOR_EFFECT.value().create(1, EquipmentTypes.CURIO));
     }
 
 }

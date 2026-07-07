@@ -1,9 +1,11 @@
 package com.chen1335.equipmentEffectLib.attachmentDatas;
 
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemExtension;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.common.SetEffectHolder;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.network.SetsInfoPack;
@@ -25,9 +27,8 @@ public class EntitySetsEffectData {
 
     public void update(LivingEntity livingEntity) {
         Map<SetEffect, Set<Item>> setMap = new HashMap<>();
-        for (EquipmentType equipmentType : EquipmentType.getUnits().values()) {
-            buildSets(equipmentType,equipmentType.source().get(livingEntity), setMap);
-        }
+        buildSets(EquipmentTypes.ALL,EquipmentTypes.ALL.source().get(livingEntity), setMap);
+
         pieceInfo.clear();
         setMap.forEach((setsEffectBase, items) -> {
             pieceInfo.put(setsEffectBase, items.size());
@@ -81,7 +82,7 @@ public class EntitySetsEffectData {
         for (ItemStack itemStack : itemStacks) {
             if (!itemStack.isEmpty()) {
                 SetEffectHolder setEffectHolder = ((IEEItemExtension) itemStack.getItem()).EE$GetSetsEffect();
-                if (setEffectHolder != null && setEffectHolder.equipmentType() == equipmentType) {
+                if (setEffectHolder != null && equipmentType.match(setEffectHolder.equipmentType())) {
                     map.computeIfAbsent(setEffectHolder.setEffect(), setsEffectBase1 -> new HashSet<>()).add(itemStack.getItem());
                 }
             }

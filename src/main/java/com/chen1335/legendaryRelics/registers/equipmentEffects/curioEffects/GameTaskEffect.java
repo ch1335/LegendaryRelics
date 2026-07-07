@@ -1,9 +1,11 @@
 package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.ISubEffectProvider;
-import com.chen1335.equipmentEffectLib.common.EquipmentType;
+import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
@@ -42,14 +44,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider {
     public static List<AttributeEntire> ATTRIBUTES;
 
     public static List<ITask> TASKS;
 
-    private BaseEffect allAttributeBoost = LREquipmentEffectTypes.ALL_ATTRIBUTE_BOOST.get().create(1, EquipmentType.CURIO);
+    private BaseEffect allAttributeBoost = LREquipmentEffectTypes.ALL_ATTRIBUTE_BOOST.get().create(1, EquipmentTypes.CURIO);
 
     public GameTaskEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -71,7 +72,7 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
     }
 
     @Override
-    public void onActive(LivingEntity entity, ItemStack itemStack) {
+    public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (entity instanceof Player player) {
             finishTask(player, new CustomTask(LegendaryRelics.id("wear_curio")), itemStack);
         }
