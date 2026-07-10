@@ -1,13 +1,18 @@
 package com.chen1335.legendaryRelics.utils;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.client.LRClient;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,14 +43,23 @@ public class SimpleSchedule {
     );
 
     public static void addSchedule(Level level, Schedule schedule) {
+
         if (level.isClientSide) {
-            DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule);
+            LRClient.submitTask(()-> DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule));
         } else {
-            DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule);
+            ((ServerLevel) level).getServer().submit(()->DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule));
         }
     }
 
     public static void addSchedule(Dist dist, Schedule schedule) {
+        if (dist == Dist.CLIENT) {
+            LRClient.submitTask(()-> DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule));
+        } else {
+            MinecraftServer currentServer = ServerLifecycleHooks.getCurrentServer();
+            if (currentServer != null) {
+                currentServer.submit(()->DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule));
+            }
+        }
         DIST_SCHEDULES_TO_ADD.get(dist).add(schedule);
     }
 

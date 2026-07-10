@@ -1,14 +1,14 @@
 package com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
-import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.IChargeAbleItem;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.utils.LRUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,11 +43,12 @@ public class Ambush extends LRWeaponEffect {
         LRUtil.splitAndAdd(
                 tooltipComponents,
                 Component.translatable("equipment_effect.legendary_relics.ambush",
-                        FinalCalculator.format((float) getMaxChargeTick(itemStack) / 20, 1),
+                        FinalCalculator.format((float) getMaxChargeTick(itemStack, player) / 20, 1),
                         DAMAGE_GAIN.toPercentageComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this)),
                         Component.translatable(Attributes.ATTACK_DAMAGE.value().getDescriptionId()).withColor(5592575)
-                ).withColor(0xaeaeae), getMaxToolTipWith(itemStack)
+                ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack)
         );
+        tooltipComponents.add(Component.translatable("legendary_relics.max_charge_time_affected_by_attack_speed").withStyle(ChatFormatting.DARK_GRAY));
 
     }
 
@@ -72,12 +73,17 @@ public class Ambush extends LRWeaponEffect {
     }
 
     public float getChargePercent(ItemStack stack, LivingEntity entity) {
-        int maxChargeTick = getMaxChargeTick(stack);
+        int maxChargeTick = getMaxChargeTick(stack, entity);
         int chargeTick = Math.min(maxChargeTick, stack.getItem().getUseDuration(stack, entity) - entity.getUseItemRemainingTicks());
         return (float) chargeTick / maxChargeTick;
     }
 
-    public int getMaxChargeTick(ItemStack itemStack) {
-        return itemStack.getItem() instanceof IChargeAbleItem chargeAbleItem ? chargeAbleItem.getMaxChargeTick(itemStack) : 60;
+    public int getMaxChargeTick(ItemStack itemStack, LivingEntity user) {
+        int maxTick = 40;
+        if (user.getAttributes().hasAttribute(Attributes.ATTACK_SPEED)) {
+            double attributeValue = user.getAttributeValue(Attributes.ATTACK_SPEED);
+            maxTick = (int) ((double) maxTick * (2D / attributeValue));
+        }
+        return maxTick;
     }
 }

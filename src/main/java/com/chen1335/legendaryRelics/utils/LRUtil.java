@@ -28,13 +28,6 @@ import java.util.Optional;
 import java.util.Random;
 
 public class LRUtil {
-    @Calculator
-    public static FinalCalculator ARROW_DAMAGE_MUL = FinalCalculator.of(
-            Mul.of(
-                    EntityAttributeValue.of(AttributesGetter.arrowDamage()),
-                    EntityAttributeValue.of(AttributesGetter.arrowVelocity())
-            )
-    );
 
     //Random ResourceLocation
     public static ResourceLocation randomLocation(int count) {

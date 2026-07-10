@@ -48,7 +48,6 @@ public class AllAttributeBoost extends LRBaseEffect {
     public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         CalculatorArg arg = CalculatorArg.simpleArg(entity, itemStack, this);
         AttributeModifyHelper.addAllPositive(entity, slotContext.pathRL(MODIFIER_ID), AMOUNT.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-
     }
 
     @Override

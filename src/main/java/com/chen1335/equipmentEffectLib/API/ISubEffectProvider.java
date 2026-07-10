@@ -5,8 +5,8 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
-public interface ISubEffectProvider {
+public interface ISubEffectProvider<T extends BaseEffect> {
     List<BaseEffect> getSubEffects(ItemStack itemStack);
 
-    void copyFrom(ISubEffectProvider provider);
+    void copyFrom(T provider);
 }

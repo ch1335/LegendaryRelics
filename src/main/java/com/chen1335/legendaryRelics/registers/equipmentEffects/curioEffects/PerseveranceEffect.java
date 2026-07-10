@@ -47,7 +47,7 @@ public class PerseveranceEffect extends LRCurioEffect {
     public static void LivingDamageEvent(LivingDamageEvent.Post event) {
         LivingEntity livingEntity = event.getEntity();
         EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.PERSEVERANCE_EFFECT.value()).ifPresent(pair -> {
-            CalculatorArg calculatorArg = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
+            CalculatorArg calculatorArg = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
             int totalTime = TIME.getInt(calculatorArg) * 20;
             float totalHeal = DAMAGE_PERCENTAGE.getValue(calculatorArg) * Math.min(livingEntity.getMaxHealth(), event.getNewDamage());
             int runCount = totalTime / 10;

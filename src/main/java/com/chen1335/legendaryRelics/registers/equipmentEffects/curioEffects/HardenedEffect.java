@@ -74,9 +74,9 @@ public class HardenedEffect extends LRCurioEffect {
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         if (!event.getEntity().level().isClientSide) {
-            LREquipmentEffectTypes.HARDENED_EFFECT.value().findBestEffect(event.getEntity()).ifPresent(infoHolder -> {
+            LREquipmentEffectTypes.HARDENED_EFFECT.value().findBestEffect(event.getEntity()).ifPresent(slotHolder -> {
                 LivingEntity living = event.getEntity();
-                CalculatorArg calculatorArg = CalculatorArg.simpleArg(living, infoHolder.itemStack(), infoHolder.effect());
+                CalculatorArg calculatorArg = CalculatorArg.simpleArg(living, slotHolder.infoHolder().itemStack(), slotHolder.infoHolder().effect());
                 if (EquipmentEffectCooldownManager.isNotInCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value())) {
                     living.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
                             .addAttributeModifier(

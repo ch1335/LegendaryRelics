@@ -8,6 +8,7 @@ import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.component.*;
@@ -163,8 +164,8 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
         BaseEffect effect = this.effectType.create(getRawEffectLevel(), getEquipmentType());
         effect.components.setAll(components.copy());
 
-        if (effect instanceof ISubEffectProvider copyTo && this instanceof ISubEffectProvider copyFrom) {
-            copyTo.copyFrom(copyFrom);
+        if (effect instanceof ISubEffectProvider<?> copyTo && this instanceof ISubEffectProvider<?> copyFrom) {
+            copyTo.copyFrom(Cast.cast(copyFrom));
         }
         return effect;
     }

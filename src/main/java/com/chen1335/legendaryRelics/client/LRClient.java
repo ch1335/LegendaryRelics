@@ -30,4 +30,8 @@ public class LRClient {
         Font font = Minecraft.getInstance().font;
         return font.getSplitter().splitLines(component, width, component.getStyle());
     }
+
+    public static void submitTask(Runnable runnable) {
+        Minecraft.getInstance().submit(runnable);
+    }
 }

@@ -21,7 +21,7 @@ public class EntityEquipmentEffectData {
     private final Map<Class<? extends SlotEffectManager>, SlotEffectManager> managerMap = new HashMap<>();
 
 
-    private final Map<EffectType<?>, InfoHolder<?>> oldBestEffects = new HashMap<>();
+    private final Map<EffectType<?>, SlotEffectHolder<?>> oldBestEffects = new HashMap<>();
 
     private final Map<EffectType<?>, TreeMultimap<Integer, SlotEffectHolder<?>>> effectHolders = new HashMap<>();
 
@@ -71,10 +71,10 @@ public class EntityEquipmentEffectData {
         return ImmutableList.copyOf(list);
     }
 
-    public <T extends BaseEffect> List<InfoHolder<T>> getEffectsByType(EffectType<T> effectType) {
-        List<InfoHolder<T>> list = new ArrayList<>();
+    public <T extends BaseEffect> List<SlotEffectHolder<T>> getEffectsByType(EffectType<T> effectType) {
+        List<SlotEffectHolder<T>> list = new ArrayList<>();
         for (SlotEffectHolder<?> value : getEffectHoldersByType(effectType).values()) {
-            list.add(Cast.cast(value.infoHolder()));
+            list.add(Cast.cast(value));
         }
         return list;
     }
@@ -98,16 +98,21 @@ public class EntityEquipmentEffectData {
 
     public void onUpdated(LivingEntity living, Set<EffectType<?>> changedTypes) {
         for (EffectType<?> changedType : changedTypes) {
-            getBestEffect(changedType).ifPresent(slotEffectHolder -> {
-                InfoHolder<?> old = oldBestEffects.get(changedType);
-                InfoHolder<?> infoHolder = slotEffectHolder.infoHolder();
+            getBestEffect(changedType).ifPresentOrElse(slotEffectHolder -> {
+                SlotEffectHolder<?> old = oldBestEffects.get(changedType);
                 if (old == null) {
-                    infoHolder.effect().onActive(slotEffectHolder.context(), living, infoHolder.itemStack());
-                    oldBestEffects.put(changedType, infoHolder);
-                } else if (old != infoHolder) {
-                    old.effect().onDeActive(slotEffectHolder.context(), living, old.itemStack());
-                    infoHolder.effect().onActive(slotEffectHolder.context(), living, infoHolder.itemStack());
-                    oldBestEffects.put(changedType, infoHolder);
+                    slotEffectHolder.active(living);
+                    oldBestEffects.put(changedType, slotEffectHolder);
+                } else if (!old.equals(slotEffectHolder)) {
+                    old.deActive(living);
+                    slotEffectHolder.active(living);
+                    oldBestEffects.put(changedType, slotEffectHolder);
+                }
+            }, () -> {
+                SlotEffectHolder<?> old = oldBestEffects.get(changedType);
+                if (old != null) {
+                    old.deActive(living);
+                    oldBestEffects.remove(changedType);
                 }
             });
 

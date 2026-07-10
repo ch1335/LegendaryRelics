@@ -15,7 +15,7 @@ public class LRArmPose {
         Player clientPlayer = LRClient.getClientPlayer();
         if (clientPlayer.isUsingItem()) {
             ItemStack useItem = clientPlayer.getUseItem();
-            float maxChargeTick = useItem.getItem() instanceof IChargeAbleItem chargeAbleItem ? chargeAbleItem.getMaxChargeTick(useItem) : 10;
+            float maxChargeTick = useItem.getItem() instanceof IChargeAbleItem chargeAbleItem ? chargeAbleItem.getMaxChargeTick(useItem, clientPlayer) : 10;
             float partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
             float f7 = (float) useItem.getUseDuration(clientPlayer) - ((float) clientPlayer.getUseItemRemainingTicks() - partialTick + 1.0F);
             float f11 = f7 / maxChargeTick;

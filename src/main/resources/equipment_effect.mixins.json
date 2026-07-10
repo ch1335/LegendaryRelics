@@ -3,7 +3,6 @@
   "package": "com.chen1335.equipmentEffectLib.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ItemMixin",
     "ItemStackMixin"
   ],
   "client": [

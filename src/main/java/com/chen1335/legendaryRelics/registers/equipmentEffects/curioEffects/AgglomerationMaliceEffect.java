@@ -72,7 +72,7 @@ public class AgglomerationMaliceEffect extends LRCurioEffect {
             LivingEntity livingEntity = event.getEntity();
             if (attacker.getSpawnType() == MobSpawnType.SPAWNER) {
                 EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value()).ifPresent(pair -> {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
+                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
                     DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_MULTIPLIER.getValue(args));
                 });
             }

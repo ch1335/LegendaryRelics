@@ -28,7 +28,7 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import java.util.List;
 
 public class AttributeBoostInNether extends LRCurioEffect {
-    public static final ResourceLocation MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "attribute_boost_in_nether");
+    private static final ResourceLocation MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "attribute_boost_in_nether");
 
     @Calculator
     public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
@@ -53,18 +53,18 @@ public class AttributeBoostInNether extends LRCurioEffect {
 
     private void addAttribute(ISlotContext slotContext, LivingEntity living, ItemStack itemStack) {
         CalculatorArg arg = CalculatorArg.simpleArg(living, itemStack, this);
-        AttributeModifyHelper.addAllPositive(living, modifierId, ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        AttributeModifyHelper.addAllPositive(living, slotContext.pathRL(MODIFIER_ID), ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
     }
 
-    private void removeAttribute(LivingEntity living, ItemStack itemStack) {
-        AttributeModifyHelper.removeAllPositive(living, modifierId);
+    private void removeAttribute(ISlotContext slotContext, LivingEntity living, ItemStack itemStack) {
+        AttributeModifyHelper.removeAllPositive(living, slotContext.pathRL(MODIFIER_ID));
     }
 
     @Override
     public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (entity.level().dimension().equals(ServerLevel.NETHER)) {
-            removeAttribute(entity, itemStack);
+            removeAttribute(slotContext,entity, itemStack);
         }
     }
 
@@ -79,11 +79,11 @@ public class AttributeBoostInNether extends LRCurioEffect {
 
         if (event.getEntity() instanceof LivingEntity livingEntity) {
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.ATTRIBUTE_BOOST_IN_NETHER.value()).ifPresent(pair -> {
-                AttributeBoostInNether effect = pair.effect();
+                AttributeBoostInNether effect = pair.infoHolder().effect();
                 if (event.getDimension().equals(ServerLevel.NETHER)) {
-                    effect.addAttribute(slotContext, livingEntity, pair.itemStack());
+                    effect.addAttribute(pair.context(), livingEntity, pair.infoHolder().itemStack());
                 } else {
-                    effect.removeAttribute(livingEntity, pair.itemStack());
+                    effect.removeAttribute(pair.context(), livingEntity, pair.infoHolder().itemStack());
                 }
             });
         }

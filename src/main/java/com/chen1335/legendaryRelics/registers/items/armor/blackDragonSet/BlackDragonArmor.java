@@ -40,7 +40,7 @@ public class BlackDragonArmor extends LRArmorBase {
     }
 
     @Override
-    public int maxToolTipWith() {
+    public int maxToolTipWidth() {
         return 270;
     }
 

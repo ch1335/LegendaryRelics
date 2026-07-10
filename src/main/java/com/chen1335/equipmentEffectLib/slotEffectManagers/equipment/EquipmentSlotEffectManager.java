@@ -5,6 +5,7 @@ import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.SlotEffectManager;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +24,7 @@ public class EquipmentSlotEffectManager extends SlotEffectManager {
     }
 
     public void onEquipmentChanged(LivingEntity living, EquipmentSlot slot, ItemStack from, ItemStack to) {
-        super.onChanged(living,new SlotContext(slot),from,to);
+        super.onChanged(living, new SlotContext(slot), from, to);
     }
 
     @Override
@@ -46,7 +47,20 @@ public class EquipmentSlotEffectManager extends SlotEffectManager {
 
         @Override
         public ResourceLocation pathRL(ResourceLocation resourceLocation) {
-            return resourceLocation.withSuffix(slot.getName());
+            return resourceLocation.withSuffix("_" + slot.getName());
+        }
+
+        @Override
+        public boolean match(EquipmentType equipmentType) {
+            return (equipmentType == EquipmentTypes.ARMOR_AND_HANDS && slot != EquipmentSlot.BODY)
+                    || (equipmentType == EquipmentTypes.HUMANOID_ARMOR && slot.isArmor())
+                    || (equipmentType == EquipmentTypes.HANDS && (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND))
+                    || (equipmentType == EquipmentTypes.HEAD && slot == EquipmentSlot.HEAD)
+                    || (equipmentType == EquipmentTypes.CHEST && slot == EquipmentSlot.CHEST)
+                    || (equipmentType == EquipmentTypes.LEGS && slot == EquipmentSlot.LEGS)
+                    || (equipmentType == EquipmentTypes.FEET && slot == EquipmentSlot.FEET)
+                    || (equipmentType == EquipmentTypes.MAIN_HAND && slot == EquipmentSlot.MAINHAND)
+                    || (equipmentType == EquipmentTypes.OFF_HAND && slot == EquipmentSlot.OFFHAND);
         }
     }
 }

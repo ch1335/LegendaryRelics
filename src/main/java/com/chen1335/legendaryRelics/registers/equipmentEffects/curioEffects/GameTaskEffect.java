@@ -45,12 +45,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider {
+public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider<GameTaskEffect> {
     public static List<AttributeEntire> ATTRIBUTES;
 
     public static List<ITask> TASKS;
 
-    private BaseEffect allAttributeBoost = LREquipmentEffectTypes.ALL_ATTRIBUTE_BOOST.get().create(1, EquipmentTypes.CURIO);
+    private final BaseEffect allAttributeBoost = LREquipmentEffectTypes.ALL_ATTRIBUTE_BOOST.get().create(1, EquipmentTypes.CURIO);
 
     public GameTaskEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -79,8 +79,8 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
     }
 
     public static void tryFinishTask(Player player, ITask task) {
-        LREquipmentEffectTypes.GAME_TASK_CURIO.value().findBestEffect(player).ifPresent(infoHolder -> {
-            ((GameTaskEffect) infoHolder.effect()).finishTask(player, task, infoHolder.itemStack());
+        LREquipmentEffectTypes.GAME_TASK_CURIO.value().findBestEffect(player).ifPresent(slotHolder -> {
+            slotHolder.infoHolder().effect().finishTask(player, task, slotHolder.infoHolder().itemStack());
         });
     }
 
@@ -208,29 +208,8 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider 
     }
 
     @Override
-    public void copyFrom(ISubEffectProvider provider) {
-        if (provider instanceof GameTaskEffect gameTaskEffect) {
-            allAttributeBoost = gameTaskEffect.allAttributeBoost.copy();
-        }
-    }
+    public void copyFrom(GameTaskEffect provider) {
 
-    @Override
-    public CompoundTag saveSimpleData() {
-        CompoundTag compoundTag = super.saveSimpleData();
-        BaseEffect.CODEC.encodeStart(NbtOps.INSTANCE, allAttributeBoost).ifSuccess(nbt -> {
-            compoundTag.put("allAttributeBoostEffect", nbt);
-        });
-        return compoundTag;
-    }
-
-    @Override
-    public void loadSimpleData(CompoundTag nbt) {
-        CompoundTag tag = nbt.getCompound("allAttributeBoostEffect");
-        if (!tag.isEmpty()) {
-            BaseEffect.CODEC.decode(NbtOps.INSTANCE, tag).ifSuccess(pair -> {
-                allAttributeBoost = pair.getFirst();
-            });
-        }
     }
 
     public record AttributeEntire(Holder<Attribute> attribute, List<Double> amounts,

@@ -185,7 +185,7 @@ repositories {
 dependencies {
     implementation fileTree("libs")
     jarJar(implementation("blank:damage_controller:2101.1.3"))
-    jarJar(implementation("blank:shield_system:2101.1.3"))
+    jarJar(implementation("blank:shield_system:2101.1.4"))
 
     implementation "curse.maven:patchouli-306770:6164617"
     implementation "curse.maven:cloth-config-348521:5729127"

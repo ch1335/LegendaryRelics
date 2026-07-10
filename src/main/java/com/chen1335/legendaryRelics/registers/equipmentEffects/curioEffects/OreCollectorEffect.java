@@ -55,7 +55,7 @@ public class OreCollectorEffect extends LRCurioEffect {
     public static void countOres(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         EquipmentEffectAPI.findBestEffect(player, LREquipmentEffectTypes.ORE_COLLECTOR_EFFECT.value()).ifPresent(pair -> {
-            CollectedMinerals.checkAndAdd(pair.itemStack(), event.getState().getBlock());
+            CollectedMinerals.checkAndAdd(pair.infoHolder().itemStack(), event.getState().getBlock());
         });
     }
 

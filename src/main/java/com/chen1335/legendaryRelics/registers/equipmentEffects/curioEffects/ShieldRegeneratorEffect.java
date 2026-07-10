@@ -74,7 +74,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
             if (instance != null && instance.getTotalAmount() < MAX_SHIELD.getValue(args)) {
                 addCooldown(wearer, COOLDOWN.getInt(args) * 20, () -> {
                     this.findBestEffect(wearer).ifPresent(pair -> {
-                        CalculatorArg args1 = CalculatorArg.simpleArg(wearer, pair.itemStack(), pair.effect());
+                        CalculatorArg args1 = CalculatorArg.simpleArg(wearer, pair.infoHolder().itemStack(), pair.infoHolder().effect());
                         instance.getShield().setAmount(MAX_SHIELD.getValue(args1));
                     });
                 });
@@ -90,7 +90,7 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
             if (instance != null && instance.getTotalAmount() < MAX_SHIELD.getValue(args)) {
                 addCooldown(entity, COOLDOWN.getInt(args) * 20, () -> {
                     findBestEffect(entity).ifPresent(pair -> {
-                        CalculatorArg args1 = CalculatorArg.simpleArg(entity, pair.itemStack(), pair.effect());
+                        CalculatorArg args1 = CalculatorArg.simpleArg(entity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
                         instance.getShield().setAmount(MAX_SHIELD.getValue(args1));
                     });
                 });
@@ -103,6 +103,10 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
         if (!isNotInCooldown(entity)) {
             this.addCooldown(entity, 0);
         }
+        @Nullable ShieldInstanceHolder<UnitShield> instance = ShieldAPI.getShieldInstance(entity, LRShieldType.SHIELD_REGENERATOR_SHIELD.get());
+        if (instance != null) {
+            instance.getShield().setAmount(0);
+        }
     }
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
@@ -111,9 +115,9 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
         @Nullable ShieldInstanceHolder<UnitShield> instance = ShieldAPI.getShieldInstance(entity, LRShieldType.SHIELD_REGENERATOR_SHIELD.get());
         if (instance != null) {
             effectType.findBestEffect(entity).ifPresent(pair -> {
-                pair.effect().addCooldown(entity, COOLDOWN.getInt(CalculatorArg.simpleArg(entity, pair.itemStack(), pair.effect())) * 20, () -> {
+                pair.infoHolder().effect().addCooldown(entity, COOLDOWN.getInt(CalculatorArg.simpleArg(entity, pair.infoHolder().itemStack(), pair.infoHolder().effect())) * 20, () -> {
                     effectType.findBestEffect(entity).ifPresent(pair1 -> {
-                        instance.getShield().setAmount(MAX_SHIELD.getValue(CalculatorArg.simpleArg(entity, pair1.itemStack(), pair1.effect())));
+                        instance.getShield().setAmount(MAX_SHIELD.getValue(CalculatorArg.simpleArg(entity, pair1.infoHolder().itemStack(), pair1.infoHolder().effect())));
                     });
                 });
             });

@@ -108,7 +108,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
                 SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
                 COOL_DOWN.toComponent(tooltipFlag.hasShiftDown(), args)
-        ).withColor(0xaeaeae), getMaxToolTipWith(itemStack));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
 
     }
 
@@ -119,7 +119,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             if (effectType.isNotInCooldown(attacker)) {
                 effectType.findBestEffect(attacker).ifPresent(pair -> {
-                    CalculatorArg args = CalculatorArg.simpleArg(attacker, pair.itemStack(), pair.effect());
+                    CalculatorArg args = CalculatorArg.simpleArg(attacker, pair.infoHolder().itemStack(), pair.infoHolder().effect());
                     DamageControllerAPI.addValue((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(args));
                     ShieldAPI.addCommonDecayShield(attacker, SHIELD_AMOUNT.getValue(args), SHIELD_LAST_TIME.getInt(args) * 20);
                     EquipmentEffectCooldownManager.addCooldown(attacker, effectType, COOL_DOWN.getInt(args) * 20);
@@ -130,7 +130,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
         if (event.getEntity() instanceof LivingEntity livingEntity) {
             effectType.findBestEffect(livingEntity).ifPresent(pair -> {
                 if (event.getSource().is(Tags.DamageTypes.IS_PHYSICAL)) {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
+                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
                     DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, 1 - PHYSICAL_DAMAGE_REDUCE.getValue(args));
                 }
             });

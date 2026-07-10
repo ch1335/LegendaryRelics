@@ -12,6 +12,7 @@ import net.minecraft.network.codec.StreamCodec;
 import com.chen1335.equipmentEffectLib.utils.Cast;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
@@ -19,6 +20,7 @@ public record ItemEffectsData(Map<EffectType<?>, BaseEffect> effects) {
     public static ItemEffectsData buildFromLinkedMap(Map<EffectType<?>, BaseEffect> map) {
         return new ItemEffectsData(ImmutableMap.copyOf(map));
     }
+
 
     public static ItemEffectsData EMPTY = new ItemEffectsData(Map.of());
 

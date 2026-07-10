@@ -32,7 +32,7 @@ public class ALLType extends EquipmentType {
     }
 
     @Override
-    public boolean match(IEquipmentType equipmentType) {
+    public boolean contain(IEquipmentType equipmentType) {
         return true;
     }
 }

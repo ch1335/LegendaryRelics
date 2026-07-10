@@ -1,15 +1,16 @@
 package com.chen1335.equipmentEffectLib.API;
 
-import com.chen1335.equipmentEffectLib.common.InfoHolder;
+import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import net.minecraft.world.entity.LivingEntity;
 import com.chen1335.equipmentEffectLib.utils.Cast;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IEffectHelper {
-    default <T extends BaseEffect> Optional<InfoHolder<T>> findBestEffect(LivingEntity living) {
+    default <T extends BaseEffect> Optional<SlotEffectHolder<T>> findBestEffect(LivingEntity living) {
         return EquipmentEffectAPI.findBestEffect(living, Cast.cast(((BaseEffect) this).getType()));
     }
 

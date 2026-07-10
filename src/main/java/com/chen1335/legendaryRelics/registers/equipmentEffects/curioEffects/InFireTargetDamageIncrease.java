@@ -42,8 +42,8 @@ public class InFireTargetDamageIncrease extends LRCurioEffect {
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         if (event.getEntity().isOnFire() && event.getSource().getEntity() instanceof LivingEntity attacker) {
-            LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value().findBestEffect(attacker).ifPresent(infoHolder -> {
-                DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(CalculatorArg.simpleArg(attacker, infoHolder.itemStack(), infoHolder.effect())));
+            LREquipmentEffectTypes.IN_FIRE_TARGET_DAMAGE_INCREASE.value().findBestEffect(attacker).ifPresent(slotHolder -> {
+                DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(CalculatorArg.simpleArg(attacker, slotHolder.infoHolder().itemStack(), slotHolder.infoHolder().effect())));
             });
         }
     }

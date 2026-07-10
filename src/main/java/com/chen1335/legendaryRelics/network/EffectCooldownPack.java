@@ -27,6 +27,8 @@ public record EffectCooldownPack(EffectType<?> effectType, int cooldownTick) imp
     }
 
     public void handler(IPayloadContext context) {
-        EquipmentEffectCooldownManager.addCooldown(context.player(), effectType, cooldownTick);
+        context.enqueueWork(()->{
+            EquipmentEffectCooldownManager.addCooldown(context.player(), effectType, cooldownTick);
+        });
     }
 }

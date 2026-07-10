@@ -23,94 +23,90 @@ import top.theillusivec4.curios.api.event.CurioChangeEvent;
 import java.util.Map;
 import java.util.Objects;
 
+@EventBusSubscriber(modid = LegendaryRelics.MODID)
+
 public class EventHandler {
+    @SubscribeEvent
+    public static void onCurioChange(CurioChangeEvent event) {
+        boolean needUpdate = false;
 
-    @EventBusSubscriber(modid = LegendaryRelics.MODID)
-    public static class Game {
-        @SubscribeEvent
-        public static void onCurioChange(CurioChangeEvent event) {
-            boolean needUpdate = false;
-
-            if (!event.getFrom().is(event.getTo().getItem())) {
-                if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
-                    needUpdate = true;
-                }
-            } else {
-                Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
-                Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
-                if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
-                    needUpdate = true;
-                }
+        if (!event.getFrom().is(event.getTo().getItem())) {
+            if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
+                needUpdate = true;
             }
-
-            if (needUpdate) {
-                EntityEquipmentEffectData data = event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
-                CurioSlotEffectManager slotEffectManager = data.getSlotEffectManager(CurioSlotEffectManager.class);
-                slotEffectManager.onCurioChanged(event.getEntity(), event.getIdentifier(), event.getSlotIndex(), event.getFrom(), event.getTo());
-            }
-
-
-            if (!Objects.equals(EquipmentEffectAPI.getItemSetEffect(event.getFrom()), EquipmentEffectAPI.getItemSetEffect(event.getTo()))) {
-                EquipmentEffectAPI.updateEntitySetEffect(event.getEntity());
+        } else {
+            Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
+            Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
+            if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
+                needUpdate = true;
             }
         }
 
-        @SubscribeEvent
-        public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
-            EquipmentSlot.Type type = event.getSlot().getType();
-            boolean updateTotal = false;
-            if (!event.getFrom().is(event.getTo().getItem())) {
-                if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
-                    updateTotal = true;
-                }
-            } else {
-                Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
-                Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
-                if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
-                    updateTotal = true;
-                }
-            }
-
-            if (updateTotal) {
-                EntityEquipmentEffectData data = event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
-                EquipmentSlotEffectManager slotEffectManager = data.getSlotEffectManager(EquipmentSlotEffectManager.class);
-                slotEffectManager.onEquipmentChanged(event.getEntity(), event.getSlot(), event.getFrom(), event.getTo());
-            }
-
-            if (!Objects.equals(EquipmentEffectAPI.getItemSetEffect(event.getFrom()), EquipmentEffectAPI.getItemSetEffect(event.getTo()))) {
-                EquipmentEffectAPI.updateEntitySetEffect(event.getEntity());
-            }
+        if (needUpdate) {
+            EntityEquipmentEffectData data = event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
+            CurioSlotEffectManager slotEffectManager = data.getSlotEffectManager(CurioSlotEffectManager.class);
+            slotEffectManager.onCurioChanged(event.getEntity(), event.getIdentifier(), event.getSlotIndex(), event.getFrom(), event.getTo());
         }
 
 
-        @SubscribeEvent
-        public static void CurioAttributeModifierEvent(CurioAttributeModifierEvent event) {
-            LivingEntity livingEntity = event.getSlotContext().entity();
-            if (livingEntity != null) {
-                for (BaseEffect effects : EquipmentEffectAPI.getEffects(event.getItemStack()).values()) {
-                    if (effects instanceof ICurioEffect curioEffect) {
-                        curioEffect.modifyCurioAttribute(event);
-                    }
-                }
+        if (!Objects.equals(EquipmentEffectAPI.getItemSetEffect(event.getFrom()), EquipmentEffectAPI.getItemSetEffect(event.getTo()))) {
+            EquipmentEffectAPI.updateEntitySetEffect(event.getEntity(), new CurioSlotEffectManager.SlotContext(event.getIdentifier(), event.getSlotIndex()), event.getFrom(), event.getTo());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
+        EquipmentSlot.Type type = event.getSlot().getType();
+        boolean updateTotal = false;
+        if (!event.getFrom().is(event.getTo().getItem())) {
+            if (EquipmentEffectAPI.haveEffects(event.getFrom()) || EquipmentEffectAPI.haveEffects(event.getTo())) {
+                updateTotal = true;
+            }
+        } else {
+            Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
+            Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
+            if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
+                updateTotal = true;
             }
         }
 
-        @SubscribeEvent
-        public static void onEntityTick(EntityTickEvent.Pre event) {
-            if (event.getEntity() instanceof LivingEntity living) {
-                living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).tick(living);
-                living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA).tick(living);
+        if (updateTotal) {
+            EntityEquipmentEffectData data = event.getEntity().getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
+            EquipmentSlotEffectManager slotEffectManager = data.getSlotEffectManager(EquipmentSlotEffectManager.class);
+            slotEffectManager.onEquipmentChanged(event.getEntity(), event.getSlot(), event.getFrom(), event.getTo());
+        }
+
+        if (!Objects.equals(EquipmentEffectAPI.getItemSetEffect(event.getFrom()), EquipmentEffectAPI.getItemSetEffect(event.getTo()))) {
+            EquipmentEffectAPI.updateEntitySetEffect(event.getEntity(), new EquipmentSlotEffectManager.SlotContext(event.getSlot()), event.getFrom(), event.getTo());
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void CurioAttributeModifierEvent(CurioAttributeModifierEvent event) {
+        LivingEntity livingEntity = event.getSlotContext().entity();
+        if (livingEntity != null) {
+            for (BaseEffect effects : EquipmentEffectAPI.getEffects(event.getItemStack()).values()) {
+                if (effects instanceof ICurioEffect curioEffect) {
+                    curioEffect.modifyCurioAttribute(event);
+                }
             }
         }
     }
 
-    @EventBusSubscriber(modid = LegendaryRelics.MODID)
-    public static class Mod {
-        @SubscribeEvent
-        public static void registerRegistries(NewRegistryEvent event) {
-            event.register(EERegisterTypes.EQUIPMENT_EFFECT_TYPE);
-            event.register(EERegisterTypes.SETS_EFFECT_TYPE);
-            event.register(EERegisterTypes.EQUIPMENT_TYPE);
+    @SubscribeEvent
+    public static void onEntityTick(EntityTickEvent.Pre event) {
+        if (event.getEntity() instanceof LivingEntity living) {
+            living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).tick(living);
+            living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA).tick(living);
         }
+    }
+
+
+    @SubscribeEvent
+    public static void registerRegistries(NewRegistryEvent event) {
+        event.register(EERegisterTypes.EQUIPMENT_EFFECT_TYPE);
+        event.register(EERegisterTypes.SETS_EFFECT_TYPE);
+        event.register(EERegisterTypes.EQUIPMENT_TYPE);
     }
 }

@@ -17,7 +17,7 @@ public interface ILRItemExtension {
 
     }
 
-    default int maxToolTipWith() {
+    default int maxToolTipWidth() {
         return 1000;
     }
 }

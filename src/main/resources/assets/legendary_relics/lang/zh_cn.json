@@ -145,5 +145,6 @@
   "set_effect_type.legendary_relics.full_set_bonus": "全套效果:%s",
   "set_effect_type.legendary_relics.tiered_bonus": "分级奖励:%s",
   "legendary_relics.damage_type.physical_damage": "物理伤害",
-  "legendary_relics.damage_type.format": "%s%s"
+  "legendary_relics.damage_type.format": "%s%s",
+  "legendary_relics.max_charge_time_affected_by_attack_speed": "最大蓄力时间受攻击速度影响"
 }

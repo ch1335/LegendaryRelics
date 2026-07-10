@@ -3,7 +3,7 @@ package com.chen1335.equipmentEffectLib.kubejs;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.EquipmentEffectLib;
-import com.chen1335.legendaryRelics.events.AttachItemEffectEvent;
+import com.chen1335.equipmentEffectLib.events.AttachItemEffectEvent;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.registry.BuilderTypeRegistry;
 import dev.latvian.mods.kubejs.script.BindingRegistry;

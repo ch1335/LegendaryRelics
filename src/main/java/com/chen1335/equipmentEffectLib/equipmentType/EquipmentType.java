@@ -17,7 +17,7 @@ public class EquipmentType implements IEquipmentType {
     }
 
     @Override
-    public boolean match(IEquipmentType equipmentType) {
+    public boolean contain(IEquipmentType equipmentType) {
         return equipmentType == this;
     }
 }

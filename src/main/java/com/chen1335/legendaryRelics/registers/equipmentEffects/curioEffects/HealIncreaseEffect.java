@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.common.InfoHolder;
+import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -45,8 +45,8 @@ public class HealIncreaseEffect extends LRCurioEffect {
         LivingEntity livingEntity = event.getEntity();
         EquipmentEffectAPI.findStackableEffect(livingEntity, LREquipmentEffectTypes.HEAL_INCREASE_EFFECT.value()).ifPresent(list -> {
             float i = 0;
-            for (InfoHolder<HealIncreaseEffect> pair : list) {
-                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
+            for (SlotEffectHolder<HealIncreaseEffect> pair : list) {
+                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
                 i += HEAL_INCREASE.getValue(args);
             }
 

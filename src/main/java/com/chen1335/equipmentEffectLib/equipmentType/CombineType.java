@@ -21,9 +21,9 @@ public class CombineType extends EquipmentType {
     }
 
     @Override
-    public boolean match(IEquipmentType equipmentType) {
+    public boolean contain(IEquipmentType equipmentType) {
         for (IEquipmentType type : types) {
-            if (type.match(equipmentType)) {
+            if (equipmentType.contain(type)) {
                 return true;
             }
         }

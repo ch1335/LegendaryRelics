@@ -2,12 +2,12 @@ package com.chen1335.legendaryRelics.registers.items.weapons;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
-import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.IChargeAbleItem;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.registers.equipmentEffects.weaponEffects.Ambush;
 import com.chen1335.legendaryRelics.registers.items.LRSwordItem;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -35,11 +35,11 @@ public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
         return List.of(
                 LREquipmentEffectTypes.BACKSTAB.value().create(1, EquipmentTypes.MAIN_HAND),
                 LREquipmentEffectTypes.AMBUSH.value().create(1, EquipmentTypes.MAIN_HAND)
-        );
+                );
     }
 
     @Override
-    public int maxToolTipWith() {
+    public int maxToolTipWidth() {
         return 270;
     }
 
@@ -52,7 +52,7 @@ public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
     }
 
     public float getChargePercent(ItemStack stack, LivingEntity entity) {
-        int maxChargeTick = getMaxChargeTick(stack);
+        int maxChargeTick = getMaxChargeTick(stack, entity);
         int chargeTick = Math.min(maxChargeTick, getUseDuration(stack, entity) - entity.getUseItemRemainingTicks());
         return (float) chargeTick / maxChargeTick;
     }
@@ -73,14 +73,17 @@ public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
         return InteractionResultHolder.consume(player.getItemInHand(hand));
     }
 
-
     @Override
     public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
         return itemAbility == ItemAbilities.SWORD_DIG;
     }
 
     @Override
-    public int getMaxChargeTick(ItemStack itemStack) {
-        return 40;
+    public int getMaxChargeTick(ItemStack itemStack, LivingEntity user) {
+        Ambush effect = EquipmentEffectAPI.getEffect(itemStack, LREquipmentEffectTypes.AMBUSH.value());
+        if (effect != null) {
+           return effect.getMaxChargeTick(itemStack,user);
+        }
+        return 0;
     }
 }

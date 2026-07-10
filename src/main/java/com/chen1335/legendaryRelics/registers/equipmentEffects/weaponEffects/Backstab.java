@@ -31,7 +31,7 @@ public class Backstab extends LRWeaponEffect {
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.backstab", DAMAGE_MUL.toPercentageComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this))).withColor(0xaeaeae), getMaxToolTipWith(itemStack));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.backstab", DAMAGE_MUL.toPercentageComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this))).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     public static void CriticalHitEvent(CriticalHitEvent event) {

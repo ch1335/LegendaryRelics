@@ -44,7 +44,7 @@ public class FireDamageReduce extends LRCurioEffect {
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         EquipmentEffectAPI.findBestEffect(event.getEntity(), LREquipmentEffectTypes.FIRE_DAMAGE_REDUCE.value()).ifPresent(pair -> {
             if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
-                DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, 1-FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.itemStack(), pair.effect())));
+                DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, 1-FIRE_DAMAGE_REDUCE.getValue(CalculatorArg.simpleArg(event.getEntity(), pair.infoHolder().itemStack(), pair.infoHolder().effect())));
             }
         });
     }

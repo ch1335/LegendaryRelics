@@ -20,7 +20,7 @@ public class ShadowDaggerExtension implements IClientItemExtensions {
         if (player.getUseItem() != stack) {
             return false;
         }
-        float maxChargeTick = stack.getItem() instanceof IChargeAbleItem chargeAbleItem ? chargeAbleItem.getMaxChargeTick(stack) : 10;
+        float maxChargeTick = stack.getItem() instanceof IChargeAbleItem chargeAbleItem ? chargeAbleItem.getMaxChargeTick(stack, player) : 10;
         int i = arm == HumanoidArm.RIGHT ? 1 : -1;
         poseStack.translate((float) i * 0.86F, -0.52F + equipProcess * -0.6F, -0.72F);
         boolean flag3 = arm == HumanoidArm.RIGHT;

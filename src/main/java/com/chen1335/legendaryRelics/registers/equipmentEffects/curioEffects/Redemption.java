@@ -87,8 +87,8 @@ public class Redemption extends LRCurioEffect {
     public static void LivingDamageEvent(LivingDamageEvent.Post event) {
         LivingEntity livingEntity = event.getEntity();
         if (EquipmentEffectCooldownManager.isNotInCooldown(livingEntity, LREquipmentEffectTypes.REDEMPTION.get())) {
-            LREquipmentEffectTypes.REDEMPTION.get().findBestEffect(livingEntity).ifPresent(infoHolder -> {
-                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, infoHolder.itemStack(), infoHolder.effect());
+            LREquipmentEffectTypes.REDEMPTION.get().findBestEffect(livingEntity).ifPresent(slotHolder -> {
+                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, slotHolder.infoHolder().itemStack(), slotHolder.infoHolder().effect());
                 if (livingEntity.getHealth() <= livingEntity.getMaxHealth() * MAX_HEALTH_PERCENTAGE.getValue(args)) {
                     ShieldAPI.addCommonTimeLimitedShield(livingEntity, SHIELD_AMOUNT.getValue(args), (int) (SHIELD_LAST_TIME.getValue(args) * 20));
                     if (livingEntity.isDeadOrDying()) {
@@ -105,7 +105,7 @@ public class Redemption extends LRCurioEffect {
             LivingEntity livingEntity = event.getEntity();
             EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get()).ifPresent(pair -> {
                 if (attacker.getType().is(EntityTypeTags.UNDEAD)) {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.itemStack(), pair.effect());
+                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
                     DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -UNDEAD_REDUCE.getValue(args));
                 }
             });

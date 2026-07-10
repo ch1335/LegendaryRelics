@@ -5,6 +5,7 @@ import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.SlotEffectManager;
 import io.netty.util.collection.IntObjectHashMap;
@@ -48,6 +49,11 @@ public class CurioSlotEffectManager extends SlotEffectManager {
 
         public ResourceLocation pathRL(ResourceLocation resourceLocation) {
             return resourceLocation.withSuffix("_" + type + "_" + index);
+        }
+
+        @Override
+        public boolean match(EquipmentType equipmentType) {
+            return equipmentType.contain(EquipmentTypes.CURIO);
         }
     }
 }

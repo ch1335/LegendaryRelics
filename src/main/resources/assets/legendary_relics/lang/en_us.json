@@ -145,6 +145,7 @@
   "set_effect_type.legendary_relics.full_set_bonus": "Full Set Bonus: %s",
   "set_effect_type.legendary_relics.tiered_bonus": "Tiered Bonus: %s",
   "legendary_relics.damage_type.physical_damage": "Physical Damage",
-  "legendary_relics.damage_type.format": "%s %s"
+  "legendary_relics.damage_type.format": "%s %s",
+  "legendary_relics.max_charge_time_affected_by_attack_speed": "Max charging time is affected by attack speed"
 
 }

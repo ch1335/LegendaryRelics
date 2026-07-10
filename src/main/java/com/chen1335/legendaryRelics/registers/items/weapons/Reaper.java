@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.registers.items.weapons;
 
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
-import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
@@ -25,7 +24,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -51,24 +49,24 @@ public class Reaper extends LRSwordItem {
     );
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
-            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg)).withColor(0xaeaeae), maxToolTipWith());
-            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.2").withColor(5592405), maxToolTipWith());
-            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.3").withColor(5592405), maxToolTipWith());
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg)).withColor(0xaeaeae), maxToolTipWidth());
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.2").withColor(5592405), maxToolTipWidth());
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.3").withColor(5592405), maxToolTipWidth());
 
         }
     }
 
     @Override
-    public int maxToolTipWith() {
+    public int maxToolTipWidth() {
         return 250;
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
+    public InteractionResultHolder<ItemStack> use( Level level,  Player player, InteractionHand usedHand) {
         if (player.getCooldowns().isOnCooldown(LRItems.REAPER.asItem())) {
             return InteractionResultHolder.fail(player.getItemInHand(usedHand));
         }
@@ -84,7 +82,7 @@ public class Reaper extends LRSwordItem {
     }
 
     @Override
-    public boolean isValidRepairItem(@NotNull ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem( ItemStack toRepair, ItemStack repair) {
         if (repair.is(Items.OBSIDIAN)) {
             return true;
         }
