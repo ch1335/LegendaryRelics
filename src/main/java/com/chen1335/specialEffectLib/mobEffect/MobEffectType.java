@@ -14,10 +14,11 @@ public class MobEffectType<T extends SpecialMobEffect> {
 
     private ResourceLocation icon;
 
-    public MobEffectType(MobEffectFactory<T> factory, boolean renderIcon, MobEffectCategory category) {
+    public MobEffectType(MobEffectFactory<T> factory, boolean renderIcon, MobEffectCategory category,ResourceLocation icon) {
         this.factory = factory;
         this.renderIcon = renderIcon;
         this.category = category;
+        this.icon = icon;
     }
 
     public ResourceLocation getIcon() {
@@ -54,7 +55,7 @@ public class MobEffectType<T extends SpecialMobEffect> {
         private MobEffectFactory<T> factory;
         private boolean renderIcon = false;
         private MobEffectCategory category = MobEffectCategory.NEUTRAL;
-
+        private ResourceLocation icon;
         public static <BT extends SpecialMobEffect> Builder<BT> builder() {
             return new Builder<>();
         }
@@ -74,8 +75,14 @@ public class MobEffectType<T extends SpecialMobEffect> {
             return this;
         }
 
+        public Builder<T> category(ResourceLocation icon) {
+            this.icon = icon;
+            return this;
+        }
+
+
         public Supplier<MobEffectType<T>> build() {
-            return () -> new MobEffectType<>(factory, renderIcon, category);
+            return () -> new MobEffectType<>(factory, renderIcon, category,icon);
         }
     }
 }
