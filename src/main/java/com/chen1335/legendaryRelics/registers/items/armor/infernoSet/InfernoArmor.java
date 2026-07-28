@@ -32,9 +32,7 @@ public class InfernoArmor extends LRArmorBase implements LRArmorHelper {
         ).withModifierAdded(
                 Attributes.ATTACK_DAMAGE, new AttributeModifier(resourcelocation, 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), equipmentslotgroup
 
-        )
-
-                ;
+        );
 
     }
 

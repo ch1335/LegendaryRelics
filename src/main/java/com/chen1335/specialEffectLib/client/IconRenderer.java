@@ -7,11 +7,18 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class IconRenderer {
     public static void renderIconRow(GuiGraphics guiGraphics, int x, int y, int iconSize, SpecialMobEffect effect) {
         RenderSystem.enableBlend();
-        float scale = iconSize/16F;
+        float scale = iconSize / 16F;
+        int borderColor = effect.getEffectType().getCategory() == MobEffectCategory.HARMFUL
+                ? 0xDDB03030
+                : 0xDD3070B0;
+        guiGraphics.fill(x - 1, y - 1, x + iconSize + 1, y + iconSize + 1, borderColor);
+        guiGraphics.fill(x, y, x + iconSize, y + iconSize, 0xDD606060);
+        guiGraphics.flush();
         RenderUtils.drawTextureWithSize(effect.getEffectType().getIcon(), guiGraphics.pose(), x, y, iconSize, iconSize, 0);
 
         if (effect.getPercentage() >= 0) {

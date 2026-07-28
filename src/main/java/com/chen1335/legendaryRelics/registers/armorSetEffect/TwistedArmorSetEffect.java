@@ -101,7 +101,7 @@ public class TwistedArmorSetEffect extends SetEffect {
         DamageSource source = event.getSource();
         if (source.getDirectEntity() instanceof AbstractArrow abstractArrow && abstractArrow.getOwner() instanceof LivingEntity attacker) {
             TwistedEffectInstance instance = getEffectInstance(attacker);
-            if (instance != null) {
+            if (instance != null && instance.getPiece() >=2) {
                 CalculatorArg args = instance.buildArgs(attacker);
                 if (instance.coolDown <= 0) {
                     float cooldownValueSecond = GAIN_STACK_COOLDOWN.getValue(args);

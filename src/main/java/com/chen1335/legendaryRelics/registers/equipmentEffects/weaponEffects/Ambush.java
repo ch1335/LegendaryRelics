@@ -79,6 +79,9 @@ public class Ambush extends LRWeaponEffect {
     }
 
     public int getMaxChargeTick(ItemStack itemStack, LivingEntity user) {
+        if (user == null) {
+            return 40;
+        }
         int maxTick = 40;
         if (user.getAttributes().hasAttribute(Attributes.ATTACK_SPEED)) {
             double attributeValue = user.getAttributeValue(Attributes.ATTACK_SPEED);

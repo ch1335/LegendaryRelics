@@ -38,7 +38,9 @@ public class EntitySetsEffectData {
         pieceInfo.clear();
 
         equipmentInfo.forEach((setsEffectBase, slotContexts) -> {
-            pieceInfo.put(setsEffectBase, slotContexts.size());
+            if (!slotContexts.isEmpty()) {
+                pieceInfo.put(setsEffectBase, slotContexts.size());
+            }
         });
 
         Map<SetEffect, EffectInstance> newEffectInstances = new HashMap<>();

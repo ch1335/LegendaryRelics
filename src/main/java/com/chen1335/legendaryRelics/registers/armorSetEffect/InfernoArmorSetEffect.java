@@ -6,7 +6,6 @@ import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSetsEffects;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
-import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.client.particlePlayer.ParticlePlayersHolder;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -154,7 +153,7 @@ public class InfernoArmorSetEffect extends SetEffect {
         DamageSource source = event.getSource();
         if ((source.is(DamageTypeTags.IS_PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK)) && source.is(Tags.DamageTypes.IS_PHYSICAL) && source.getEntity() instanceof LivingEntity attacker) {
             InfernoEffectInstance instance = getEffectInstance(attacker);
-            if (instance != null) {
+            if (instance != null && instance.getPiece() >= 2) {
                 CalculatorArg args = instance.buildArgs(attacker);
                 if (instance.coolDown <= 0) {
                     float cooldownValueSecond = GAIN_STACK_COOLDOWN.getValue(args);
@@ -167,8 +166,8 @@ public class InfernoArmorSetEffect extends SetEffect {
                     SpecialEffectAPI.addEffectToEntity(attacker, effect, Doom::getFinal);
                 }
 
-                SpecialEffectAPI.getEffect(attacker,attacker.getUUID(),LRSpecialMobEffects.DOOM.value()).ifPresent(doom -> {
-                    if (doom.getStack() >=10) {
+                SpecialEffectAPI.getEffect(attacker, attacker.getUUID(), LRSpecialMobEffects.DOOM.value()).ifPresent(doom -> {
+                    if (doom.getStack() >= 10) {
                         InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args));
                         infernoScorch.setSourceEntity(attacker);
                         SpecialEffectAPI.addEffectToEntity(event.getEntity(), infernoScorch, InfernoScorch::getFinal);

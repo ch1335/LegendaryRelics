@@ -223,7 +223,6 @@ dependencies {
     implementation "curse.maven:advanced-loot-info-1205426:7537434"
     runtimeOnly 'net.covers1624:DevLogin:0.1.0.5'
 
-
 //    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     implementation("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 }

@@ -35,9 +35,10 @@ public class EventHandler {
                 needUpdate = true;
             }
         } else {
+
             Map<EffectType<?>, BaseEffect> fromEffects = EquipmentEffectAPI.getEffects(event.getFrom());
             Map<EffectType<?>, BaseEffect> toEffects = EquipmentEffectAPI.getEffects(event.getTo());
-            if (fromEffects.values().hashCode() != toEffects.values().hashCode()) {
+            if (!fromEffects.values().equals(toEffects.values())) {
                 needUpdate = true;
             }
         }

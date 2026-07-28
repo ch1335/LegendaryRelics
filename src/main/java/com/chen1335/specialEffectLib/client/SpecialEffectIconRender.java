@@ -49,10 +49,12 @@ public class SpecialEffectIconRender implements LayeredDraw.Layer {
 
         if (!beneficialIcons.isEmpty()) {
             renderIcons(guiGraphics, guiWidth, guiHeight - gui.leftHeight, beneficialIcons, -1);
+            gui.leftHeight +=13;
         }
 
         if (!harmfulIcons.isEmpty()) {
             renderIcons(guiGraphics, guiWidth, guiHeight - gui.rightHeight, harmfulIcons, 1);
+            gui.rightHeight +=13;
         }
     }
 
@@ -60,15 +62,15 @@ public class SpecialEffectIconRender implements LayeredDraw.Layer {
     private static void renderIcons(GuiGraphics guiGraphics, int guiWidth, int y, List<SpecialMobEffect> effects, int i) {
         int iconSize = 16;
         float scale = 0.6F;
-        int x = guiWidth / 2 + (91 * i);
+        int x = guiWidth / 2 + (91 * i)+1;
         RenderSystem.enableBlend();
         PoseStack pose = guiGraphics.pose();
         for (SpecialMobEffect effect : effects) {
             pose.pushPose();
-            pose.translate(x, y + 9 - iconSize * scale, 0);
+            pose.translate(x, y + 8 - iconSize * scale, 0);
             pose.scale(scale, scale, 0);
             IconRenderer.renderIconRow(guiGraphics, 0, 0, iconSize, effect);
-            x = (int) (x + (iconSize ) * -i * scale)+2;
+            x = (int) (x + (iconSize ) * -i * scale)+3;
             pose.popPose();
         }
         RenderSystem.disableBlend();

@@ -1,17 +1,23 @@
 package com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 import com.chen1335.equipmentEffectLib.API.ISubEffectProvider;
+import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
-import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
+import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.misc.gameTask.taskTypes.*;
+import com.chen1335.legendaryRelics.utils.SimpleSchedule;
 import com.google.common.collect.ImmutableList;
-import com.google.gson.*;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -20,8 +26,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,6 +47,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider<GameTaskEffect> {
@@ -74,7 +79,7 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider<
     @Override
     public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (entity instanceof Player player) {
-            finishTask(player, new CustomTask(LegendaryRelics.id("wear_curio")), itemStack);
+            SimpleSchedule.addSchedule(player.level(),new SimpleSchedule.Wait(()->finishTask(player, new CustomTask(LegendaryRelics.id("wear_curio")), itemStack),1));
         }
     }
 
@@ -89,7 +94,6 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider<
         if (TASKS.size() > rawEffectLevel) {
             ITask task1 = TASKS.get(rawEffectLevel);
             if (task1.check(task)) {
-                setRawEffectLevel(rawEffectLevel + 1);
                 player.sendSystemMessage(Component.translatable("legendary_relics.task.has_finished", task1.getComponent().withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GOLD));
                 onTaskFinished(player, task, itemStack);
             }
@@ -98,7 +102,14 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider<
 
 
     public void onTaskFinished(Player player, ITask task, ItemStack itemStack) {
-
+        ItemEffectsData itemEffectsData = itemStack.get(EEItemDataComponentTypes.ITEM_EFFECT);
+        if (itemEffectsData != null) {
+            LinkedHashMap<EffectType<?>, BaseEffect> map = new LinkedHashMap<>(itemEffectsData.effects());
+            GameTaskEffect copy = (GameTaskEffect) this.copy();
+            copy.setRawEffectLevel(getRawEffectLevel() + 1);
+            map.put(getType(),copy);
+            itemStack.set(EEItemDataComponentTypes.ITEM_EFFECT,ItemEffectsData.buildFromLinkedMap(map));
+        }
     }
 
     @Override
@@ -152,14 +163,14 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider<
                 DataResult<Pair<List<ITask>, JsonElement>> decode1 = ITask.Tasks.CODEC.listOf().decode(JsonOps.INSTANCE, tasks);
                 if (decode1.isSuccess()) {
                     TASKS = decode1.getOrThrow().getFirst();
-                }else {
+                } else {
                     saveToFile(file);
                     return;
                 }
                 DataResult<Pair<List<AttributeEntire>, JsonElement>> decode = AttributeEntire.CODEC.listOf().decode(JsonOps.INSTANCE, attributes);
                 if (decode.isSuccess()) {
                     ATTRIBUTES = decode.getOrThrow().getFirst();
-                }else {
+                } else {
                     saveToFile(file);
                 }
             } catch (IOException e) {
@@ -173,7 +184,7 @@ public class GameTaskEffect extends LRCurioEffect implements ISubEffectProvider<
 
     public static void saveToFile(File file) {
         JsonObject main = new JsonObject();
-        JsonElement tasks = ITask.Tasks.CODEC.listOf().encodeStart(JsonOps.INSTANCE,TASKS).getOrThrow();
+        JsonElement tasks = ITask.Tasks.CODEC.listOf().encodeStart(JsonOps.INSTANCE, TASKS).getOrThrow();
         main.add("tasks", tasks);
         JsonElement attributes = AttributeEntire.CODEC.listOf().encodeStart(JsonOps.INSTANCE, ATTRIBUTES).getOrThrow();
         main.add("attributes", attributes);
