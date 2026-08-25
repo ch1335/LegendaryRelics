@@ -22,13 +22,9 @@ import java.util.List;
 
 public class LastWhisper extends BowItem implements IEffectEquipment, ILRItemExtension, IRenderArrowBow {
     public LastWhisper() {
-        super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+        super(new Properties().stacksTo(1).rarity(Rarity.EPIC).durability(2031));
     }
 
-    @Override
-    public boolean isDamageable(ItemStack stack) {
-        return false;
-    }
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
@@ -62,6 +58,4 @@ public class LastWhisper extends BowItem implements IEffectEquipment, ILRItemExt
             to.remove(LRDataComponentTypes.BOW_USING_ARROW);
         }
     }
-
-
 }

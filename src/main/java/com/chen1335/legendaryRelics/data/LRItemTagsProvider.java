@@ -95,5 +95,17 @@ public class LRItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.BOW_ENCHANTABLE).add(
                 LRItems.LAST_WHISPER.asItem()
         );
+
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(
+                LRItems.LAST_WHISPER.asItem()
+        );
+
+        tag(ItemTags.VANISHING_ENCHANTABLE).add(
+                LRItems.LAST_WHISPER.asItem()
+        );
+
+        tag(Tags.Items.RANGED_WEAPON_TOOLS).add(
+                LRItems.LAST_WHISPER.asItem()
+        );
     }
 }

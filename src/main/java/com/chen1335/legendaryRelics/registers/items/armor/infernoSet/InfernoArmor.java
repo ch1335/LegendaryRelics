@@ -40,7 +40,10 @@ public class InfernoArmor extends LRArmorBase implements LRArmorHelper {
     public boolean isDamageable(ItemStack stack) {
         return false;
     }
-
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
     @Override
     public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
         return TEXTURE;

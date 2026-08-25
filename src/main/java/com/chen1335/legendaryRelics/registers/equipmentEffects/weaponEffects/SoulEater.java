@@ -72,12 +72,14 @@ public class SoulEater extends LRWeaponEffect {
 
         if (livingKiller != null && !weaponItem.isEmpty()) {
             SoulEater soulEater = EquipmentEffectAPI.getEffect(weaponItem, LREquipmentEffectTypes.SOUL_EATER.value());
-            CalculatorArg arg = CalculatorArg.simpleArg(livingKiller, weaponItem, soulEater);
-            livingKiller.heal(livingKiller.getMaxHealth() * HEAL.getValue(arg));
-            if (event.getEntity().getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
-                double attack = event.getEntity().getAttributeValue(Attributes.ATTACK_DAMAGE);
-                livingKiller.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
-                        .addAttributeModifier(livingKiller, Attributes.ATTACK_DAMAGE, new AttributeModifier(LegendaryRelics.id("soul_eater_" + event.getEntity().getId()), attack * GAIN_ATTACK_DAMAGE_PERCENT.getValue(arg), AttributeModifier.Operation.ADD_VALUE), 10 * 20);
+            if (soulEater != null) {
+                CalculatorArg arg = CalculatorArg.simpleArg(livingKiller, weaponItem, soulEater);
+                livingKiller.heal(livingKiller.getMaxHealth() * HEAL.getValue(arg));
+                if (event.getEntity().getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
+                    double attack = event.getEntity().getAttributeValue(Attributes.ATTACK_DAMAGE);
+                    livingKiller.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
+                            .addAttributeModifier(livingKiller, Attributes.ATTACK_DAMAGE, new AttributeModifier(LegendaryRelics.id("soul_eater_" + event.getEntity().getId()), attack * GAIN_ATTACK_DAMAGE_PERCENT.getValue(arg), AttributeModifier.Operation.ADD_VALUE), 10 * 20);
+                }
             }
         }
     }

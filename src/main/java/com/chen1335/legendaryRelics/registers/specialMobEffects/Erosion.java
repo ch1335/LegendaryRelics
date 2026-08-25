@@ -7,12 +7,10 @@ import com.chen1335.legendaryRelics.registers.entities.projectiles.misc.Treatmen
 import com.chen1335.legendaryRelics.registers.specialMobEffects.common.StackAbleEffect;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Erosion extends StackAbleEffect {
@@ -23,7 +21,7 @@ public class Erosion extends StackAbleEffect {
 
     public Erosion(MobEffectType<?> effectType) {
         super(effectType);
-        registerModifier(Attributes.ARMOR, "erosion_armor_mdofier", AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, value -> value * armorReducePerLayer);
+        registerModifier(Attributes.ARMOR, "erosion_armor_mdofier", AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, value -> - value * armorReducePerLayer);
     }
 
     public Erosion(float perLayerDamage, float armorReducePerLayer) {

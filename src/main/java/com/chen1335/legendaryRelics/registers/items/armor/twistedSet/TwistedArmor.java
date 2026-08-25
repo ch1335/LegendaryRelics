@@ -38,7 +38,10 @@ public class TwistedArmor extends LRArmorBase {
     public boolean isDamageable(ItemStack stack) {
         return false;
     }
-
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
 
     @Override
     public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
