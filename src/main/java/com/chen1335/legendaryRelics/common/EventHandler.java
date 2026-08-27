@@ -139,7 +139,7 @@ public class EventHandler {
                 CalculatorArg arg = CalculatorArg.emptyArg();
                 CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, headArmor);
                 MobEffectInstance effectInstance = event.getEffectInstance();
-                if (effectInstance != null && effectInstance.duration != -1) {
+                if (effectInstance.duration != -1) {
                     if (effectInstance.getEffect().value().getCategory() != MobEffectCategory.HARMFUL) {
                         effectInstance.duration = (int) (effectInstance.duration * BlackDragonHelmet.GOOD_EFFECT_TIME_MULTIPLIER.getValue(arg));
                     } else {
