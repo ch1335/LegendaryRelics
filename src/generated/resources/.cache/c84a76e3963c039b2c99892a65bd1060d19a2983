@@ -1,5 +1,5 @@
-// 1.21.1	2026-02-24T19:06:28.7297859	Tags for minecraft:damage_type mod id legendary_relics
-a590cd0a4d09d423957d7c7861e1a72f7c32802f data/minecraft/tags/damage_type/bypasses_cooldown.json
+// 1.21.1	2026-08-28T00:53:44.562362	Tags for minecraft:damage_type mod id legendary_relics
+5a25a24ab2892e3cfb2a574dd68c5ce724cd67dc data/minecraft/tags/damage_type/bypasses_cooldown.json
 36ca88a026f04b770ec1c0102113448aa46a6b8c data/minecraft/tags/damage_type/is_player_attack.json
 cf5f10dcdfc43ca182a54aa14939acb5bd6b573a data/minecraft/tags/damage_type/is_projectile.json
 06b5f4b1f275cfa110bc3f1046c0eae155586189 data/minecraft/tags/damage_type/no_knockback.json

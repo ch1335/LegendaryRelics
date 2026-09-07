@@ -28,8 +28,9 @@ public class CharmOfFreshStart extends LRCuriosBase {
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        GameTaskEffect gameTaskEffect = LREquipmentEffectTypes.GAME_TASK_CURIO.value().create(0, EquipmentTypes.CURIO);
-        return List.of(gameTaskEffect);
+        return List.of(
+                LREquipmentEffectTypes.GAME_TASK_CURIO.value().create(0, EquipmentTypes.CURIO)
+        );
     }
 
     @Override

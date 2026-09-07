@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.client.particlePlayer;
 
 import com.chen1335.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.ChainLightningEffect;
 import com.chen1335.legendaryRelics.network.PlayClientParticlePack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +21,7 @@ public class ParticlePlayersHolder {
 
     public static void init() {
         PARTICLE_PLAYER_MAP.put("inferno_explosion", InfernoArmorSetEffect::playClientParticle);
+        PARTICLE_PLAYER_MAP.put(ChainLightningEffect.PARTICLE_PLAYER_NAME, ChainLightningEffect::playClientParticle);
     }
 
     public static void playParticles(Level level, String name, CompoundTag arg) {

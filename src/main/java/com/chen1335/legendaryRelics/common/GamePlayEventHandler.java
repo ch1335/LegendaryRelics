@@ -53,6 +53,7 @@ public class GamePlayEventHandler {
     public static void LivingDamageEvent$Post$Lowest(LivingDamageEvent.Post event) {
         PerseveranceEffect.LivingDamageEvent(event);
         Redemption.LivingDamageEvent(event);
+        ChainLightningEffect.LivingDamageEvent(event);
     }
 
     @SubscribeEvent

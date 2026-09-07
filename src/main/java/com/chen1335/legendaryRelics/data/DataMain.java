@@ -60,6 +60,9 @@ public class DataMain {
                 generator.getPackOutput(),
                 builtinEntriesProvider.getRegistryProvider()));
 
+        generator.addProvider(event.includeServer(), new LRSoundDefinitionsProvider(
+                generator.getPackOutput(),
+                event.getExistingFileHelper()));
     }
 
     public static String modid() {

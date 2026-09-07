@@ -69,4 +69,6 @@ public class LREquipmentEffectTypes {
     public static final DeferredHolder<EffectType<?>, EffectType<Backstab>> BACKSTAB = register("backstab", () -> new EffectType<>(Backstab::new));
 
     public static final DeferredHolder<EffectType<?>, EffectType<Ambush>> AMBUSH = register("ambush", () -> new EffectType<>(Ambush::new));
+
+    public static final DeferredHolder<EffectType<?>, EffectType<ChainLightningEffect>> CHAIN_LIGHTNING = register("chain_lightning", () -> new EffectType<>(ChainLightningEffect::new));
 }

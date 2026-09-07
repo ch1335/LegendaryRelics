@@ -25,7 +25,8 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.EROSION,
                         LRDamageTypes.FLYING_REAPER,
                         LRDamageTypes.INFERNO_SCORCH,
-                        LRDamageTypes.FLYING_KNIFE
+                        LRDamageTypes.FLYING_KNIFE,
+                        LRDamageTypes.CHAIN_LIGHTNING
                 );
 
         this.tag(DamageTypeTags.IS_PLAYER_ATTACK).
