@@ -17,6 +17,7 @@ public abstract class ModProxy {
     protected ModProxy(String modid) {
         isLoaded = FMLLoader.getLoadingModList().getModFileById(modid) != null;
         if (isLoaded) {
+            init(MOD_EVENT_BUS);
             MOD_EVENT_BUS.addListener(this::registerClientExtensions);
         }
     }
@@ -27,6 +28,10 @@ public abstract class ModProxy {
 
     public static void addProxy(ModProxy proxy){
         MOD_PROXIES.add(proxy);
+    }
+
+    public void init(IEventBus modEventBus){
+
     }
 
     public void registerClientExtensions(RegisterClientExtensionsEvent event) {
