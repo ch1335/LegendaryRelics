@@ -1,10 +1,10 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.specialMobEffects.Doom;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.specialMobEffects.Erosion;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.specialMobEffects.InfernoScorch;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.specialMobEffects.PhaseShooting;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Doom;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Erosion;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.InfernoScorch;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import net.minecraft.world.effect.MobEffectCategory;

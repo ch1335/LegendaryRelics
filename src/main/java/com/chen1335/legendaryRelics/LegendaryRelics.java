@@ -13,9 +13,12 @@ import com.chen1335.legendaryRelics.common.lootModifier.lootInject.LootInjectors
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.config.LootConfig;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.curioEffects.GameTaskEffect;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.craftType.CraftItem;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.craftType.CraftTypes;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.ItemRegisters;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftItem;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftTypes;
+import com.chen1335.legendaryRelics.utils.ModProxy;
 import com.chen1335.specialEffectLib.SpecialEffectLib;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -54,6 +57,9 @@ public class LegendaryRelics {
                 LRItems.getEntries().forEach(itemDeferredHolder -> {
                     output.accept(itemDeferredHolder.value().getDefaultInstance());
                 });
+                ItemRegisters.getEntries().forEach(itemDeferredHolder -> {
+                    output.accept(itemDeferredHolder.value().getDefaultInstance());
+                });
             }).build());
 
     public static boolean APOTHIC_ATTRIBUTES_EXTENSION_LOADED = false;
@@ -61,6 +67,8 @@ public class LegendaryRelics {
     public static final Path CONFIGS_PATH = FMLPaths.CONFIGDIR.get().resolve("legendary_relics");
 
     public LegendaryRelics(IEventBus modEventBus, ModContainer modContainer) {
+        ModProxy.MOD_EVENT_BUS = modEventBus;
+        ModProxy.addProxy(ISSModProxy.INSTANCE);
         CONFIGS_PATH.toFile().mkdirs();
 
         EquipmentEffectLib.init(modEventBus, modContainer);
@@ -68,6 +76,7 @@ public class LegendaryRelics {
 
         CREATIVE_MODE_TABS.register(modEventBus);
         LRItems.register(modEventBus);
+        ItemRegisters.register(modEventBus);
         LRShieldType.register(modEventBus);
         LRAttachmentTypes.register(modEventBus);
         LRDataComponentTypes.register(modEventBus);

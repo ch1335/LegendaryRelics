@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.utils;
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.LRClient;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.attachmentDatas.LRProjectileData;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

@@ -26,5 +26,6 @@ public class EntityRendererRegister {
         BLACK_DRAGON_ARMOR_MODEL = new BlackDragonArmorModel<>(event.getContext().bakeLayer(BlackDragonArmorModel.LAYER_LOCATION));
         INFERNO_ARMOR_MODEL = new InfernoArmorModel<>(event.getContext().bakeLayer(InfernoArmorModel.LAYER_LOCATION));
         TWISTED_ARMOR_MODEL = new TwistedArmorModel<>(event.getContext().bakeLayer(TwistedArmorModel.LAYER_LOCATION));
+        SOUL_ARMOR_MODEL = new SoulArmorModel<>(event.getContext().bakeLayer(SoulArmorModel.LAYER_LOCATION));
     }
 }

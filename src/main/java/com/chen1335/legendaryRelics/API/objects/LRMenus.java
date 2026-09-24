@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.menus.EquipmentWorkbenchCraftMenu;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.menus.EquipmentWorkbenchCraftMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;

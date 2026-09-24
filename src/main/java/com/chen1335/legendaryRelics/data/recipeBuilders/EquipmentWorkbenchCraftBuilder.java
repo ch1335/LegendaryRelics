@@ -1,9 +1,9 @@
 package com.chen1335.legendaryRelics.data.recipeBuilders;
 
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.EquipmentWorkbenchCraft;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.craftType.CraftItem;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.craftType.ICraftType;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.ingredients.IngredientWithSize;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftItem;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.ICraftType;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.ingredients.IngredientWithSize;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeBuilder;

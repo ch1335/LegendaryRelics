@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.blocks.EquipmentWorkbench;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.blocks.EquipmentWorkbench;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;

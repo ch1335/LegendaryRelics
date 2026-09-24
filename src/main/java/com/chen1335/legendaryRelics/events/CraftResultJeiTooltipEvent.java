@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.events;
 
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import net.minecraft.world.item.crafting.RecipeHolder;

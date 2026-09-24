@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.client.particlePlayer;
 
-import com.chen1335.legendaryRelics.registers.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.curioEffects.ChainLightningEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.ChainLightningEffect;
 import com.chen1335.legendaryRelics.network.PlayClientParticlePack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;

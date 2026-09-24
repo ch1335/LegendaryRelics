@@ -2,8 +2,8 @@ package com.chen1335.legendaryRelics.effectInstances;
 
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.attachmentDatas.LRProjectileData;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.world.entity.LivingEntity;

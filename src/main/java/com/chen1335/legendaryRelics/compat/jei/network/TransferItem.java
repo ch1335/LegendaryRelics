@@ -2,9 +2,9 @@ package com.chen1335.legendaryRelics.compat.jei.network;
 
 import com.chen1335.legendaryRelics.API.objects.LRRecipe;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.menus.EquipmentWorkbenchCraftMenu;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.EquipmentWorkbenchCraft;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.ingredients.IngredientWithSize;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.menus.EquipmentWorkbenchCraftMenu;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.ingredients.IngredientWithSize;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

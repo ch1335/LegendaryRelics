@@ -1,14 +1,14 @@
 package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.armorSetEffect.InfernoArmorSetEffect;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.armorSetEffect.TwistedArmorSetEffect;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.armorEffect.FallImmunity;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.curioEffects.*;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.weaponEffects.Backstab;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.weaponEffects.Perforation;
-import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.weaponEffects.SoulEater;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.*;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Backstab;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
