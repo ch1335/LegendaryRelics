@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.EquipmentWorkbenchCraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;

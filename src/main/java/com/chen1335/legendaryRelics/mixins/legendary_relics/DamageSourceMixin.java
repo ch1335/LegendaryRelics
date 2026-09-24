@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
-import com.chen1335.legendaryRelics.registers.attachmentDatas.LRProjectileData;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;

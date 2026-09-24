@@ -1,21 +1,21 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonBoots;
-import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonChestPlate;
-import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonHelmet;
-import com.chen1335.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonLeggings;
-import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoBoots;
-import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoChestPlate;
-import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoHelmet;
-import com.chen1335.legendaryRelics.registers.items.armor.infernoSet.InfernoLeggings;
-import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedBoots;
-import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedChestPlate;
-import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedHelmet;
-import com.chen1335.legendaryRelics.registers.items.armor.twistedSet.TwistedLeggings;
-import com.chen1335.legendaryRelics.registers.items.curios.*;
-import com.chen1335.legendaryRelics.registers.items.misc.*;
-import com.chen1335.legendaryRelics.registers.items.weapons.*;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.blackDragonSet.BlackDragonBoots;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.blackDragonSet.BlackDragonChestPlate;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.blackDragonSet.BlackDragonHelmet;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.blackDragonSet.BlackDragonLeggings;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.infernoSet.InfernoBoots;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.infernoSet.InfernoChestPlate;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.infernoSet.InfernoHelmet;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.infernoSet.InfernoLeggings;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.twistedSet.TwistedBoots;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.twistedSet.TwistedChestPlate;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.twistedSet.TwistedHelmet;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.armor.twistedSet.TwistedLeggings;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.curios.*;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.misc.*;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.items.weapons.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -112,4 +112,7 @@ public class LRItems {
     public static final DeferredItem<BlockItem> EQUIPMENT_WORKBENCH = ITEM_DEFERRED_REGISTER.register("equipment_workbench", () -> new BlockItem(LRBlocks.EQUIPMENT_WORKBENCH.value(), new Item.Properties()));
 
     public static final DeferredItem<ShadowDagger> SHADOW_DAGGER = ITEM_DEFERRED_REGISTER.register("shadow_dagger", ShadowDagger::new);
+
+    public static final DeferredItem<ThunderboltNecklace> THUNDERBOLT_NECKLACE = ITEM_DEFERRED_REGISTER.register("thunderbolt_necklace", ThunderboltNecklace::new);
+
 }

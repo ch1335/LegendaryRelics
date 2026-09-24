@@ -1,4 +1,0 @@
-@ParametersAreNonnullByDefault
-package com.chen1335.legendaryRelics.registers.screens;
-
-import javax.annotation.ParametersAreNonnullByDefault;

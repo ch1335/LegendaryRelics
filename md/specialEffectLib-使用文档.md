@@ -703,7 +703,7 @@ HUD 会使用该值绘制扇形覆盖层。
 > `StackAbleEffect` 当前不属于 `com.chen1335.specialEffectLib`，而是 LegendaryRelics 在以下包中的项目级扩展：
 >
 > ```text
-> com.chen1335.legendaryRelics.registers.specialMobEffects.common.StackAbleEffect
+> com.chen1335.legendaryRelics.registers.legendaryRelics.specialMobEffects.common.StackAbleEffect
 > ```
 >
 > 如果把 `specialEffectLib` 独立使用，需要复制、迁移或自行实现该类。

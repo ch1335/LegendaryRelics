@@ -53,6 +53,7 @@ public class LRItemTagsProvider extends ItemTagsProvider {
         tag(CuriosTags.NECKLACE).add(
                 LRItems.SACRED_TALISMAN.asItem(),
                 LRItems.PERSEVERANCE_NECKLACE.asItem(),
+                LRItems.THUNDERBOLT_NECKLACE.asItem(),
                 LRItems.HEALING_TALISMAN.asItem()
         );
 

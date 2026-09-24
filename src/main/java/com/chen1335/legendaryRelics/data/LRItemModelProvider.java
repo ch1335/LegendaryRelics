@@ -42,6 +42,7 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.DARK_GOLD.asItem());
         basicItem(LRItems.DARK_GOLD_FORGING_TOOL.asItem());
         basicItem(LRItems.WITHER_SPIRIT.asItem());
+        basicItem(LRItems.THUNDERBOLT_NECKLACE.asItem());
 
         basicItem(LRItems.INFERNO_HELMET.asItem());
         basicItem(LRItems.INFERNO_CHEST_PLATE.asItem());

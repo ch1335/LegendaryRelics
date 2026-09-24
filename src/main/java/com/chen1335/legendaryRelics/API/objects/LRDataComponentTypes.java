@@ -1,9 +1,9 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.registers.dataComponentTypes.BowUsingArrow;
-import com.chen1335.legendaryRelics.registers.dataComponentTypes.CollectedMinerals;
-import com.chen1335.legendaryRelics.registers.dataComponentTypes.ItemTask;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.dataComponentTypes.BowUsingArrow;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.dataComponentTypes.CollectedMinerals;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.dataComponentTypes.ItemTask;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;

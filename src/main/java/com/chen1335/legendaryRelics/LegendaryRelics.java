@@ -13,9 +13,9 @@ import com.chen1335.legendaryRelics.common.lootModifier.lootInject.LootInjectors
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.config.LootConfig;
-import com.chen1335.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
-import com.chen1335.legendaryRelics.registers.recipes.craftType.CraftItem;
-import com.chen1335.legendaryRelics.registers.recipes.craftType.CraftTypes;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.equipmentEffects.curioEffects.GameTaskEffect;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.craftType.CraftItem;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.craftType.CraftTypes;
 import com.chen1335.specialEffectLib.SpecialEffectLib;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.item.ItemProperties;

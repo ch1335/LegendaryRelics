@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.client;
 
 import com.chen1335.legendaryRelics.client.module.armor.blackDragonArmor.BlackDragonArmorModel;
 import com.chen1335.legendaryRelics.client.module.armor.infernoArmor.InfernoArmorModel;
+import com.chen1335.legendaryRelics.client.module.armor.soulArmor.SoulArmorModel;
 import com.chen1335.legendaryRelics.client.module.armor.twistedArmor.TwistedArmorModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,11 +12,14 @@ public class EntityRendererRegister {
     public static BlackDragonArmorModel<LivingEntity> BLACK_DRAGON_ARMOR_MODEL;
     public static InfernoArmorModel<LivingEntity> INFERNO_ARMOR_MODEL;
     public static TwistedArmorModel<LivingEntity> TWISTED_ARMOR_MODEL;
+    public static SoulArmorModel<LivingEntity> SOUL_ARMOR_MODEL;
 
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(BlackDragonArmorModel.LAYER_LOCATION, BlackDragonArmorModel::createBodyLayer);
         event.registerLayerDefinition(InfernoArmorModel.LAYER_LOCATION, () -> InfernoArmorModel.createMesh(LayerDefinitions.OUTER_ARMOR_DEFORMATION));
         event.registerLayerDefinition(TwistedArmorModel.LAYER_LOCATION, () -> TwistedArmorModel.createMesh(LayerDefinitions.OUTER_ARMOR_DEFORMATION));
+        event.registerLayerDefinition(SoulArmorModel.LAYER_LOCATION, () -> SoulArmorModel.createMesh(LayerDefinitions.OUTER_ARMOR_DEFORMATION));
+
     }
 
     public static void addLayers(EntityRenderersEvent.AddLayers event) {

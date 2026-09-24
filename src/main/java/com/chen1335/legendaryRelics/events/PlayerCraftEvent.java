@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.events;
 
-import com.chen1335.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.registers.legendaryRelics.recipes.EquipmentWorkbenchCraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;

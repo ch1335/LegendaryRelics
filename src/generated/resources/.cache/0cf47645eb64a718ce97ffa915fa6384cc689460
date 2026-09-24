@@ -1,4 +1,4 @@
-// 1.21.1	2026-04-30T15:48:39.8884314	Item Models: legendary_relics
+// 1.21.1	2026-09-16T01:20:30.8601164	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
@@ -35,6 +35,7 @@ e350612c536a90fa06fa508cdb490f2f1f2c3f87 assets/legendary_relics/models/item/sac
 c210e24fbc9dc1a1f03f4939f3281a95d1e5736a assets/legendary_relics/models/item/shield_regenerator.json
 97f0a031f488075834c68cce25a13b96e1bc3dd0 assets/legendary_relics/models/item/skeleton_throwing_knife.json
 ceb76e23522c8c8c384c63d70b82a71166a097db assets/legendary_relics/models/item/the_ore_collectors_ring.json
+4c13793d1b96232990f2d6b9510c4b76ecd53ab3 assets/legendary_relics/models/item/thunderbolt_necklace.json
 fa4c342a171b19108b223ed5646d50fc1aca4d4d assets/legendary_relics/models/item/twisted_boots.json
 680a448007303ec9f991739125b4a83e3004a8a1 assets/legendary_relics/models/item/twisted_chest_plate.json
 68436f06edae1c7802c46bb345906a860d7b6b8b assets/legendary_relics/models/item/twisted_helmet.json
