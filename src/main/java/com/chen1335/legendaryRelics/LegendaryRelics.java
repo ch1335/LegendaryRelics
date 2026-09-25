@@ -14,7 +14,6 @@ import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.config.LootConfig;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
-import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.ItemRegisters;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftTypes;
@@ -57,9 +56,6 @@ public class LegendaryRelics {
                 LRItems.getEntries().forEach(itemDeferredHolder -> {
                     output.accept(itemDeferredHolder.value().getDefaultInstance());
                 });
-                ItemRegisters.getEntries().forEach(itemDeferredHolder -> {
-                    output.accept(itemDeferredHolder.value().getDefaultInstance());
-                });
             }).build());
 
     public static boolean APOTHIC_ATTRIBUTES_EXTENSION_LOADED = false;
@@ -76,7 +72,6 @@ public class LegendaryRelics {
 
         CREATIVE_MODE_TABS.register(modEventBus);
         LRItems.register(modEventBus);
-        ItemRegisters.register(modEventBus);
         LRShieldType.register(modEventBus);
         LRAttachmentTypes.register(modEventBus);
         LRDataComponentTypes.register(modEventBus);
