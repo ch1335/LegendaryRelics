@@ -125,6 +125,13 @@ public class LegendaryRelics {
         if (ModList.get().isLoaded("legendarytooltips")) {
             LegendaryTooltipsHandler.init();
         }
+
+        ModProxy.MOD_PROXIES.forEach(proxy -> {
+            if (proxy.shouldLoad()){
+                proxy.clientSetup(event);
+            }
+        });
+
         ParticlePlayersHolder.init();
 
         ItemProperties.register(LRItems.CHARM_OF_FRESH_START.asItem(),

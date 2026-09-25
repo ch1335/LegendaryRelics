@@ -2,7 +2,7 @@ package com.chen1335.legendaryRelics.mods.ironsSpellBooks;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.clientExtensions.SoulArmorExtension;
-import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.ItemRegisters;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.utils.ModProxy;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -17,17 +17,17 @@ public class ISSModProxy extends ModProxy {
 
     @Override
     public void init(IEventBus modEventBus) {
-        ItemRegisters.register(modEventBus);
+        ISSRegisters.Item.register(modEventBus);
         modEventBus.addListener(this::buildCreativeTabContents);
     }
 
     @Override
     public void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerItem(new SoulArmorExtension(),
-                ItemRegisters.SOUL_HELMET,
-                ItemRegisters.SOUL_CHEST_PLATE,
-                ItemRegisters.SOUL_LEGGINGS,
-                ItemRegisters.SOUL_BOOTS
+                ISSRegisters.Item.SOUL_HELMET,
+                ISSRegisters.Item.SOUL_CHEST_PLATE,
+                ISSRegisters.Item.SOUL_LEGGINGS,
+                ISSRegisters.Item.SOUL_BOOTS
         );
     }
 
@@ -35,7 +35,7 @@ public class ISSModProxy extends ModProxy {
         if (!event.getTabKey().equals(LegendaryRelics.LEGENDARY_RELICS.getKey())) {
             return;
         }
-        ItemRegisters.getEntries().forEach(itemDeferredHolder -> {
+        ISSRegisters.Item.getEntries().forEach(itemDeferredHolder -> {
             event.accept(itemDeferredHolder.value().getDefaultInstance());
         });
     }

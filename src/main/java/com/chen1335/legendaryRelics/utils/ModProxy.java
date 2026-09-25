@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.utils;
 
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
@@ -35,6 +36,10 @@ public abstract class ModProxy {
     }
 
     public void registerClientExtensions(RegisterClientExtensionsEvent event) {
+
+    }
+
+    public void clientSetup(FMLClientSetupEvent event) {
 
     }
 }

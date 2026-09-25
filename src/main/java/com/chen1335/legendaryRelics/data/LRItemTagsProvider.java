@@ -2,7 +2,7 @@ package com.chen1335.legendaryRelics.data;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.API.objects.LRTags;
-import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.ItemRegisters;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -62,14 +62,14 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.BLACK_DRAGON_HELMET.value(),
                 LRItems.INFERNO_HELMET.value(),
                 LRItems.TWISTED_HELMET.value(),
-                ItemRegisters.SOUL_HELMET.value()
+                ISSRegisters.Item.SOUL_HELMET.value()
         );
 
         tag(ItemTags.CHEST_ARMOR).add(
                 LRItems.BLACK_DRAGON_CHEST_PLATE.value(),
                 LRItems.INFERNO_CHEST_PLATE.value(),
                 LRItems.TWISTED_CHEST_PLATE.value(),
-                ItemRegisters.SOUL_CHEST_PLATE.value()
+                ISSRegisters.Item.SOUL_CHEST_PLATE.value()
 
         );
 
@@ -77,14 +77,14 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.BLACK_DRAGON_LEGGINGS.value(),
                 LRItems.INFERNO_LEGGINGS.value(),
                 LRItems.TWISTED_LEGGINGS.value(),
-                ItemRegisters.SOUL_LEGGINGS.value()
+                ISSRegisters.Item.SOUL_LEGGINGS.value()
         );
 
         tag(ItemTags.FOOT_ARMOR).add(
                 LRItems.BLACK_DRAGON_BOOTS.value(),
                 LRItems.INFERNO_BOOTS.value(),
                 LRItems.TWISTED_BOOTS.value(),
-                ItemRegisters.SOUL_BOOTS.value()
+                ISSRegisters.Item.SOUL_BOOTS.value()
         );
 
         tag(ItemTags.SWORDS).add(

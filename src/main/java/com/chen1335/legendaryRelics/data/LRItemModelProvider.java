@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.data;
 import com.chen1335.legendaryRelics.API.objects.LRBlocks;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.ItemRegisters;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -55,10 +55,10 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.TWISTED_LEGGINGS.asItem());
         basicItem(LRItems.TWISTED_BOOTS.asItem());
 
-        basicItem(ItemRegisters.SOUL_HELMET.asItem());
-        basicItem(ItemRegisters.SOUL_CHEST_PLATE.asItem());
-        basicItem(ItemRegisters.SOUL_LEGGINGS.asItem());
-        basicItem(ItemRegisters.SOUL_BOOTS.asItem());
+        basicItem(ISSRegisters.Item.SOUL_HELMET.asItem());
+        basicItem(ISSRegisters.Item.SOUL_CHEST_PLATE.asItem());
+        basicItem(ISSRegisters.Item.SOUL_LEGGINGS.asItem());
+        basicItem(ISSRegisters.Item.SOUL_BOOTS.asItem());
 
         handheldItem(LRItems.WITHERING_BLADE.asItem());
         basicItem(LegendaryRelics.id("book"));
