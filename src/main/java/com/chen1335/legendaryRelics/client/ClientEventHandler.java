@@ -8,6 +8,9 @@ import com.chen1335.legendaryRelics.client.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.entityRenderers.FlyingReaperRender;
 import com.chen1335.legendaryRelics.client.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.client.SoulMissileRenderer;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.screens.EquipmentWorkbenchCraftScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -73,6 +76,9 @@ public class ClientEventHandler {
             event.registerEntityRenderer(LREntityTypes.TREATMENT_BALL.value(), TreatmentBallRenderer::new);
             event.registerEntityRenderer(LREntityTypes.FLYING_REAPER.value(), FlyingReaperRender::new);
             event.registerEntityRenderer(LREntityTypes.FLYING_KNIFE.value(), FlyingKnifeRender::new);
+            if (ISSModProxy.INSTANCE.shouldLoad()) {
+                event.registerEntityRenderer(ISSRegisters.Entity.SOUL_MISSILE.value(), SoulMissileRenderer::new);
+            }
         }
 
         @SubscribeEvent

@@ -6,6 +6,7 @@ import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.utils.ModProxy;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 public class ISSModProxy extends ModProxy {
@@ -18,7 +19,14 @@ public class ISSModProxy extends ModProxy {
     @Override
     public void init(IEventBus modEventBus) {
         ISSRegisters.Item.register(modEventBus);
+        ISSRegisters.Entity.register(modEventBus);
+        ISSRegisters.ArmorSetEffect.register(modEventBus);
+        ISSRegisters.SpecialMobEffect.register(modEventBus);
+
         modEventBus.addListener(this::buildCreativeTabContents);
+
+        NeoForge.EVENT_BUS.addListener(EventHandler::setItemSetsEffect);
+        NeoForge.EVENT_BUS.addListener(EventHandler::livingIncomingDamage);
     }
 
     @Override

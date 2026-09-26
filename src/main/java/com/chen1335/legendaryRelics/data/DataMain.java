@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.data.lootTables.LRGlobalLootModifierProvider;
 import com.chen1335.legendaryRelics.data.lootTables.LRLootTableProvider;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.IRSDamageTypes;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
@@ -25,7 +26,10 @@ public class DataMain {
                 generator.getPackOutput(),
                 event.getLookupProvider(),
                 new RegistrySetBuilder()
-                        .add(Registries.DAMAGE_TYPE, LRDamageTypes::bootstrap)
+                        .add(Registries.DAMAGE_TYPE, context -> {
+                            LRDamageTypes.bootstrap(context);
+                            IRSDamageTypes.bootstrap(context);
+                        })
                 ,
                 Map.of(),
                 Set.of(LegendaryRelics.MODID)

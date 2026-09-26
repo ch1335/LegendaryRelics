@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-16T01:20:30.8601164	Item Models: legendary_relics
+// 1.21.1	2026-09-25T18:47:57.5234074	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
@@ -34,6 +34,10 @@ e350612c536a90fa06fa508cdb490f2f1f2c3f87 assets/legendary_relics/models/item/sac
 5d22e9700ef31bde0b8148ecdcb22a3c2ba6394d assets/legendary_relics/models/item/shadow_dagger_reverse.json
 c210e24fbc9dc1a1f03f4939f3281a95d1e5736a assets/legendary_relics/models/item/shield_regenerator.json
 97f0a031f488075834c68cce25a13b96e1bc3dd0 assets/legendary_relics/models/item/skeleton_throwing_knife.json
+4cc11bf3f196277d6d0714d699e3ae09f8f27b2c assets/legendary_relics/models/item/soul_boots.json
+1102551f87216e4271d547c6764c62b10c436d7c assets/legendary_relics/models/item/soul_chest_plate.json
+49da5c190c1a1a5e3919dcdb63315850814dc64f assets/legendary_relics/models/item/soul_helmet.json
+e7b3c67f00ad5a251b774b92ade564995c80c0d7 assets/legendary_relics/models/item/soul_leggings.json
 ceb76e23522c8c8c384c63d70b82a71166a097db assets/legendary_relics/models/item/the_ore_collectors_ring.json
 4c13793d1b96232990f2d6b9510c4b76ecd53ab3 assets/legendary_relics/models/item/thunderbolt_necklace.json
 fa4c342a171b19108b223ed5646d50fc1aca4d4d assets/legendary_relics/models/item/twisted_boots.json

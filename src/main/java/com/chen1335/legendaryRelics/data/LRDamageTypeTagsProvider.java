@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.data;
 
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.IRSDamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
@@ -26,7 +27,8 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.FLYING_REAPER,
                         LRDamageTypes.INFERNO_SCORCH,
                         LRDamageTypes.FLYING_KNIFE,
-                        LRDamageTypes.CHAIN_LIGHTNING
+                        LRDamageTypes.CHAIN_LIGHTNING,
+                        IRSDamageTypes.SOUL_MISSILE
                 );
 
         this.tag(DamageTypeTags.IS_PLAYER_ATTACK).
@@ -38,11 +40,14 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
         this.tag(Tags.DamageTypes.IS_MAGIC)
                 .add(LRDamageTypes.EROSION);
 
+        // 灵魂飞弹刻意只打 is_physical，不打 is_magic：
+        // 套装的叠层/发射条件是「造成法术伤害」，飞弹若也算法术伤害会自我触发导致无限递归。
         this.tag(Tags.DamageTypes.IS_PHYSICAL)
                 .add(
                         LRDamageTypes.FLYING_REAPER,
                         LRDamageTypes.INFERNO_SCORCH,
-                        LRDamageTypes.FLYING_KNIFE
+                        LRDamageTypes.FLYING_KNIFE,
+                        IRSDamageTypes.SOUL_MISSILE
                 );
 
         this.tag(DamageTypeTags.IS_PROJECTILE)

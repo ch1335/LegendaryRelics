@@ -8,6 +8,10 @@ public class ComponentHolders {
         public static Component infernoScorch() {
             return Component.translatable("legendary_relics.special_effect.inferno_scorch").withStyle(ChatFormatting.RED);
         }
+
+        public static Component soulGather() {
+            return Component.translatable("legendary_relics.stack.soul_gather").withStyle(ChatFormatting.AQUA);
+        }
     }
 
     public static class Misc {
@@ -20,8 +24,15 @@ public class ComponentHolders {
             return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage()).withStyle(ChatFormatting.GOLD);
         }
 
+        public static Component magicDamage(Component component) {
+            return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage()).withStyle(ChatFormatting.GOLD);
+        }
         public static Component physicalDamage() {
             return Component.translatable("legendary_relics.damage_type.physical_damage").withStyle(ChatFormatting.RED);
+        }
+
+        public static Component magicDamage() {
+            return Component.translatable("legendary_relics.damage_type.magic_damage").withStyle(ChatFormatting.RED);
         }
     }
 }
