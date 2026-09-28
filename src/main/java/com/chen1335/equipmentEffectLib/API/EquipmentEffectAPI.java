@@ -18,8 +18,8 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,9 +28,8 @@ public final class EquipmentEffectAPI {
         return EntityEquipmentEffectData.getEquipmentEffectData(living).getBestEffect(effectType);
     }
 
-    public static <T extends BaseEffect> Optional<List<SlotEffectHolder<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
-        List<SlotEffectHolder<T>> list = EntityEquipmentEffectData.getEquipmentEffectData(living).getEffectsByType(effectType);
-        return list.isEmpty() ? Optional.empty() : Optional.of(list);
+    public static <T extends BaseEffect> Optional<Collection<SlotEffectHolder<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
+        return EntityEquipmentEffectData.getEquipmentEffectData(living).getEffectsByType(effectType);
     }
 
 

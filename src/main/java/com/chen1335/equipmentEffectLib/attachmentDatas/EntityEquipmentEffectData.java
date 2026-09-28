@@ -75,12 +75,13 @@ public class EntityEquipmentEffectData {
         return ImmutableList.copyOf(list);
     }
 
-    public <T extends BaseEffect> List<SlotEffectHolder<T>> getEffectsByType(EffectType<T> effectType) {
-        List<SlotEffectHolder<T>> list = new ArrayList<>();
-        for (SlotEffectHolder<?> value : getEffectHoldersByType(effectType).values()) {
-            list.add(Cast.cast(value));
+    public <T extends BaseEffect> Optional<Collection<SlotEffectHolder<T>>> getEffectsByType(EffectType<T> effectType) {
+        Collection<SlotEffectHolder<T>> collection = Cast.cast(getEffectHoldersByType(effectType).values());
+        if (collection.isEmpty()) {
+            return Optional.empty();
+        }else {
+            return Optional.of(collection);
         }
-        return list;
     }
 
     public void tick(LivingEntity living) {

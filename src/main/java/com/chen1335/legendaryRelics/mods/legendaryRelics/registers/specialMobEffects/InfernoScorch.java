@@ -25,11 +25,11 @@ public class InfernoScorch extends TimeLimitEffect {
         super(effectType);
     }
 
-    public InfernoScorch(float damagePerSecond,float explosionDamage) {
+    public InfernoScorch(float damagePerSecond,float explosionDamage,int duration) {
         super(LRSpecialMobEffects.INFERNO_SCORCH.value());
         this.damage = damagePerSecond;
         this.explosionDamage = explosionDamage;
-        initTime(120);
+        initTime(duration);
     }
 
     @Override

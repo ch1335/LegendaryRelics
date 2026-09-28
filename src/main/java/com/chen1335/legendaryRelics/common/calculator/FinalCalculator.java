@@ -93,13 +93,21 @@ public class FinalCalculator implements Unit {
     }
 
     public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color) {
+        return toComponent(hasShiftDown, calculatorArg, color, 1);
+    }
+
+    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color, float scale) {
+        return toComponent(hasShiftDown, calculatorArg, color, scale, "");
+    }
+
+    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color, float scale, String format) {
         if (hasShiftDown) {
             if (color == -1) {
                 color = 16777215;
             }
-            return Component.empty().append(Component.literal(format(getValue(calculatorArg), i)).withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+            return Component.empty().append(Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i))).withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
         } else {
-            MutableComponent component = Component.literal(format(getValue(calculatorArg), i));
+            MutableComponent component = Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i)));
             if (color != -1) {
                 component.withColor(color);
             }

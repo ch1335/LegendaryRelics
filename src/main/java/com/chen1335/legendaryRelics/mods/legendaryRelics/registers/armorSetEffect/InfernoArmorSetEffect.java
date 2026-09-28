@@ -86,6 +86,11 @@ public class InfernoArmorSetEffect extends SetEffect {
     );
 
     @Calculator
+    public static final FinalCalculator INFERNO_SCORCH_DURATION = FinalCalculator.of(
+            Constant.of(120)
+    );
+
+    @Calculator
     public static final FinalCalculator INFERNO_EXPLOSION_DAMAGE = FinalCalculator.of(
             Mul.of(
                     MultiAdd.of(
@@ -168,7 +173,7 @@ public class InfernoArmorSetEffect extends SetEffect {
 
                 SpecialEffectAPI.getEffect(attacker, attacker.getUUID(), LRSpecialMobEffects.DOOM.value()).ifPresent(doom -> {
                     if (doom.getStack() >= 10) {
-                        InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args));
+                        InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args),INFERNO_EXPLOSION_DAMAGE.getInt(args));
                         infernoScorch.setSourceEntity(attacker);
                         SpecialEffectAPI.addEffectToEntity(event.getEntity(), infernoScorch, InfernoScorch::getFinal);
                     }
@@ -196,7 +201,7 @@ public class InfernoArmorSetEffect extends SetEffect {
                         Entity sourceEntity = effect.getSourceEntity(level);
                         for (LivingEntity nearbyEntity : nearbyEntities) {
                             if (sourceEntity != null && !nearbyEntity.isAlliedTo(sourceEntity) && nearbyEntity != sourceEntity) {
-                                InfernoScorch infernoScorch = new InfernoScorch(effect.getDamage(), effect.getExplosionDamage());
+                                InfernoScorch infernoScorch = new InfernoScorch(effect.getDamage(), effect.getExplosionDamage(),effect.getTotalTime());
                                 infernoScorch.setSourceEntity(effect.getSourceEntity(level));
                                 SpecialEffectAPI.addEffectToEntity(nearbyEntity, infernoScorch, InfernoScorch::getFinal);
                                 nearbyEntity.hurt(level.damageSources().source(LRDamageTypes.INFERNO_SCORCH, effect.getSourceEntity(level)), effect.getExplosionDamage());

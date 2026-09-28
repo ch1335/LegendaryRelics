@@ -10,14 +10,14 @@ public record SlotEffectHolder<T extends BaseEffect>(ISlotContext context,
 
     @Override
     public int compareTo(@NotNull SlotEffectHolder o) {
-        return o.context.hashCode() - context.hashCode();
+        return Integer.compare(o.context.hashCode(), context.hashCode());
     }
 
     public void active(LivingEntity livingEntity) {
-        infoHolder.effect().onActive(context,livingEntity,infoHolder.itemStack());
+        infoHolder.effect().onActive(context, livingEntity, infoHolder.itemStack());
     }
 
     public void deActive(LivingEntity livingEntity) {
-        infoHolder.effect().onDeActive(context,livingEntity,infoHolder.itemStack());
+        infoHolder.effect().onDeActive(context, livingEntity, infoHolder.itemStack());
     }
 }
