@@ -3,7 +3,6 @@ package com.chen1335.legendaryRelics.API.objects;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
@@ -26,7 +25,7 @@ public class LREquipmentEffectTypes {
         EQUIPMENT_EFFECT_TYPES.register(modEventBus);
     }
 
-    public static final DeferredHolder<EffectType<?>, EffectType<Redemption>> REDEMPTION = register("redemption", () -> new CooldownAbleEffectType<>(Redemption::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/sacred_talisman.png")));
+    public static final DeferredHolder<EffectType<?>, EffectType<Redemption>> REDEMPTION = register("redemption", () -> new EffectType<>(Redemption::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/sacred_talisman.png")));
 
     public static final DeferredHolder<EffectType<?>, EffectType<AttributeBoostInNether>> ATTRIBUTE_BOOST_IN_NETHER = register("attribute_boost_in_nether", () -> new EffectType<>(AttributeBoostInNether::new));
 
@@ -36,7 +35,7 @@ public class LREquipmentEffectTypes {
 
     public static final DeferredHolder<EffectType<?>, EffectType<FireDamageReduce>> FIRE_DAMAGE_REDUCE = register("fire_damage_reduce", () -> new EffectType<>(FireDamageReduce::new));
 
-    public static final DeferredHolder<EffectType<?>, EffectType<HardenedEffect>> HARDENED_EFFECT = register("hardened_effect", () -> new CooldownAbleEffectType<>(HardenedEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/hardened_ring.png")));
+    public static final DeferredHolder<EffectType<?>, EffectType<HardenedEffect>> HARDENED_EFFECT = register("hardened_effect", () -> new EffectType<>(HardenedEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/hardened_ring.png")));
 
     public static final DeferredHolder<EffectType<?>, EffectType<HealIncreaseEffect>> HEAL_INCREASE_EFFECT = register("heal_increase_effect", () -> new EffectType<>(HealIncreaseEffect::new, true));
 
@@ -44,7 +43,7 @@ public class LREquipmentEffectTypes {
 
     public static final DeferredHolder<EffectType<?>, EffectType<PerseveranceEffect>> PERSEVERANCE_EFFECT = register("perseverance_effect", () -> new EffectType<>(PerseveranceEffect::new));
 
-    public static final DeferredHolder<EffectType<?>, EffectType<ShieldRegeneratorEffect>> SHIELD_REGENERATOR_EFFECT = register("shield_regenerator_effect", () -> new CooldownAbleEffectType<>(ShieldRegeneratorEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/shield_regenerator.png")));
+    public static final DeferredHolder<EffectType<?>, EffectType<ShieldRegeneratorEffect>> SHIELD_REGENERATOR_EFFECT = register("shield_regenerator_effect", () -> new EffectType<>(ShieldRegeneratorEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/shield_regenerator.png")));
 
     public static final DeferredHolder<EffectType<?>, EffectType<OreCollectorEffect>> ORE_COLLECTOR_EFFECT = register("ore_collector_effect", () -> new EffectType<>(OreCollectorEffect::new));
 
@@ -52,7 +51,7 @@ public class LREquipmentEffectTypes {
 
     public static final DeferredHolder<EffectType<?>, EffectType<ErosionEffect>> EROSION_EFFECT = register("erosion_effect", () -> new EffectType<>(ErosionEffect::new));
 
-    public static final DeferredHolder<EffectType<?>, EffectType<BlackDragonChestPlateEffect>> BLACK_DRAGON_CHESTPLATE_EFFECT = register("black_dragon_chestplate_effect", () -> new CooldownAbleEffectType<>(BlackDragonChestPlateEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/black_dragon_chestplate.png")));
+    public static final DeferredHolder<EffectType<?>, EffectType<BlackDragonChestPlateEffect>> BLACK_DRAGON_CHESTPLATE_EFFECT = register("black_dragon_chestplate_effect", () -> new EffectType<>(BlackDragonChestPlateEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/black_dragon_chestplate.png")));
 
     public static final DeferredHolder<EffectType<?>, EffectType<FallImmunity>> FALL_IMMUNITY = register("fall_immunity", () -> new EffectType<>(FallImmunity::new));
 

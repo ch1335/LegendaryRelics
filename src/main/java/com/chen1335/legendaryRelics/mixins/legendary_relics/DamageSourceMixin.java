@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
-import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
@@ -26,7 +25,7 @@ public class DamageSourceMixin {
     @Inject(method = "<init>(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V", at = @At("RETURN"))
     private void init(Holder<?> type, Entity directEntity, Entity causingEntity, Vec3 damageSourcePosition, CallbackInfo ci) {
         if (directEntity instanceof Projectile projectile) {
-            lr$projectileData = LRUtil.getProjectileData(projectile);
+            lr$projectileData = LRProjectileData.getData(projectile);
         }
     }
 

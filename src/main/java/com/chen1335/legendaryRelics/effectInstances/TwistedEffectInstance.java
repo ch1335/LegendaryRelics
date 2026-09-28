@@ -4,7 +4,6 @@ import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
-import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -25,7 +24,7 @@ public class TwistedEffectInstance extends EffectInstance {
 
 
     public void modifyArrow(AbstractArrow arrow, LivingEntity owner) {
-        LRProjectileData projectileData = LRUtil.getProjectileData(arrow);
+        LRProjectileData projectileData = LRProjectileData.getData(arrow);
         SpecialEffectAPI.getEffect(owner, owner.getUUID(), LRSpecialMobEffects.PHASE_SHOOTING.value()).ifPresent(phaseShooting -> {
             if (phaseShooting.getStack() >= 10) {
                 projectileData.ignoreHitCooldown = true;

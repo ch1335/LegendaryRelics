@@ -1,9 +1,7 @@
 package com.chen1335.legendaryRelics.utils;
 
-import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.LRClient;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -13,7 +11,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.phys.*;
 import net.neoforged.neoforgespi.Environment;
@@ -45,11 +42,6 @@ public class LRUtil {
 
         return ResourceLocation.fromNamespaceAndPath(nameSpace, word.toString());
     }
-
-    public static LRProjectileData getProjectileData(Projectile projectile) {
-        return projectile.getData(LRAttachmentTypes.PROJECTILE_DATA);
-    }
-
 
     public static HitResult pick(Entity entity, double blockInteractionRange, double entityInteractionRange) {
         double d0 = Math.max(blockInteractionRange, entityInteractionRange);

@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas;
 
+import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.TimeLimitedAttributeBonusManager;
 import net.minecraft.core.HolderLookup;
@@ -48,5 +49,9 @@ public class LREntityData implements INBTSerializable<CompoundTag> {
 
     public EquipmentEffectCooldownManager getEquipmentEffectCooldownManager() {
         return equipmentEffectCooldownManager;
+    }
+
+    public static LREntityData getData(LivingEntity living) {
+        return living.getData(LRAttachmentTypes.ENTITY_DATA.get());
     }
 }

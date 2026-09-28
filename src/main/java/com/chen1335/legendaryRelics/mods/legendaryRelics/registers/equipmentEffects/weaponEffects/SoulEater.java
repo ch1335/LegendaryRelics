@@ -3,7 +3,6 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEff
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
@@ -12,6 +11,7 @@ import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
@@ -77,7 +77,7 @@ public class SoulEater extends LRWeaponEffect {
                 livingKiller.heal(livingKiller.getMaxHealth() * HEAL.getValue(arg));
                 if (event.getEntity().getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
                     double attack = event.getEntity().getAttributeValue(Attributes.ATTACK_DAMAGE);
-                    livingKiller.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
+                    LREntityData.getData(livingKiller).getTimeLimitedAttributeBonusManager()
                             .addAttributeModifier(livingKiller, Attributes.ATTACK_DAMAGE, new AttributeModifier(LegendaryRelics.id("soul_eater_" + event.getEntity().getId()), attack * GAIN_ATTACK_DAMAGE_PERCENT.getValue(arg), AttributeModifier.Operation.ADD_VALUE), 10 * 20);
                 }
             }

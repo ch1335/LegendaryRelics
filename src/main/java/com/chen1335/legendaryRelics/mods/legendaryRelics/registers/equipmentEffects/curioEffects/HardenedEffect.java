@@ -2,7 +2,6 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEff
 
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
@@ -14,6 +13,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -78,7 +78,7 @@ public class HardenedEffect extends LRCurioEffect {
                 LivingEntity living = event.getEntity();
                 CalculatorArg calculatorArg = CalculatorArg.simpleArg(living, slotHolder.infoHolder().itemStack(), slotHolder.infoHolder().effect());
                 if (EquipmentEffectCooldownManager.isNotInCooldown(living, LREquipmentEffectTypes.HARDENED_EFFECT.value())) {
-                    living.getData(LRAttachmentTypes.ENTITY_DATA).getTimeLimitedAttributeBonusManager()
+                    LREntityData.getData(living).getTimeLimitedAttributeBonusManager()
                             .addAttributeModifier(
                                     living,
                                     Attributes.ARMOR,

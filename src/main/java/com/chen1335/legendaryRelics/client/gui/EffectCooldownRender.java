@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.client.gui;
 
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.client.RenderUtils;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
@@ -10,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -27,10 +27,11 @@ public class EffectCooldownRender implements LayeredDraw.Layer {
         int x = (int) (width * xPercentage);
         int y = (int) (height * yPercentage) - 16;
         for (Map.Entry<EffectType<?>, EquipmentEffectCooldownManager.CooldownHolder> entry : clientCooldownManager.getCooldownHolders().entrySet()) {
-            if (entry.getKey() instanceof CooldownAbleEffectType<?> effectType && effectType.getCooldownIcon() != null) {
+            ResourceLocation cooldownIcon = entry.getKey().getCooldownIcon();
+            if (cooldownIcon != null) {
                 y = y + 16;
                 EquipmentEffectCooldownManager.CooldownHolder cooldownHolder = entry.getValue();
-                guiGraphics.blit(effectType.getCooldownIcon(), x, y, 0, 0, 16, 16, 16, 16);
+                guiGraphics.blit(cooldownIcon, x, y, 0, 0, 16, 16, 16, 16);
                 PoseStack poseStack = guiGraphics.pose();
                 poseStack.pushPose();
                 RenderUtils.drawSector(guiGraphics, x, y, 16, (float) cooldownHolder.getTimeLeft() / cooldownHolder.getTotalTime());

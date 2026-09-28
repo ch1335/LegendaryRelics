@@ -3,12 +3,14 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDa
 import com.chen1335.equipmentEffectLib.common.InfoHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.common.EffectInfoHolder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.RegistryOps;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.UnknownNullability;
 
@@ -49,4 +51,7 @@ public class LRProjectileData implements INBTSerializable<CompoundTag> {
         return Optional.ofNullable(attachedEffects.get(effectType));
     }
 
+    public static LRProjectileData getData(Projectile projectile) {
+        return projectile.getData(LRAttachmentTypes.PROJECTILE_DATA.get());
+    }
 }

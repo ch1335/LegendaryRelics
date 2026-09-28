@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.common;
 
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.client.LRClient;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.network.EffectCooldownPack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,7 +43,7 @@ public class EquipmentEffectCooldownManager {
     }
 
     public static void addCooldown(LivingEntity living, EffectType<?> effectType, int time) {
-        living.getData(LRAttachmentTypes.ENTITY_DATA).getEquipmentEffectCooldownManager().addCooldown(effectType, time);
+        LREntityData.getData(living).getEquipmentEffectCooldownManager().addCooldown(effectType, time);
         if (living instanceof ServerPlayer serverPlayer) {
             PacketDistributor.sendToPlayer(serverPlayer, new EffectCooldownPack(effectType, time));
         } else if (living.level().isClientSide) {
@@ -52,7 +52,7 @@ public class EquipmentEffectCooldownManager {
     }
 
     public static void addCooldown(LivingEntity living, EffectType<?> effectType, int time, Runnable runnable) {
-        living.getData(LRAttachmentTypes.ENTITY_DATA).getEquipmentEffectCooldownManager().addCooldown(effectType, time,runnable);
+        LREntityData.getData(living).getEquipmentEffectCooldownManager().addCooldown(effectType, time,runnable);
         if (living instanceof ServerPlayer serverPlayer) {
             PacketDistributor.sendToPlayer(serverPlayer, new EffectCooldownPack(effectType, time));
         } else if (living.level().isClientSide) {
@@ -61,7 +61,7 @@ public class EquipmentEffectCooldownManager {
     }
 
     public static boolean isNotInCooldown(LivingEntity living, EffectType<?> effectType) {
-        return living.getData(LRAttachmentTypes.ENTITY_DATA).getEquipmentEffectCooldownManager().isNotInCooldown(effectType);
+        return LREntityData.getData(living).getEquipmentEffectCooldownManager().isNotInCooldown(effectType);
     }
 
     public Map<EffectType<?>, CooldownHolder> getCooldownHolders() {

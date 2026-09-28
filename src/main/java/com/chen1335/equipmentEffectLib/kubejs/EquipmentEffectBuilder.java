@@ -3,7 +3,6 @@ package com.chen1335.equipmentEffectLib.kubejs;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
-import com.chen1335.legendaryRelics.API.CooldownAbleEffectType;
 import dev.latvian.mods.kubejs.registry.BuilderBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -107,7 +106,7 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
             };
 
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory).cooldownIcon(cooldownIcon);
+                return new EffectType<>(factory).cooldownIcon(cooldownIcon);
             } else {
                 return new EffectType<>(factory);
             }
@@ -125,7 +124,7 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
         public EffectType<?> createObject() {
             EffectType.EffectFactory<BaseEffectJS.ArmorEffectJS> factory = (effectType, level, equipmentType) -> createBase(new BaseEffectJS.ArmorEffectJS(effectType, level, equipmentType));
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory).cooldownIcon(cooldownIcon);
+                return new EffectType<>(factory).cooldownIcon(cooldownIcon);
             } else {
                 return new EffectType<>(factory);
             }
@@ -160,7 +159,7 @@ public abstract class EquipmentEffectBuilder<T extends EquipmentEffectBuilder<?>
             };
 
             if (cooldownAble) {
-                return new CooldownAbleEffectType<>(factory).cooldownIcon(cooldownIcon);
+                return new EffectType<>(factory).cooldownIcon(cooldownIcon);
             } else {
                 return new EffectType<>(factory);
             }

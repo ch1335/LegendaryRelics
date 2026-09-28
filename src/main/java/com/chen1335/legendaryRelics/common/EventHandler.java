@@ -21,7 +21,6 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.b
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc.DarkGoldForgingTool;
-import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -68,7 +67,7 @@ public class EventHandler {
         @SubscribeEvent
         public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
             if (ModList.get().isLoaded("patchouli")) {
-                LREntityData entityData = event.getEntity().getData(LRAttachmentTypes.ENTITY_DATA);
+                LREntityData entityData = LREntityData.getData(event.getEntity());
                 if (!entityData.hasGiveBook) {
                     event.getEntity().addItem(ItemModBook.forBook(LegendaryRelics.id("legendary_relics_book")));
                     entityData.hasGiveBook = true;
@@ -100,7 +99,7 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void playerClone(PlayerEvent.Clone event) {
-            event.getEntity().setData(LRAttachmentTypes.ENTITY_DATA, event.getOriginal().getData(LRAttachmentTypes.ENTITY_DATA));
+            event.getEntity().setData(LRAttachmentTypes.ENTITY_DATA, LREntityData.getData(event.getOriginal()));
         }
 
         @SubscribeEvent
@@ -153,7 +152,7 @@ public class EventHandler {
         public static void EntityTickPre(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity living && !living.level().isClientSide) {
                 if (living.hasData(LRAttachmentTypes.ENTITY_DATA)) {
-                    living.getData(LRAttachmentTypes.ENTITY_DATA).tick(living);
+                    LREntityData.getData(living).tick(living);
                 }
             }
         }
@@ -176,7 +175,7 @@ public class EventHandler {
             }
 
             if (event.getSource().getDirectEntity() instanceof Projectile projectile) {
-                LRProjectileData data = LRUtil.getProjectileData(projectile);
+                LRProjectileData data = LRProjectileData.getData(projectile);
                 if (data.damageMul != 1) {
                     event.setAmount(event.getAmount() * data.damageMul);
                 }
