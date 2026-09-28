@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.equipmentEff
 
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -46,8 +47,10 @@ public class MagicSuppressionEffect extends LRWeaponEffect {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.magic_suppression.desc",
                 DURATION.toComponent(tooltipFlag.hasShiftDown(), arg),
+                ComponentHolders.Combat.magicDamage(),
                 DAMAGE_REDUCTION.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")
         ).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("legendary_relics.special.effect_source_no_stack").withColor(5592405));
     }
 
     @Override

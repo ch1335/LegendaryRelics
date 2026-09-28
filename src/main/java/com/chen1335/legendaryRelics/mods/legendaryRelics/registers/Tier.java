@@ -49,7 +49,7 @@ public class Tier {
                 6,
                 -2,
                 14,
-                () -> Ingredient.of(Tags.Items.BONES)
+                () -> Ingredient.of(Tags.Items.OBSIDIANS)
         );
 
         /**
