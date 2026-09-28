@@ -21,18 +21,18 @@ public class ComponentHolders {
 
     public static class Combat {
         public static Component physicalDamage(Component component) {
-            return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage()).withStyle(ChatFormatting.GOLD);
+            return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage());
         }
 
         public static Component magicDamage(Component component) {
-            return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage()).withStyle(ChatFormatting.GOLD);
+            return Component.translatable("legendary_relics.damage_type.format", component, magicDamage());
         }
         public static Component physicalDamage() {
-            return Component.translatable("legendary_relics.damage_type.physical_damage").withStyle(ChatFormatting.RED);
+            return Component.translatable("legendary_relics.damage_type.physical_damage");
         }
 
         public static Component magicDamage() {
-            return Component.translatable("legendary_relics.damage_type.magic_damage").withStyle(ChatFormatting.RED);
+            return Component.translatable("legendary_relics.damage_type.magic_damage");
         }
     }
 }

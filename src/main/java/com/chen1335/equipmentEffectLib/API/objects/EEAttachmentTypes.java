@@ -1,6 +1,7 @@
 package com.chen1335.equipmentEffectLib.API.objects;
 
 import com.chen1335.equipmentEffectLib.EquipmentEffectLib;
+import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEffectDates;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntitySetsEffectData;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -18,5 +19,9 @@ public class EEAttachmentTypes {
 
     public static final Supplier<AttachmentType<EntitySetsEffectData>> ENTITY_SETS_EFFECT_DATA = ATTACHMENT_TYPES.register(
             "entity_sets_effect_data", () -> AttachmentType.builder((holder) -> new EntitySetsEffectData()).build()
+    );
+
+    public static final Supplier<AttachmentType<EntityEffectDates>> ENTITY_EFFECT_DATA = ATTACHMENT_TYPES.register(
+            "entity_effect_data", () -> AttachmentType.builder((holder) -> new EntityEffectDates()).build()
     );
 }

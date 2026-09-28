@@ -51,13 +51,13 @@ public class TimeLimitedAttributeBonusManager implements INBTSerializable<Compou
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
         CompoundTag compoundTag = new CompoundTag();
         ListTag listTag = new ListTag();
-        modifierHolders.forEach(modifierHolder -> {
+        modifierHolders.forEach(modifierHolder -> modifierHolder.attributeHolder.unwrapKey().ifPresent(key->{
             CompoundTag holderTag = new CompoundTag();
-            holderTag.putString("attribute", modifierHolder.attributeHolder.getKey().location().toString());
+            holderTag.putString("attribute", key.location().toString());
             holderTag.put("modifier", modifierHolder.modifier.save());
             holderTag.putInt("time", modifierHolder.time);
             listTag.add(holderTag);
-        });
+        }));
         compoundTag.put("modifiers", listTag);
         return compoundTag;
     }

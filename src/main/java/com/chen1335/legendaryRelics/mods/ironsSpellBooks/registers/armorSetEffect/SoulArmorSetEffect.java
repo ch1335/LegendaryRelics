@@ -105,6 +105,7 @@ public class SoulArmorSetEffect extends SetEffect {
                 Component.translatable("set_effect.legendary_relics.soul.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.1",
                 GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, LRColors.Component.YELLOW.getColor()),
+                ComponentHolders.Combat.magicDamage(),
                 soulGatherComponent()
         ).withStyle(ChatFormatting.GRAY));
 
@@ -120,6 +121,7 @@ public class SoulArmorSetEffect extends SetEffect {
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.4",
+                ComponentHolders.Combat.magicDamage(),
                 MISSILE_DAMAGE_PERCENT.toPercentageComponent(shiftDown, args, LRColors.Component.RED.getColor())
         ).withStyle(ChatFormatting.GRAY));
 

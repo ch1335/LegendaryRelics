@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEff
 
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -63,7 +64,7 @@ public class ErosionEffect extends LRWeaponEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.1").withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.2", DAMAGE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.2", ComponentHolders.Combat.magicDamage(DAMAGE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg))).withColor(0xaeaeae));
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.3", ARMOR_REDUCE_PER_LAYER.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
     }
 

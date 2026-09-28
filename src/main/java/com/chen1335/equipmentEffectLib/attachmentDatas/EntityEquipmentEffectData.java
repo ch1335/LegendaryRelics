@@ -1,6 +1,7 @@
 package com.chen1335.equipmentEffectLib.attachmentDatas;
 
 import com.chen1335.equipmentEffectLib.API.ITickAbleEffect;
+import com.chen1335.equipmentEffectLib.API.ITypeWithEntityData;
 import com.chen1335.equipmentEffectLib.common.InfoHolder;
 import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
@@ -19,7 +20,6 @@ import java.util.*;
 public class EntityEquipmentEffectData {
 
     private final Map<Class<? extends SlotEffectManager>, SlotEffectManager> managerMap = new HashMap<>();
-
 
     private final Map<EffectType<?>, SlotEffectHolder<?>> oldBestEffects = new HashMap<>();
 

@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons;
 
 import com.chen1335.legendaryRelics.client.LRClient;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -57,7 +58,7 @@ public class SkeletonThrowingKnife extends LRSwordItem {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
-            tooltipComponents.add(Component.translatable("item.legendary_relics.skeleton_throwing_knife.desc.1", DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg)).withStyle(ChatFormatting.GRAY));
+            tooltipComponents.add(Component.translatable("item.legendary_relics.skeleton_throwing_knife.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg))).withStyle(ChatFormatting.GRAY));
             tooltipComponents.add(Component.translatable("legendary_relics.cooldown_affected_by_attack_speed").withStyle(ChatFormatting.DARK_GRAY));
         }
     }

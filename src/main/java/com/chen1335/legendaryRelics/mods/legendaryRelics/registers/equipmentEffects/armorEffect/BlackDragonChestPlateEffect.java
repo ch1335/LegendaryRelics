@@ -5,6 +5,7 @@ import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -101,7 +102,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         if (getRawEffectLevel() > 1) {
-            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", PHYSICAL_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
         }
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
                 DAMAGE_INCREASE.toComponent(tooltipFlag.hasShiftDown(), args),

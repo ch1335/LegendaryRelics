@@ -1,16 +1,19 @@
 package com.chen1335.equipmentEffectLib.effectBase;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
+import com.chen1335.equipmentEffectLib.API.ITypeWithEntityData;
 import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class EffectType<T extends BaseEffect> {
 
     private final EffectFactory<T> factory;
+    private Supplier<ITypeWithEntityData<?>> dataFactory = null;
     private final boolean stackable;
 
     public EffectType(EffectFactory<T> factory, boolean stackable) {
@@ -21,7 +24,6 @@ public class EffectType<T extends BaseEffect> {
     public EffectType(EffectFactory<T> factory) {
         this(factory, false);
     }
-
 
     public T create(int level, EquipmentType equipmentType) {
         return factory.create(this, level, equipmentType);

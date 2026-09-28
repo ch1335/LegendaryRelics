@@ -56,11 +56,14 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.FLYING_KNIFE
                 );
 
+        // 连锁闪电与灵魂飞弹都是"附带"的伤害，不应该把目标击退
         this.tag(DamageTypeTags.NO_KNOCKBACK)
                 .add(
                         LRDamageTypes.EROSION,
                         LRDamageTypes.FLYING_REAPER,
-                        LRDamageTypes.INFERNO_SCORCH
+                        LRDamageTypes.INFERNO_SCORCH,
+                        LRDamageTypes.CHAIN_LIGHTNING,
+                        IRSDamageTypes.SOUL_MISSILE
                 );
     }
 }

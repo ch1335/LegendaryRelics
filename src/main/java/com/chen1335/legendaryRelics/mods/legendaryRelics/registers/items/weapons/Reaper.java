@@ -5,6 +5,7 @@ import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.client.LRClient;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -53,7 +54,7 @@ public class Reaper extends LRSwordItem {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
-            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg)).withColor(0xaeaeae), maxToolTipWidth());
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg))).withColor(0xaeaeae), maxToolTipWidth());
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.2").withColor(5592405), maxToolTipWidth());
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.3").withColor(5592405), maxToolTipWidth());
 
