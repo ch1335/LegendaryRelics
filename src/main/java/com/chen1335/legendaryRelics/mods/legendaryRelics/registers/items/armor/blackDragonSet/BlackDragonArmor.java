@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet;
 
-import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -21,7 +21,7 @@ public class BlackDragonArmor extends LRArmorBase {
     public static final ResourceLocation BlackDragonArmorTexture = LegendaryRelics.id("textures/armor/black_dragon.png");
 
     public BlackDragonArmor(Type type, Properties properties) {
-        super(LRArmorMaterials.BLACK_DRAGON, type, properties.stacksTo(1));
+        super(Tier.Armor.BLACK_DRAGON, type, properties.stacksTo(1));
     }
 
 

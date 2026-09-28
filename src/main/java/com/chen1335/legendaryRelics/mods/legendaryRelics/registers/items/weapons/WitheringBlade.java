@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapon
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
 import net.minecraft.world.item.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class WitheringBlade extends LRSwordItem {
 
     public WitheringBlade() {
-        super(Tiers.NETHERITE, new Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.NETHERITE, 6, -2.4F)));
+        super(Tier.Weapon.WITHERING_BLADE, new Properties().stacksTo(1).rarity(Rarity.EPIC));
     }
 
     @Override

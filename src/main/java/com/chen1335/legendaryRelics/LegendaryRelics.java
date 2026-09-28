@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.config.LootConfig;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftTypes;
@@ -75,7 +76,7 @@ public class LegendaryRelics {
         LRShieldType.register(modEventBus);
         LRAttachmentTypes.register(modEventBus);
         LRDataComponentTypes.register(modEventBus);
-        LRArmorMaterials.register(modEventBus);
+        Tier.Armor.register(modEventBus);
         LREquipmentEffectTypes.register(modEventBus);
         LRSpecialMobEffects.register(modEventBus);
         LREntityTypes.register(modEventBus);

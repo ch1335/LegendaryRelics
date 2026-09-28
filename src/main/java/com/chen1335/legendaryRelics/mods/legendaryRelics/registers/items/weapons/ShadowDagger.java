@@ -6,27 +6,23 @@ import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.IChargeAbleItem;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Ambush;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
-import net.neoforged.neoforge.common.SimpleTier;
-import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
 public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
-    public static Tier TIER = new SimpleTier(BlockTags.INCORRECT_FOR_IRON_TOOL, 512 + 256, 6.0F, 0, 14, () -> Ingredient.of(Tags.Items.BONES));
 
     public ShadowDagger() {
-        super(TIER, new Item.Properties().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(Tiers.NETHERITE, 2, -2F)));
+        super(Tier.Weapon.SHADOW_DAGGER, new Item.Properties().rarity(Rarity.RARE));
     }
 
     @Override

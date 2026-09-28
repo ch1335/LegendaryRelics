@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.infernoSet;
 
 import com.chen1335.legendaryRelics.API.LRArmorHelper;
-import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -20,7 +20,7 @@ public class InfernoArmor extends LRArmorBase implements LRArmorHelper {
     public static final ResourceLocation TEXTURE = LegendaryRelics.id("textures/armor/inferno_armor.png");
 
     public InfernoArmor(Type type, Properties properties) {
-        super(LRArmorMaterials.INFERNO, type, properties.stacksTo(1).rarity(Rarity.EPIC));
+        super(Tier.Armor.INFERNO, type, properties.stacksTo(1).rarity(Rarity.EPIC));
     }
 
     @Override

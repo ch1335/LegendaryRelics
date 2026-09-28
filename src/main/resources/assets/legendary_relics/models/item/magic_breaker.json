@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "neoforge:separate_transforms",
+  "base": {
+    "parent": "minecraft:item/handheld",
+    "textures": {
+      "layer0": "legendary_relics:item/magic_breaker"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/handheld",
+      "textures": {
+        "layer0": "legendary_relics:item/magic_breaker_gui"
+      }
+    }
+  }
+}

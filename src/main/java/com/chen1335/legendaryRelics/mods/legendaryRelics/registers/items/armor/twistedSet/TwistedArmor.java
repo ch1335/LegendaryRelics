@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.twistedSet;
 
-import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -20,7 +20,7 @@ public class TwistedArmor extends LRArmorBase {
     public static final ResourceLocation TEXTURE = LegendaryRelics.id("textures/armor/twisted_armor.png");
 
     public TwistedArmor(Type type, Properties properties) {
-        super(LRArmorMaterials.TWISTED, type, properties.stacksTo(1).rarity(Rarity.EPIC));
+        super(Tier.Armor.TWISTED, type, properties.stacksTo(1).rarity(Rarity.EPIC));
     }
 
     @Override

@@ -91,7 +91,8 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.WITHERING_BLADE.value(),
                 LRItems.REAPER.value(),
                 LRItems.SKELETON_THROWING_KNIFE.asItem(),
-                LRItems.SHADOW_DAGGER.value()
+                LRItems.SHADOW_DAGGER.value(),
+                ISSRegisters.Item.MAGIC_BREAKER.value()
         );
 
         tag(Tags.Items.TOOLS_BOW).add(

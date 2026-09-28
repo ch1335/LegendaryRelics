@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.mods.ironsSpellBooks;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.clientExtensions.SoulArmorExtension;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSTiers;
 import com.chen1335.legendaryRelics.utils.ModProxy;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -21,12 +22,15 @@ public class ISSModProxy extends ModProxy {
         ISSRegisters.Item.register(modEventBus);
         ISSRegisters.Entity.register(modEventBus);
         ISSRegisters.ArmorSetEffect.register(modEventBus);
+        ISSRegisters.EquipmentEffect.register(modEventBus);
         ISSRegisters.SpecialMobEffect.register(modEventBus);
+        ISSTiers.Armor.register(modEventBus);
 
         modEventBus.addListener(this::buildCreativeTabContents);
 
         NeoForge.EVENT_BUS.addListener(EventHandler::setItemSetsEffect);
         NeoForge.EVENT_BUS.addListener(EventHandler::livingIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(EventHandler::spellDamage);
     }
 
     @Override

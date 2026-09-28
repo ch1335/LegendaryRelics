@@ -10,11 +10,11 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingKnife;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -22,15 +22,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.SimpleTier;
-import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
 public class SkeletonThrowingKnife extends LRSwordItem {
-    public static Tier TIER = new SimpleTier(BlockTags.INCORRECT_FOR_IRON_TOOL, 512, 6.0F, 5.0F, 14, () -> Ingredient.of(Tags.Items.BONES));
 
     @Calculator
     public static final FinalCalculator DAMAGE = FinalCalculator.of(
@@ -50,7 +46,7 @@ public class SkeletonThrowingKnife extends LRSwordItem {
     );
 
     public SkeletonThrowingKnife() {
-        super(TIER, new Item.Properties().rarity(Rarity.RARE));
+        super(Tier.Weapon.SKELETON_THROWING_KNIFE, new Item.Properties().rarity(Rarity.RARE));
     }
 
     @Override
@@ -61,11 +57,6 @@ public class SkeletonThrowingKnife extends LRSwordItem {
             tooltipComponents.add(Component.translatable("item.legendary_relics.skeleton_throwing_knife.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg))).withStyle(ChatFormatting.GRAY));
             tooltipComponents.add(Component.translatable("legendary_relics.cooldown_affected_by_attack_speed").withStyle(ChatFormatting.DARK_GRAY));
         }
-    }
-
-    @Override
-    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
-        return SwordItem.createAttributes(SkeletonThrowingKnife.TIER, 0, -2);
     }
 
     @Override

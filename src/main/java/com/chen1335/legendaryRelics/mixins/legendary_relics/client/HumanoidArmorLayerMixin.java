@@ -1,6 +1,6 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics.client;
 
-import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -33,7 +33,7 @@ public class HumanoidArmorLayerMixin {
 
     @Inject(method = "renderTrim(Lnet/minecraft/core/Holder;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/armortrim/ArmorTrim;Lnet/minecraft/client/model/Model;Z)V", at = @At("HEAD"), cancellable = true)
     private void renderTrim(Holder<ArmorMaterial> p_323506_, PoseStack p_289687_, MultiBufferSource p_289643_, int p_289683_, ArmorTrim p_289692_, Model p_289663_, boolean p_289651_, CallbackInfo ci) {
-        if (p_323506_.value() == LRArmorMaterials.BLACK_DRAGON.value()) {
+        if (p_323506_.value() == Tier.Armor.BLACK_DRAGON.value()) {
             ci.cancel();
         }
     }

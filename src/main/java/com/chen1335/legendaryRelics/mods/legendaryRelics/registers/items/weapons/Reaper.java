@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class Reaper extends LRSwordItem {
     public Reaper() {
-        super(Tiers.NETHERITE, new Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.NETHERITE, 8, -2.4F)));
+        super(Tier.Weapon.REAPER, new Properties().stacksTo(1).rarity(Rarity.EPIC));
     }
 
     @Override

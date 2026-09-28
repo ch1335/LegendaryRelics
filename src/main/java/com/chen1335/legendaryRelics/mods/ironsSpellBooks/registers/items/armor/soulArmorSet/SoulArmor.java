@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.armor.soulArmorSet;
 
-import com.chen1335.legendaryRelics.API.objects.LRArmorMaterials;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSTiers;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +19,7 @@ public class SoulArmor extends LRArmorBase {
     public static final ResourceLocation TEXTURE = LegendaryRelics.id("textures/armor/soul_armor_layer.png");
 
     public SoulArmor(Type type, Properties properties) {
-        super(LRArmorMaterials.SOUL, type, properties.stacksTo(1).rarity(Rarity.EPIC));
+        super(ISSTiers.Armor.SOUL, type, properties.stacksTo(1).rarity(Rarity.EPIC));
     }
 
     @Override
