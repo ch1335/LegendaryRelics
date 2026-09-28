@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -192,11 +193,11 @@ public class FlyingReaper extends AbstractArrow {
 
     @Override
     public void playerTouch(@NotNull Player player) {
-        if (player == getOwner() && inGround() && player.getData(LRAttachmentTypes.ENTITY_DATA.get()).reaperPickCooldown == 0) {
+        if (player == getOwner() && inGround() && LREntityData.getData(player).reaperPickCooldown == 0) {
             player.swing(InteractionHand.MAIN_HAND, true);
             this.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1F);
             this.setPos(player.getX(), player.getEyeY() - 0.1F, player.getZ());
-            player.getData(LRAttachmentTypes.ENTITY_DATA.get()).reaperPickCooldown = 4;
+            LREntityData.getData(player).reaperPickCooldown = 4;
             inGround = false;
         }
     }

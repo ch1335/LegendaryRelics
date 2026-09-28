@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.attachmentDatas;
 
 import com.chen1335.equipmentEffectLib.API.ITickAbleEffect;
-import com.chen1335.equipmentEffectLib.API.ITypeWithEntityData;
+import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.common.InfoHolder;
 import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
@@ -24,6 +24,10 @@ public class EntityEquipmentEffectData {
     private final Map<EffectType<?>, SlotEffectHolder<?>> oldBestEffects = new HashMap<>();
 
     private final Map<EffectType<?>, TreeMultimap<Integer, SlotEffectHolder<?>>> effectHolders = new HashMap<>();
+
+    public static EntityEquipmentEffectData getEquipmentEffectData(LivingEntity living) {
+        return living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA);
+    }
 
     public TreeMultimap<Integer, SlotEffectHolder<?>> getEffectHoldersByType(EffectType<?> type) {
         return effectHolders.computeIfAbsent(type, t -> TreeMultimap.create());

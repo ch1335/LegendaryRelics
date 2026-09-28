@@ -4,6 +4,7 @@ import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.IEquipmentType;
+import com.chen1335.equipmentEffectLib.attachmentDatas.EntityEquipmentEffectData;
 import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.ItemEffectsData;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.SetEffectData;
@@ -24,12 +25,11 @@ import java.util.Optional;
 
 public final class EquipmentEffectAPI {
     public static <T extends BaseEffect> Optional<SlotEffectHolder<T>> findBestEffect(LivingEntity living, EffectType<T> effectType) {
-        List<SlotEffectHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
-        return list.isEmpty() ? Optional.empty() : Optional.of(list.getFirst());
+        return EntityEquipmentEffectData.getEquipmentEffectData(living).getBestEffect(effectType);
     }
 
     public static <T extends BaseEffect> Optional<List<SlotEffectHolder<T>>> findStackableEffect(LivingEntity living, EffectType<T> effectType) {
-        List<SlotEffectHolder<T>> list = living.getData(EEAttachmentTypes.ENTITY_EQUIPMENT_EFFECT_DATA).getEffectsByType(effectType);
+        List<SlotEffectHolder<T>> list = EntityEquipmentEffectData.getEquipmentEffectData(living).getEffectsByType(effectType);
         return list.isEmpty() ? Optional.empty() : Optional.of(list);
     }
 
@@ -94,7 +94,7 @@ public final class EquipmentEffectAPI {
 
 
     public static void updateEntitySetEffect(@NotNull LivingEntity living, ISlotContext slotContext, ItemStack from, ItemStack eventTo) {
-        living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(living,slotContext, from,  eventTo);
+        living.getData(EEAttachmentTypes.ENTITY_SETS_EFFECT_DATA.get()).update(living, slotContext, from, eventTo);
     }
 
 }
