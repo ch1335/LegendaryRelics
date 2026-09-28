@@ -28,6 +28,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -108,7 +109,7 @@ public class InfernoArmorSetEffect extends SetEffect {
         boolean shiftDown = tooltipFlag.hasShiftDown();
         list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.inferno.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.1",
-                GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, LRColors.Component.YELLOW.getColor()),
+                GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, LRColors.Component.YELLOW.getStyle()),
                 doomComponent()
         ).withStyle(ChatFormatting.GRAY));
 
@@ -121,20 +122,22 @@ public class InfernoArmorSetEffect extends SetEffect {
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.3",
-                ATTACK_RANGE_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getColor()),
-                DAMAGE_PER_STACK.toPercentageComponent(shiftDown, args, LRColors.Component.BLUE.getColor())
+                ATTACK_RANGE_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle()),
+                DAMAGE_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.4",
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(shiftDown, args, LRColors.Component.RED.getColor()))
+                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(shiftDown, args, LRColors.Component.RED.getStyle()))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.5",
                 ComponentHolders.Effects.infernoScorch(),
+                // 0.05F 把 tick 换算成秒（120 tick -> 6 秒）
+                INFERNO_SCORCH_DURATION.toComponent(shiftDown, args, LRColors.Component.RED.getStyle(), 0.05F, "%s"),
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(shiftDown, args, LRColors.Component.RED.getColor()))
+                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(shiftDown, args, LRColors.Component.RED.getStyle()))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"
@@ -173,7 +176,7 @@ public class InfernoArmorSetEffect extends SetEffect {
 
                 SpecialEffectAPI.getEffect(attacker, attacker.getUUID(), LRSpecialMobEffects.DOOM.value()).ifPresent(doom -> {
                     if (doom.getStack() >= 10) {
-                        InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args),INFERNO_EXPLOSION_DAMAGE.getInt(args));
+                        InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args),INFERNO_SCORCH_DURATION.getInt(args));
                         infernoScorch.setSourceEntity(attacker);
                         SpecialEffectAPI.addEffectToEntity(event.getEntity(), infernoScorch, InfernoScorch::getFinal);
                     }

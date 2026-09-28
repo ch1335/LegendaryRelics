@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.common.calculator.api.Unit;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -65,13 +66,26 @@ public class FinalCalculator implements Unit {
         return (int) getValue(calculatorArg);
     }
 
-    @Override
-    public MutableComponent toComponent(CalculatorArg calculatorArg) {
-        return Component.empty().append(Component.literal(format(getValue(calculatorArg), i)).withColor(16777215)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+    /** 未指定样式（即传 {@link Style#EMPTY}）时，展开态数值使用的默认样式。 */
+    public static final Style DEFAULT_STYLE = Style.EMPTY.withColor(16777215);
+
+    /** Style.EMPTY 表示"未指定样式"。 */
+    private static boolean isUnstyled(Style style) {
+        return Style.EMPTY.equals(style);
     }
 
-    public MutableComponent toComponent(CalculatorArg calculatorArg, int color) {
-        return Component.empty().append(Component.literal(format(getValue(calculatorArg), i)).withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+    /** 施加样式。传 Style.EMPTY 时是空操作，数值会继承上下文样式。 */
+    private static MutableComponent styled(MutableComponent component, Style style) {
+        return component.withStyle(style);
+    }
+
+    @Override
+    public MutableComponent toComponent(CalculatorArg calculatorArg) {
+        return Component.empty().append(styled(Component.literal(format(getValue(calculatorArg), i)), DEFAULT_STYLE)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+    }
+
+    public MutableComponent toComponent(CalculatorArg calculatorArg, Style style) {
+        return Component.empty().append(styled(Component.literal(format(getValue(calculatorArg), i)), isUnstyled(style) ? DEFAULT_STYLE : style)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
     }
 
     @Override
@@ -89,48 +103,23 @@ public class FinalCalculator implements Unit {
     }
 
     public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
-        return toComponent(hasShiftDown, calculatorArg, -1);
+        return toComponent(hasShiftDown, calculatorArg, Style.EMPTY);
     }
 
-    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color) {
-        return toComponent(hasShiftDown, calculatorArg, color, 1);
+    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, Style style) {
+        return toComponent(hasShiftDown, calculatorArg, style, 1);
     }
 
-    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color, float scale) {
-        return toComponent(hasShiftDown, calculatorArg, color, scale, "");
+    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, Style style, float scale) {
+        return toComponent(hasShiftDown, calculatorArg, style, scale, "%s");
     }
 
-    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color, float scale, String format) {
+    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, Style style, float scale, String format) {
         if (hasShiftDown) {
-            if (color == -1) {
-                color = 16777215;
-            }
-            return Component.empty().append(Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i))).withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+            MutableComponent value = styled(Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i))), isUnstyled(style) ? DEFAULT_STYLE : style);
+            return Component.empty().append(value).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
         } else {
-            MutableComponent component = Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i)));
-            if (color != -1) {
-                component.withColor(color);
-            }
-            return component;
-        }
-    }
-
-    public MutableComponent toPercentageComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
-        return toPercentageComponent(hasShiftDown, calculatorArg, -1);
-    }
-
-    public MutableComponent toPercentageComponent(boolean hasShiftDown, CalculatorArg calculatorArg, int color) {
-        if (hasShiftDown) {
-            if (color == -1) {
-                color = 16777215;
-            }
-            return Component.empty().append(Component.literal(format(getValue(calculatorArg) * 100, i) + "%").withColor(color)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
-        } else {
-            MutableComponent component = Component.literal(format(getValue(calculatorArg) * 100, i) + "%");
-            if (color != -1) {
-                component.withColor(color);
-            }
-            return component;
+            return styled(Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i))), style);
         }
     }
 

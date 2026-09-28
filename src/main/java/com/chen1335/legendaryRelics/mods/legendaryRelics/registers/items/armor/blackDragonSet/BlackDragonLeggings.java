@@ -8,6 +8,7 @@ import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -42,8 +43,8 @@ public class BlackDragonLeggings extends BlackDragonArmor {
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         CalculatorArg arg = new CalculatorArg();
         CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, stack);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.1", PROJECTILE_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.2", HEAL_INCREASE.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.1", PROJECTILE_DAMAGE_REDUCE.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.2", HEAL_INCREASE.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 
     @Override

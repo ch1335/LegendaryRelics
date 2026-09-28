@@ -18,6 +18,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeVal
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -102,7 +103,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         if (getRawEffectLevel() > 1) {
-            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
         }
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
                 DAMAGE_INCREASE.toComponent(tooltipFlag.hasShiftDown(), args),

@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -21,6 +22,6 @@ public class AncientFragment extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toPercentageComponent(tooltipFlag.hasShiftDown(), CalculatorArg.emptyArg())).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.emptyArg(), Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 }

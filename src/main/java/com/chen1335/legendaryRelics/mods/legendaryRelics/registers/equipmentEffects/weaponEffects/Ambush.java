@@ -10,6 +10,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLev
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -44,7 +45,7 @@ public class Ambush extends LRWeaponEffect {
                 tooltipComponents,
                 Component.translatable("equipment_effect.legendary_relics.ambush",
                         FinalCalculator.format((float) getMaxChargeTick(itemStack, player) / 20, 1),
-                        DAMAGE_GAIN.toPercentageComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this)),
+                        DAMAGE_GAIN.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this), Style.EMPTY, 100, "%s%%"),
                         Component.translatable(Attributes.ATTACK_DAMAGE.value().getDescriptionId()).withColor(5592575)
                 ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack)
         );

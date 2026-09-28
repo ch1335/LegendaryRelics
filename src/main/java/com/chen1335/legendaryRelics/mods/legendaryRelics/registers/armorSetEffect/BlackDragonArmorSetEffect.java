@@ -12,6 +12,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeVal
 import com.chen1335.legendaryRelics.common.calculator.special.TieredBonus;
 import com.chen1335.legendaryRelics.effectInstances.BlackDragonEffectInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,7 +42,7 @@ public class BlackDragonArmorSetEffect extends SetEffect {
         CalculatorArg args = buildArg(player);
         tooltipComponents.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.excellence.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.1",
-                ATTRIBUTE_MULTIPLIER.toPercentageComponent(tooltipFlag.hasShiftDown(), args)
+                ATTRIBUTE_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")
         ).withColor(16733695));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.2",
                 HEALTH_REGAIN.toComponent(tooltipFlag.hasShiftDown(), args)

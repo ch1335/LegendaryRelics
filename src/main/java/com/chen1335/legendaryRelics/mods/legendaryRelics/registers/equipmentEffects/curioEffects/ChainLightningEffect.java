@@ -15,6 +15,7 @@ import com.chen1335.legendaryRelics.utils.SimpleSchedule;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -60,7 +61,7 @@ public class ChainLightningEffect extends LRBaseEffect {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.chain_lightning",
                 String.valueOf(CHAIN_RANGE),
-                DAMAGE_RATIO.toPercentageComponent(tooltipFlag.hasShiftDown(), arg),
+                DAMAGE_RATIO.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%"),
                 String.valueOf(MAX_CHAIN_TARGETS)
         ).withColor(0xaeaeae));
     }

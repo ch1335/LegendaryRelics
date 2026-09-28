@@ -11,6 +11,7 @@ import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.special.TieredBonus;
 import com.chen1335.legendaryRelics.effectInstances.TwistedEffectInstance;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
+import com.chen1335.legendaryRelics.utils.LRColors;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -57,7 +58,7 @@ public class TwistedArmorSetEffect extends SetEffect {
         boolean shiftDown = tooltipFlag.hasShiftDown();
         list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.twisted.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.1",
-                GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, ChatFormatting.YELLOW.getColor()),
+                GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, LRColors.Component.YELLOW.getStyle()),
                 phaseShootingComponent()
         ).withStyle(ChatFormatting.GRAY));
 
@@ -70,13 +71,13 @@ public class TwistedArmorSetEffect extends SetEffect {
 
 
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.3",
-                DRAW_SPEED_PER_STACK.toPercentageComponent(shiftDown, args, ChatFormatting.BLUE.getColor()),
-                ARROW_DAMAGE_PER_STACK.toPercentageComponent(shiftDown, args, ChatFormatting.BLUE.getColor())
+                DRAW_SPEED_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle(), 100, "%s%%"),
+                ARROW_DAMAGE_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.4",
-                ADDITION_ARROW_BASE_DAMAGE.toPercentageComponent(shiftDown, args, ChatFormatting.RED.getColor())
+                ADDITION_ARROW_BASE_DAMAGE.toComponent(shiftDown, args, LRColors.Component.RED.getStyle(), 100, "%s%%")
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"

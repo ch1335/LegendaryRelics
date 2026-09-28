@@ -1,18 +1,21 @@
 package com.chen1335.legendaryRelics.utils;
 
-public class LRColors {
-    public enum Component{
-        YELLOW(16777045),
-        RED(16733525),
-        BLUE(5592575);
-        private final int color;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Style;
 
-        Component(int color) {
-            this.color = color;
+public class LRColors {
+    public enum Component {
+        YELLOW(ChatFormatting.YELLOW),
+        RED(ChatFormatting.RED),
+        BLUE(ChatFormatting.BLUE);
+        private final Style style;
+
+        Component(ChatFormatting formatting) {
+            this.style = Style.EMPTY.withColor(formatting);
         }
 
-        public int getColor() {
-            return color;
+        public Style getStyle() {
+            return style;
         }
     }
 }

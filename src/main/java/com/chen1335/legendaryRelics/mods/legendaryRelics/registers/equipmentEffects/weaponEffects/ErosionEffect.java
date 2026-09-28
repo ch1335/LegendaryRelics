@@ -13,6 +13,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeVal
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Erosion;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -65,7 +66,7 @@ public class ErosionEffect extends LRWeaponEffect {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.1").withColor(0xaeaeae));
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.2", ComponentHolders.Combat.magicDamage(DAMAGE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg))).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.3", ARMOR_REDUCE_PER_LAYER.toPercentageComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.3", ARMOR_REDUCE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 
     @Override

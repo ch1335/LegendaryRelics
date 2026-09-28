@@ -13,6 +13,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffe
 import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -40,7 +41,7 @@ public class AllAttributeBoost extends LRBaseEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.all_attribute_boost", AMOUNT.toPercentageComponent(tooltipFlag.hasShiftDown(), args)).withStyle(ChatFormatting.GOLD));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.all_attribute_boost", AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")).withStyle(ChatFormatting.GOLD));
     }
 
 

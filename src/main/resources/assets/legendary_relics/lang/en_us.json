@@ -143,7 +143,7 @@
   "set_effect.legendary_relics.inferno.desc.2": "If you don't get %2$s for more than %1$s seconds, you lose one stack of %3$s every second",
   "set_effect.legendary_relics.inferno.desc.3": "Each stack provides %s attack range and %s attack damage",
   "set_effect.legendary_relics.inferno.desc.4": "At 10 stacks, attack applies %s effect, dealing %s per second",
-  "set_effect.legendary_relics.inferno.desc.5": "When a creature with %s effect dies, it applies %s to nearby creatures and deals %s",
+  "set_effect.legendary_relics.inferno.desc.5": "When a creature with %s effect dies, it applies %s seconds of %s to nearby creatures and deals %s",
   "set_effect.legendary_relics.inferno.name": "Inferno",
   "set_effect.legendary_relics.soul.desc.1": "Every %s second, dealing %s gains 1 stack of %s, up to 10 stacks",
   "set_effect.legendary_relics.soul.desc.2": "If you don't get %2$s for more than %1$s seconds, you lose one stack of %3$s every second",
