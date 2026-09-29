@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.data;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.API.objects.LRTags;
 import com.chen1335.legendaryRelics.data.recipeBuilders.EquipmentWorkbenchCraftBuilder;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
@@ -11,6 +12,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -56,7 +58,7 @@ public class LRRecipeProvider extends RecipeProvider {
         EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_HELMET, Items.NETHERITE_HELMET)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
-                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 3)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
@@ -64,7 +66,7 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(Items.ELYTRA)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
-                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 3)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .addSecondary(Items.PHANTOM_MEMBRANE, 4)
                 .save(recipeOutput);
@@ -72,22 +74,25 @@ public class LRRecipeProvider extends RecipeProvider {
         EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_LEGGINGS, Items.NETHERITE_LEGGINGS)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
-                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 3)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
         EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_BOOTS, Items.NETHERITE_BOOTS)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
-                .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 3)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
         EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.MAGIC_BREAKER, ItemRegistry.SPELLBREAKER.get())
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
-                .addSecondary(LRItems.DRAGON_SCALE, 2)
-                .addSecondary(Items.OBSIDIAN, 4)
+                .addSecondary(Items.CRYING_OBSIDIAN, 2)
+                .addSecondary(Items.ENDER_EYE, 2)
+                .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 4)
+                .addSecondary(ItemRegistry.CINDER_ESSENCE.get(), 4)
+
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.DARK_GOLD)

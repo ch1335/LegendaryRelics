@@ -64,6 +64,11 @@ public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
         return this;
     }
 
+    public EquipmentWorkbenchCraftBuilder addSecondary(Ingredient ingredient, int count) {
+        secondaryItems.add(new IngredientWithSize(ingredient, count));
+        return this;
+    }
+
     @Override
     public RecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
         return this;

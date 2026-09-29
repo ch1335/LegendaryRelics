@@ -1,0 +1,9 @@
+{
+  "values": [
+    "legendary_relics:dragon_scale",
+    {
+      "id": "irons_spellbooks:dragonskin",
+      "required": false
+    }
+  ]
+}

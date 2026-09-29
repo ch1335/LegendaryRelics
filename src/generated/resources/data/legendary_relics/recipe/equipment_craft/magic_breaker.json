@@ -1,0 +1,66 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "irons_spellbooks:spellbreaker"
+  },
+  "result": {
+    "type": "legendary_relics:craft_item",
+    "item": {
+      "components": {
+        "irons_spellbooks:spell_container": {
+          "data": [
+            {
+              "id": "irons_spellbooks:counterspell",
+              "index": 0,
+              "level": 1,
+              "locked": true
+            }
+          ],
+          "maxSpells": 1,
+          "mustEquip": false,
+          "spellWheel": true
+        }
+      },
+      "count": 1,
+      "id": "legendary_relics:magic_breaker"
+    }
+  },
+  "secondaryItems": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:dark_gold_fragment"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "legendary_relics:ancient_fragment"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:crying_obsidian"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:ender_eye"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "tag": "c:scales/ender_dragon"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "irons_spellbooks:cinder_essence"
+      }
+    }
+  ]
+}

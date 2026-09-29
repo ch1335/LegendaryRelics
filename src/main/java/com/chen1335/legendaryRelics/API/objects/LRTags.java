@@ -10,7 +10,7 @@ public interface LRTags {
     interface Items {
         TagKey<Item> CAN_ONLY_WEAR_ONE = create("can_only_wear_one");
 
-        TagKey<Item> SCALES_ENDER_DRAGON = create("scales/ender_dragon");
+        TagKey<Item> SCALES_ENDER_DRAGON = create("c","scales/ender_dragon");
 
         static TagKey<Item> create(String name) {
             return TagKey.create(Registries.ITEM, LegendaryRelics.id(name));

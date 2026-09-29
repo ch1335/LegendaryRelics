@@ -3,9 +3,11 @@ package com.chen1335.legendaryRelics.data;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.API.objects.LRTags;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
+import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -24,6 +26,11 @@ public class LRItemTagsProvider extends ItemTagsProvider {
         tag(LRTags.Items.CAN_ONLY_WEAR_ONE).add(
                 LRItems.CHARM_OF_FRESH_START.asItem()
         );
+
+        // 末影龙鳞。ISS 是可选依赖，用 optional 条目，缺失时不会拖垮整个标签。
+        tag(LRTags.Items.SCALES_ENDER_DRAGON)
+                .add(LRItems.DRAGON_SCALE.asItem())
+                .addOptional(ItemRegistry.DRAGONSKIN.getId());
 
         tag(CuriosTags.CHARM)
                 .add(

@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.armor.
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSTiers;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,9 +27,10 @@ public class SoulArmor extends LRArmorBase {
     protected ItemAttributeModifiers buildAttributes() {
         ResourceLocation resourcelocation = LegendaryRelics.id("armor.soul." + type.getName());
         EquipmentSlotGroup equipmentslotgroup = EquipmentSlotGroup.bySlot(type.getSlot());
-        return this.getDefaultAttributeModifiers().withModifierAdded(
-                Attributes.MAX_HEALTH, new AttributeModifier(resourcelocation, 2, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup
-        );
+        return this.getDefaultAttributeModifiers()
+                .withModifierAdded(Attributes.MAX_HEALTH, new AttributeModifier(resourcelocation, 2, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup)
+                .withModifierAdded(AttributeRegistry.MAX_MANA, new AttributeModifier(resourcelocation, 125, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup)
+                .withModifierAdded(AttributeRegistry.SPELL_POWER, new AttributeModifier(resourcelocation, 0.05, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), equipmentslotgroup);
     }
 
     @Override
