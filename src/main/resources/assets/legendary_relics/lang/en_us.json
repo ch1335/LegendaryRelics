@@ -5,6 +5,7 @@
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "While in the Nether, most of your attributes are increased by %s.",
   "equipment_effect.legendary_relics.backstab": "§6Backstab§r:When attacking a target that is not facing you, This attack is guaranteed to be a critical hit and deal additional %s critical damage",
   "equipment_effect.legendary_relics.dark_steel_claw": "This curio gain %s attack damage",
+  "equipment_effect.legendary_relics.ender_suppression.desc": "§6Ender Suppression§r:Prevents most teleportation of the attacked target for the next %s seconds",
   "equipment_effect.legendary_relics.erosion.1": "§6Erosion§r:The target be attacked will be inflicted with up to 5 stacks of erosion, each stack:",
   "equipment_effect.legendary_relics.erosion.2": "Deals %s per second and heals you for 1%% of your lost health",
   "equipment_effect.legendary_relics.erosion.3": "Reduced the target's %s total armor",

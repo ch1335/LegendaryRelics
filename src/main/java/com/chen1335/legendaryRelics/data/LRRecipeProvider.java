@@ -2,6 +2,8 @@ package com.chen1335.legendaryRelics.data;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.data.recipeBuilders.EquipmentWorkbenchCraftBuilder;
+import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
+import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -78,6 +80,13 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(LRItems.DRAGON_SCALE, 3)
+                .addSecondary(Items.OBSIDIAN, 4)
+                .save(recipeOutput);
+
+        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.MAGIC_BREAKER, ItemRegistry.SPELLBREAKER.get())
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(LRItems.DRAGON_SCALE, 2)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 

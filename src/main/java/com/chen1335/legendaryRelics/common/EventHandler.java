@@ -21,6 +21,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.b
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc.DarkGoldForgingTool;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.EnderSuppression;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -44,6 +45,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -307,6 +309,16 @@ public class EventHandler {
             }
             if (eventTo.getItem() instanceof ILRItemExtension extension) {
                 extension.onEquipmentChangeTo(from,eventTo,event.getEntity());
+            }
+        }
+
+        /**
+         * 末影抑制：阻止跨维度传送。
+         */
+        @SubscribeEvent
+        public static void EntityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
+            if (EnderSuppression.isSuppressed(event.getEntity())) {
+                event.setCanceled(true);
             }
         }
     }

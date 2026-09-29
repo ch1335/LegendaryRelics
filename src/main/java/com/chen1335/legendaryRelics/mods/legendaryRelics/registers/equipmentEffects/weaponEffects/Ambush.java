@@ -6,8 +6,13 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Add;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
 import com.chen1335.legendaryRelics.utils.LRUtil;
+import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -32,7 +37,15 @@ public class Ambush extends LRWeaponEffect {
     public static ResourceLocation BONUS_DAMAGE_ID = LegendaryRelics.id("dagger_charge");
 
     @Calculator
-    public static final FinalCalculator DAMAGE_GAIN = FinalCalculator.of(EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(3F, 0.5F)));
+    public static final FinalCalculator DAMAGE_GAIN = FinalCalculator.of(
+            Add.of(
+                    EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(2F, 0.25F)),
+                    Mul.of(
+                            Constant.of(0.5F),
+                            EntityAttributeValue.of(ALObjects.Attributes.CRIT_DAMAGE)
+                    )
+            )
+    );
 
 
     public Ambush(EffectType<?> effectType, int level, EquipmentType equipmentType) {

@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Doom;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.EnderSuppression;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Erosion;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.InfernoScorch;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
@@ -39,5 +40,11 @@ public class LRSpecialMobEffects {
     public static final DeferredHolder<MobEffectType<?>, MobEffectType<PhaseShooting>> PHASE_SHOOTING = SPECIAL_MOB_EFFECT_TYPES.register("phase_shooting", MobEffectType.Builder.<PhaseShooting>builder()
             .factory(PhaseShooting::new)
             .renderIcon()
+            .build());
+
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<EnderSuppression>> ENDER_SUPPRESSION = SPECIAL_MOB_EFFECT_TYPES.register("ender_suppression", MobEffectType.Builder.<EnderSuppression>builder()
+            .factory(EnderSuppression::new)
+            .renderIcon()
+            .category(MobEffectCategory.HARMFUL)
             .build());
 }

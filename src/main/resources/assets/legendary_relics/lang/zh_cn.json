@@ -8,6 +8,7 @@
   "equipment_effect.legendary_relics.backstab": "§6背刺§r:攻击一个没有面向你的目标时，此次攻击必定暴击并且造成额外%s暴击伤害",
   "equipment_effect.legendary_relics.chain_lightning": "§6连锁闪电§r:近战或远程命中时触发连锁闪电，闪电会跳向%s格内最近的目标，造成原始伤害%s的电击伤害，最多连锁%s个目标，每个目标只会被电击一次",
   "equipment_effect.legendary_relics.dark_steel_claw": "这件饰品获得%s攻击伤害。",
+  "equipment_effect.legendary_relics.ender_suppression.desc": "§6末影抑制§r:阻止被攻击的目标在未来%s秒内的大部分传送效果",
   "equipment_effect.legendary_relics.erosion.1": "§6侵蚀§r:攻击目标会附加最多叠加5层的侵蚀效果，每层效果:",
   "equipment_effect.legendary_relics.erosion.2": "每秒造成%s并且恢复你1%%已损失生命值",
   "equipment_effect.legendary_relics.erosion.3": "降低目标%s总护甲值",

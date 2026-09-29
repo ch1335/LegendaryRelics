@@ -4,6 +4,7 @@ import com.chen1335.equipmentEffectLib.API.IEffectEquipment;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSTiers;
 import io.redspace.ironsspellbooks.api.item.weapons.ExtendedSwordItem;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.Rarity;
 import java.util.List;
 
 /**
- * 破魔：命中后抑制目标的法术输出，并自带一级反制法术。
+ * 破魔：命中后抑制目标的法术输出与传送，并自带一级反制法术。
  */
 public class MagicBreaker extends MagicSwordItem implements IEffectEquipment, ILRItemExtension {
 
@@ -30,6 +31,9 @@ public class MagicBreaker extends MagicSwordItem implements IEffectEquipment, IL
 
     @Override
     public List<BaseEffect> getDefaultEffects() {
-        return List.of(ISSRegisters.EquipmentEffect.MAGIC_SUPPRESSION.value().create(1, EquipmentTypes.MAIN_HAND));
+        return List.of(
+                ISSRegisters.EquipmentEffect.MAGIC_SUPPRESSION.value().create(1, EquipmentTypes.MAIN_HAND),
+                LREquipmentEffectTypes.ENDER_SUPPRESSION.value().create(1, EquipmentTypes.MAIN_HAND)
+        );
     }
 }
