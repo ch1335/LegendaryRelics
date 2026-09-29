@@ -13,6 +13,7 @@
   "equipment_effect.legendary_relics.fire_damage_reduce": "Reduces fire damage taken by %s.",
   "equipment_effect.legendary_relics.flame_immunity": "Immune Flame Damage",
   "equipment_effect.legendary_relics.hardened_effect": "After receiving damage, gain %s armor for %s seconds, which has a cooldown of %s seconds.",
+  "curios.identifier.cloak": "Cloak",
   "death.attack.chain_lightning": "%1$s was electrocuted by chain lightning",
   "death.attack.chain_lightning.player": "%1$s was electrocuted by chain lightning whilst fighting %2$s",
   "equipment_effect.legendary_relics.chain_lightning": "§6Chain Lightning§r:Melee or ranged hits trigger a chain lightning that jumps to the nearest target within %s blocks, dealing %s of the original damage, chaining up to %s targets. Each target can only be shocked once",

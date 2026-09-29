@@ -1,5 +1,6 @@
 {
   "block.legendary_relics.equipment_workbench": "强化锻造台",
+  "curios.identifier.cloak": "斗篷",
   "death.attack.chain_lightning": "%1$s被连锁闪电电死了",
   "death.attack.chain_lightning.player": "%1$s在与%2$s战斗时被连锁闪电电死了",
   "equipment_effect.legendary_relics.all_attribute_boost": "使你的大部分属性提升%s",
