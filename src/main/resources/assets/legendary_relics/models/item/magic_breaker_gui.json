@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "particle": "legendary_relics:item/magic_breaker_gui",
+    "layer0": "legendary_relics:item/magic_breaker_gui"
+  }
+}

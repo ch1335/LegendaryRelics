@@ -29,8 +29,8 @@ public class ISSTiers {
          */
         public static final ExtendedWeaponTier MAGIC_BREAKER = new ExtendedWeaponTier(
                 2031,
-                9.0F,
-                -2.2F,
+                11.0F,
+                -2.5F,
                 12,
                 BlockTags.INCORRECT_FOR_DIAMOND_TOOL,
                 () -> Ingredient.of(Items.DIAMOND),
