@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common.lootModifier.lootInject;
 
+import com.chen1335.legendaryRelics.common.lootModifier.lootInject.lootInjects.ElderGuardianLootInjector;
 import com.chen1335.legendaryRelics.common.lootModifier.lootInject.lootInjects.EnderDragonLootInjector;
 import com.chen1335.legendaryRelics.common.lootModifier.lootInject.lootInjects.PiglinBruteLootInjector;
 import com.chen1335.legendaryRelics.common.lootModifier.lootInject.lootInjects.WitherLootInjector;
@@ -14,6 +15,7 @@ public class LootInjectors {
         addInjector(new WitherLootInjector());
         addInjector(new EnderDragonLootInjector());
         addInjector(new PiglinBruteLootInjector());
+        addInjector(new ElderGuardianLootInjector());
     }
 
     public static void addInjector(BaseInjector baseInjector) {

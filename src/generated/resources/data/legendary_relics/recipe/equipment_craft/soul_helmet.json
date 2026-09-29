@@ -1,0 +1,45 @@
+{
+  "type": "legendary_relics:equipment_craft",
+  "mainItem": {
+    "item": "irons_spellbooks:netherite_mage_helmet"
+  },
+  "result": {
+    "type": "legendary_relics:craft_item",
+    "item": {
+      "count": 1,
+      "id": "legendary_relics:soul_helmet"
+    }
+  },
+  "secondaryItems": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:wither_spirit"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "legendary_relics:tyrannical_essence"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:ghast_tear"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:soul_sand"
+      }
+    }
+  ]
+}

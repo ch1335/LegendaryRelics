@@ -85,6 +85,32 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
+        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_HELMET, ItemRegistry.NETHERITE_MAGE_HELMET.get())
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.GHAST_TEAR, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.SOUL_SAND, 4)
+                .save(recipeOutput);
+
+        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_CHEST_PLATE, ItemRegistry.NETHERITE_MAGE_CHESTPLATE.get())
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.GHAST_TEAR, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.SOUL_SAND, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_LEGGINGS, ItemRegistry.NETHERITE_MAGE_LEGGINGS.get())
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.GHAST_TEAR, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.SOUL_SAND, 4)
+                .save(recipeOutput);
+        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_BOOTS, ItemRegistry.NETHERITE_MAGE_BOOTS.get())
+                .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
+                .addSecondary(Items.GHAST_TEAR, 2)
+                .addSecondary(Items.GOLD_INGOT, 4)
+                .addSecondary(Items.SOUL_SAND, 4)
+                .save(recipeOutput);
+
         EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.MAGIC_BREAKER, ItemRegistry.SPELLBREAKER.get())
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
@@ -92,7 +118,6 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(Items.ENDER_EYE, 2)
                 .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 4)
                 .addSecondary(ItemRegistry.CINDER_ESSENCE.get(), 4)
-
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.DARK_GOLD)

@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common.lootModifier;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 import java.util.List;
