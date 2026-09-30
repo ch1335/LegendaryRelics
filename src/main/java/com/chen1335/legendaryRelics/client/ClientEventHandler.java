@@ -12,9 +12,11 @@ import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRen
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.client.SoulMissileRenderer;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.screens.EquipmentWorkbenchCraftScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -26,6 +28,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class ClientEventHandler {
@@ -63,7 +66,13 @@ public class ClientEventHandler {
                     );
                 }
             }
+        }
 
+        @SubscribeEvent
+        public static void EntityTickEvent(EntityTickEvent.Pre event) {
+            if (event.getEntity() instanceof LivingEntity living) {
+                LREntityData.getData(living).cloakRender.tick(living);
+            }
         }
     }
 
