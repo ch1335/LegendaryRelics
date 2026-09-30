@@ -1,8 +1,10 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc;
 
+import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
@@ -13,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AncientFragment extends Item {
+public class AncientFragment extends Item implements ILRItemExtension {
     public AncientFragment() {
         super(new Properties().rarity(Rarity.EPIC));
     }
@@ -22,6 +24,6 @@ public class AncientFragment extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.emptyArg(), Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.emptyArg(), Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), maxToolTipWidth(stack));
     }
 }

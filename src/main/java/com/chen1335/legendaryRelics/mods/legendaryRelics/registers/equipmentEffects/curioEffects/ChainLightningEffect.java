@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffe
 import com.chen1335.legendaryRelics.utils.SimpleSchedule;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
@@ -59,11 +60,11 @@ public class ChainLightningEffect extends LRBaseEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.chain_lightning",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.chain_lightning",
                 String.valueOf(CHAIN_RANGE),
                 DAMAGE_RATIO.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%"),
                 String.valueOf(MAX_CHAIN_TARGETS)
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     public static void LivingDamageEvent(LivingDamageEvent.Post event) {

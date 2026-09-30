@@ -1,14 +1,15 @@
 package com.chen1335.legendaryRelics.client;
 
+import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.API.objects.LRMenus;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
+import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.TreatmentBallRenderer;
-import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
-import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.client.SoulMissileRenderer;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
@@ -23,10 +24,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
@@ -73,6 +71,11 @@ public class ClientEventHandler {
             if (event.getEntity() instanceof LivingEntity living) {
                 LREntityData.getData(living).cloakRender.tick(living);
             }
+        }
+
+        @SubscribeEvent
+        public static void onGatherComponents(RenderTooltipEvent.GatherComponents event) {
+
         }
     }
 

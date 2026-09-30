@@ -16,6 +16,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.tags.EntityTypeTags;
@@ -75,11 +76,11 @@ public class Redemption extends LRCurioEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.undead_reduce", UNDEAD_REDUCE.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.skill",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.redemption.skill",
                 MAX_HEALTH_PERCENTAGE.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
                 SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
                 SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args)
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.skill.desc").withColor(5592405));
         tooltipComponents.add(Component.translatable("legendary_relics.cooldown", 120).withColor(5592405));
     }

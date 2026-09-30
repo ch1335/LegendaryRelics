@@ -17,7 +17,11 @@ public interface ILRItemExtension {
 
     }
 
-    default int maxToolTipWidth() {
-        return 1000;
+    default int maxToolTipWidth(ItemStack itemStack) {
+        return defaultMaxToolTipWidth(itemStack);
+    }
+
+    static int defaultMaxToolTipWidth(ItemStack itemStack) {
+        return 270;
     }
 }

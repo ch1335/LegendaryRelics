@@ -13,6 +13,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import com.chen1335.shieldSystem.shieldSystem.ShieldInstanceHolder;
 import com.chen1335.shieldSystem.shieldSystem.UnitShield;
@@ -59,10 +60,10 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.shield_regenerator_effect",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.shield_regenerator_effect",
                 COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args),
                 MAX_SHIELD.toComponent(tooltipFlag.hasShiftDown(), args)
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
 

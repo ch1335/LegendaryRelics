@@ -8,6 +8,7 @@ import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.EnderSuppression;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,9 +38,9 @@ public class EnderSuppressionEffect extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.ender_suppression.desc",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.ender_suppression.desc",
                 DURATION.toComponent(tooltipFlag.hasShiftDown(), arg)
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     @Override

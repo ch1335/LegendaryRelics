@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -65,11 +66,11 @@ public class HardenedEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.hardened_effect",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.hardened_effect",
                 ARMOR_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
                 TIME_KEEP.toComponent(tooltipFlag.hasShiftDown(), args),
                 COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args)
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {

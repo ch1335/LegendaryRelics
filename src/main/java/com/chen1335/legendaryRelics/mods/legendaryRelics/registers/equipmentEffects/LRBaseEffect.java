@@ -33,6 +33,6 @@ public class LRBaseEffect extends BaseEffect {
     }
 
     public int getMaxToolTipWidth(ItemStack itemStack) {
-        return itemStack.getItem() instanceof ILRItemExtension extension ? extension.maxToolTipWidth() : 1000;
+        return itemStack.getItem() instanceof ILRItemExtension extension ? extension.maxToolTipWidth(itemStack) : 1000;
     }
 }

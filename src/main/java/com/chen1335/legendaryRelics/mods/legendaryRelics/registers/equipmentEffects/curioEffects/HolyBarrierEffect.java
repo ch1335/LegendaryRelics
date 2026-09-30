@@ -10,6 +10,7 @@ import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Invincibility;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,10 +46,10 @@ public class HolyBarrierEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.holy_barrier",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.holy_barrier",
                 INVINCIBLE_TIME.toComponent(tooltipFlag.hasShiftDown(), args),
                 COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args)
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {

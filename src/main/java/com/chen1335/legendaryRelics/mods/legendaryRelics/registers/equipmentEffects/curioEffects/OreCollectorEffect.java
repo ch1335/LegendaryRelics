@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.dataComponentTypes.CollectedMinerals;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -47,7 +48,7 @@ public class OreCollectorEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.1", DEFAULT.toComponent(tooltipFlag.hasShiftDown(), args), COLLECTED_MINERALS_REQUIRE.toComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.1", DEFAULT.toComponent(tooltipFlag.hasShiftDown(), args), COLLECTED_MINERALS_REQUIRE.toComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.2", Component.literal(String.valueOf(itemStack.getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS, CollectedMinerals.empty()).getCollectedOresAmount()))).withColor(0xaeaeae));
     }
 

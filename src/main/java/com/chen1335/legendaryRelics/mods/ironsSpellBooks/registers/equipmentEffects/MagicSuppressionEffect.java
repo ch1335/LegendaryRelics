@@ -10,6 +10,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.specialMobEffects.MagicSuppression;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.LRWeaponEffect;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,11 +46,11 @@ public class MagicSuppressionEffect extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.magic_suppression.desc",
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.magic_suppression.desc",
                 DURATION.toComponent(tooltipFlag.hasShiftDown(), arg),
                 ComponentHolders.Combat.magicDamage(),
                 DAMAGE_REDUCTION.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")
-        ).withColor(0xaeaeae));
+        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("legendary_relics.special.effect_source_no_stack").withColor(5592405));
     }
 

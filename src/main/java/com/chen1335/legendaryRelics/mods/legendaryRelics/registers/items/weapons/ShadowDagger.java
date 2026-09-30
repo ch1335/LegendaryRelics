@@ -33,10 +33,6 @@ public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
                 );
     }
 
-    @Override
-    public int maxToolTipWidth() {
-        return 270;
-    }
 
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
