@@ -60,7 +60,7 @@ public class EntityEffectData implements INBTSerializable<CompoundTag> {
             Map<MobEffectType<?>, SpecialMobEffect> effectMap = i1.next();
             if (effectMap.isEmpty()) {
                 i1.remove();
-                break;
+                continue;
             }
             Iterator<Map.Entry<MobEffectType<?>, SpecialMobEffect>> iterator = effectMap.entrySet().iterator();
             while (iterator.hasNext()) {

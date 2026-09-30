@@ -22,6 +22,14 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class GamePlayEventHandler {
+    /**
+     * 神圣屏障：无敌拦截见 {@code LivingIncomingDamageEventMixin}，这里只做触发判定。
+     */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void HolyBarrierHighest(LivingIncomingDamageEvent event) {
+        HolyBarrierEffect.LivingIncomingDamageEvent(event);
+    }
+
     @SubscribeEvent
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         InfernoArmorSetEffect.LivingIncomingDamageEvent(event);

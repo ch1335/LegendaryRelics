@@ -5,6 +5,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.EnderSuppression;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Erosion;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.InfernoScorch;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Invincibility;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
@@ -46,5 +47,10 @@ public class LRSpecialMobEffects {
             .factory(EnderSuppression::new)
             .renderIcon()
             .category(MobEffectCategory.HARMFUL)
+            .build());
+
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<Invincibility>> INVINCIBILITY = SPECIAL_MOB_EFFECT_TYPES.register("invincibility", MobEffectType.Builder.<Invincibility>builder()
+            .factory(Invincibility::new)
+            .renderIcon()
             .build());
 }

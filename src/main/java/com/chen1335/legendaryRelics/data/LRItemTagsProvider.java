@@ -65,6 +65,15 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.HEALING_TALISMAN.asItem()
         );
 
+        // 神圣斗篷同时占用背饰与斗篷两个槽位
+        tag(CuriosTags.BACK).add(
+                LRItems.HOLY_CLOAK.asItem()
+        );
+
+        tag(CuriosTags.createItemTag("cloak")).add(
+                LRItems.HOLY_CLOAK.asItem()
+        );
+
         tag(ItemTags.HEAD_ARMOR).add(
                 LRItems.BLACK_DRAGON_HELMET.value(),
                 LRItems.INFERNO_HELMET.value(),

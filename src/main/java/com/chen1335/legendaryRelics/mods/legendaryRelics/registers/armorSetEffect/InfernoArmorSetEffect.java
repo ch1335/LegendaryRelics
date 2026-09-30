@@ -86,9 +86,10 @@ public class InfernoArmorSetEffect extends SetEffect {
             )
     );
 
+    /** 持续时间（秒）。 */
     @Calculator
     public static final FinalCalculator INFERNO_SCORCH_DURATION = FinalCalculator.of(
-            Constant.of(120)
+            Constant.of(6F)
     );
 
     @Calculator
@@ -134,8 +135,7 @@ public class InfernoArmorSetEffect extends SetEffect {
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.5",
                 ComponentHolders.Effects.infernoScorch(),
-                // 0.05F 把 tick 换算成秒（120 tick -> 6 秒）
-                INFERNO_SCORCH_DURATION.toComponent(shiftDown, args, LRColors.Component.RED.getStyle(), 0.05F, "%s"),
+                INFERNO_SCORCH_DURATION.toComponent(shiftDown, args, LRColors.Component.RED.getStyle()),
                 ComponentHolders.Effects.infernoScorch(),
                 ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(shiftDown, args, LRColors.Component.RED.getStyle()))
         ).withStyle(ChatFormatting.GRAY));
@@ -176,7 +176,7 @@ public class InfernoArmorSetEffect extends SetEffect {
 
                 SpecialEffectAPI.getEffect(attacker, attacker.getUUID(), LRSpecialMobEffects.DOOM.value()).ifPresent(doom -> {
                     if (doom.getStack() >= 10) {
-                        InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args),INFERNO_SCORCH_DURATION.getInt(args));
+                        InfernoScorch infernoScorch = new InfernoScorch(INFERNO_SCORCH_DAMAGE.getValue(args), INFERNO_EXPLOSION_DAMAGE.getValue(args),INFERNO_SCORCH_DURATION.getInt(args) * 20);
                         infernoScorch.setSourceEntity(attacker);
                         SpecialEffectAPI.addEffectToEntity(event.getEntity(), infernoScorch, InfernoScorch::getFinal);
                     }

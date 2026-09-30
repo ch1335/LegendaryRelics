@@ -45,6 +45,8 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.WITHER_SPIRIT.asItem());
         basicItem(LRItems.THUNDERBOLT_NECKLACE.asItem());
 
+        basicItem(LRItems.HOLY_CLOAK.asItem());
+
         basicItem(LRItems.INFERNO_HELMET.asItem());
         basicItem(LRItems.INFERNO_CHEST_PLATE.asItem());
         basicItem(LRItems.INFERNO_LEGGINGS.asItem());

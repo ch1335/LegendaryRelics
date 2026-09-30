@@ -115,4 +115,6 @@ public class LRItems {
 
     public static final DeferredItem<ThunderboltNecklace> THUNDERBOLT_NECKLACE = ITEM_DEFERRED_REGISTER.register("thunderbolt_necklace", ThunderboltNecklace::new);
 
+    public static final DeferredItem<HolyCloak> HOLY_CLOAK = ITEM_DEFERRED_REGISTER.register("holy_cloak", HolyCloak::new);
+
 }

@@ -72,4 +72,6 @@ public class LREquipmentEffectTypes {
     public static final DeferredHolder<EffectType<?>, EffectType<ChainLightningEffect>> CHAIN_LIGHTNING = register("chain_lightning", () -> new EffectType<>(ChainLightningEffect::new));
 
     public static final DeferredHolder<EffectType<?>, EffectType<EnderSuppressionEffect>> ENDER_SUPPRESSION = register("ender_suppression_effect", () -> new EffectType<>(EnderSuppressionEffect::new));
+
+    public static final DeferredHolder<EffectType<?>, EffectType<HolyBarrierEffect>> HOLY_BARRIER = register("holy_barrier_effect", () -> new EffectType<>(HolyBarrierEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/holy_cloak.png")));
 }
