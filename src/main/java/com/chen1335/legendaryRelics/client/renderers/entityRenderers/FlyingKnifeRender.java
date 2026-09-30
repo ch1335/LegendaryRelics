@@ -1,4 +1,4 @@
-package com.chen1335.legendaryRelics.client.entityRenderers;
+package com.chen1335.legendaryRelics.client.renderers.entityRenderers;
 
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingKnife;
 import com.mojang.blaze3d.vertex.PoseStack;

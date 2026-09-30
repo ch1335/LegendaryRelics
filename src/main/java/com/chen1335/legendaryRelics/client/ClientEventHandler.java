@@ -4,10 +4,11 @@ import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.API.objects.LRMenus;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.client.entityRenderers.FlyingKnifeRender;
-import com.chen1335.legendaryRelics.client.entityRenderers.FlyingReaperRender;
-import com.chen1335.legendaryRelics.client.entityRenderers.TreatmentBallRenderer;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
+import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.client.SoulMissileRenderer;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -24,6 +26,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class ClientEventHandler {
     @EventBusSubscriber(value = {Dist.CLIENT})
@@ -84,6 +87,18 @@ public class ClientEventHandler {
         @SubscribeEvent
         public static void RegisterMenuScreensEvent(RegisterMenuScreensEvent event) {
             event.register(LRMenus.EQUIPMENT_WORKBENCH_CRAFT.value(), EquipmentWorkbenchCraftScreen::new);
+        }
+
+        /**
+         * 注册饰品渲染器。
+         *
+         * <p>Curios 会在它自己的 {@code EntityRenderersEvent.AddLayers} 监听器里调用
+         * {@code CuriosRendererRegistry.load()}，而 {@code getRenderer} 只读 load 时填充的表。
+         * 所以这里必须用最高优先级，确保在它之前完成注册。
+         */
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void RegisterCurioRenderers(EntityRenderersEvent.AddLayers event) {
+            CuriosRendererRegistry.register(LRItems.HOLY_CLOAK.get(), HolyCloakRenderer::new);
         }
     }
 }

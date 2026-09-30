@@ -1,4 +1,4 @@
 @ParametersAreNonnullByDefault
-package com.chen1335.legendaryRelics.client.entityRenderers;
+package com.chen1335.legendaryRelics.client.renderers.entityRenderers;
 
 import javax.annotation.ParametersAreNonnullByDefault;

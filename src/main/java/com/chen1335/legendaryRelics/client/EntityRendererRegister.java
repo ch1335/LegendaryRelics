@@ -23,7 +23,7 @@ public class EntityRendererRegister {
         event.registerLayerDefinition(TwistedArmorModel.LAYER_LOCATION, () -> TwistedArmorModel.createMesh(LayerDefinitions.OUTER_ARMOR_DEFORMATION));
         event.registerLayerDefinition(SoulArmorModel.LAYER_LOCATION, () -> SoulArmorModel.createMesh(LayerDefinitions.OUTER_ARMOR_DEFORMATION));
 
-        event.registerLayerDefinition(HolyCloakModel.LAYER_LOCATION, () -> HolyCloakModel.createMesh(new CubeDeformation(0.5F)));
+        event.registerLayerDefinition(HolyCloakModel.LAYER_LOCATION, () -> HolyCloakModel.createMesh(new CubeDeformation(1)));
 
     }
 
