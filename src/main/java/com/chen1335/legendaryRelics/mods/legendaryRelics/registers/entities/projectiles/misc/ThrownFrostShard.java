@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.pro
 import com.chen1335.legendaryRelics.API.objects.LREntityDataSerializers;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.LRProjectile;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
@@ -80,6 +82,29 @@ public class ThrownFrostShard extends LRProjectile {
             renderItem = entityData.get(ITEM).getDefaultInstance();
         }
         return renderItem;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        // 飞行途中在客户端留下雪花轨迹；插进方块或已经命中移除后就不再生成
+        if (this.level().isClientSide && !this.inGround && !this.isRemoved()) {
+            this.spawnTrailParticles();
+        }
+    }
+
+    /**
+     * 沿飞行方向拖出一串雪花粒子，带一点随机抖动。
+     */
+    private void spawnTrailParticles() {
+        Vec3 motion = this.getDeltaMovement();
+        for (int i = 0; i < 2; i++) {
+            this.level().addParticle(ParticleTypes.SNOWFLAKE,
+                    this.getX() - motion.x * 0.15 * i + (this.random.nextDouble() - 0.5) * 0.15,
+                    this.getY() - motion.y * 0.15 * i + (this.random.nextDouble() - 0.5) * 0.15,
+                    this.getZ() - motion.z * 0.15 * i + (this.random.nextDouble() - 0.5) * 0.15,
+                    0.0, 0.0, 0.0);
+        }
     }
 
     @Override

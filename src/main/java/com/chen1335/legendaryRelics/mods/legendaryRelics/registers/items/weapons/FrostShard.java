@@ -80,7 +80,7 @@ public class FrostShard extends LRSwordItem implements IChargeAbleItem {
             shard.setBaseDamage(THROW_DAMAGE);
             level.addFreshEntity(shard);
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
+                    SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0F, 1.50F);
 
             // 投掷不消耗物品，只扣 1 点耐久
             stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(livingEntity.getUsedItemHand()));

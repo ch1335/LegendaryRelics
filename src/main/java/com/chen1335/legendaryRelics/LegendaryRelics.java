@@ -166,6 +166,13 @@ public class LegendaryRelics {
                 id("charging"),
                 (stack, level, living, i) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F
         );
+
+        // 霜锥蓄力时切换成反向握持模型，沿用原版三叉戟的谓词名
+        ItemProperties.register(
+                LRItems.FROST_SHARD.asItem(),
+                ResourceLocation.withDefaultNamespace("throwing"),
+                (stack, level, living, i) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F
+        );
     }
 
     public void setup(FMLCommonSetupEvent event) {

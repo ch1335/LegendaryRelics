@@ -84,11 +84,11 @@ public class Tier {
         public static final LRSimpleTier FROST_SHARD = new LRSimpleTier(
                 BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
                 2031,
-                9.0F,
+                7.0F,
                 8.0F,
-                -2.9F,
+                -2F,
                 15,
-                () -> Ingredient.of(Items.PRISMARINE_SHARD)
+                () -> Ingredient.of(Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE)
         );
     }
 
