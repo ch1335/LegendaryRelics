@@ -117,4 +117,6 @@ public class LRItems {
 
     public static final DeferredItem<HolyCloak> HOLY_CLOAK = ITEM_DEFERRED_REGISTER.register("holy_cloak", HolyCloak::new);
 
+    public static final DeferredItem<FrostShard> FROST_SHARD = ITEM_DEFERRED_REGISTER.register("frost_shard", FrostShard::new);
+
 }

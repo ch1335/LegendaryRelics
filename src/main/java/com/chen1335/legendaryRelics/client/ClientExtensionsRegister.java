@@ -1,10 +1,7 @@
 package com.chen1335.legendaryRelics.client;
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
-import com.chen1335.legendaryRelics.client.clientExtensions.BlackDragonArmorExtension;
-import com.chen1335.legendaryRelics.client.clientExtensions.InfernoArmorExtension;
-import com.chen1335.legendaryRelics.client.clientExtensions.ShadowDaggerExtension;
-import com.chen1335.legendaryRelics.client.clientExtensions.TwistedArmorExtension;
+import com.chen1335.legendaryRelics.client.clientExtensions.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 public class ClientExtensionsRegister {
@@ -32,6 +29,10 @@ public class ClientExtensionsRegister {
 
         event.registerItem(new ShadowDaggerExtension(),
                 LRItems.SHADOW_DAGGER
+        );
+
+        event.registerItem(new FrostShardExtension(),
+                LRItems.FROST_SHARD
         );
     }
 

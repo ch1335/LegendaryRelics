@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"0": "legendary_relics:item/frost_shard",
+		"layer0": "legendary_relics:item/frost_shard",
 		"particle": "legendary_relics:item/frost_shard"
 	},
 	"display": {

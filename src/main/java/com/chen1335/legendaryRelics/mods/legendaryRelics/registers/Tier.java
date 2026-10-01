@@ -77,6 +77,19 @@ public class Tier {
                 15,
                 () -> Ingredient.of(Items.NETHERITE_INGOT)
         );
+
+        /**
+         * 霜锥的武器 tier，攻击伤害与攻速对齐原版三叉戟。
+         */
+        public static final LRSimpleTier FROST_SHARD = new LRSimpleTier(
+                BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+                2031,
+                9.0F,
+                8.0F,
+                -2.9F,
+                15,
+                () -> Ingredient.of(Items.PRISMARINE_SHARD)
+        );
     }
 
     public static class Armor {

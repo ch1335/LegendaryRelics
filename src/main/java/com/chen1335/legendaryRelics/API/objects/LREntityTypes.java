@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.API.objects;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingKnife;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.ThrownFrostShard;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.TreatmentBall;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -23,6 +24,8 @@ public class LREntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<FlyingReaper>> FLYING_REAPER = ENTITY_TYPES.register("flying_reaper", () -> EntityType.Builder.<FlyingReaper>of(FlyingReaper::new, MobCategory.MISC).sized(0.5F, 1.5F).updateInterval(1).build("flying_reaper"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<FlyingKnife>> FLYING_KNIFE = ENTITY_TYPES.register("flying_knife", () -> EntityType.Builder.<FlyingKnife>of(FlyingKnife::new, MobCategory.MISC).sized(0.5F, 0.5F).updateInterval(1).build("flying_knife"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownFrostShard>> THROWN_FROST_SHARD = ENTITY_TYPES.register("thrown_frost_shard", () -> EntityType.Builder.<ThrownFrostShard>of(ThrownFrostShard::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("thrown_frost_shard"));
 
 
 }
