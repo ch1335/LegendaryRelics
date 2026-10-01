@@ -45,10 +45,10 @@ public class LRArmPose {
             if (f11 > 1.0F) {
                 f11 = 1.0F;
             }
-            if (model.leftArmPose == LRArmPose.DAGGER_CHARGE.getValue()) {
+            if (model.leftArmPose == LRArmPose.TRIDENT_CHARGE.getValue()) {
                 model.leftArm.xRot = -Mth.HALF_PI - f11 * Mth.HALF_PI;
                 model.leftArm.yRot = 0.0F;
-            } else if (model.rightArmPose == LRArmPose.DAGGER_CHARGE.getValue()) {
+            } else if (model.rightArmPose == LRArmPose.TRIDENT_CHARGE.getValue()) {
                 model.rightArm.xRot = -Mth.HALF_PI - f11 * Mth.HALF_PI;
                 model.rightArm.yRot = 0.0F;
             }

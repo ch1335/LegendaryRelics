@@ -87,7 +87,7 @@ public class FrostShard extends LRSwordItem implements IChargeAbleItem {
         }
 
         // 投掷后进入 10 秒冷却
-        player.getCooldowns().addCooldown(this, THROW_COOLDOWN);
+//        player.getCooldowns().addCooldown(this, THROW_COOLDOWN);
         player.awardStat(Stats.ITEM_USED.get(this));
     }
 

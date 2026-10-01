@@ -26,7 +26,7 @@ public class FrostShardExtension implements IClientItemExtensions {
         boolean flag3 = arm == HumanoidArm.RIGHT;
         int k = flag3 ? 1 : -1;
 
-        poseStack.translate((float) k * -0.5F, 0.7F, 0.1F);
+        poseStack.translate((float) k * -0.5F, 1.7F, 0.1F);
         poseStack.mulPose(Axis.XP.rotationDegrees(-55.0F));
         poseStack.mulPose(Axis.YP.rotationDegrees((float) k * 35.3F));
         poseStack.mulPose(Axis.ZP.rotationDegrees((float) k * -9.785F));

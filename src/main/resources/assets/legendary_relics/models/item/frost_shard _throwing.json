@@ -1,0 +1,35 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:item/handheld",
+	"textures": {
+		"particle": "legendary_relics:item/frost_shard",
+		"layer0": "legendary_relics:item/frost_shard"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-170, -90, 55],
+			"translation": [0, -8.25, 1.75],
+			"scale": [2.5, 2.5, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-170, 90, -55],
+			"translation": [0, -8.25, 1.75],
+			"scale": [2.5, 2.5, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 25],
+			"translation": [2.25, 7, 0],
+			"scale": [2.5, 2.5, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, -25],
+			"translation": [2.25, 7, 0],
+			"scale": [2.5, 2.5, 1]
+		},
+		"ground": {
+			"translation": [0, 4.5, 0],
+			"scale": [1.5, 1.5, 1]
+		}
+	}
+}
