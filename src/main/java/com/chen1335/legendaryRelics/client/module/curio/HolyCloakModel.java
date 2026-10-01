@@ -31,7 +31,7 @@ public class HolyCloakModel<T extends LivingEntity> extends HumanoidModel<T> {
 
         PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition cloak = partdefinition.addOrReplaceChild("cloak", CubeListBuilder.create().texOffs(0, 16).addBox(-8.0F, 0.0F, -2.0F, 16.0F, 23.0F, 4.0F, new CubeDeformation(1.4F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition cloak = partdefinition.addOrReplaceChild("cloak", CubeListBuilder.create().texOffs(0, 16).addBox(-8.0F, 0.0F, -2.0F, 16.0F, 23.0F, 4.0F, new CubeDeformation(1.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 48, 48);
     }

@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEff
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
+import com.chen1335.legendaryRelics.API.objects.LRSounds;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
@@ -13,6 +14,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -65,6 +67,10 @@ public class HolyBarrierEffect extends LRCurioEffect {
 
                 // 完全抵消本次伤害
                 event.setCanceled(true);
+
+                // 屏障破碎音效
+                living.level().playSeededSound(null, living.getX(), living.getY(), living.getZ(),
+                        LRSounds.HOLY_BARRIER_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F, 0);
 
                 // 施加无敌
                 Invincibility barrier = new Invincibility(LRSpecialMobEffects.INVINCIBILITY.value());

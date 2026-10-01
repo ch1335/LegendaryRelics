@@ -1,4 +1,4 @@
-package com.chen1335.equipmentEffectLib.MixinsAPI;
+package com.chen1335.equipmentEffectLib.mixinsAPI;
 
 import net.minecraft.world.item.ItemStack;
 

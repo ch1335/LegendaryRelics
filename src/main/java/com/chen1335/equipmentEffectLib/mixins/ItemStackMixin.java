@@ -1,7 +1,7 @@
 package com.chen1335.equipmentEffectLib.mixins;
 
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
+import com.chen1335.equipmentEffectLib.mixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.dataComponentTypes.SetEffectData;
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;

@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "irons_spellbooks"
+    }
+  ],
   "type": "legendary_relics:equipment_craft",
   "mainItem": {
     "item": "irons_spellbooks:spellbreaker"

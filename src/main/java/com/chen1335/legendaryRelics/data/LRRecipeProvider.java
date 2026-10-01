@@ -11,8 +11,10 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -24,6 +26,7 @@ public class LRRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput, HolderLookup.@NotNull Provider holderLookup) {
+        RecipeOutput issOutput = recipeOutput.withConditions(new ModLoadedCondition("irons_spellbooks"));
 
         EquipmentWorkbenchCraftBuilder.builder(LRItems.LAST_WHISPER, LRItems.WITHER_SPIRIT)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT, 2)
@@ -90,26 +93,26 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
-                .save(recipeOutput);
+                .save(issOutput);
 
         EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_CHEST_PLATE, ItemRegistry.NETHERITE_MAGE_CHESTPLATE.get())
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
-                .save(recipeOutput);
+                .save(issOutput);
         EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_LEGGINGS, ItemRegistry.NETHERITE_MAGE_LEGGINGS.get())
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
-                .save(recipeOutput);
+                .save(issOutput);
         EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_BOOTS, ItemRegistry.NETHERITE_MAGE_BOOTS.get())
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
-                .save(recipeOutput);
+                .save(issOutput);
 
         EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.MAGIC_BREAKER, ItemRegistry.SPELLBREAKER.get())
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
@@ -118,6 +121,14 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(Items.ENDER_EYE, 2)
                 .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 4)
                 .addSecondary(ItemRegistry.CINDER_ESSENCE.get(), 4)
+                .save(issOutput);
+
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.HOLY_CLOAK, Items.LEATHER_CHESTPLATE)
+                .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(Items.WHITE_WOOL, 4)
+                .addSecondary(Items.GLOWSTONE, 4)
+                .addSecondary(Items.LAPIS_LAZULI, 4)
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, LRItems.DARK_GOLD)

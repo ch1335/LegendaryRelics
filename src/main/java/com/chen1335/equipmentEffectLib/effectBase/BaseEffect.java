@@ -4,7 +4,7 @@ import com.chen1335.equipmentEffectLib.API.IEffectHelper;
 import com.chen1335.equipmentEffectLib.API.ISubEffectProvider;
 import com.chen1335.equipmentEffectLib.API.objects.EEItemEffectDataComponentTypes;
 import com.chen1335.equipmentEffectLib.API.objects.EERegisterTypes;
-import com.chen1335.equipmentEffectLib.MixinsAPI.IEEItemStackMixin;
+import com.chen1335.equipmentEffectLib.mixinsAPI.IEEItemStackMixin;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;

@@ -14,6 +14,8 @@ public class LRSounds {
 
     public static final Holder<SoundEvent> CHAIN_LIGHTNING = registerSound("chain_lightning");
 
+    public static final Holder<SoundEvent> HOLY_BARRIER_BREAK = registerSound("holy_barrier_break");
+
     private static Holder<SoundEvent> registerSound(String name) {
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(LegendaryRelics.id(name)));
     }

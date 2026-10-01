@@ -3,5 +3,10 @@
     "sounds": [
       "legendary_relics:misc/chain_lightning"
     ]
+  },
+  "holy_barrier_break": {
+    "sounds": [
+      "legendary_relics:misc/holy_barrier_break"
+    ]
   }
 }
