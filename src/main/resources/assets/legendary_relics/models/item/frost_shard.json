@@ -1,5 +1,16 @@
 {
-	"parent": "legendary_relics:item/frost_shard_handheld",
+	"loader": "neoforge:separate_transforms",
+	"textures": {
+		"particle": "legendary_relics:item/frost_shard"
+	},
+	"base": {
+		"parent": "legendary_relics:item/frost_shard_handheld"
+	},
+	"perspectives": {
+		"gui": {
+			"parent": "legendary_relics:item/frost_shard_gui"
+		}
+	},
 	"overrides": [
 		{
 			"predicate": {

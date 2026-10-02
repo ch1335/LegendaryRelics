@@ -1,7 +1,9 @@
-// 1.21.1	2026-09-26T23:32:21.4677978	Tags for minecraft:damage_type mod id legendary_relics
-c8e9b3cc07f1b99f759d1975a5a68ef1d41a38f4 data/minecraft/tags/damage_type/bypasses_cooldown.json
+// 1.21.1	2026-10-02T22:46:03.5437417	Tags for minecraft:damage_type mod id legendary_relics
+8392637dfe64a05cc5d1688bb5107c5f71c9b399 data/minecraft/tags/damage_type/always_kills_armor_stands.json
+fd5ecadab5bf1a13560f65d19ca400387d16dfca data/minecraft/tags/damage_type/bypasses_cooldown.json
 36ca88a026f04b770ec1c0102113448aa46a6b8c data/minecraft/tags/damage_type/is_player_attack.json
-cf5f10dcdfc43ca182a54aa14939acb5bd6b573a data/minecraft/tags/damage_type/is_projectile.json
+b9f3872b8cdead534c8481e84cb51393855b4f97 data/minecraft/tags/damage_type/is_projectile.json
 cbdbc9530c53051374c24d5d56ea31a47bbcb2b8 data/minecraft/tags/damage_type/no_knockback.json
+8392637dfe64a05cc5d1688bb5107c5f71c9b399 data/minecraft/tags/damage_type/panic_causes.json
 507f2a90630e31a4d7dfe0aa25a5c96e0e7c2f1c data/neoforge/tags/damage_type/is_magic.json
-aa92400d125388e8242622440b1fe9ff8f79f7a9 data/neoforge/tags/damage_type/is_physical.json
+7362f11c8bccc84a4b557f8cef590b3f3397e725 data/neoforge/tags/damage_type/is_physical.json

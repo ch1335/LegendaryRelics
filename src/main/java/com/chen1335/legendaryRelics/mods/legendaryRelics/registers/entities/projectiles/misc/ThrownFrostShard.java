@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc;
 
+import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityDataSerializers;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.LRProjectile;
@@ -110,7 +111,7 @@ public class ThrownFrostShard extends LRProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
-        DamageSource source = this.damageSources().trident(this, this.getOwner());
+        DamageSource source = this.level().damageSources().source(LRDamageTypes.FROST_SHARD, this, this.getOwner());
         float damage = getBaseDamage();
         if (!level().isClientSide && getWeaponItem() != null) {
             damage = EnchantmentHelper.modifyDamage((ServerLevel) level(), this.getWeaponItem(), entity, source, damage);

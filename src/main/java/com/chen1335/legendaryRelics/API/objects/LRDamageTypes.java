@@ -16,12 +16,16 @@ public interface LRDamageTypes {
 
     ResourceKey<DamageType> CHAIN_LIGHTNING = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("chain_lightning"));
 
+    /** 霜锥投掷物的伤害类型，参数与标签沿用原版三叉戟。 */
+    ResourceKey<DamageType> FROST_SHARD = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("frost_shard"));
+
     static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(EROSION, new DamageType("erosion", 0.1F));
         context.register(FLYING_REAPER, new DamageType("flying_reaper", 0.1F));
         context.register(INFERNO_SCORCH, new DamageType("inferno_scorch", 0.1F));
         context.register(FLYING_KNIFE, new DamageType("flying_knife", 0.1F));
         context.register(CHAIN_LIGHTNING, new DamageType("chain_lightning", 0.1F));
+        context.register(FROST_SHARD, new DamageType("frost_shard", 0.1F));
 
     }
 }

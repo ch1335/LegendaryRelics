@@ -16,6 +16,8 @@
   "curios.identifier.cloak": "Cloak",
   "death.attack.chain_lightning": "%1$s was electrocuted by chain lightning",
   "death.attack.chain_lightning.player": "%1$s was electrocuted by chain lightning whilst fighting %2$s",
+  "death.attack.frost_shard": "%1$s was impaled by Frost Shard",
+  "death.attack.frost_shard.player": "%1$s was impaled by Frost Shard whilst fighting %2$s",
   "equipment_effect.legendary_relics.chain_lightning": "§6Chain Lightning§r:Melee or ranged hits trigger a chain lightning that jumps to the nearest target within %s blocks, dealing %s of the original damage, chaining up to %s targets. Each target can only be shocked once",
   "equipment_effect.legendary_relics.heal_increase_effect": "Increases healing effects received by %s.",
   "equipment_effect.legendary_relics.heal_per_second_effect": "Restores %s health every 5 seconds.",

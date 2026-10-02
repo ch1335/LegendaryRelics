@@ -3,6 +3,8 @@
   "curios.identifier.cloak": "斗篷",
   "death.attack.chain_lightning": "%1$s被连锁闪电电死了",
   "death.attack.chain_lightning.player": "%1$s在与%2$s战斗时被连锁闪电电死了",
+  "death.attack.frost_shard": "%1$s被霜锥刺穿了",
+  "death.attack.frost_shard.player": "%1$s在与%2$s战斗时被霜锥刺穿了",
   "equipment_effect.legendary_relics.all_attribute_boost": "使你的大部分属性提升%s",
   "equipment_effect.legendary_relics.ambush": "§6突袭§r:按住右键进行最多%s秒的蓄力，释放时对瞄准的目标进行一次强力攻击，此次攻击基于蓄力时间获得至多%s的%s",
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "在下界时，你的大部分属性提升%s",

@@ -1,6 +1,12 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons;
 
 import com.chen1335.legendaryRelics.API.IChargeAbleItem;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.MultiMul;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.ThrownFrostShard;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
@@ -10,6 +16,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,17 +32,29 @@ import net.minecraft.world.level.Level;
  */
 public class FrostShard extends LRSwordItem implements IChargeAbleItem {
 
-    /** 蓄力到可以投掷所需的最短时间（tick），与三叉戟一致。 */
+    /**
+     * 蓄力到可以投掷所需的最短时间（tick），与三叉戟一致。
+     */
     public static final int THROW_THRESHOLD_TIME = 10;
 
-    /** 投掷初速，与三叉戟一致。 */
+    /**
+     * 投掷初速，与三叉戟一致。
+     */
     public static final float SHOOT_POWER = 2.5F;
 
-    /** 投掷基础伤害，与三叉戟一致。 */
-    public static final float THROW_DAMAGE = 8.0F;
 
-    /** 投掷后的冷却时间（tick），10 秒。 */
-    public static final int THROW_COOLDOWN = 200;
+    @Calculator
+    public static final FinalCalculator THROW_DAMAGE = FinalCalculator.of(
+            MultiMul.of(
+                    Constant.of(0.75F),
+                    EntityAttributeValue.of(Attributes.ATTACK_DAMAGE)
+            )
+    );
+
+    /**
+     * 投掷后的冷却时间（tick），10 秒。
+     */
+    public static final int THROW_COOLDOWN = 20*3;
 
     public FrostShard() {
         super(Tier.Weapon.FROST_SHARD, new Item.Properties().rarity(Rarity.RARE).stacksTo(1).fireResistant());
@@ -77,7 +96,7 @@ public class FrostShard extends LRSwordItem implements IChargeAbleItem {
             ThrownFrostShard shard = new ThrownFrostShard(player, level, stack);
             shard.setPos(player.getEyePosition());
             shard.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, SHOOT_POWER, 1.0F);
-            shard.setBaseDamage(THROW_DAMAGE);
+            shard.setBaseDamage(THROW_DAMAGE.getValue(CalculatorArg.simpleArg(player, stack)));
             level.addFreshEntity(shard);
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0F, 1.50F);
@@ -87,7 +106,7 @@ public class FrostShard extends LRSwordItem implements IChargeAbleItem {
         }
 
         // 投掷后进入 10 秒冷却
-//        player.getCooldowns().addCooldown(this, THROW_COOLDOWN);
+        player.getCooldowns().addCooldown(this, THROW_COOLDOWN);
         player.awardStat(Stats.ITEM_USED.get(this));
     }
 
