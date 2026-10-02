@@ -30,6 +30,15 @@
 		"ground": {
 			"translation": [0, 4.5, 0],
 			"scale": [1.5, 1.5, 1]
+		},
+		"gui": {
+			"scale": [2.5, 2.5, 1]
+		},
+		"fixed": {
+			"scale": [2.5, 2.5, 1]
+		},
+		"on_shelf": {
+			"scale": [2.5, 2.5, 1]
 		}
 	}
 }

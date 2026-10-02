@@ -4,6 +4,8 @@ import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityDataSerializers;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.LRProjectile;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +13,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -22,6 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -40,6 +43,9 @@ import javax.annotation.Nullable;
 public class ThrownFrostShard extends LRProjectile {
 
     private static final EntityDataAccessor<Item> ITEM = SynchedEntityData.defineId(ThrownFrostShard.class, LREntityDataSerializers.ITEM.get());
+
+    /** 破碎时的实体事件 id，客户端据此生成物品碎屑粒子。 */
+    private static final byte SHATTER_EVENT = 3;
 
     private ItemStack renderItem = null;
 
@@ -120,18 +126,47 @@ public class ThrownFrostShard extends LRProjectile {
             if (!level().isClientSide && getWeaponItem() != null) {
                 EnchantmentHelper.doPostAttackEffectsWithItemSource((ServerLevel) level(), entity, source, getWeaponItem());
             }
-            this.playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
         } else {
             this.deflect(ProjectileDeflection.REVERSE, entity, this.getOwner(), false);
             this.setDeltaMovement(this.getDeltaMovement().scale(0.2));
         }
 
-        discard();
+        this.shatter();
     }
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        this.playSound(SoundEvents.TRIDENT_HIT_GROUND, 1.0F, 1.0F);
+        this.shatter();
+    }
+
+    /**
+     * 命中后破碎：服务端播放碎冰音效并广播事件，客户端据事件生成物品碎屑，最后移除自身。
+     *
+     * <p>{@code Level.addParticle} 在服务端是空实现，所以粒子只能由客户端生成；
+     * 这里沿用原版投掷物（雪球、鸡蛋）的实体事件写法，保证附近玩家都能看到碎屑。
+     */
+    private void shatter() {
+        if (!this.level().isClientSide) {
+            this.level().broadcastEntityEvent(this, SHATTER_EVENT);
+            this.playSound(SoundType.GLASS.getBreakSound(), 1.0F, 1.2F);
+        }
+        this.discard();
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == SHATTER_EVENT) {
+            ItemStack renderItem = this.getRenderItem();
+            for (int i = 0; i < 8; i++) {
+                this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.ICE.defaultBlockState()),
+                        this.getX(), this.getY(), this.getZ(),
+                        ((double) this.random.nextFloat() - 0.5),
+                        ((double) this.random.nextFloat() - 0.5),
+                        ((double) this.random.nextFloat() - 0.5));
+            }
+        } else {
+            super.handleEntityEvent(id);
+        }
     }
 }
