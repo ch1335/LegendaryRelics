@@ -7,6 +7,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.InfernoScorch;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Invincibility;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -52,5 +53,11 @@ public class LRSpecialMobEffects {
     public static final DeferredHolder<MobEffectType<?>, MobEffectType<Invincibility>> INVINCIBILITY = SPECIAL_MOB_EFFECT_TYPES.register("invincibility", MobEffectType.Builder.<Invincibility>builder()
             .factory(Invincibility::new)
             .renderIcon()
+            .build());
+
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<Slowness>> SLOWNESS = SPECIAL_MOB_EFFECT_TYPES.register("slowness", MobEffectType.Builder.<Slowness>builder()
+            .factory(Slowness::new)
+            .renderIcon()
+            .category(MobEffectCategory.HARMFUL)
             .build());
 }

@@ -104,6 +104,10 @@ public class SpecialMobEffect {
 
     }
 
+    public boolean canApplyTo(LivingEntity living){
+        return true;
+    }
+
     public CompoundTag save() {
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.putUUID("SourceEntityUUID", sourceEntityUUID);

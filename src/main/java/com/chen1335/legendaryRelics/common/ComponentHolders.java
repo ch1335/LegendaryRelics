@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.legendaryRelics.utils.LRColors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
@@ -21,11 +22,11 @@ public class ComponentHolders {
 
     public static class Combat {
         public static Component physicalDamage(Component component) {
-            return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage());
+            return Component.translatable("legendary_relics.damage_type.format", component, physicalDamage()).withStyle(LRColors.Component.RED.getStyle());
         }
 
         public static Component magicDamage(Component component) {
-            return Component.translatable("legendary_relics.damage_type.format", component, magicDamage());
+            return Component.translatable("legendary_relics.damage_type.format", component, magicDamage()).withStyle(LRColors.Component.BLUE.getStyle());
         }
         public static Component physicalDamage() {
             return Component.translatable("legendary_relics.damage_type.physical_damage");

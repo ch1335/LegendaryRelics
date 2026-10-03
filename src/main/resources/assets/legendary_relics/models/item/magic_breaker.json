@@ -1,5 +1,9 @@
 {
   "loader": "neoforge:separate_transforms",
+  "gui_light": "front",
+  "textures": {
+    "particle": "legendary_relics:item/magic_breaker"
+  },
   "base": {
     "parent": "legendary_relics:item/magic_breaker_handheld"
   },

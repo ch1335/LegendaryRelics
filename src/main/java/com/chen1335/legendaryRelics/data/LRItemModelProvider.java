@@ -39,6 +39,7 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.HEALING_TALISMAN.asItem());
         basicItem(LRItems.PERSEVERANCE_NECKLACE.asItem());
         basicItem(LRItems.DRAGON_SCALE.asItem());
+        basicItem(LRItems.ZENITH_ICE.asItem());
         basicItem(LRItems.DARK_GOLD_FRAGMENT.asItem());
         basicItem(LRItems.DARK_GOLD.asItem());
         basicItem(LRItems.DARK_GOLD_FORGING_TOOL.asItem());
@@ -80,6 +81,7 @@ public class LRItemModelProvider extends ItemModelProvider {
         handheldItem(LRItems.SKELETON_THROWING_KNIFE.asItem());
 
         simpleBlockItem(LRBlocks.EQUIPMENT_WORKBENCH.get());
+        simpleBlockItem(LRBlocks.ICE_ENCASEMENT.get());
 
 
         handheldItem(LRItems.SHADOW_DAGGER.asItem()).override().predicate(LegendaryRelics.id("charging"), 1).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/shadow_dagger_reverse")));

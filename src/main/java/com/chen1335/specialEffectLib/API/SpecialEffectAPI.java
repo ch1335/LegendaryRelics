@@ -21,6 +21,9 @@ public class SpecialEffectAPI {
     }
 
     public static <T extends SpecialMobEffect> void addEffectToEntity(LivingEntity target, T effect, @Nullable FinalEffectGetter<T> finalEffectGetter) {
+        if (!effect.canApplyTo(target)) {
+            return;
+        }
         EntityEffectData entityEffectData = getEntityEffectData(target);
         Map<MobEffectType<?>, SpecialMobEffect> effectMap = entityEffectData.getSourceEffects(effect.getSourceEntityUUID());
         SpecialMobEffect old = effectMap.get(effect.getEffectType());

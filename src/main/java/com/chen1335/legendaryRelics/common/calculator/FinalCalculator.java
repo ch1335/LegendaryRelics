@@ -9,6 +9,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 public class FinalCalculator implements Unit {
 
@@ -115,11 +116,12 @@ public class FinalCalculator implements Unit {
     }
 
     public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, Style style, float scale, String format) {
+        // format 由调用方提供，可能含 %f 之类的数字占位符，所以同样固定用 Locale.ROOT
         if (hasShiftDown) {
-            MutableComponent value = styled(Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i))), isUnstyled(style) ? DEFAULT_STYLE : style);
+            MutableComponent value = styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), isUnstyled(style) ? DEFAULT_STYLE : style);
             return Component.empty().append(value).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
         } else {
-            return styled(Component.literal(format.formatted(format(getValue(calculatorArg) * scale, i))), style);
+            return styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), style);
         }
     }
 
@@ -132,7 +134,9 @@ public class FinalCalculator implements Unit {
     }
 
     public static String format(float value, int i) {
-        return new BigDecimal(String.format("%." + i + "f", value)).stripTrailingZeros().toPlainString();
+        // 必须显式指定 Locale.ROOT：否则法语等地区会把小数点写成逗号，
+        // 下面的 BigDecimal 解析会直接抛 NumberFormatException。
+        return new BigDecimal(String.format(Locale.ROOT, "%." + i + "f", value)).stripTrailingZeros().toPlainString();
     }
 
     public static double castToDoubleStrict(float f) {

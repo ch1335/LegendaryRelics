@@ -1,3 +1,5 @@
-// 1.21.1	2026-02-26T17:05:44.4153692	Block States: legendary_relics
+// 1.21.1	2026-10-03T18:03:19.9042774	Block States: legendary_relics
 401afca2934dcb6ea338f9827c793172f1ef559b assets/legendary_relics/blockstates/equipment_workbench.json
+c0a0933f4e0aa16e146cc86ddac5bfc7a9eb1040 assets/legendary_relics/blockstates/ice_encasement.json
 d0d4b859e9fb615ab36f9a665f58f9d38f057e5d assets/legendary_relics/models/block/equipment_workbench.json
+e30b8c6fd5c3dc3eaf23320b9f436311d9e5f272 assets/legendary_relics/models/block/ice_encasement.json

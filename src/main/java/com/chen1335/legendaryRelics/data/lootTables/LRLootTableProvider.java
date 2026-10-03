@@ -8,6 +8,7 @@ import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +34,10 @@ public class LRLootTableProvider extends LootTableProvider {
         @Override
         protected void generate() {
             dropSelf(LRBlocks.EQUIPMENT_WORKBENCH.value());
+
+            // 冰封方块：方块自身不掉落，内容物由方块自己弹出（见 IceEncasement#playerWillDestroy）。
+            // 这里挂一张空战利品表 —— 什么都不掉，但必须存在，否则数据生成会因缺少战利品表而失败。
+            add(LRBlocks.ICE_ENCASEMENT.value(), LootTable.lootTable());
         }
 
         @Override

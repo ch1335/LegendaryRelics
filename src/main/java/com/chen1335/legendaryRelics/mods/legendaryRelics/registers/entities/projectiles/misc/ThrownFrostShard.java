@@ -3,7 +3,10 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.pro
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityDataSerializers;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.LRProjectile;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons.FrostShard;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -46,6 +49,15 @@ public class ThrownFrostShard extends LRProjectile {
 
     /** 破碎时的实体事件 id，客户端据此生成物品碎屑粒子。 */
     private static final byte SHATTER_EVENT = 3;
+
+    /** 命中实体后向左右溅射的冰锥数量。 */
+    private static final int SPLASH_COUNT = 5;
+
+    /** 相邻两枚冰锥之间的夹角（度）。 */
+    private static final float SPLASH_ANGLE_STEP = 10.0F;
+
+    /** 溅射出的冰锥初速。 */
+    private static final float SPLASH_SPEED = 1.5F;
 
     private ItemStack renderItem = null;
 
@@ -117,6 +129,8 @@ public class ThrownFrostShard extends LRProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
+        // 溅射方向取命中瞬间的飞行方向，必须在下面改动 deltaMovement 之前取出
+        Vec3 hitDirection = this.getDeltaMovement();
         DamageSource source = this.level().damageSources().source(LRDamageTypes.FROST_SHARD, this, this.getOwner());
         float damage = getBaseDamage();
         if (!level().isClientSide && getWeaponItem() != null) {
@@ -126,12 +140,74 @@ public class ThrownFrostShard extends LRProjectile {
             if (!level().isClientSide && getWeaponItem() != null) {
                 EnchantmentHelper.doPostAttackEffectsWithItemSource((ServerLevel) level(), entity, source, getWeaponItem());
             }
+            // 投掷物命中：给目标挂减速
+            if (!level().isClientSide && entity instanceof LivingEntity livingTarget) {
+                CalculatorArg arg = buildArg();
+                Slowness.apply(livingTarget, this.getOwner(),
+                        FrostShard.THROWN_SLOWNESS.getValue(arg),
+                        (int) (FrostShard.SLOWNESS_TIME.getValue(arg) * 20));
+            }
         } else {
             this.deflect(ProjectileDeflection.REVERSE, entity, this.getOwner(), false);
             this.setDeltaMovement(this.getDeltaMovement().scale(0.2));
         }
 
+        this.splashIcicles(hitDirection, entity);
         this.shatter();
+    }
+
+    /**
+     * 计算溅射伤害与减速比例用的参数；拿不到投掷者或武器时退回空参数。
+     */
+    private CalculatorArg buildArg() {
+        LivingEntity thrower = this.getOwner() instanceof LivingEntity living ? living : null;
+        ItemStack weapon = this.getWeaponItem();
+        return thrower != null && weapon != null
+                ? CalculatorArg.simpleArg(thrower, weapon)
+                : CalculatorArg.emptyArg();
+    }
+
+    /**
+     * 沿命中方向向左右溅射出若干冰锥。
+     *
+     * <p>伤害算法由 {@link FrostShard#ICICLE_DAMAGE} 提供，冰锥实体只承载算好的数值。
+     * 方向、位置与伤害都以命中瞬间为准，所以要在 deltaMovement 被改动之前调用。
+     *
+     * @param excludedTarget 霜锥本体已经命中的目标，冰锥跳过它；冰锥之间互不排斥，可以打同一个目标
+     */
+    private void splashIcicles(Vec3 hitDirection, Entity excludedTarget) {
+        if (this.level().isClientSide || hitDirection.lengthSqr() < 1.0E-4) {
+            return;
+        }
+
+        CalculatorArg arg = buildArg();
+        float icicleDamage = FrostShard.ICICLE_DAMAGE.getValue(arg);
+
+        Vec3 direction = hitDirection.normalize();
+        for (int i = 0; i < SPLASH_COUNT; i++) {
+            // 以命中方向为中心，左右各展开 (SPLASH_COUNT - 1) / 2 个角度间隔
+            double radians = Math.toRadians((i - (SPLASH_COUNT - 1) / 2.0F) * SPLASH_ANGLE_STEP);
+            double cos = Math.cos(radians);
+            double sin = Math.sin(radians);
+            // 只旋转水平分量、y 保持不变，形成左右扇形
+            Vec3 spread = new Vec3(
+                    direction.x * cos - direction.z * sin,
+                    direction.y,
+                    direction.x * sin + direction.z * cos);
+
+            LivingEntity thrower = this.getOwner() instanceof LivingEntity living ? living : null;
+            Icicle icicle = new Icicle(thrower, this.level(), this.getWeaponItem());
+            // 不让冰锥打中霜锥本体已经命中的目标；冰锥之间互不排斥，可以打同一个目标
+            icicle.setExcludedTarget(excludedTarget);
+            // 生成点沿飞行方向前移一点，避免冰锥直接嵌在命中目标的模型里
+            icicle.setPos(
+                    this.getX() + direction.x * 0.3D,
+                    this.getY() + direction.y * 0.3D,
+                    this.getZ() + direction.z * 0.3D);
+            icicle.shoot(spread.x, spread.y, spread.z, 1.5F, 0.0F);
+            icicle.setBaseDamage(icicleDamage);
+            this.level().addFreshEntity(icicle);
+        }
     }
 
     @Override
@@ -158,12 +234,12 @@ public class ThrownFrostShard extends LRProjectile {
     public void handleEntityEvent(byte id) {
         if (id == SHATTER_EVENT) {
             ItemStack renderItem = this.getRenderItem();
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 16; i++) {
                 this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.ICE.defaultBlockState()),
                         this.getX(), this.getY(), this.getZ(),
-                        ((double) this.random.nextFloat() - 0.5),
-                        ((double) this.random.nextFloat() - 0.5),
-                        ((double) this.random.nextFloat() - 0.5));
+                        ((double) this.random.nextFloat()),
+                        ((double) this.random.nextFloat()),
+                        ((double) this.random.nextFloat()));
             }
         } else {
             super.handleEntityEvent(id);

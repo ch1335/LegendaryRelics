@@ -1,14 +1,18 @@
 package com.chen1335.legendaryRelics.client;
 
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
+import com.chen1335.legendaryRelics.API.objects.LRBlockEntities;
+import com.chen1335.legendaryRelics.API.objects.LRBlocks;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.API.objects.LRMenus;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
+import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEncasementRenderer;
 import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IcicleRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.ThrownFrostShardRender;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
@@ -17,6 +21,8 @@ import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.screens.EquipmentWorkbenchCraftScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,6 +31,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -93,6 +100,8 @@ public class ClientEventHandler {
             event.registerEntityRenderer(LREntityTypes.FLYING_REAPER.value(), FlyingReaperRender::new);
             event.registerEntityRenderer(LREntityTypes.FLYING_KNIFE.value(), FlyingKnifeRender::new);
             event.registerEntityRenderer(LREntityTypes.THROWN_FROST_SHARD.value(), ThrownFrostShardRender::new);
+            event.registerEntityRenderer(LREntityTypes.ICICLE.value(), IcicleRenderer::new);
+            event.registerBlockEntityRenderer(LRBlockEntities.ICE_ENCASEMENT.get(), IceEncasementRenderer::new);
             if (ISSModProxy.INSTANCE.shouldLoad()) {
                 event.registerEntityRenderer(ISSRegisters.Entity.SOUL_MISSILE.value(), SoulMissileRenderer::new);
             }
@@ -113,6 +122,17 @@ public class ClientEventHandler {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void RegisterCurioRenderers(EntityRenderersEvent.AddLayers event) {
             CuriosRendererRegistry.register(LRItems.HOLY_CLOAK.get(), HolyCloakRenderer::new);
+        }
+
+        /**
+         * 冰封方块用原版冰的贴图，而冰是半透明的。
+         *
+         * <p>方块渲染层由 {@code ItemBlockRenderTypes} 决定，自定义方块默认走实体（不透明）层，
+         * 那样冰会变成实心白块、也看不到里面的物品，所以必须显式注册成半透明层。
+         */
+        @SubscribeEvent
+        public static void RegisterBlockRenderLayers(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> ItemBlockRenderTypes.setRenderLayer(LRBlocks.ICE_ENCASEMENT.get(), RenderType.translucent()));
         }
     }
 }

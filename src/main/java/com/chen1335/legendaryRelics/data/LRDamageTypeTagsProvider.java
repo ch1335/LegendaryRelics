@@ -29,6 +29,7 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.FLYING_KNIFE,
                         LRDamageTypes.CHAIN_LIGHTNING,
                         LRDamageTypes.FROST_SHARD,
+                        LRDamageTypes.ICICLE,
                         IRSDamageTypes.SOUL_MISSILE
                 );
 
@@ -49,6 +50,7 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.INFERNO_SCORCH,
                         LRDamageTypes.FLYING_KNIFE,
                         LRDamageTypes.FROST_SHARD,
+                        LRDamageTypes.ICICLE,
                         IRSDamageTypes.SOUL_MISSILE
                 );
 
@@ -56,15 +58,22 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                 .add(
                         LRDamageTypes.FLYING_REAPER,
                         LRDamageTypes.FLYING_KNIFE,
-                        LRDamageTypes.FROST_SHARD
+                        LRDamageTypes.FROST_SHARD,
+                        LRDamageTypes.ICICLE
                 );
 
-        // 霜锥是投掷武器，沿用原版三叉戟所在的另外两个标签
+        // 霜锥与冰锥都是投掷物，沿用原版三叉戟所在的另外两个标签
         this.tag(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS)
-                .add(LRDamageTypes.FROST_SHARD);
+                .add(
+                        LRDamageTypes.FROST_SHARD,
+                        LRDamageTypes.ICICLE
+                );
 
         this.tag(DamageTypeTags.PANIC_CAUSES)
-                .add(LRDamageTypes.FROST_SHARD);
+                .add(
+                        LRDamageTypes.FROST_SHARD,
+                        LRDamageTypes.ICICLE
+                );
 
         // 连锁闪电与灵魂飞弹都是"附带"的伤害，不应该把目标击退
         this.tag(DamageTypeTags.NO_KNOCKBACK)

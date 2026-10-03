@@ -19,6 +19,9 @@ public interface LRDamageTypes {
     /** 霜锥投掷物的伤害类型，参数与标签沿用原版三叉戟。 */
     ResourceKey<DamageType> FROST_SHARD = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("frost_shard"));
 
+    /** 冰锥的伤害类型，参数与标签参考霜锥投掷物。 */
+    ResourceKey<DamageType> ICICLE = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("icicle"));
+
     static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(EROSION, new DamageType("erosion", 0.1F));
         context.register(FLYING_REAPER, new DamageType("flying_reaper", 0.1F));
@@ -26,6 +29,7 @@ public interface LRDamageTypes {
         context.register(FLYING_KNIFE, new DamageType("flying_knife", 0.1F));
         context.register(CHAIN_LIGHTNING, new DamageType("chain_lightning", 0.1F));
         context.register(FROST_SHARD, new DamageType("frost_shard", 0.1F));
+        context.register(ICICLE, new DamageType("icicle", 0.1F));
 
     }
 }

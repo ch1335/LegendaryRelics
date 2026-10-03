@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-30T03:01:32.5387418	Item Models: legendary_relics
+// 1.21.1	2026-10-03T18:03:19.9062723	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
@@ -17,6 +17,7 @@ fd747a44967559c141a3cfab103272ef10d2b66f assets/legendary_relics/models/item/bla
 894b927f4b0ddbe0574c7cfc342d388af0448dce assets/legendary_relics/models/item/hardened_ring.json
 86f6d075a112a3e7af8b9c1a546c22711703653c assets/legendary_relics/models/item/healing_talisman.json
 16172401f2a248ef753bc35f294c514d150f2b97 assets/legendary_relics/models/item/holy_cloak.json
+70f7bf58b373e0ac28df53421f0e9e6360373c7f assets/legendary_relics/models/item/ice_encasement.json
 065dd558bd53dd555a6fb06d698625aeb6016703 assets/legendary_relics/models/item/inferno_boots.json
 210ce0fef3a40ba41f1ff1e19ee1088689c8a514 assets/legendary_relics/models/item/inferno_chest_plate.json
 2537d2a8e0e941b82f89f76e9c0a20ec7088f25e assets/legendary_relics/models/item/inferno_helmet.json
@@ -48,3 +49,4 @@ cfd2f10fac4b087659d393ad0fb5c935b643c060 assets/legendary_relics/models/item/twi
 727e39c1692ec57df2a221b1b7472b63b398b19a assets/legendary_relics/models/item/tyrannical_essence.json
 78374888c0c8e4c219e0dea7114ecf8e98295ba8 assets/legendary_relics/models/item/withering_blade.json
 4a4ecefa56621c25574fde6de856be59ca38ab2e assets/legendary_relics/models/item/wither_spirit.json
+899712fa177649fa13ce81d526ffcb856ce8904c assets/legendary_relics/models/item/zenith_ice.json

@@ -18,5 +18,8 @@ public class LRBlockStateProvider extends BlockStateProvider {
                 LegendaryRelics.id("block/equipment_workbench_front"),
                 LegendaryRelics.id("block/equipment_workbench_bottom"),
                 LegendaryRelics.id("block/equipment_workbench_top")));
+
+        // 外观直接用原版冰的贴图（六面 + 粒子都用同一张）
+        simpleBlock(LRBlocks.ICE_ENCASEMENT.value(), models().cubeAll("ice_encasement", mcLoc("block/ice")));
     }
 }

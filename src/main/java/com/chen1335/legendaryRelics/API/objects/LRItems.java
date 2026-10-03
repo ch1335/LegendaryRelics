@@ -107,9 +107,14 @@ public class LRItems {
 
     public static final DeferredItem<Item> TYRANNICAL_ESSENCE = ITEM_DEFERRED_REGISTER.register("tyrannical_essence", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
 
+    /** 臻冰：材料类物品，可叠加（沿用默认上限 64），品质史诗。 */
+    public static final DeferredItem<Item> ZENITH_ICE = ITEM_DEFERRED_REGISTER.register("zenith_ice", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
+
     public static final DeferredItem<SkeletonThrowingKnife> SKELETON_THROWING_KNIFE = ITEM_DEFERRED_REGISTER.register("skeleton_throwing_knife", SkeletonThrowingKnife::new);
 
     public static final DeferredItem<BlockItem> EQUIPMENT_WORKBENCH = ITEM_DEFERRED_REGISTER.register("equipment_workbench", () -> new BlockItem(LRBlocks.EQUIPMENT_WORKBENCH.value(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> ICE_ENCASEMENT = ITEM_DEFERRED_REGISTER.register("ice_encasement", () -> new BlockItem(LRBlocks.ICE_ENCASEMENT.value(), new Item.Properties()));
 
     public static final DeferredItem<ShadowDagger> SHADOW_DAGGER = ITEM_DEFERRED_REGISTER.register("shadow_dagger", ShadowDagger::new);
 
