@@ -62,6 +62,7 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.SACRED_TALISMAN.asItem(),
                 LRItems.PERSEVERANCE_NECKLACE.asItem(),
                 LRItems.THUNDERBOLT_NECKLACE.asItem(),
+                LRItems.FROSTHEART_PENDANT.asItem(),
                 LRItems.HEALING_TALISMAN.asItem()
         );
 
@@ -71,7 +72,8 @@ public class LRItemTagsProvider extends ItemTagsProvider {
         );
 
         tag(CuriosTags.createItemTag("cloak")).add(
-                LRItems.HOLY_CLOAK.asItem()
+                LRItems.HOLY_CLOAK.asItem(),
+                LRItems.SNOWFEATHER_CLOAK.asItem()
         );
 
         tag(ItemTags.HEAD_ARMOR).add(

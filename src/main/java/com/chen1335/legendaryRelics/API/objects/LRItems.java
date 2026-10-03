@@ -16,6 +16,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.t
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.curios.*;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc.*;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons.*;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -107,8 +108,8 @@ public class LRItems {
 
     public static final DeferredItem<Item> TYRANNICAL_ESSENCE = ITEM_DEFERRED_REGISTER.register("tyrannical_essence", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
 
-    /** 臻冰：材料类物品，可叠加（沿用默认上限 64），品质史诗。 */
-    public static final DeferredItem<Item> ZENITH_ICE = ITEM_DEFERRED_REGISTER.register("zenith_ice", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
+    /** 臻冰：材料类物品，可叠加（沿用默认上限 64），品质史诗，带附魔光效。 */
+    public static final DeferredItem<Item> ZENITH_ICE = ITEM_DEFERRED_REGISTER.register("zenith_ice", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
 
     public static final DeferredItem<SkeletonThrowingKnife> SKELETON_THROWING_KNIFE = ITEM_DEFERRED_REGISTER.register("skeleton_throwing_knife", SkeletonThrowingKnife::new);
 
@@ -120,7 +121,13 @@ public class LRItems {
 
     public static final DeferredItem<ThunderboltNecklace> THUNDERBOLT_NECKLACE = ITEM_DEFERRED_REGISTER.register("thunderbolt_necklace", ThunderboltNecklace::new);
 
+    /** 霜心项链：近战反伤减速 + 寒冷群系属性提升。 */
+    public static final DeferredItem<FrostHeartPendant> FROSTHEART_PENDANT = ITEM_DEFERRED_REGISTER.register("frostheart_pendant", FrostHeartPendant::new);
+
     public static final DeferredItem<HolyCloak> HOLY_CLOAK = ITEM_DEFERRED_REGISTER.register("holy_cloak", HolyCloak::new);
+
+    /** 雪羽斗篷：细雪免疫 + 移速提升 + 延长自己造成的减速。 */
+    public static final DeferredItem<SnowFeatherCloak> SNOWFEATHER_CLOAK = ITEM_DEFERRED_REGISTER.register("snowfeather_cloak", SnowFeatherCloak::new);
 
     public static final DeferredItem<FrostShard> FROST_SHARD = ITEM_DEFERRED_REGISTER.register("frost_shard", FrostShard::new);
 

@@ -8,6 +8,7 @@ import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
 import com.chen1335.specialEffectLib.network.AddOrUpdateEffectPack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,6 +32,8 @@ public class SpecialEffectAPI {
             effect = finalEffectGetter.accept(effect, Cast.cast(old));
         }
         effectMap.put(effect.getEffectType(), effect);
+        // 效果已进入实体数据、但尚未生效：通知监听者，它们还能调整这个实例（例如延长持续时间）
+        NeoForge.EVENT_BUS.post(new SpecialEffectAddedEvent(target, effect));
         effect.onAddOrUpdate(target);
 
         if (!target.level().isClientSide) {

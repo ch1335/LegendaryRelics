@@ -37,6 +37,18 @@ public class LREquipmentEffectTypes {
 
     public static final DeferredHolder<EffectType<?>, EffectType<HardenedEffect>> HARDENED_EFFECT = register("hardened_effect", () -> new EffectType<>(HardenedEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/hardened_ring.png")));
 
+    /** 霜心项链：受到近战伤害时给攻击者减速。 */
+    public static final DeferredHolder<EffectType<?>, EffectType<FrostHeartEffect>> FROST_HEART = register("frost_heart", () -> new EffectType<>(FrostHeartEffect::new));
+
+    /** 霜心项链：位于寒冷群系时提升大部分属性。 */
+    public static final DeferredHolder<EffectType<?>, EffectType<ColdDomainEffect>> COLD_DOMAIN = register("cold_domain", () -> new EffectType<>(ColdDomainEffect::new));
+
+    /** 雪羽斗篷：免疫细雪的冻结与陷入，并提升移动速度。 */
+    public static final DeferredHolder<EffectType<?>, EffectType<TreadingSnowEffect>> TREADING_SNOW = register("treading_snow", () -> new EffectType<>(TreadingSnowEffect::new));
+
+    /** 雪羽斗篷：自己造成的减速效果持续时间延长。 */
+    public static final DeferredHolder<EffectType<?>, EffectType<FrostBloomEffect>> FROST_BLOOM = register("frost_bloom", () -> new EffectType<>(FrostBloomEffect::new));
+
     public static final DeferredHolder<EffectType<?>, EffectType<HealIncreaseEffect>> HEAL_INCREASE_EFFECT = register("heal_increase_effect", () -> new EffectType<>(HealIncreaseEffect::new, true));
 
     public static final DeferredHolder<EffectType<?>, EffectType<HealPerSecondEffect>> HEAL_PER_SECOND_EFFECT = register("heal_per_second_effect", () -> new EffectType<>(HealPerSecondEffect::new, true));

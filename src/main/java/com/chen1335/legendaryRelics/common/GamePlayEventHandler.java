@@ -9,6 +9,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffe
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Backstab;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
+import com.chen1335.specialEffectLib.API.SpecialEffectAddedEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -42,6 +43,7 @@ public class GamePlayEventHandler {
         AgglomerationMaliceEffect.LivingIncomingDamageEvent(event);
         FallImmunity.LivingIncomingDamageEvent(event);
         HardenedEffect.LivingIncomingDamageEvent(event);
+        FrostHeartEffect.LivingIncomingDamageEvent(event);
 
 
         Redemption.LivingIncomingDamageEvent(event);
@@ -65,8 +67,15 @@ public class GamePlayEventHandler {
     }
 
     @SubscribeEvent
-    public static void EntityTickPre(EntityTickEvent.Pre event) {
+    public static void SpecialEffectAddedEvent(SpecialEffectAddedEvent event) {
+        // 霜华：延长佩戴者造成的特殊减速
+        FrostBloomEffect.SpecialEffectAddedEvent(event);
+    }
 
+    @SubscribeEvent
+    public static void EntityTickPre(EntityTickEvent.Pre event) {
+        // 寒域：群系会随走动改变，装备状态不会，所以要周期性检查
+        ColdDomainEffect.EntityTickEvent(event);
     }
 
     @SubscribeEvent

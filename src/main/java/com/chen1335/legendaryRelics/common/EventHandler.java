@@ -16,6 +16,7 @@ import com.chen1335.legendaryRelics.network.*;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.dataComponentTypes.BowUsingArrow;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.FrostBloomEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonArmor;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonLeggings;
@@ -81,6 +82,8 @@ public class EventHandler {
             }
             if (!event.getEntity().level().isClientSide) {
                 PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
+                // 服务端配置不会自动同步，进服时把当前值发给玩家，供 Cloth Config 界面显示
+                PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), ServerConfigPack.ofCurrent());
 
                 CalculatorsHolder.getCalculators().forEach((locateInfo, finalCalculator) -> {
                     if (finalCalculator.changed()) {
@@ -134,6 +137,8 @@ public class EventHandler {
 
         @SubscribeEvent
         public static void MobEffectEvent$Added(MobEffectEvent.Added event) {
+            // 霜华：延长佩戴者造成的原版缓慢
+            FrostBloomEffect.MobEffectEvent$Added(event);
             ItemStack headArmor = event.getEntity().getItemBySlot(EquipmentSlot.HEAD);
             if (headArmor.getItem() == LRItems.BLACK_DRAGON_HELMET.get()) {
                 CalculatorArg arg = CalculatorArg.emptyArg();
@@ -333,6 +338,8 @@ public class EventHandler {
             registrar.playToClient(PlayClientParticlePack.TYPE, PlayClientParticlePack.STREAM_CODEC, PlayClientParticlePack::handler);
 
             registrar.playBidirectional(LootConfigPack.TYPE, LootConfigPack.STREAM_CODEC, LootConfigPack::handler);
+
+            registrar.playBidirectional(ServerConfigPack.TYPE, ServerConfigPack.STREAM_CODEC, ServerConfigPack::handler);
 
             registrar.playBidirectional(UpdateCalculatorPack.TYPE, UpdateCalculatorPack.STREAM_CODEC, UpdateCalculatorPack::handler);
 
