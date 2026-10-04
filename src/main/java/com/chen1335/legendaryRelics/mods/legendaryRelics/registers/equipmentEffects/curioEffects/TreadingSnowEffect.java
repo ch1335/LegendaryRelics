@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEff
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
-import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
+import com.chen1335.legendaryRelics.API.objects.LRAttributes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -28,9 +28,12 @@ import java.util.List;
 /**
  * 踏雪：免疫细雪的冻结与陷入，并提升移动速度。
  *
- * <p>细雪免疫靠两个 mixin（{@code LivingEntityCanFreezeMixin} 拦冻结、
- * {@code PowderSnowBlockMixin} 拦陷入），它们都通过
- * {@link #preventsPowderSnowSinking(Entity)} 反查这个效果，和 {@code Invincibility} 同一套路。
+ * <p>细雪免疫做成<b>属性</b>（{@link LRAttributes#POWDER_SNOW_WALKING}）而不是直接查饰品：
+ * 细雪判定在客户端也会跑（本地玩家的移动预测），客户端查不到饰品就会按"要下沉"预测，
+ * 与服务端结算互相纠正 —— 表现为站在细雪上抽搐。属性会同步给客户端，两端结论一致。
+ *
+ * <p>两个 mixin（{@code LivingEntityCanFreezeMixin} 拦冻结、{@code PowderSnowBlockMixin} 拦陷入）
+ * 都只读这个属性，见 {@link #canWalkOnPowderSnow(Entity)}。
  */
 public class TreadingSnowEffect extends LRCurioEffect {
 
@@ -52,34 +55,49 @@ public class TreadingSnowEffect extends LRCurioEffect {
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
-    private static AttributeInstance speedOf(LivingEntity entity) {
-        return entity.getAttribute(Attributes.MOVEMENT_SPEED);
-    }
-
     @Override
     public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
-        AttributeInstance speed = speedOf(entity);
-        if (speed == null) {
-            return;
+        ResourceLocation id = slotContext.pathRL(MODIFIER_ID);
+
+        AttributeInstance speed = entity.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed != null) {
+            CalculatorArg arg = CalculatorArg.simpleArg(entity, itemStack, this);
+            speed.removeModifier(id);
+            speed.addTransientModifier(new AttributeModifier(id, MOVE_SPEED.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         }
-        CalculatorArg arg = CalculatorArg.simpleArg(entity, itemStack, this);
-        speed.removeModifier(slotContext.pathRL(MODIFIER_ID));
-        speed.addTransientModifier(new AttributeModifier(slotContext.pathRL(MODIFIER_ID), MOVE_SPEED.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+
+        // 细雪行走：布尔属性 +1（按 BooleanAttribute 约定用 ADD_VALUE），属性会自动同步到客户端
+        AttributeInstance powderSnow = entity.getAttribute(LRAttributes.POWDER_SNOW_WALKING);
+        if (powderSnow != null) {
+            powderSnow.removeModifier(id);
+            powderSnow.addTransientModifier(new AttributeModifier(id, 1.0D, AttributeModifier.Operation.ADD_VALUE));
+        }
     }
 
     @Override
     public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
-        AttributeInstance speed = speedOf(entity);
+        ResourceLocation id = slotContext.pathRL(MODIFIER_ID);
+
+        AttributeInstance speed = entity.getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed != null) {
-            speed.removeModifier(slotContext.pathRL(MODIFIER_ID));
+            speed.removeModifier(id);
+        }
+        AttributeInstance powderSnow = entity.getAttribute(LRAttributes.POWDER_SNOW_WALKING);
+        if (powderSnow != null) {
+            powderSnow.removeModifier(id);
         }
     }
 
     /**
-     * 该实体是否免疫细雪的冻结与陷入（供两个 mixin 调用）。
+     * 该实体能否站在细雪上（不陷入、不冻结）。
+     *
+     * <p>读的是<b>已同步的属性</b>，所以客户端与服务端的结论必然一致。
      */
-    public static boolean preventsPowderSnowSinking(Entity entity) {
-        return entity instanceof LivingEntity living
-                && LREquipmentEffectTypes.TREADING_SNOW.value().findBestEffect(living).isPresent();
+    public static boolean canWalkOnPowderSnow(Entity entity) {
+        if (!(entity instanceof LivingEntity living)) {
+            return false;
+        }
+        AttributeInstance instance = living.getAttribute(LRAttributes.POWDER_SNOW_WALKING);
+        return instance != null && instance.getValue() > 0;
     }
 }

@@ -76,6 +76,7 @@ public class LegendaryRelics {
         LRItems.register(modEventBus);
         LRShieldType.register(modEventBus);
         LRAttachmentTypes.register(modEventBus);
+        LRAttributes.register(modEventBus);
         LRDataComponentTypes.register(modEventBus);
         Tier.Armor.register(modEventBus);
         LREquipmentEffectTypes.register(modEventBus);
