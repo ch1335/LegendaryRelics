@@ -1,4 +1,6 @@
 {
+  "attribute.name.legendary_relics.magic_find": "魔法发现",
+  "attribute.name.legendary_relics.magic_find.desc": "提高稀有战利品的概率",
   "attribute.name.legendary_relics.powder_snow_walking": "细雪行走",
   "block.legendary_relics.equipment_workbench": "强化锻造台",
   "block.legendary_relics.ice_encasement": "冰封块",
@@ -79,6 +81,7 @@
   "item.legendary_relics.frostheart_pendant": "霜心项链",
   "item.legendary_relics.frost_shard.desc.3": "冰锥不会命中霜锥命中过的目标，但是多个冰锥可以命中同一个目标",
   "item.legendary_relics.frost_shard.desc.4": "减速效果只取最强",
+  "item.legendary_relics.glacite_skeleton_spawn_egg": "冰川骷髅刷怪蛋",
   "item.legendary_relics.hardened_ring": "硬化指环",
   "item.legendary_relics.healing_talisman": "治愈护符",
   "item.legendary_relics.holy_cloak": "神圣斗篷",
@@ -130,6 +133,8 @@
   "legendary_relics.config.lootTable": "战利品表设置",
   "legendary_relics.config.lootTable.cant_edit": "您当前正在非本地服务器游玩，由于权限过低，无法编辑配置，但是您可以查看由服务端发送的配置信息。",
   "legendary_relics.config.not_in_world": "只能在进入世界后编辑：服务端配置在进入世界前不会被加载。",
+  "legendary_relics.config.rare_drop_threshold_factor": "稀有掉落阈值系数",
+  "legendary_relics.config.rare_drop_threshold_factor.tooltip": "概率低于「该系数 ÷ 池内条目数」的战利品视为稀有掉落，会按玩家的「魔法发现」属性临时提高权重。设为 0 可完全关闭。",
   "legendary_relics.config.request_update": "正在请求将服务端配置同步至服务端。",
   "legendary_relics.config.request_update_failure": "同步失败，权限不足。",
   "legendary_relics.config.request_update_success": "同步成功!",

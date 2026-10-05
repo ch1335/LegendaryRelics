@@ -26,6 +26,14 @@ public class LRServerConfig {
      */
     public static final ModConfigSpec.DoubleValue ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS;
 
+    /**
+     * Threshold factor for rare drops, relative to the average chance inside a loot pool.
+     *
+     * <p>An entry counts as rare when its chance is below {@code this factor / number of entries in the pool}.
+     * Rare entries get their weight boosted by the player's Magic Find attribute.
+     */
+    public static final ModConfigSpec.DoubleValue RARE_DROP_THRESHOLD_FACTOR;
+
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
@@ -45,6 +53,18 @@ public class LRServerConfig {
                         "0.035 for radius 2 and 0.040 for radius 3.",
                         "Set to 0 to make every ice spike equally likely.")
                 .defineInRange("zenith_ice_spike_chance_per_radius", 0.005D, 0.0D, 1.0D);
+
+        builder.pop();
+
+        builder.comment("Loot settings").push("loot");
+
+        RARE_DROP_THRESHOLD_FACTOR = builder
+                .comment("Threshold factor (0~1) for rare drops, relative to the average chance inside a loot pool.",
+                        "An entry counts as rare when its chance is below this factor divided by the number of entries",
+                        "in the same pool. Rare entries get their weight boosted by the player's Magic Find attribute.",
+                        "Default 0.5: with 25 entries in a pool the threshold is 0.5 / 25 = 2%.",
+                        "Set to 0 to disable rare drop boosting entirely.")
+                .defineInRange("rare_drop_threshold_factor", 0.5D, 0.0D, 1.0D);
 
         builder.pop();
 

@@ -79,6 +79,18 @@ public class ClothConfig {
             zenithIceChancePerRadius.setEditable(editable);
             serverConfig.addEntry(zenithIceChancePerRadius);
 
+            DoubleListEntry rareDropThresholdFactor = entryBuilder.startDoubleField(
+                            Component.translatable("legendary_relics.config.rare_drop_threshold_factor"),
+                            serverConfigsLoaded ? LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.get()
+                                    : LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.getDefault())
+                    .setDefaultValue(0.5D)
+                    .setMin(0.0D)
+                    .setMax(1.0D)
+                    .setTooltip(Component.translatable("legendary_relics.config.rare_drop_threshold_factor.tooltip"))
+                    .build();
+            rareDropThresholdFactor.setEditable(editable);
+            serverConfig.addEntry(rareDropThresholdFactor);
+
             ConfigCategory lootTableConfig = configBuilder.getOrCreateCategory(Component.translatable("legendary_relics.config.lootTable"));
             if (!editable) {
                 lootTableConfig.setDescription(new Component[]{Component.translatable(
@@ -122,6 +134,7 @@ public class ClothConfig {
                         // 单人游戏里本地就是服务端，直接写入并落盘
                         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.set(zenithIceSpikeChance.getValue());
                         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.set(zenithIceChancePerRadius.getValue());
+                        LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.set(rareDropThresholdFactor.getValue());
                         LRServerConfig.CONFIG_SPEC.save();
                         if (ModList.get().isLoaded("ali")) {
                             player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.info.ali"));
@@ -131,7 +144,7 @@ public class ClothConfig {
                         PacketDistributor.sendToServer(new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
                         // 多人游戏：服务端配置由服务端写入，这里只把值发过去
                         player.sendSystemMessage(Component.translatable("legendary_relics.config.request_update"));
-                        PacketDistributor.sendToServer(new ServerConfigPack(zenithIceSpikeChance.getValue(), zenithIceChancePerRadius.getValue()));
+                        PacketDistributor.sendToServer(new ServerConfigPack(zenithIceSpikeChance.getValue(), zenithIceChancePerRadius.getValue(), rareDropThresholdFactor.getValue()));
                     }
                 }
 

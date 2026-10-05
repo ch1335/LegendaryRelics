@@ -24,7 +24,8 @@ import org.jetbrains.annotations.NotNull;
  * 要显示服务端的真实值就必须自己发包 —— 和 {@link LootConfigPack} 同一套做法。
  */
 public record ServerConfigPack(double zenithIceSpikeChance,
-                               double zenithIceSpikeChancePerRadius) implements CustomPacketPayload {
+                               double zenithIceSpikeChancePerRadius,
+                               double rareDropThresholdFactor) implements CustomPacketPayload {
 
     public static final Type<ServerConfigPack> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "server_config"));
@@ -32,6 +33,7 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     public static final StreamCodec<? super RegistryFriendlyByteBuf, ServerConfigPack> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.DOUBLE, ServerConfigPack::zenithIceSpikeChance,
             ByteBufCodecs.DOUBLE, ServerConfigPack::zenithIceSpikeChancePerRadius,
+            ByteBufCodecs.DOUBLE, ServerConfigPack::rareDropThresholdFactor,
             ServerConfigPack::new
     );
 
@@ -39,7 +41,8 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     public static ServerConfigPack ofCurrent() {
         return new ServerConfigPack(
                 LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.get(),
-                LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.get());
+                LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.get(),
+                LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.get());
     }
 
     @Override
@@ -71,5 +74,6 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     private void apply() {
         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.set(zenithIceSpikeChance);
         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.set(zenithIceSpikeChancePerRadius);
+        LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.set(rareDropThresholdFactor);
     }
 }

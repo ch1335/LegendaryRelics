@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.BooleanAttribute;
+import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -35,6 +36,14 @@ public class LRAttributes {
             () -> new BooleanAttribute("attribute.name.legendary_relics.powder_snow_walking", false)
                     .setSyncable(true)
                     .setSentiment(Attribute.Sentiment.NEUTRAL));
+
+    /**
+     * 魔法发现（Magic Find）：稀有掉落补偿的权重提升比例，值即提升幅度（0.2 表示 +20%）。基础值 0，默认不生效。
+     */
+    public static final DeferredHolder<Attribute, Attribute> MAGIC_FIND = ATTRIBUTES.register(
+            "magic_find",
+            () -> new PercentageAttribute("attribute.name.legendary_relics.magic_find", 0.0D, 0.0D, 10000.0D)
+                    .setSyncable(true));
 
     public static void register(IEventBus modEventBus) {
         ATTRIBUTES.register(modEventBus);

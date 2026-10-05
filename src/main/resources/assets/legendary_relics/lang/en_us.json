@@ -1,4 +1,6 @@
 {
+  "attribute.name.legendary_relics.magic_find": "Magic Find",
+  "attribute.name.legendary_relics.magic_find.desc": "Increases the chance of rare loot",
   "attribute.name.legendary_relics.powder_snow_walking": "Powder Snow Walking",
   "block.legendary_relics.equipment_workbench": "Strengthening forging table",
   "block.legendary_relics.ice_encasement": "Ice Encasement",
@@ -79,6 +81,7 @@
   "item.legendary_relics.frostheart_pendant": "Frostheart Pendant",
   "item.legendary_relics.frost_shard.desc.3": "Icicles cannot hit the target struck by the Frost Shard itself, but multiple icicles can hit the same target",
   "item.legendary_relics.frost_shard.desc.4": "Only the strongest slowness effect takes effect",
+  "item.legendary_relics.glacite_skeleton_spawn_egg": "Glacite Skeleton Spawn Egg",
   "item.legendary_relics.hardened_ring": "Hardened Ring",
   "item.legendary_relics.healing_talisman": "Healing Talisman",
   "item.legendary_relics.holy_cloak": "Holy Cloak",
@@ -130,6 +133,8 @@
   "legendary_relics.config.lootTable": "LootTable Config",
   "legendary_relics.config.lootTable.cant_edit": "You are currently playing on a non-local server and cannot edit the configuration due to low permissions, but you can view the configuration information sent by the server.",
   "legendary_relics.config.not_in_world": "This can only be edited after entering a world: server configs are not loaded before that.",
+  "legendary_relics.config.rare_drop_threshold_factor": "Rare Drop Threshold Factor",
+  "legendary_relics.config.rare_drop_threshold_factor.tooltip": "Loot whose chance is below this factor divided by the number of entries in its pool counts as rare, and gets its weight boosted by the player's Magic Find attribute. Set to 0 to disable.",
   "legendary_relics.config.request_update": "Requesting to sync the server config to the server.",
   "legendary_relics.config.request_update_failure": "Sync failed: insufficient permissions.",
   "legendary_relics.config.request_update_success": "Sync successful!",

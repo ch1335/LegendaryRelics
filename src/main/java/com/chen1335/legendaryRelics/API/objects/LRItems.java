@@ -21,6 +21,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -130,5 +131,9 @@ public class LRItems {
     public static final DeferredItem<SnowFeatherCloak> SNOWFEATHER_CLOAK = ITEM_DEFERRED_REGISTER.register("snowfeather_cloak", SnowFeatherCloak::new);
 
     public static final DeferredItem<FrostShard> FROST_SHARD = ITEM_DEFERRED_REGISTER.register("frost_shard", FrostShard::new);
+
+    /** 冰川骷髅刷怪蛋：颜色取自臻冰那套冰蓝配色。 */
+    public static final DeferredItem<DeferredSpawnEggItem> GLACITE_SKELETON_SPAWN_EGG = ITEM_DEFERRED_REGISTER.register("glacite_skeleton_spawn_egg",
+            () -> new DeferredSpawnEggItem(LREntityTypes.GLACITE_SKELETON, 0x82CDF0, 0x174263, new Item.Properties()));
 
 }

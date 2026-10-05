@@ -12,6 +12,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +31,7 @@ public class DataMain {
                             LRDamageTypes.bootstrap(context);
                             IRSDamageTypes.bootstrap(context);
                         })
+                        .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, LRSpawnDatagen::bootstrap)
                 ,
                 Map.of(),
                 Set.of(LegendaryRelics.MODID)

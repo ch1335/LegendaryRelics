@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-03T23:14:03.0951128	Item Models: legendary_relics
+// 1.21.1	2026-10-05T23:26:42.9154006	Item Models: legendary_relics
 19ab3898a027eebf25fc5754de4524be603a641f assets/legendary_relics/models/item/agglomeration_malice.json
 d6377fc814f747e9a4f3392382053cf33753301a assets/legendary_relics/models/item/ancient_fragment.json
 cec4327c535414767f38cb0f08d24e537034c627 assets/legendary_relics/models/item/black_dragon_boots.json
@@ -15,6 +15,7 @@ fd747a44967559c141a3cfab103272ef10d2b66f assets/legendary_relics/models/item/bla
 54db757283fb48e698dc96649a6b950364b52f79 assets/legendary_relics/models/item/dragon_scale.json
 0202fced9a682a5fb6eee1b7fc8da5eba884bad9 assets/legendary_relics/models/item/equipment_workbench.json
 f001eef1d09dab9b0b894614127cb49f77637e2d assets/legendary_relics/models/item/frostheart_pendant.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/legendary_relics/models/item/glacite_skeleton_spawn_egg.json
 894b927f4b0ddbe0574c7cfc342d388af0448dce assets/legendary_relics/models/item/hardened_ring.json
 86f6d075a112a3e7af8b9c1a546c22711703653c assets/legendary_relics/models/item/healing_talisman.json
 16172401f2a248ef753bc35f294c514d150f2b97 assets/legendary_relics/models/item/holy_cloak.json

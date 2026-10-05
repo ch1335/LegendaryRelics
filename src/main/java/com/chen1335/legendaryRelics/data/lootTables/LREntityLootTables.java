@@ -6,11 +6,15 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
@@ -18,8 +22,9 @@ import java.util.stream.Stream;
 /**
  * 实体战利品表。
  *
- * <p>冰川骷髅单独掉一把霜锥：基础 5%，每级抢夺 +1%。手持那把永不掉落（见 {@code GlaciteSkeleton#finalizeSpawn}），
- * 所以玩家只能从这里拿到，且是全新的。
+ * <p>冰川骷髅：骨头沿用原版骷髅（0~2，每级抢夺再 +0~1）；冰 0~1，每级抢夺再 +0~1；
+ * 霜锥单独一个池，基础 5%、每级抢夺 +1%。手持那把永不掉落（见 {@code GlaciteSkeleton#finalizeSpawn}），
+ * 所以霜锥只能从这里拿到。
  */
 public class LREntityLootTables extends EntityLootSubProvider {
 
@@ -29,8 +34,21 @@ public class LREntityLootTables extends EntityLootSubProvider {
 
     @Override
     public void generate() {
-        this.add(LREntityTypes.GLACITE_SKELETON.get(), LootTable.lootTable().withPool(
-                LootPool.lootPool()
+        this.add(LREntityTypes.GLACITE_SKELETON.get(), LootTable.lootTable()
+                // 骨头：数值与原版骷髅一致
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(Items.BONE)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))))
+                // 冰：0~1，每级抢夺再 +0~1（期望上等同抬高上限）
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(Items.ICE)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))))
+                // 霜锥：独立掷骰
+                .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(LRItems.FROST_SHARD.get())
                                 .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.05F, 0.01F)))));

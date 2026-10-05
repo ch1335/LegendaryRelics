@@ -85,6 +85,9 @@ public class LRItemModelProvider extends ItemModelProvider {
         simpleBlockItem(LRBlocks.EQUIPMENT_WORKBENCH.get());
         simpleBlockItem(LRBlocks.ICE_ENCASEMENT.get());
 
+        // 刷怪蛋：套用原版模板模型，不需要自己的贴图
+        getBuilder("glacite_skeleton_spawn_egg").parent(new ModelFile.UncheckedModelFile(mcLoc("item/template_spawn_egg")));
+
 
         handheldItem(LRItems.SHADOW_DAGGER.asItem()).override().predicate(LegendaryRelics.id("charging"), 1).model(new ModelFile.UncheckedModelFile(LegendaryRelics.id("item/shadow_dagger_reverse")));
 
