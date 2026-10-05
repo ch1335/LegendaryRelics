@@ -2,6 +2,7 @@
   "attribute.name.legendary_relics.powder_snow_walking": "Powder Snow Walking",
   "block.legendary_relics.equipment_workbench": "Strengthening forging table",
   "block.legendary_relics.ice_encasement": "Ice Encasement",
+  "entity.legendary_relics.glacite_skeleton": "Glacite Skeleton",
   "equipment_effect.legendary_relics.all_attribute_boost": "Boosts most of your attributes by %s",
   "equipment_effect.legendary_relics.ambush": "§6Ambush§r:Hold down the right button to charge for up to %s seconds, and when released, attack the target once, and this attack will gain up to %s of %s based on the charge time",
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "While in the Nether, most of your attributes are increased by %s.",

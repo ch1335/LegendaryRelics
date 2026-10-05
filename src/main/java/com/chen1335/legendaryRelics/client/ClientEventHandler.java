@@ -12,6 +12,7 @@ import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEnc
 import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.GlaciteSkeletonRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IcicleRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.ThrownFrostShardRender;
@@ -101,6 +102,7 @@ public class ClientEventHandler {
             event.registerEntityRenderer(LREntityTypes.FLYING_KNIFE.value(), FlyingKnifeRender::new);
             event.registerEntityRenderer(LREntityTypes.THROWN_FROST_SHARD.value(), ThrownFrostShardRender::new);
             event.registerEntityRenderer(LREntityTypes.ICICLE.value(), IcicleRenderer::new);
+            event.registerEntityRenderer(LREntityTypes.GLACITE_SKELETON.value(), GlaciteSkeletonRenderer::new);
             event.registerBlockEntityRenderer(LRBlockEntities.ICE_ENCASEMENT.get(), IceEncasementRenderer::new);
             if (ISSModProxy.INSTANCE.shouldLoad()) {
                 event.registerEntityRenderer(ISSRegisters.Entity.SOUL_MISSILE.value(), SoulMissileRenderer::new);

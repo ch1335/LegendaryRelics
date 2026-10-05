@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 public class LRLootTableProvider extends LootTableProvider {
     public LRLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, Set.of(), List.of(
-                new LootTableProvider.SubProviderEntry(BlockLoot::new, LootContextParamSets.BLOCK)
+                new LootTableProvider.SubProviderEntry(BlockLoot::new, LootContextParamSets.BLOCK),
+                new LootTableProvider.SubProviderEntry(LREntityLootTables::new, LootContextParamSets.ENTITY)
         ), registries);
     }
 

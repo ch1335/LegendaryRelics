@@ -1,3 +1,4 @@
-// 1.21.1	2026-10-03T18:05:16.7771493	Loot Tables
+// 1.21.1	2026-10-05T16:23:20.595164	Loot Tables
 1e165c4a6e4748c2e3f1f031a1e136ff2f61ff30 data/legendary_relics/loot_table/blocks/equipment_workbench.json
 3eb92b6ca578681000ef612c05ac1b7a16024dc8 data/legendary_relics/loot_table/blocks/ice_encasement.json
+96e221437f50c8a1fd345f3624ca8657f27c2196 data/legendary_relics/loot_table/entities/glacite_skeleton.json
