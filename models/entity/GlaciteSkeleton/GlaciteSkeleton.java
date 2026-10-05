@@ -3,9 +3,9 @@
 // Paste this class into your mod and generate all required imports
 
 
-public class skeleton<T extends Entity> extends EntityModel<T> {
+public class GlaciteSkeleton<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "skeleton"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "glaciteskeleton"), "main");
 	private final ModelPart head;
 	private final ModelPart body;
 	private final ModelPart left_arm;
@@ -13,7 +13,7 @@ public class skeleton<T extends Entity> extends EntityModel<T> {
 	private final ModelPart left_leg;
 	private final ModelPart right_leg;
 
-	public skeleton(ModelPart root) {
+	public GlaciteSkeleton(ModelPart root) {
 		this.head = root.getChild("head");
 		this.body = root.getChild("body");
 		this.left_arm = root.getChild("left_arm");

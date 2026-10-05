@@ -32,10 +32,20 @@ public class FrostShardThrowGoal extends Goal {
     @Override
     public boolean canUse() {
         LivingEntity target = this.mob.getTarget();
-        return target != null && target.isAlive()
-                && this.mob.getMainHandItem().getItem() instanceof FrostShard
-                && this.mob.distanceTo(target) > GlaciteSkeleton.RANGED_DISTANCE
-                && this.mob.getSensing().hasLineOfSight(target);
+        if (target == null || !target.isAlive() || !(this.mob.getMainHandItem().getItem() instanceof FrostShard)) {
+            return false;
+        }
+        if (!this.mob.getSensing().hasLineOfSight(target)) {
+            return false;
+        }
+        // 距离够远，或近战被地形挡住够不到 —— 都转为投掷
+        return this.mob.distanceTo(target) > GlaciteSkeleton.RANGED_DISTANCE || this.mob.isMeleeBlocked();
+    }
+
+    /** 是否处于近战回退模式：已在近战距离内，但够不到目标。 */
+    private boolean meleeFallback() {
+        LivingEntity target = this.mob.getTarget();
+        return target != null && this.mob.distanceTo(target) <= GlaciteSkeleton.RANGED_DISTANCE;
     }
 
     @Override
@@ -63,6 +73,13 @@ public class FrostShardThrowGoal extends Goal {
             return;
         }
         this.mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+
+        // 回退模式要边推进边投掷；远距离则是原地投掷
+        if (this.meleeFallback()) {
+            this.mob.getNavigation().moveTo(target, 1.2D);
+        } else {
+            this.mob.getNavigation().stop();
+        }
 
         if (this.cooldown > 0) {
             this.cooldown--;
