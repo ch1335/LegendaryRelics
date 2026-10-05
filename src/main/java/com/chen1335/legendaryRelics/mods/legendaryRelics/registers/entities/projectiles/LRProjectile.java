@@ -347,8 +347,11 @@ public class LRProjectile extends Projectile {
 
     @Nullable
     protected EntityHitResult findHitEntity(Vec3 startVec, Vec3 endVec) {
+        // 必须用带交点的这个重载：另一个只把实体塞进 EntityHitResult，
+        // getLocation() 会退化成目标自身位置（脚部），粒子与分裂位置就都不对了。
         return ProjectileUtil.getEntityHitResult(
-                this.level(), this, startVec, endVec, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0), this::canHitEntity
+                this, startVec, endVec, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0),
+                this::canHitEntity, Double.MAX_VALUE
         );
     }
 

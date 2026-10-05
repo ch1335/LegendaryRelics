@@ -8,7 +8,6 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.proj
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons.FrostShard;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
 import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +15,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -46,9 +46,6 @@ import javax.annotation.Nullable;
 public class ThrownFrostShard extends LRProjectile {
 
     private static final EntityDataAccessor<Item> ITEM = SynchedEntityData.defineId(ThrownFrostShard.class, LREntityDataSerializers.ITEM.get());
-
-    /** 破碎时的实体事件 id，客户端据此生成物品碎屑粒子。 */
-    private static final byte SHATTER_EVENT = 3;
 
     /** 命中实体后向左右溅射的冰锥数量。 */
     private static final int SPLASH_COUNT = 5;
@@ -140,7 +137,7 @@ public class ThrownFrostShard extends LRProjectile {
             if (!level().isClientSide && getWeaponItem() != null) {
                 EnchantmentHelper.doPostAttackEffectsWithItemSource((ServerLevel) level(), entity, source, getWeaponItem());
             }
-            // 投掷物命中：给目标挂减速
+            // 霜锥本体命中时减速
             if (!level().isClientSide && entity instanceof LivingEntity livingTarget) {
                 CalculatorArg arg = buildArg();
                 Slowness.apply(livingTarget, this.getOwner(),
@@ -152,8 +149,8 @@ public class ThrownFrostShard extends LRProjectile {
             this.setDeltaMovement(this.getDeltaMovement().scale(0.2));
         }
 
-        this.splashIcicles(hitDirection, entity);
-        this.shatter();
+        this.splashIcicles(hitDirection, result.getLocation(), entity);
+        this.shatter(result.getLocation());
     }
 
     /**
@@ -171,11 +168,11 @@ public class ThrownFrostShard extends LRProjectile {
      * 沿命中方向向左右溅射出若干冰锥。
      *
      * <p>伤害算法由 {@link FrostShard#ICICLE_DAMAGE} 提供，冰锥实体只承载算好的数值。
-     * 方向、位置与伤害都以命中瞬间为准，所以要在 deltaMovement 被改动之前调用。
      *
+     * @param origin         命中点，冰锥从这里生成
      * @param excludedTarget 霜锥本体已经命中的目标，冰锥跳过它；冰锥之间互不排斥，可以打同一个目标
      */
-    private void splashIcicles(Vec3 hitDirection, Entity excludedTarget) {
+    private void splashIcicles(Vec3 hitDirection, Vec3 origin, Entity excludedTarget) {
         if (this.level().isClientSide || hitDirection.lengthSqr() < 1.0E-4) {
             return;
         }
@@ -199,11 +196,7 @@ public class ThrownFrostShard extends LRProjectile {
             Icicle icicle = new Icicle(thrower, this.level(), this.getWeaponItem());
             // 不让冰锥打中霜锥本体已经命中的目标；冰锥之间互不排斥，可以打同一个目标
             icicle.setExcludedTarget(excludedTarget);
-            // 生成点沿飞行方向前移一点，避免冰锥直接嵌在命中目标的模型里
-            icicle.setPos(
-                    this.getX() + direction.x * 0.3D,
-                    this.getY() + direction.y * 0.3D,
-                    this.getZ() + direction.z * 0.3D);
+            icicle.setPos(origin.x, origin.y, origin.z);
             icicle.shoot(spread.x, spread.y, spread.z, 1.5F, 0.0F);
             icicle.setBaseDamage(icicleDamage);
             this.level().addFreshEntity(icicle);
@@ -213,36 +206,23 @@ public class ThrownFrostShard extends LRProjectile {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        this.shatter();
+        this.shatter(result.getLocation());
     }
 
     /**
-     * 命中后破碎：服务端播放碎冰音效并广播事件，客户端据事件生成物品碎屑，最后移除自身。
+     * 在指定位置破碎：播放碎冰音效与粒子，然后移除自身。
      *
-     * <p>{@code Level.addParticle} 在服务端是空实现，所以粒子只能由客户端生成；
-     * 这里沿用原版投掷物（雪球、鸡蛋）的实体事件写法，保证附近玩家都能看到碎屑。
+     * <p>粒子走 {@code ServerLevel#sendParticles}，原版会把精确坐标发给附近玩家；
+     * 实体事件（{@code handleEntityEvent}）不行 —— 客户端只能用自身位置，而那时已经飞过命中点。
      */
-    private void shatter() {
+    private void shatter(Vec3 pos) {
         if (!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, SHATTER_EVENT);
-            this.playSound(SoundType.GLASS.getBreakSound(), 1.0F, 1.2F);
+            if (this.level() instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.ICE.defaultBlockState()),
+                        pos.x, pos.y, pos.z, 16, 0.25D, 0.25D, 0.25D, 0.05D);
+            }
+            this.level().playSound(null, pos.x, pos.y, pos.z, SoundType.GLASS.getBreakSound(), SoundSource.NEUTRAL, 1.0F, 1.2F);
         }
         this.discard();
-    }
-
-    @Override
-    public void handleEntityEvent(byte id) {
-        if (id == SHATTER_EVENT) {
-            ItemStack renderItem = this.getRenderItem();
-            for (int i = 0; i < 16; i++) {
-                this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.ICE.defaultBlockState()),
-                        this.getX(), this.getY(), this.getZ(),
-                        ((double) this.random.nextFloat()),
-                        ((double) this.random.nextFloat()),
-                        ((double) this.random.nextFloat()));
-            }
-        } else {
-            super.handleEntityEvent(id);
-        }
     }
 }
