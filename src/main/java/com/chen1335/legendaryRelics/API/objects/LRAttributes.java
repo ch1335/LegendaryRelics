@@ -38,7 +38,7 @@ public class LRAttributes {
                     .setSentiment(Attribute.Sentiment.NEUTRAL));
 
     /**
-     * 魔法发现（Magic Find）：稀有掉落补偿的权重提升比例，值即提升幅度（0.2 表示 +20%）。基础值 0，默认不生效。
+     * 魔法发现（Magic Find）：让稀有掉落在本抽没出现时额外独立重试一次，最终概率 = 基础概率 ×（1 + 该值）。基础值 0，默认不生效。
      */
     public static final DeferredHolder<Attribute, Attribute> MAGIC_FIND = ATTRIBUTES.register(
             "magic_find",

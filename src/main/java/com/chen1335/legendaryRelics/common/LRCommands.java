@@ -76,7 +76,7 @@ public class LRCommands {
             return 0;
         }
 
-        // 尽量把常见上下文都塞进去，让玩家的魔法发现属性也能生效；缺参数的战利品表会直接报错而不是静默出错
+        // 尽量把常见上下文都塞进去：玩家身份（魔法发现）、手持物（工具附魔）、玩家攻击的伤害来源（实体掉落）
         LootParams.Builder builder = new LootParams.Builder(level)
                 .withParameter(LootContextParams.ORIGIN, source.getPosition())
                 .withParameter(LootContextParams.TOOL, lr$toolOf(source));
@@ -84,7 +84,8 @@ public class LRCommands {
         if (entity instanceof Player player) {
             builder.withParameter(LootContextParams.THIS_ENTITY, player)
                     .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
-                    .withParameter(LootContextParams.ATTACKING_ENTITY, player);
+                    .withParameter(LootContextParams.ATTACKING_ENTITY, player)
+                    .withParameter(LootContextParams.DAMAGE_SOURCE, level.damageSources().playerAttack(player));
         }
 
         LootParams params;
