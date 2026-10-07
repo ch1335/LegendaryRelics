@@ -144,6 +144,15 @@ repositories {
         }
     }
 
+    // GeckoLib 官方仓库（4.x 的 group 是 software.bernie.geckolib，5.x 才是 com.geckolib）
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroup("software.bernie.geckolib")
+        }
+    }
+
 //    maven {
 //        url "https://maven.latvian.dev/releases"
 //        content {
@@ -215,7 +224,7 @@ dependencies {
     implementation "curse.maven:overflowing-bars-852662:5770623"
     implementation "curse.maven:prism-lib-638111:6372979"
     implementation "curse.maven:tslatentitystatus-tes-830420:7115952"
-    implementation "curse.maven:geckolib-388172:7415496"
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 
     implementation "curse.maven:iceberg-520110:6423863"
     implementation "curse.maven:legendary-tooltips-532127:6400660"
