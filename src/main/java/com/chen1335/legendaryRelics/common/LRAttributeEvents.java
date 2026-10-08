@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.common;
 import com.chen1335.legendaryRelics.API.objects.LRAttributes;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.Frostsworn;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.neoforged.bus.api.EventPriority;
@@ -31,5 +32,6 @@ public class LRAttributeEvents {
     public static void EntityAttributeCreation(EntityAttributeCreationEvent event) {
         // 与原版骷髅同属性
         event.put(LREntityTypes.GLACITE_SKELETON.value(), AbstractSkeleton.createAttributes().build());
+        event.put(LREntityTypes.FROSTSWORN.value(), Frostsworn.createAttributes().build());
     }
 }

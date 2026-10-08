@@ -34,7 +34,7 @@
 				{
 					"name": "torso",
 					"parent": "body",
-					"pivot": [0, 25, 0],
+					"pivot": [0, 14, 0],
 					"cubes": [
 						{"origin": [-4, 14, -2], "size": [8, 14, 4], "uv": [0, 32]}
 					]
@@ -53,9 +53,7 @@
 					"name": "hand_item",
 					"parent": "right_arm",
 					"pivot": [-6.5, 16.5, 0],
-					"cubes": [
-						{"origin": [-7, 16, -20], "size": [1, 1, 22], "uv": [-19, -20]}
-					]
+					"rotation": [55, 0, 0]
 				},
 				{
 					"name": "left_arm",
@@ -82,7 +80,7 @@
 				{
 					"name": "head",
 					"parent": "torso",
-					"pivot": [0, 25, 0],
+					"pivot": [0, 28, 0],
 					"cubes": [
 						{"origin": [-4, 28, -4], "size": [8, 8, 8], "uv": [0, 0]}
 					]

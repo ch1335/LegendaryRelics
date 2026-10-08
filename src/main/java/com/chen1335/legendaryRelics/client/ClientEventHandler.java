@@ -12,6 +12,7 @@ import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEnc
 import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FrostswornRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.GlaciteSkeletonRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IcicleRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.TreatmentBallRenderer;
@@ -103,6 +104,7 @@ public class ClientEventHandler {
             event.registerEntityRenderer(LREntityTypes.THROWN_FROST_SHARD.value(), ThrownFrostShardRender::new);
             event.registerEntityRenderer(LREntityTypes.ICICLE.value(), IcicleRenderer::new);
             event.registerEntityRenderer(LREntityTypes.GLACITE_SKELETON.value(), GlaciteSkeletonRenderer::new);
+            event.registerEntityRenderer(LREntityTypes.FROSTSWORN.value(), FrostswornRenderer::new);
             event.registerBlockEntityRenderer(LRBlockEntities.ICE_ENCASEMENT.get(), IceEncasementRenderer::new);
             if (ISSModProxy.INSTANCE.shouldLoad()) {
                 event.registerEntityRenderer(ISSRegisters.Entity.SOUL_MISSILE.value(), SoulMissileRenderer::new);
@@ -135,6 +137,12 @@ public class ClientEventHandler {
         @SubscribeEvent
         public static void RegisterBlockRenderLayers(FMLClientSetupEvent event) {
             event.enqueueWork(() -> ItemBlockRenderTypes.setRenderLayer(LRBlocks.ICE_ENCASEMENT.get(), RenderType.translucent()));
+        }
+
+        /** 动画里用的 query.modified_move_speed 不是 GeckoLib 内置查询，不注册的话恒为 0。 */
+        @SubscribeEvent
+        public static void RegisterMolangQueries(FMLClientSetupEvent event) {
+            LRMolangQueries.register();
         }
     }
 }

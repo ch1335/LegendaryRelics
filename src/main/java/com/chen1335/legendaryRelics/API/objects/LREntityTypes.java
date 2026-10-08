@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.Frostsworn;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.GlaciteSkeleton;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingKnife;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
@@ -32,6 +33,8 @@ public class LREntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<Icicle>> ICICLE = ENTITY_TYPES.register("icicle", () -> EntityType.Builder.<Icicle>of(Icicle::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(1).build("icicle"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<GlaciteSkeleton>> GLACITE_SKELETON = ENTITY_TYPES.register("glacite_skeleton", () -> EntityType.Builder.<GlaciteSkeleton>of(GlaciteSkeleton::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).clientTrackingRange(8).build("glacite_skeleton"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<Frostsworn>> FROSTSWORN = ENTITY_TYPES.register("frostsworn", () -> EntityType.Builder.<Frostsworn>of(Frostsworn::new, MobCategory.MONSTER).sized(0.7F, 2.4F).eyeHeight(2.1F).clientTrackingRange(10).fireImmune().build("frostsworn"));
 
 
 }
