@@ -151,7 +151,8 @@ public class Frostsworn extends Monster implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         // 停下时切 idle 而不是返回 STOP：STOP 会让控制器停下并把骨骼重置回静止姿态，
-        controllers.add(new AnimationController<>(this, "movement", 6,
+        // 从走到站会硬切一下。保持控制器运行，transitionLength 才有东西可混合。
+        controllers.add(new AnimationController<>(this, "movement", 4,
                 state -> state.setAndContinue(state.isMoving() ? WALK : IDLE)));
         // 触发式攻击必须让控制器能回到 STOPPED：GeckoLib 只在 STOPPED 时重置动画 tick
         controllers.add(new AnimationController<>(this, "attack", 3, state -> PlayState.STOP)
