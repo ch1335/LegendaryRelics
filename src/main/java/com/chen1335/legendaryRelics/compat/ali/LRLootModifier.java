@@ -4,8 +4,6 @@ import com.chen1335.legendaryRelics.common.lootModifier.LootEntry;
 import com.yanny.ali.api.*;
 import com.yanny.ali.plugin.common.nodes.GroupNode;
 import com.yanny.ali.plugin.common.nodes.ItemNode;
-import com.yanny.ali.plugin.common.tooltip.ArrayTooltipNode;
-import com.yanny.ali.plugin.common.tooltip.LiteralTooltipNode;
 import com.yanny.ali.plugin.server.EntryTooltipUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;

@@ -6,7 +6,6 @@ import com.chen1335.legendaryRelics.common.lootModifier.LootEntries;
 import com.chen1335.legendaryRelics.common.lootModifier.LootEntry;
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
 import com.chen1335.legendaryRelics.utils.valueHolder.ConfigValueHolder;
-import com.electronwill.nightconfig.core.UnmodifiableConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

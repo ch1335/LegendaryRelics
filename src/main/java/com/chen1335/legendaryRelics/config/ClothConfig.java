@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.config;
 
 import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
-import com.chen1335.legendaryRelics.config.LRServerConfig;
 import com.chen1335.legendaryRelics.network.LootConfigPack;
 import com.chen1335.legendaryRelics.network.ServerConfigPack;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
