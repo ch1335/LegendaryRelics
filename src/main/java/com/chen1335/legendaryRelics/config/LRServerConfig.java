@@ -42,6 +42,14 @@ public class LRServerConfig {
      */
     public static final ModConfigSpec.DoubleValue RARE_CONDITION_CHANCE_THRESHOLD;
 
+    /**
+     * Weight-share threshold for rare mobs.
+     *
+     * <p>Only mobs whose base spawn weight is below this share of the whole spawn list get their weight
+     * boosted by the players' Seeking attribute; the final weight is base weight x (1 + Seeking), uncapped.
+     */
+    public static final ModConfigSpec.DoubleValue RARE_SPAWN_WEIGHT_THRESHOLD;
+
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
@@ -85,6 +93,19 @@ public class LRServerConfig {
                         "Default 0.1.",
                         "Set to 0 to disable boosting those conditions entirely.")
                 .defineInRange("rare_condition_chance_threshold", 0.1D, 0.0D, 1.0D);
+
+        builder.pop();
+
+        builder.comment("Mob spawn settings").push("spawn");
+
+        RARE_SPAWN_WEIGHT_THRESHOLD = builder
+                .comment("Weight-share threshold (0~1) for rare mobs. A mob counts as rare when its base spawn",
+                        "weight is below this share of the whole spawn list. Rare mobs get their weight boosted",
+                        "by the highest Seeking attribute among players within 128 blocks: final weight becomes",
+                        "base weight x (1 + Seeking), uncapped. Other mobs are unaffected.",
+                        "Default 0.02 (2%).",
+                        "Set to 0 to disable the Seeking attribute entirely.")
+                .defineInRange("rare_spawn_weight_threshold", 0.02D, 0.0D, 1.0D);
 
         builder.pop();
 

@@ -26,7 +26,8 @@ import org.jetbrains.annotations.NotNull;
 public record ServerConfigPack(double zenithIceSpikeChance,
                                double zenithIceSpikeChancePerRadius,
                                double rareDropThresholdFactor,
-                               double rareConditionChanceThreshold) implements CustomPacketPayload {
+                               double rareConditionChanceThreshold,
+                               double rareSpawnWeightThreshold) implements CustomPacketPayload {
 
     public static final Type<ServerConfigPack> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "server_config"));
@@ -36,6 +37,7 @@ public record ServerConfigPack(double zenithIceSpikeChance,
             ByteBufCodecs.DOUBLE, ServerConfigPack::zenithIceSpikeChancePerRadius,
             ByteBufCodecs.DOUBLE, ServerConfigPack::rareDropThresholdFactor,
             ByteBufCodecs.DOUBLE, ServerConfigPack::rareConditionChanceThreshold,
+            ByteBufCodecs.DOUBLE, ServerConfigPack::rareSpawnWeightThreshold,
             ServerConfigPack::new
     );
 
@@ -45,7 +47,8 @@ public record ServerConfigPack(double zenithIceSpikeChance,
                 LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.get(),
                 LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.get(),
                 LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.get(),
-                LRServerConfig.RARE_CONDITION_CHANCE_THRESHOLD.get());
+                LRServerConfig.RARE_CONDITION_CHANCE_THRESHOLD.get(),
+                LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.get());
     }
 
     @Override
@@ -79,5 +82,6 @@ public record ServerConfigPack(double zenithIceSpikeChance,
         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.set(zenithIceSpikeChancePerRadius);
         LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.set(rareDropThresholdFactor);
         LRServerConfig.RARE_CONDITION_CHANCE_THRESHOLD.set(rareConditionChanceThreshold);
+        LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.set(rareSpawnWeightThreshold);
     }
 }

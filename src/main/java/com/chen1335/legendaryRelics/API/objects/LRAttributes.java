@@ -45,6 +45,15 @@ public class LRAttributes {
             () -> new PercentageAttribute("attribute.name.legendary_relics.magic_find", 0.0D, 0.0D, 10000.0D)
                     .setSyncable(true));
 
+    /**
+     * 寻觅（Seeking）：提高稀有生物的刷怪权重。权重占比低于阈值（服务端配置）的生物，
+     * 最终权重 = 基础权重 ×（1 + 该值），不封顶。基础值 0，默认不生效。
+     */
+    public static final DeferredHolder<Attribute, Attribute> SEEKING = ATTRIBUTES.register(
+            "seeking",
+            () -> new PercentageAttribute("attribute.name.legendary_relics.seeking", 0.0D, 0.0D, 10000.0D)
+                    .setSyncable(true));
+
     public static void register(IEventBus modEventBus) {
         ATTRIBUTES.register(modEventBus);
     }
