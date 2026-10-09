@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public record ChanceModifierCondition(List<ChanceModifier> modifiers) implements
     }
 
     @Override
-    public LootItemConditionType getType() {
+    public @NotNull LootItemConditionType getType() {
         return LRLootConditions.CHANCE_MODIFIERS.get();
     }
 
