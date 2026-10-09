@@ -8,5 +8,10 @@
     "sounds": [
       "legendary_relics:misc/holy_barrier_break"
     ]
+  },
+  "swing": {
+    "sounds": [
+      "legendary_relics:misc/swing"
+    ]
   }
 }

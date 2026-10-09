@@ -3,23 +3,20 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.mon
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.ai.LRPathNavigation;
-import java.util.Map;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.ai.goal.AnimatableMeleeAttackGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -28,21 +25,22 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.keyframe.event.builtin.AutoPlayingSoundKeyframeHandler;
 import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 /**
- * 冰誓骑士：近战追击型 Boss。
+ * 冰誓骑士
  *
  * <p>{@code Monster#registerGoals} 是空实现，走路与攻击目标都得自己加。
  * 模型里 attack_1 会带动 hand_item 骨骼，主手武器由渲染层的 BlockAndItemGeoLayer 挂上。
@@ -56,19 +54,6 @@ public class Frostsworn extends Monster implements GeoEntity {
     private static final RawAnimation ATTACK_1 = RawAnimation.begin().thenPlay("attack_1");
     private static final RawAnimation ATTACK_2 = RawAnimation.begin().thenPlay("attack_2");
     private static final RawAnimation JAB = RawAnimation.begin().thenPlay("jab");
-
-    /** 近战三选一，随机播放。名字与模型动画一一对应。 */
-    private static final String[] ATTACK_ANIMS = {"attack_1", "attack_2", "jab"};
-
-    /** 三个攻击在 bb 里命中帧的秒数换算成的 tick（0.29 / 0.2917 / 0.3056）。 */
-    private static final Map<String, Integer> ATTACK_HIT_TICKS = Map.of(
-            "attack_1", 8,
-            "attack_2", 8,
-            "jab", 6);
-
-    /** 本次挥击的目标与剩余命中倒计时；动画只在客户端 tick，伤害必须在服务端按同一时刻结算。 */
-    private LivingEntity pendingAttackTarget;
-    private int pendingHitTicks;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -90,7 +75,13 @@ public class Frostsworn extends Monster implements GeoEntity {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+        // 参数依次是 权重 / 命中帧 / 动画长度（tick）。命中帧要和 bb 里标的关键帧对齐，
+        // 动画长度决定两击之间的最短间隔。
+        int attackTransitionTickTime = 1;
+        this.goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<>(this, 1.0D, true)
+                .withAttackType(1, 8 + attackTransitionTickTime, 15, "attack", "attack_1", (mob, target) -> mob.doHurtTarget(target))
+                .withAttackType(1, 8 + attackTransitionTickTime, 15, "attack", "attack_2", (mob, target) -> mob.doHurtTarget(target))
+                .withAttackType(1, 6 + attackTransitionTickTime, 13, "attack", "jab", (mob, target) -> mob.doHurtTarget(target)));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -107,58 +98,38 @@ public class Frostsworn extends Monster implements GeoEntity {
         return super.getAttackBoundingBox().inflate(1D, 0.0D, 1D);
     }
 
-    /** 用精简版导航：原版节点太密，每换一个节点身体朝向就要重算一次。 */
+    /**
+     * 用精简版导航：原版节点太密，每换一个节点身体朝向就要重算一次。
+     */
     @Override
     protected PathNavigation createNavigation(Level level) {
         return new LRPathNavigation(this, level);
     }
 
-    /** 只登记目标并触发动画，伤害由服务端在命中时刻结算（见 tick）。 */
-    @Override
-    public boolean doHurtTarget(Entity target) {
-        if (target instanceof LivingEntity living) {
-            this.pendingAttackTarget = living;
-        }
-        String pick = ATTACK_ANIMS[this.getRandom().nextInt(ATTACK_ANIMS.length)];
-        this.pendingHitTicks =  Map.of(
-                "attack_1", 8,
-                "attack_2", 8,
-                "jab", 6).getOrDefault(pick, 6);
-        this.triggerAnim("attack", pick);
-        return true;
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        if (this.level().isClientSide() || this.pendingAttackTarget == null) {
-            return;
-        }
-
-        if (--this.pendingHitTicks > 0) {
-            return;
-        }
-
-        LivingEntity target = this.pendingAttackTarget;
-        this.pendingAttackTarget = null;
-        // 与关键帧同刻重新判定：被拉开或已死就是空挥
-        if (target.isAlive() && !this.isRemoved() && this.isWithinMeleeAttackRange(target)) {
-            super.doHurtTarget(target);
-        }
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        // 停下时切 idle 而不是返回 STOP：STOP 会让控制器停下并把骨骼重置回静止姿态，
-        // 从走到站会硬切一下。保持控制器运行，transitionLength 才有东西可混合。
-        controllers.add(new AnimationController<>(this, "movement", 4,
-                state -> state.setAndContinue(state.isMoving() ? WALK : IDLE)));
-        // 触发式攻击必须让控制器能回到 STOPPED：GeckoLib 只在 STOPPED 时重置动画 tick
-        controllers.add(new AnimationController<>(this, "attack", 3, state -> PlayState.STOP)
+        AnimationController<Frostsworn> attackController = new AnimationController<>(this, "attack", 1, state -> {
+            state.resetCurrentAnimation();
+            return PlayState.STOP;
+        })
+                // 关键帧音效默认不会播，挂上内置的自动播放 handler 才会响应 sound_effects
+                .setSoundKeyframeHandler(new AutoPlayingSoundKeyframeHandler<>())
                 .triggerableAnim("attack_1", ATTACK_1)
                 .triggerableAnim("attack_2", ATTACK_2)
-                .triggerableAnim("jab", JAB));
+                .triggerableAnim("jab", JAB);
+
+        AnimationController<Frostsworn> moveController = new AnimationController<>(this, "movement", 3,
+                state -> {
+
+                    if (attackController.isPlayingTriggeredAnimation()) {
+                        state.resetCurrentAnimation();
+                        return PlayState.STOP;
+                    }
+                    return state.isMoving() ? state.setAndContinue(WALK) : state.setAndContinue(IDLE);
+                });
+
+        controllers.add(moveController);
+        controllers.add(attackController);
     }
 
     @Override
@@ -193,7 +164,9 @@ public class Frostsworn extends Monster implements GeoEntity {
         return SoundEvents.STRAY_DEATH;
     }
 
-    /** 脚步声在 Entity 上，不在 Mob 上。 */
+    /**
+     * 脚步声在 Entity 上，不在 Mob 上。
+     */
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.STRAY_STEP, 0.15F, 1.0F);

@@ -1,6 +1,7 @@
-package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters;
+package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.ai.goal.forstsworn;
 
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.GlaciteSkeleton;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.ThrownFrostShard;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons.FrostShard;
 import net.minecraft.sounds.SoundEvents;

@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.mon
 
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.ai.goal.forstsworn.FrostShardThrowGoal;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
