@@ -89,6 +89,7 @@ public class LegendaryRelics {
         LRRecipe.register(modEventBus);
         LRMenus.register(modEventBus);
         LRSounds.register(modEventBus);
+        LRLootConditions.register(modEventBus);
         modEventBus.addListener(ClientExtensionsRegister::register);
         modEventBus.addListener(EntityRendererRegister::registerLayerDefinitions);
         modEventBus.addListener(EntityRendererRegister::addLayers);

@@ -2,17 +2,20 @@ package com.chen1335.legendaryRelics.data.lootTables;
 
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
+import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifier;
+import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifierCondition;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
@@ -23,8 +26,8 @@ import java.util.stream.Stream;
  * 实体战利品表。
  *
  * <p>冰川骷髅：骨头沿用原版骷髅（0~2，每级抢夺再 +0~1）；冰 0~1，每级抢夺再 +0~1；
- * 霜锥单独一个池，基础 5%、每级抢夺 +1%。手持那把永不掉落（见 {@code GlaciteSkeleton#finalizeSpawn}），
- * 所以霜锥只能从这里拿到。
+ * 霜锥单独一个池，基础 5%，抢夺每级 +0.5%，攻击者幸运每点 +0.5%，最后按难度 ×1/×1/×1.15/×1.3。
+ * 手持那把永不掉落（见 {@code GlaciteSkeleton#finalizeSpawn}），所以霜锥只能从这里拿到。
  */
 public class LREntityLootTables extends EntityLootSubProvider {
 
@@ -47,11 +50,18 @@ public class LREntityLootTables extends EntityLootSubProvider {
                         .add(LootItem.lootTableItem(Items.ICE)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                 .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))))
-                // 霜锥：独立掷骰
+                // 霜锥：基础 5% → 抢夺每级 +0.5% → 攻击者幸运每点 +0.5% → 按难度缩放
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(LRItems.FROST_SHARD.get())
-                                .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.05F, 0.01F)))));
+                                .when(ChanceModifierCondition.builder(
+                                        new ChanceModifier.SetChance(0.05D),
+                                        new ChanceModifier.ToolEnchantmentLevel(Enchantments.LOOTING,
+                                                ChanceModifier.Operation.ADD, 0.005D),
+                                        new ChanceModifier.EntityAttribute(Attributes.LUCK,
+                                                ChanceModifier.EntitySource.ATTACKING_ENTITY,
+                                                ChanceModifier.Operation.ADD, 0.005D),
+                                        ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D))))));
     }
 
     /** 只登记本模组的实体，否则会因原版实体缺表而报错。 */

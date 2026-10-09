@@ -25,8 +25,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public record ServerConfigPack(double zenithIceSpikeChance,
                                double zenithIceSpikeChancePerRadius,
-                               double rareDropThresholdFactor,
-                               double rareConditionChanceThreshold,
                                double rareSpawnWeightThreshold) implements CustomPacketPayload {
 
     public static final Type<ServerConfigPack> TYPE =
@@ -35,8 +33,6 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     public static final StreamCodec<? super RegistryFriendlyByteBuf, ServerConfigPack> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.DOUBLE, ServerConfigPack::zenithIceSpikeChance,
             ByteBufCodecs.DOUBLE, ServerConfigPack::zenithIceSpikeChancePerRadius,
-            ByteBufCodecs.DOUBLE, ServerConfigPack::rareDropThresholdFactor,
-            ByteBufCodecs.DOUBLE, ServerConfigPack::rareConditionChanceThreshold,
             ByteBufCodecs.DOUBLE, ServerConfigPack::rareSpawnWeightThreshold,
             ServerConfigPack::new
     );
@@ -46,8 +42,6 @@ public record ServerConfigPack(double zenithIceSpikeChance,
         return new ServerConfigPack(
                 LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.get(),
                 LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.get(),
-                LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.get(),
-                LRServerConfig.RARE_CONDITION_CHANCE_THRESHOLD.get(),
                 LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.get());
     }
 
@@ -80,8 +74,6 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     private void apply() {
         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.set(zenithIceSpikeChance);
         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.set(zenithIceSpikeChancePerRadius);
-        LRServerConfig.RARE_DROP_THRESHOLD_FACTOR.set(rareDropThresholdFactor);
-        LRServerConfig.RARE_CONDITION_CHANCE_THRESHOLD.set(rareConditionChanceThreshold);
         LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.set(rareSpawnWeightThreshold);
     }
 }
