@@ -68,11 +68,8 @@
           "type": "minecraft:item",
           "conditions": [
             {
+              "base_chance": 0.05,
               "chance_modifiers": [
-                {
-                  "type": "set_chance",
-                  "value": 0.05
-                },
                 {
                   "type": "tool_enchantment_level",
                   "enchantment": "minecraft:looting",
