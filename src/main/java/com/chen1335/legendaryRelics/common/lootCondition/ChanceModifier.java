@@ -288,7 +288,7 @@ public sealed interface ChanceModifier {
 
     /** 用哪个上下文实体取属性。 */
     enum EntitySource implements StringRepresentable {
-        /** 本实体：方块类战利品表没有它，实体战利品表里是被击杀的那个。 */
+        /** 上下文主角：实体掉落里是被击杀的生物，宝箱/刷怪笼/考古里是开箱的玩家。 */
         THIS_ENTITY("this_entity", context -> context.getParamOrNull(LootContextParams.THIS_ENTITY)),
         /** 攻击者，最常用的一个。 */
         ATTACKING_ENTITY("attacking_entity", context -> context.getParamOrNull(LootContextParams.ATTACKING_ENTITY)),

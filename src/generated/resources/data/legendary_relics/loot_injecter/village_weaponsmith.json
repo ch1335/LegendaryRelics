@@ -25,7 +25,7 @@
         "bonus_rolls": 0.0,
         "conditions": [
           {
-            "base_chance": 0.3333333333333333,
+            "base_chance": 0.25,
             "condition": "legendary_relics:chance_modifiers"
           }
         ],
