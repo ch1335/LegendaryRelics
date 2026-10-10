@@ -173,6 +173,26 @@ public interface TableCondition {
             return this.children.stream().allMatch(child -> child.test(id, table));
         }
     }
+
+    /**
+     * 自定义选择器：json 里只给一个 id，判断交给监听 CustomXxxConditionEvent 的代码。
+     *
+     * <p>注意每次判定都会发事件，注入器 × 表的规模下调用量很大，监听者要自己控制开销。
+     */
+    record Custom(String id) implements TableCondition {
+        public static final MapCodec<Custom> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Codec.STRING.fieldOf("custom_id").forGetter(Custom::id)).apply(instance, Custom::new));
+
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.CUSTOM_TABLE.get();
+        }
+
+        @Override
+        public boolean test(ResourceLocation tableId, LootTable table) {
+            return CustomTableConditionEvent.post(this.id, tableId, table);
+        }
+    }
 }
 
 /**
@@ -205,24 +225,5 @@ final class TagTableCache {
                 .filter(table -> table != null)
                 .map(ResourceKey::location)
                 .collect(Sets::newHashSet, Set::add, Set::addAll));
-    }
-    /**
-     * 自定义选择器：json 里只给一个 id，判断交给监听 CustomXxxConditionEvent 的代码。
-     *
-     * <p>注意每次判定都会发事件，注入器 × 表的规模下调用量很大，监听者要自己控制开销。
-     */
-    record Custom(String id) implements TableCondition {
-        public static final MapCodec<Custom> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Codec.STRING.fieldOf("custom_id").forGetter(Custom::id)).apply(instance, Custom::new));
-
-        @Override
-        public TableConditionType getType() {
-            return LRLootInjectorOps.CUSTOM_TABLE.get();
-        }
-
-        @Override
-        public boolean test(ResourceLocation tableId, LootTable table) {
-            return CustomTableConditionEvent.post(this.id, tableId, table);
-        }
     }
 }

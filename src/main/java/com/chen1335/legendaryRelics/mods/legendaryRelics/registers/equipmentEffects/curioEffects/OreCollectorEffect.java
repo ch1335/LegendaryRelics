@@ -62,12 +62,7 @@ public class OreCollectorEffect extends LRCurioEffect {
 
     @Override
     public void modifyCurioAttribute(CurioAttributeModifierEvent event) {
-        if (LegendaryRelics.isApothicAttributesExtensionLoaded()) {
-            LivingEntity livingEntity = event.getSlotContext().entity();
-            CalculatorArg args = CalculatorArg.simpleArg(livingEntity, event.getItemStack(), this);
-            int addition = event.getItemStack().getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS, CollectedMinerals.empty()).getCollectedOresAmount() >= OreCollectorEffect.COLLECTED_MINERALS_REQUIRE.getInt(args) ? 1 : 0;
-            event.addModifier(ModAttributes.MINING_FORTUNE, new AttributeModifier(LegendaryRelics.id("ore_collector_fortune"), (int) (OreCollectorEffect.DEFAULT.getValue(args) + addition), AttributeModifier.Operation.ADD_VALUE));
-        }
+        super.modifyCurioAttribute(event);
     }
 
     @Override

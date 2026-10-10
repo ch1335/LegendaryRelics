@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common.lootCondition;
 
+import com.chen1335.legendaryRelics.events.EnchantedLootEvent;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,7 +16,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
@@ -34,7 +34,9 @@ public sealed interface ChanceModifier {
 
     Codec<ChanceModifier> CODEC = Codec.STRING.dispatch("type", ChanceModifier::type, ChanceModifier::codecFor);
 
-    /** JSON 里的类型名。 */
+    /**
+     * JSON 里的类型名。
+     */
     String type();
 
     double apply(double chance, LootContext context);
@@ -53,11 +55,16 @@ public sealed interface ChanceModifier {
         };
     }
 
-    /** 概率加上一个值（可以是负数，用来折减）。 */
+    /**
+     * 概率加上一个值（可以是负数，用来折减）。
+     */
     record Add(double value) implements ChanceModifier {
         public static final String TYPE = "add";
 
-        public static Add of(double value) { return new Add(value); }
+        public static Add of(double value) {
+            return new Add(value);
+        }
+
         public static final MapCodec<Add> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.fieldOf("value").forGetter(Add::value)).apply(instance, Add::new));
 
@@ -72,11 +79,16 @@ public sealed interface ChanceModifier {
         }
     }
 
-    /** 概率乘一个系数。 */
+    /**
+     * 概率乘一个系数。
+     */
     record Multiply(double factor) implements ChanceModifier {
         public static final String TYPE = "multiply";
 
-        public static Multiply of(double factor) { return new Multiply(factor); }
+        public static Multiply of(double factor) {
+            return new Multiply(factor);
+        }
+
         public static final MapCodec<Multiply> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.fieldOf("factor").forGetter(Multiply::factor)).apply(instance, Multiply::new));
 
@@ -99,7 +111,10 @@ public sealed interface ChanceModifier {
     record SetChance(double value) implements ChanceModifier {
         public static final String TYPE = "set_chance";
 
-        public static SetChance of(double value) { return new SetChance(value); }
+        public static SetChance of(double value) {
+            return new SetChance(value);
+        }
+
         public static final MapCodec<SetChance> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.fieldOf("value").forGetter(SetChance::value)).apply(instance, SetChance::new));
 
@@ -114,11 +129,16 @@ public sealed interface ChanceModifier {
         }
     }
 
-    /** 把概率夹到 [min, max]，用来兜底避免加工出负数或超过 1 的值。 */
+    /**
+     * 把概率夹到 [min, max]，用来兜底避免加工出负数或超过 1 的值。
+     */
     record Clamp(double min, double max) implements ChanceModifier {
         public static final String TYPE = "clamp";
 
-        public static Clamp of(double min, double max) { return new Clamp(min, max); }
+        public static Clamp of(double min, double max) {
+            return new Clamp(min, max);
+        }
+
         public static final MapCodec<Clamp> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.optionalFieldOf("min", 0.0D).forGetter(Clamp::min),
                 Codec.DOUBLE.optionalFieldOf("max", 1.0D).forGetter(Clamp::max)).apply(instance, Clamp::new));
@@ -134,11 +154,16 @@ public sealed interface ChanceModifier {
         }
     }
 
-    /** 取补：1 - 概率。 */
+    /**
+     * 取补：1 - 概率。
+     */
     record Invert() implements ChanceModifier {
         public static final String TYPE = "invert";
 
-        public static Invert of() { return new Invert(); }
+        public static Invert of() {
+            return new Invert();
+        }
+
         public static final MapCodec<Invert> CODEC = MapCodec.unit(Invert::new);
 
         @Override
@@ -172,12 +197,16 @@ public sealed interface ChanceModifier {
                 Codec.DOUBLE.optionalFieldOf("hard").forGetter(DifficultyFactor::hard)
         ).apply(instance, DifficultyFactor::new));
 
-        /** 乘法版本，datagen 用起来比手搓 Optional 干净。 */
+        /**
+         * 乘法版本，datagen 用起来比手搓 Optional 干净。
+         */
         public static DifficultyFactor multiply(double peaceful, double easy, double normal, double hard) {
             return of(Operation.MULTIPLY, peaceful, easy, normal, hard);
         }
 
-        /** 加法版本。 */
+        /**
+         * 加法版本。
+         */
         public static DifficultyFactor add(double peaceful, double easy, double normal, double hard) {
             return of(Operation.ADD, peaceful, easy, normal, hard);
         }
@@ -215,12 +244,14 @@ public sealed interface ChanceModifier {
      *
      * <p>注意这里的 multiply 和 {@link DifficultyFactor} 不同：那边乘的是档位值本身，这边乘的是「1 + 增量」。
      */
-    record ToolEnchantmentLevel(ResourceKey<Enchantment> enchantment, Operation operation, double perLevel) implements ChanceModifier {
+    record ToolEnchantmentLevel(ResourceKey<Enchantment> enchantment, Operation operation,
+                                double perLevel) implements ChanceModifier {
         public static final String TYPE = "tool_enchantment_level";
 
         public static ToolEnchantmentLevel of(ResourceKey<Enchantment> enchantment, Operation operation, double perLevel) {
             return new ToolEnchantmentLevel(enchantment, operation, perLevel);
         }
+
         public static final MapCodec<ToolEnchantmentLevel> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ResourceKey.codec(Registries.ENCHANTMENT).fieldOf("enchantment").forGetter(ToolEnchantmentLevel::enchantment),
                 Operation.CODEC.optionalFieldOf("operation", Operation.MULTIPLY).forGetter(ToolEnchantmentLevel::operation),
@@ -242,8 +273,8 @@ public sealed interface ChanceModifier {
         /**
          * 取不到工具或对应附魔时按 0 级处理，也就是不改变概率。
          *
-         * <p>方块类战利品表才有 TOOL；实体类没有（见 LivingEntity#dropFromLootTable），
-         * 那时退回攻击者身上取等级 —— 和原版 LootItemRandomChanceWithEnchantedBonusCondition 一致。
+         * <p>NeoForge 推荐直接用 ItemStack#getEnchantmentLevel，取不到工具就按 0 级算，
+         * 然后发 EnchantedLootEvent 让外部调整（例如装备效果加抢夺）。
          *
          * <p>附魔是数据驱动注册表，没法像属性那样直接存 Holder，只能存 ResourceKey 再取。
          */
@@ -252,14 +283,13 @@ public sealed interface ChanceModifier {
                     .registryOrThrow(Registries.ENCHANTMENT)
                     .getHolderOrThrow(this.enchantment);
 
+            // NeoForge 推荐直接用 ItemStack#getEnchantmentLevel，比 EnchantmentHelper 那层更直接
             ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
-            if (tool != null && !tool.isEmpty()) {
-                return tool.getEnchantmentLevel(holder);
-            }
+            int level = tool == null || tool.isEmpty()
+                    ? 0
+                    : tool.getEnchantmentLevel(holder);
 
-            Entity attacker = context.getParamOrNull(LootContextParams.ATTACKING_ENTITY);
-
-            return attacker instanceof LivingEntity living ? EnchantmentHelper.getEnchantmentLevel(holder, living) : 0;
+            return EnchantedLootEvent.post(holder, context, level);
         }
     }
 
@@ -269,12 +299,14 @@ public sealed interface ChanceModifier {
      * <p>{@code per_point} 是「每点属性增减多少」，语义和 {@link ToolEnchantmentLevel} 一致。
      * 拿不到实体、或该实体身上没有这条属性时【原样返回】而不是当成 0，所以不装相关模组也不会意外清零。
      */
-    record EntityAttribute(Holder<Attribute> attribute, EntitySource source, Operation operation, double perPoint) implements ChanceModifier {
+    record EntityAttribute(Holder<Attribute> attribute, EntitySource source, Operation operation,
+                           double perPoint) implements ChanceModifier {
         public static final String TYPE = "entity_attribute";
 
         public static EntityAttribute of(Holder<Attribute> attribute, EntitySource source, Operation operation, double perPoint) {
             return new EntityAttribute(attribute, source, operation, perPoint);
         }
+
         public static final MapCodec<EntityAttribute> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 BuiltInRegistries.ATTRIBUTE.holderByNameCodec().fieldOf("attribute").forGetter(EntityAttribute::attribute),
                 EntitySource.CODEC.optionalFieldOf("entity", EntitySource.ATTACKING_ENTITY).forGetter(EntityAttribute::source),
@@ -304,15 +336,25 @@ public sealed interface ChanceModifier {
         }
     }
 
-    /** 用哪个上下文实体取属性。 */
+    /**
+     * 用哪个上下文实体取属性。
+     */
     enum EntitySource implements StringRepresentable {
-        /** 上下文主角：实体掉落里是被击杀的生物，宝箱/刷怪笼/考古里是开箱的玩家。 */
+        /**
+         * 上下文主角：实体掉落里是被击杀的生物，宝箱/刷怪笼/考古里是开箱的玩家。
+         */
         THIS_ENTITY("this_entity", context -> context.getParamOrNull(LootContextParams.THIS_ENTITY)),
-        /** 攻击者，最常用的一个。 */
+        /**
+         * 攻击者，最常用的一个。
+         */
         ATTACKING_ENTITY("attacking_entity", context -> context.getParamOrNull(LootContextParams.ATTACKING_ENTITY)),
-        /** 直接攻击者（弓箭射出的箭等）。 */
+        /**
+         * 直接攻击者（弓箭射出的箭等）。
+         */
         DIRECT_ATTACKING_ENTITY("direct_attacking_entity", context -> context.getParamOrNull(LootContextParams.DIRECT_ATTACKING_ENTITY)),
-        /** 最后造成伤害的玩家。 */
+        /**
+         * 最后造成伤害的玩家。
+         */
         LAST_DAMAGE_PLAYER("last_damage_player", context -> context.getParamOrNull(LootContextParams.LAST_DAMAGE_PLAYER));
 
         public static final Codec<EntitySource> CODEC = StringRepresentable.fromEnum(EntitySource::values);
@@ -335,11 +377,17 @@ public sealed interface ChanceModifier {
         }
     }
 
-    /** 难度档位的加工语义。 */
+    /**
+     * 难度档位的加工语义。
+     */
     enum Operation implements StringRepresentable {
-        /** 概率 + 档位值。 */
+        /**
+         * 概率 + 档位值。
+         */
         ADD("add"),
-        /** 概率 × 档位值。 */
+        /**
+         * 概率 × 档位值。
+         */
         MULTIPLY("multiply");
 
         public static final Codec<Operation> CODEC = StringRepresentable.fromEnum(Operation::values);
@@ -355,17 +403,23 @@ public sealed interface ChanceModifier {
             return this.name;
         }
 
-        /** 档位留空时用的值：加法 0、乘法 1，都不改变概率。 */
+        /**
+         * 档位留空时用的值：加法 0、乘法 1，都不改变概率。
+         */
         public double neutral() {
             return this == ADD ? 0.0D : 1.0D;
         }
 
-        /** 纯语义：加法是 +value，乘法是 ×value。 */
+        /**
+         * 纯语义：加法是 +value，乘法是 ×value。
+         */
         public double apply(double chance, double value) {
             return this == ADD ? chance + value : chance * value;
         }
 
-        /** 增量语义：加法是 +delta，乘法是 ×（1 + delta）；delta 为 0 时两者都不改变。 */
+        /**
+         * 增量语义：加法是 +delta，乘法是 ×（1 + delta）；delta 为 0 时两者都不改变。
+         */
         public double applyScaled(double chance, double delta) {
             return this == ADD ? chance + delta : chance * (1.0D + delta);
         }
