@@ -4,6 +4,7 @@
   "legendary_relics.ali.wrapper": "%s",
   "legendary_relics.ali.operation.add": "加法 :",
   "legendary_relics.ali.operation.multiply": "乘法 :",
+  "legendary_relics.ali.property.base_chance": "基础概率",
   "legendary_relics.ali.property.set_chance": "设置概率",
   "legendary_relics.ali.property.multiply_factor": "乘法系数",
   "legendary_relics.ali.property.add_value": "加法数值",

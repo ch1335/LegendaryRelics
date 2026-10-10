@@ -9,11 +9,9 @@ import com.chen1335.legendaryRelics.client.LegendaryTooltipsHandler;
 import com.chen1335.legendaryRelics.client.particlePlayer.ParticlePlayersHolder;
 import com.chen1335.legendaryRelics.common.calculator.AutoRegister;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
-import com.chen1335.legendaryRelics.common.lootModifier.lootInject.LootInjectors;
 import com.chen1335.legendaryRelics.config.ClothConfig;
 import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.config.LRServerConfig;
-import com.chen1335.legendaryRelics.config.LootConfig;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
@@ -101,7 +99,6 @@ public class LegendaryRelics {
 
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, LRClientConfig.CONFIG_SPEC,"legendary_relics/client.toml");
-        modContainer.registerConfig(ModConfig.Type.SERVER, LootConfig.CONFIG_SPEC,"legendary_relics/loots.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, LRServerConfig.CONFIG_SPEC,"legendary_relics/server.toml");
         if (ModList.get().isLoaded("cloth_config")) {
             if (Environment.get().getDist().isClient()) {
@@ -189,6 +186,5 @@ public class LegendaryRelics {
     }
 
     public void serverStartedEvent(ServerStartedEvent event) {
-        LootInjectors.INJECTORS.clear();
     }
 }

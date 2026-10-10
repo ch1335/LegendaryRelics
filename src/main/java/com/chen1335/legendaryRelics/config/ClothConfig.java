@@ -1,7 +1,5 @@
 package com.chen1335.legendaryRelics.config;
 
-import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
-import com.chen1335.legendaryRelics.network.LootConfigPack;
 import com.chen1335.legendaryRelics.network.ServerConfigPack;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
@@ -46,8 +44,8 @@ public class ClothConfig {
             // SERVER 配置在进入世界之前不会被加载，此时 ConfigValue#get() 会抛异常，
             // 所以主菜单里只显示默认值、且不可编辑。
             // 多人游戏里这份本地副本由 ServerConfigPack 在进服时同步过来。
-            boolean serverConfigsLoaded = LRServerConfig.CONFIG_SPEC.isLoaded() && LootConfig.CONFIG_SPEC.isLoaded();
             ConfigCategory serverConfig = configBuilder.getOrCreateCategory(Component.translatable("legendary_relics.config.server"));
+            boolean serverConfigsLoaded = LRServerConfig.CONFIG_SPEC.isLoaded();
             boolean editable = canEdit(parent.getMinecraft()) && serverConfigsLoaded;
             if (!editable) {
                 serverConfig.setDescription(new Component[]{Component.translatable(
@@ -90,46 +88,12 @@ public class ClothConfig {
             rareSpawnWeightThreshold.setEditable(editable);
             serverConfig.addEntry(rareSpawnWeightThreshold);
 
-            ConfigCategory lootTableConfig = configBuilder.getOrCreateCategory(Component.translatable("legendary_relics.config.lootTable"));
-            if (!editable) {
-                lootTableConfig.setDescription(new Component[]{Component.translatable(
-                        serverConfigsLoaded ? "legendary_relics.config.lootTable.cant_edit" : "legendary_relics.config.not_in_world")});
-            }
-            LootModifier.LOOT_ENTRIES.forEach((id, lootEntry) -> {
-                SubCategoryBuilder subCategoryBuilder = entryBuilder.startSubCategory(lootEntry.getComponent());
-
-                @NotNull StringListListEntry lootTables = entryBuilder.startStrList(Component.translatable("legendary_relics.loot_config.loot_tables"),
-                                serverConfigsLoaded ? lootEntry.lootTables.get() : lootEntry.lootTables.geDefault())
-                        .setDefaultValue(lootEntry.lootTables.geDefault())
-                        .setSaveConsumer(lootEntry.lootTables::set)
-                        .build();
-                lootTables.setEditable(editable);
-                subCategoryBuilder.add(lootTables);
-
-                @NotNull DoubleListEntry chance = entryBuilder.startDoubleField(Component.translatable("legendary_relics.loot_config.chance"),
-                                serverConfigsLoaded ? lootEntry.chance.get() : lootEntry.chance.geDefault())
-                        .setDefaultValue(lootEntry.chance.geDefault())
-                        .setSaveConsumer(lootEntry.chance::set).build();
-                chance.setEditable(editable);
-                subCategoryBuilder.add(chance);
-
-                @NotNull IntegerListEntry rolls = entryBuilder.startIntField(Component.translatable("legendary_relics.loot_config.rolls"),
-                                serverConfigsLoaded ? lootEntry.rolls.get() : lootEntry.rolls.geDefault())
-                        .setDefaultValue(lootEntry.rolls.geDefault())
-                        .setSaveConsumer(lootEntry.rolls::set).build();
-                rolls.setEditable(editable);
-                subCategoryBuilder.add(rolls);
-
-
-                lootTableConfig.addEntry(subCategoryBuilder.build());
-            });
 
             configBuilder.setSavingRunnable(() -> {
                 LRClientConfig.CONFIG_SPEC.save();
                 LocalPlayer player = parent.getMinecraft().player;
                 if (player != null) {
                     if (parent.getMinecraft().getSingleplayerServer() != null) {
-                        LootConfig.CONFIG_SPEC.save();
                         // 单人游戏里本地就是服务端，直接写入并落盘
                         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.set(zenithIceSpikeChance.getValue());
                         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.set(zenithIceChancePerRadius.getValue());
@@ -140,7 +104,6 @@ public class ClothConfig {
                         }
                     } else if (player.getPermissionLevel() >= 2) {
                         player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.request_update"));
-                        PacketDistributor.sendToServer(new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
                         // 多人游戏：服务端配置由服务端写入，这里只把值发过去
                         player.sendSystemMessage(Component.translatable("legendary_relics.config.request_update"));
                         PacketDistributor.sendToServer(new ServerConfigPack(zenithIceSpikeChance.getValue(), zenithIceChancePerRadius.getValue(), rareSpawnWeightThreshold.getValue()));

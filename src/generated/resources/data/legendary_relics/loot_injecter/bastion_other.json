@@ -1,0 +1,52 @@
+{
+  "ops": [
+    {
+      "type": "add_pool",
+      "pool": {
+        "bonus_rolls": 0.0,
+        "entries": [
+          {
+            "type": "minecraft:group",
+            "children": [
+              {
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "base_chance": 0.25,
+                    "condition": "legendary_relics:chance_modifiers"
+                  }
+                ],
+                "name": "legendary_relics:nether_ring"
+              },
+              {
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "base_chance": 0.2,
+                    "condition": "legendary_relics:chance_modifiers"
+                  }
+                ],
+                "name": "legendary_relics:ancient_fragment"
+              },
+              {
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "base_chance": 0.2,
+                    "condition": "legendary_relics:chance_modifiers"
+                  }
+                ],
+                "name": "legendary_relics:dark_gold_fragment"
+              }
+            ]
+          }
+        ],
+        "rolls": 1.0
+      }
+    }
+  ],
+  "tableCondition": {
+    "type": "id",
+    "id": "minecraft:chests/bastion_other"
+  }
+}

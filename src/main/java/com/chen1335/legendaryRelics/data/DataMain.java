@@ -2,7 +2,6 @@ package com.chen1335.legendaryRelics.data;
 
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.data.lootTables.LRGlobalLootModifierProvider;
 import com.chen1335.legendaryRelics.data.lootTables.LRLootTableProvider;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.IRSDamageTypes;
 import net.minecraft.core.RegistrySetBuilder;
@@ -45,15 +44,7 @@ public class DataMain {
         generator.addProvider(event.includeServer(), new LRItemTagsProvider(generator.getPackOutput(), builtinEntriesProvider.getRegistryProvider(), blockTagsProvider.contentsGetter()));
 
         generator.addProvider(event.includeServer(), new LRItemModelProvider(generator.getPackOutput(), event.getExistingFileHelper()));
-
-        generator.addProvider(event.includeServer(), new LRGlobalLootModifierProvider(
-                generator.getPackOutput(),
-                builtinEntriesProvider.getRegistryProvider(),
-                modid()
-        ));
-
-
-        generator.addProvider(event.includeServer(), new LRRecipeProvider(
+generator.addProvider(event.includeServer(), new LRRecipeProvider(
                 generator.getPackOutput(),
                 builtinEntriesProvider.getRegistryProvider()));
 
@@ -66,9 +57,7 @@ public class DataMain {
                 generator.getPackOutput(),
                 builtinEntriesProvider.getRegistryProvider()));
 
-        generator.addProvider(event.includeServer(), new LRLootInjectorProvider(
-                generator.getPackOutput(),
-                builtinEntriesProvider.getRegistryProvider()));
+        generator.addProvider(event.includeServer(), new LRLootInjectorProvider(generator.getPackOutput(), event.getLookupProvider()));
 
         generator.addProvider(event.includeServer(), new LRSoundDefinitionsProvider(
                 generator.getPackOutput(),

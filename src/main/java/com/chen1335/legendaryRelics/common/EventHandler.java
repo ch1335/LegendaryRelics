@@ -9,7 +9,6 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
-import com.chen1335.legendaryRelics.common.lootModifier.LootModifier;
 import com.chen1335.legendaryRelics.compat.jei.network.TransferItem;
 import com.chen1335.legendaryRelics.mixins.legendary_relics.CurioAttributeModifierEventInvoker;
 import com.chen1335.legendaryRelics.network.*;
@@ -81,7 +80,6 @@ public class EventHandler {
                 }
             }
             if (!event.getEntity().level().isClientSide) {
-                PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new LootConfigPack(LootModifier.LOOT_ENTRIES.values().stream().toList()));
                 // 服务端配置不会自动同步，进服时把当前值发给玩家，供 Cloth Config 界面显示
                 PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), ServerConfigPack.ofCurrent());
 
@@ -337,7 +335,6 @@ public class EventHandler {
             registrar.playToClient(SetsInfoPack.TYPE, SetsInfoPack.STREAM_CODEC, SetsInfoPack::handler);
             registrar.playToClient(PlayClientParticlePack.TYPE, PlayClientParticlePack.STREAM_CODEC, PlayClientParticlePack::handler);
 
-            registrar.playBidirectional(LootConfigPack.TYPE, LootConfigPack.STREAM_CODEC, LootConfigPack::handler);
 
             registrar.playBidirectional(ServerConfigPack.TYPE, ServerConfigPack.STREAM_CODEC, ServerConfigPack::handler);
 

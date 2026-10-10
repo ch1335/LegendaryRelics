@@ -1,0 +1,40 @@
+{
+  "ops": [
+    {
+      "type": "add_pool",
+      "pool": {
+        "bonus_rolls": 0.0,
+        "entries": [
+          {
+            "type": "minecraft:group",
+            "children": [
+              {
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "base_chance": 0.1,
+                    "chance_modifiers": [
+                      {
+                        "type": "tool_enchantment_level",
+                        "enchantment": "minecraft:looting",
+                        "operation": "add",
+                        "per_level": 0.02
+                      }
+                    ],
+                    "condition": "legendary_relics:chance_modifiers"
+                  }
+                ],
+                "name": "legendary_relics:tyrannical_essence"
+              }
+            ]
+          }
+        ],
+        "rolls": 1.0
+      }
+    }
+  ],
+  "tableCondition": {
+    "type": "id",
+    "id": "minecraft:entities/piglin_brute"
+  }
+}

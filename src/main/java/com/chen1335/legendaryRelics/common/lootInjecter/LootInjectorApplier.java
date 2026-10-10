@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common.lootInjecter;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.common.lootInjecter.event.LootInjectorApplyEvent;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Holder;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -77,7 +79,12 @@ public final class LootInjectorApplier {
                     continue;
                 }
 
-                injector.ops().forEach(op -> op.apply(table));
+                Optional<LootInjector> effective = LootInjectorApplyEvent.post(injector, holder.key().location(), table);
+                if (effective.isEmpty()) {
+                    continue;
+                }
+
+                effective.get().ops().forEach(op -> op.apply(table));
                 applications++;
             }
         }

@@ -4,6 +4,7 @@
   "legendary_relics.ali.wrapper": "%s",
   "legendary_relics.ali.operation.add": "Addition :",
   "legendary_relics.ali.operation.multiply": "Multiplication :",
+  "legendary_relics.ali.property.base_chance": "Base chance",
   "legendary_relics.ali.property.set_chance": "Set chance",
   "legendary_relics.ali.property.multiply_factor": "Multiplier",
   "legendary_relics.ali.property.add_value": "Added value",

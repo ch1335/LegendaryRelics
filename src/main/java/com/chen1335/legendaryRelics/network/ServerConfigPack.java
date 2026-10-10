@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
  * </ul>
  *
  * <p>NeoForge 不会自动同步 {@code ModConfig.Type.SERVER} 配置，所以 Cloth Config 界面
- * 要显示服务端的真实值就必须自己发包 —— 和 {@link LootConfigPack} 同一套做法。
  */
 public record ServerConfigPack(double zenithIceSpikeChance,
                                double zenithIceSpikeChancePerRadius,
