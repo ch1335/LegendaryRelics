@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common.lootInjecter;
 
 import com.chen1335.legendaryRelics.API.objects.LRLootInjectorOps;
+import com.chen1335.legendaryRelics.common.lootInjecter.event.CustomInjectorOpEvent;
 import com.chen1335.legendaryRelics.common.lootInjecter.condition.EntryCondition;
 import com.chen1335.legendaryRelics.common.lootInjecter.condition.PoolCondition;
 import com.mojang.serialization.Codec;
@@ -206,5 +207,22 @@ public interface LootInjectorOp {
         }
 
         return pool.entries;
+    }
+    /**
+     * 自定义操作：json 里只给一个 id，具体怎么改表交给监听 CustomInjectorOpEvent 的代码。
+     */
+    record Custom(String id) implements LootInjectorOp {
+        public static final MapCodec<Custom> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Codec.STRING.fieldOf("custom_id").forGetter(Custom::id)).apply(instance, Custom::new));
+
+        @Override
+        public LootInjectorOpType getType() {
+            return LRLootInjectorOps.CUSTOM_OP.get();
+        }
+
+        @Override
+        public void apply(LootTable table) {
+            CustomInjectorOpEvent.post(this.id, table);
+        }
     }
 }

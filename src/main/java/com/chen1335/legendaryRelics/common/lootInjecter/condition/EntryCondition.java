@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common.lootInjecter.condition;
 
 import com.chen1335.legendaryRelics.API.objects.LRLootInjectorOps;
+import com.chen1335.legendaryRelics.common.lootInjecter.event.CustomEntryConditionEvent;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -223,6 +224,25 @@ public interface EntryCondition {
         @Override
         public boolean test(int index, LootPoolEntryContainer entry) {
             return this.children.stream().allMatch(child -> child.test(index, entry));
+        }
+    }
+    /**
+     * 自定义选择器：json 里只给一个 id，判断交给监听 CustomXxxConditionEvent 的代码。
+     *
+     * <p>注意每次判定都会发事件，注入器 × 表的规模下调用量很大，监听者要自己控制开销。
+     */
+    record Custom(String id) implements EntryCondition {
+        public static final MapCodec<Custom> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Codec.STRING.fieldOf("custom_id").forGetter(Custom::id)).apply(instance, Custom::new));
+
+        @Override
+        public EntryConditionType getType() {
+            return LRLootInjectorOps.CUSTOM_ENTRY.get();
+        }
+
+        @Override
+        public boolean test(int index, LootPoolEntryContainer entry) {
+            return CustomEntryConditionEvent.post(this.id, index, entry);
         }
     }
 }

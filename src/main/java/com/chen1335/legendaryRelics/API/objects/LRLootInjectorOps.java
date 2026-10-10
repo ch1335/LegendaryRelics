@@ -43,6 +43,9 @@ public final class LRLootInjectorOps {
             OP_TYPES.register("remove_entry", () -> new LootInjectorOpType(LootInjectorOp.RemoveEntry.CODEC));
     public static final DeferredHolder<LootInjectorOpType, LootInjectorOpType> MODIFY_ENTRY =
             OP_TYPES.register("modify_entry", () -> new LootInjectorOpType(LootInjectorOp.ModifyEntry.CODEC));
+    /** 只带一个 id，实际改动交给 CustomInjectorOpEvent 的监听者。 */
+    public static final DeferredHolder<LootInjectorOpType, LootInjectorOpType> CUSTOM_OP =
+            OP_TYPES.register("custom", () -> new LootInjectorOpType(LootInjectorOp.Custom.CODEC));
 
     // ---- 表选择器：同一套做法，别的模组也能注册 ----
 
@@ -74,6 +77,9 @@ public final class LRLootInjectorOps {
             TABLE_CONDITION_TYPES.register("any_of", () -> new TableConditionType(TableCondition.AnyOf.CODEC));
     public static final DeferredHolder<TableConditionType, TableConditionType> TABLE_ALL_OF =
             TABLE_CONDITION_TYPES.register("all_of", () -> new TableConditionType(TableCondition.AllOf.CODEC));
+    /** 只带一个 id，判断交给 CustomTableConditionEvent 的监听者。 */
+    public static final DeferredHolder<TableConditionType, TableConditionType> CUSTOM_TABLE =
+            TABLE_CONDITION_TYPES.register("custom", () -> new TableConditionType(TableCondition.Custom.CODEC));
 
     // ---- 池选择器 ----
 
@@ -101,6 +107,9 @@ public final class LRLootInjectorOps {
             POOL_CONDITION_TYPES.register("any_of", () -> new PoolConditionType(PoolCondition.AnyOf.CODEC));
     public static final DeferredHolder<PoolConditionType, PoolConditionType> POOL_ALL_OF =
             POOL_CONDITION_TYPES.register("all_of", () -> new PoolConditionType(PoolCondition.AllOf.CODEC));
+    /** 只带一个 id，判断交给 CustomPoolConditionEvent 的监听者。 */
+    public static final DeferredHolder<PoolConditionType, PoolConditionType> CUSTOM_POOL =
+            POOL_CONDITION_TYPES.register("custom", () -> new PoolConditionType(PoolCondition.Custom.CODEC));
 
     // ---- 条目选择器 ----
 
@@ -138,6 +147,9 @@ public final class LRLootInjectorOps {
             ENTRY_CONDITION_TYPES.register("any_of", () -> new EntryConditionType(EntryCondition.AnyOf.CODEC));
     public static final DeferredHolder<EntryConditionType, EntryConditionType> ENTRY_ALL_OF =
             ENTRY_CONDITION_TYPES.register("all_of", () -> new EntryConditionType(EntryCondition.AllOf.CODEC));
+    /** 只带一个 id，判断交给 CustomEntryConditionEvent 的监听者。 */
+    public static final DeferredHolder<EntryConditionType, EntryConditionType> CUSTOM_ENTRY =
+            ENTRY_CONDITION_TYPES.register("custom", () -> new EntryConditionType(EntryCondition.Custom.CODEC));
 
     private LRLootInjectorOps() {
     }
