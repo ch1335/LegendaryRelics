@@ -56,6 +56,8 @@ public sealed interface ChanceModifier {
     /** 概率加上一个值（可以是负数，用来折减）。 */
     record Add(double value) implements ChanceModifier {
         public static final String TYPE = "add";
+
+        public static Add of(double value) { return new Add(value); }
         public static final MapCodec<Add> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.fieldOf("value").forGetter(Add::value)).apply(instance, Add::new));
 
@@ -73,6 +75,8 @@ public sealed interface ChanceModifier {
     /** 概率乘一个系数。 */
     record Multiply(double factor) implements ChanceModifier {
         public static final String TYPE = "multiply";
+
+        public static Multiply of(double factor) { return new Multiply(factor); }
         public static final MapCodec<Multiply> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.fieldOf("factor").forGetter(Multiply::factor)).apply(instance, Multiply::new));
 
@@ -94,6 +98,8 @@ public sealed interface ChanceModifier {
      */
     record SetChance(double value) implements ChanceModifier {
         public static final String TYPE = "set_chance";
+
+        public static SetChance of(double value) { return new SetChance(value); }
         public static final MapCodec<SetChance> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.fieldOf("value").forGetter(SetChance::value)).apply(instance, SetChance::new));
 
@@ -111,6 +117,8 @@ public sealed interface ChanceModifier {
     /** 把概率夹到 [min, max]，用来兜底避免加工出负数或超过 1 的值。 */
     record Clamp(double min, double max) implements ChanceModifier {
         public static final String TYPE = "clamp";
+
+        public static Clamp of(double min, double max) { return new Clamp(min, max); }
         public static final MapCodec<Clamp> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.DOUBLE.optionalFieldOf("min", 0.0D).forGetter(Clamp::min),
                 Codec.DOUBLE.optionalFieldOf("max", 1.0D).forGetter(Clamp::max)).apply(instance, Clamp::new));
@@ -129,6 +137,8 @@ public sealed interface ChanceModifier {
     /** 取补：1 - 概率。 */
     record Invert() implements ChanceModifier {
         public static final String TYPE = "invert";
+
+        public static Invert of() { return new Invert(); }
         public static final MapCodec<Invert> CODEC = MapCodec.unit(Invert::new);
 
         @Override
@@ -207,6 +217,10 @@ public sealed interface ChanceModifier {
      */
     record ToolEnchantmentLevel(ResourceKey<Enchantment> enchantment, Operation operation, double perLevel) implements ChanceModifier {
         public static final String TYPE = "tool_enchantment_level";
+
+        public static ToolEnchantmentLevel of(ResourceKey<Enchantment> enchantment, Operation operation, double perLevel) {
+            return new ToolEnchantmentLevel(enchantment, operation, perLevel);
+        }
         public static final MapCodec<ToolEnchantmentLevel> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ResourceKey.codec(Registries.ENCHANTMENT).fieldOf("enchantment").forGetter(ToolEnchantmentLevel::enchantment),
                 Operation.CODEC.optionalFieldOf("operation", Operation.MULTIPLY).forGetter(ToolEnchantmentLevel::operation),
@@ -257,6 +271,10 @@ public sealed interface ChanceModifier {
      */
     record EntityAttribute(Holder<Attribute> attribute, EntitySource source, Operation operation, double perPoint) implements ChanceModifier {
         public static final String TYPE = "entity_attribute";
+
+        public static EntityAttribute of(Holder<Attribute> attribute, EntitySource source, Operation operation, double perPoint) {
+            return new EntityAttribute(attribute, source, operation, perPoint);
+        }
         public static final MapCodec<EntityAttribute> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 BuiltInRegistries.ATTRIBUTE.holderByNameCodec().fieldOf("attribute").forGetter(EntityAttribute::attribute),
                 EntitySource.CODEC.optionalFieldOf("entity", EntitySource.ATTACKING_ENTITY).forGetter(EntityAttribute::source),

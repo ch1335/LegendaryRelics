@@ -43,31 +43,31 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     // 多张表共用的条目，写一次省得逐处重复；Drop 只是数据，被多个池复用是安全的
     // 基础 20%，开箱玩家每点幸运 +1%，先钳到 30% 再按难度放大
     private static final Drop ANCIENT_FRAGMENT_NORMAL = new Drop(0.2D, 0.0D, List.of(
-            new ChanceModifier.EntityAttribute(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
+            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
                     ChanceModifier.Operation.ADD, 0.01D),
-            new ChanceModifier.Clamp(0.0D, 0.3D),
+            ChanceModifier.Clamp.of(0.0D, 0.3D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D)),
             LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
 
     // 基础 30%，开箱玩家每点幸运 +1%，先钳到 40% 再按难度放大
     private static final Drop ANCIENT_FRAGMENT_HIGH = new Drop(0.3D, 0.0D, List.of(
-            new ChanceModifier.EntityAttribute(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
+            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
                     ChanceModifier.Operation.ADD, 0.01D),
-            new ChanceModifier.Clamp(0.0D, 0.4D),
+            ChanceModifier.Clamp.of(0.0D, 0.4D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D)),
             LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
     // 基础 20%，开箱玩家每点幸运 +1%，先钳到 30% 再按难度放大（暗金难度加成比其他碎片高）
     private static final Drop DARK_GOLD_FRAGMENT_NORMAL = new Drop(0.2D, 0.0D, List.of(
-            new ChanceModifier.EntityAttribute(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
+            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
                     ChanceModifier.Operation.ADD, 0.01D),
-            new ChanceModifier.Clamp(0.0D, 0.3D),
+            ChanceModifier.Clamp.of(0.0D, 0.3D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
             LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
     // 基础 30%，开箱玩家每点幸运 +1%，先钳到 40% 再按难度放大
     private static final Drop DARK_GOLD_FRAGMENT_HIGH = new Drop(0.3D, 0.0D, List.of(
-            new ChanceModifier.EntityAttribute(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
+            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
                     ChanceModifier.Operation.ADD, 0.01D),
-            new ChanceModifier.Clamp(0.0D, 0.4D),
+            ChanceModifier.Clamp.of(0.0D, 0.4D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
             LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
 
@@ -170,10 +170,11 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     }
 
     /**
-     * 一个条目一个池：池掷一次、池里唯一条目，权重占比恒为 1，概率条件直接决定它是否产出。
+     * 一个条目一个池：池掷一次、池里唯一条目，权重占比恒为 1，概率条件直接决定它是否产出，
+     * 所以每个条目都是各自独立判定。ALI 里每个池占一行，条目多时看起来是一列，这是池语义决定的。
      *
      * <p>不能用 minecraft:group 合并：group 只是把孩子的权重摊平进池的候选列表，
-     * LootPool.addRandomItem 随后仍然按权重抽一个，所以合并会让"N 个条目"变成"每次只出 1 个"。
+     * LootPool.addRandomItem 随后仍然按权重抽一个，"N 个条目"会变成"每次只出 1 个"。
      */
     private static List<LootInjectorOp> pools(Drop... drops) {
         List<LootInjectorOp> ops = new ArrayList<>();
@@ -195,7 +196,7 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
         List<ChanceModifier> modifiers = new ArrayList<>();
 
         if (perLooting != 0.0D) {
-            modifiers.add(new ChanceModifier.ToolEnchantmentLevel(Enchantments.LOOTING,
+            modifiers.add(ChanceModifier.ToolEnchantmentLevel.of(Enchantments.LOOTING,
                     ChanceModifier.Operation.ADD, perLooting));
         }
 

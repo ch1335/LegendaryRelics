@@ -55,9 +55,9 @@ public class LREntityLootTables extends EntityLootSubProvider {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(LRItems.FROST_SHARD.get())
                                 .when(ChanceModifierCondition.builder(0.05D,
-                                        new ChanceModifier.ToolEnchantmentLevel(Enchantments.LOOTING,
+                                        ChanceModifier.ToolEnchantmentLevel.of(Enchantments.LOOTING,
                                                 ChanceModifier.Operation.ADD, 0.005D),
-                                        new ChanceModifier.EntityAttribute(Attributes.LUCK,
+                                        ChanceModifier.EntityAttribute.of(Attributes.LUCK,
                                                 ChanceModifier.EntitySource.ATTACKING_ENTITY,
                                                 ChanceModifier.Operation.ADD, 0.005D),
                                         ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D))))));
