@@ -1,19 +1,24 @@
 {
   "ops": [
     {
-      "type": "add_pool",
+      "type": "legendary_relics:add_pool",
       "pool": {
         "bonus_rolls": 0.0,
-        "conditions": [
-          {
-            "base_chance": 0.2,
-            "condition": "legendary_relics:chance_modifiers"
-          }
-        ],
         "entries": [
           {
-            "type": "minecraft:item",
-            "name": "legendary_relics:healing_talisman"
+            "type": "legendary_relics:all_of",
+            "children": [
+              {
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "base_chance": 0.2,
+                    "condition": "legendary_relics:chance_modifiers"
+                  }
+                ],
+                "name": "legendary_relics:healing_talisman"
+              }
+            ]
           }
         ],
         "rolls": 1.0
@@ -21,7 +26,7 @@
     }
   ],
   "tableCondition": {
-    "type": "id",
+    "type": "legendary_relics:id",
     "id": "minecraft:chests/village/village_temple"
   }
 }

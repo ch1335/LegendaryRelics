@@ -1,39 +1,44 @@
 {
   "ops": [
     {
-      "type": "add_pool",
+      "type": "legendary_relics:add_pool",
       "pool": {
         "bonus_rolls": 0.0,
-        "conditions": [
-          {
-            "base_chance": 0.2,
-            "chance_modifiers": [
-              {
-                "type": "entity_attribute",
-                "attribute": "minecraft:generic.luck",
-                "entity": "this_entity",
-                "operation": "add",
-                "per_point": 0.01
-              },
-              {
-                "type": "clamp",
-                "max": 0.3
-              },
-              {
-                "type": "difficulty_factor",
-                "easy": 1.0,
-                "hard": 1.3,
-                "normal": 1.15,
-                "peaceful": 1.0
-              }
-            ],
-            "condition": "legendary_relics:chance_modifiers"
-          }
-        ],
         "entries": [
           {
-            "type": "minecraft:item",
-            "name": "legendary_relics:ancient_fragment"
+            "type": "legendary_relics:all_of",
+            "children": [
+              {
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "base_chance": 0.2,
+                    "chance_modifiers": [
+                      {
+                        "type": "entity_attribute",
+                        "attribute": "minecraft:generic.luck",
+                        "entity": "this_entity",
+                        "operation": "add",
+                        "per_point": 0.01
+                      },
+                      {
+                        "type": "clamp",
+                        "max": 0.3
+                      },
+                      {
+                        "type": "difficulty_factor",
+                        "easy": 1.0,
+                        "hard": 1.3,
+                        "normal": 1.15,
+                        "peaceful": 1.0
+                      }
+                    ],
+                    "condition": "legendary_relics:chance_modifiers"
+                  }
+                ],
+                "name": "legendary_relics:ancient_fragment"
+              }
+            ]
           }
         ],
         "rolls": 1.0
@@ -41,7 +46,7 @@
     }
   ],
   "tableCondition": {
-    "type": "id",
+    "type": "legendary_relics:id",
     "id": "minecraft:chests/stronghold_crossing"
   }
 }

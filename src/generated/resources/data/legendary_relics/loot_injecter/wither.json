@@ -1,34 +1,39 @@
 {
   "ops": [
     {
-      "type": "add_pool",
+      "type": "legendary_relics:add_pool",
       "pool": {
         "bonus_rolls": 0.0,
-        "conditions": [
-          {
-            "condition": "legendary_relics:chance_modifiers"
-          }
-        ],
         "entries": [
           {
-            "type": "minecraft:item",
-            "functions": [
+            "type": "legendary_relics:all_of",
+            "children": [
               {
-                "add": false,
-                "count": 3.0,
-                "function": "minecraft:set_count"
-              },
-              {
-                "count": {
-                  "type": "minecraft:uniform",
-                  "max": 1.0,
-                  "min": 0.0
-                },
-                "enchantment": "minecraft:looting",
-                "function": "minecraft:enchanted_count_increase"
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "condition": "legendary_relics:chance_modifiers"
+                  }
+                ],
+                "functions": [
+                  {
+                    "add": false,
+                    "count": 3.0,
+                    "function": "minecraft:set_count"
+                  },
+                  {
+                    "count": {
+                      "type": "minecraft:uniform",
+                      "max": 1.0,
+                      "min": 0.0
+                    },
+                    "enchantment": "minecraft:looting",
+                    "function": "minecraft:enchanted_count_increase"
+                  }
+                ],
+                "name": "legendary_relics:wither_spirit"
               }
-            ],
-            "name": "legendary_relics:wither_spirit"
+            ]
           }
         ],
         "rolls": 1.0
@@ -36,7 +41,7 @@
     }
   ],
   "tableCondition": {
-    "type": "id",
+    "type": "legendary_relics:id",
     "id": "minecraft:entities/wither"
   }
 }

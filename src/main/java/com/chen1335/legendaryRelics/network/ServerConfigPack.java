@@ -19,8 +19,6 @@ import org.jetbrains.annotations.NotNull;
  *     <li><b>客户端 → 服务端</b>：请求把配置改成给定的值（需要权限等级 2，单人本地玩家直接放行）</li>
  *     <li><b>服务端 → 客户端</b>：把服务端当前生效的值同步过去，客户端只当作显示缓存</li>
  * </ul>
- *
- * <p>NeoForge 不会自动同步 {@code ModConfig.Type.SERVER} 配置，所以 Cloth Config 界面
  */
 public record ServerConfigPack(double zenithIceSpikeChance,
                                double zenithIceSpikeChancePerRadius,

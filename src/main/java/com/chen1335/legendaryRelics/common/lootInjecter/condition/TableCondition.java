@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.common.lootInjecter.condition;
 
 import com.google.common.collect.Sets;
+import com.chen1335.legendaryRelics.API.objects.LRLootInjectorOps;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -25,12 +26,14 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * <p>实体/方块的标签要先反查成"表 id 集合"：战利品表不知道自己的主人，只能遍历注册表建立映射。
  */
-public sealed interface TableCondition {
+public interface TableCondition {
 
-    Codec<TableCondition> CODEC = Codec.STRING.dispatch("type", TableCondition::type, TableCondition::codecFor);
+    /** 按注册表名分发，别的模组注册进 LRLootInjectorOps.TABLE_CONDITION_KEY 就能加自己的选择器。 */
+    Codec<TableCondition> CODEC = LRLootInjectorOps.TABLE_CONDITIONS.byNameCodec()
+            .dispatch("type", TableCondition::getType, TableConditionType::codec);
 
-    /** JSON 里的类型名。用短名，因为这一层完全是我们自己的数据包格式。 */
-    String type();
+    /** 类型注册表项，json 里写成 命名空间:路径。 */
+    TableConditionType getType();
 
     boolean test(ResourceLocation id, LootTable table);
 
@@ -39,31 +42,13 @@ public sealed interface TableCondition {
         TagTableCache.clear();
     }
 
-    private static MapCodec<? extends TableCondition> codecFor(String type) {
-        return switch (type) {
-            case All.TYPE -> All.CODEC;
-            case ById.TYPE -> ById.CODEC;
-            case Namespace.TYPE -> Namespace.CODEC;
-            case PathPrefix.TYPE -> PathPrefix.CODEC;
-            case EntityTagTable.TYPE -> EntityTagTable.CODEC;
-            case BlockTagTable.TYPE -> BlockTagTable.CODEC;
-            case Not.TYPE -> Not.CODEC;
-            case AnyOf.TYPE -> AnyOf.CODEC;
-            case AllOf.TYPE -> AllOf.CODEC;
-            default -> throw new IllegalArgumentException("Unknown table condition: " + type);
-        };
-    }
-
     /** 匹配所有表。 */
     record All() implements TableCondition {
-        public static final String TYPE = "all";
-        public static final MapCodec<All> CODEC = MapCodec.unit(All::new);
-
         @Override
-        public String type() {
-            return TYPE;
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_ALL.get();
         }
-
+        public static final MapCodec<All> CODEC = MapCodec.unit(All::new);
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return true;
@@ -72,15 +57,12 @@ public sealed interface TableCondition {
 
     /** 按表 id 精确匹配。 */
     record ById(ResourceLocation id) implements TableCondition {
-        public static final String TYPE = "id";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_BY_ID.get();
+        }
         public static final MapCodec<ById> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ResourceLocation.CODEC.fieldOf("id").forGetter(ById::id)).apply(instance, ById::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return this.id.equals(id);
@@ -89,15 +71,12 @@ public sealed interface TableCondition {
 
     /** 按命名空间匹配，例如全部 legendary_relics 的表。 */
     record Namespace(String namespace) implements TableCondition {
-        public static final String TYPE = "namespace";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_NAMESPACE.get();
+        }
         public static final MapCodec<Namespace> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.STRING.fieldOf("namespace").forGetter(Namespace::namespace)).apply(instance, Namespace::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return this.namespace.equals(id.getNamespace());
@@ -106,15 +85,12 @@ public sealed interface TableCondition {
 
     /** 按路径前缀匹配，例如 {@code entities/} 就是所有实体表。 */
     record PathPrefix(String prefix) implements TableCondition {
-        public static final String TYPE = "path_prefix";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_PATH_PREFIX.get();
+        }
         public static final MapCodec<PathPrefix> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Codec.STRING.fieldOf("prefix").forGetter(PathPrefix::prefix)).apply(instance, PathPrefix::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return id.getPath().startsWith(this.prefix);
@@ -127,16 +103,13 @@ public sealed interface TableCondition {
      * <p>注意战利品表是多对一的：不在标签里的实体可能共用同一张表，那种情况下改动会一起生效。
      */
     record EntityTagTable(TagKey<EntityType<?>> tag) implements TableCondition {
-        public static final String TYPE = "entity_tag";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_ENTITY_TAG.get();
+        }
         public static final MapCodec<EntityTagTable> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 TagKey.codec(Registries.ENTITY_TYPE).fieldOf("tag").forGetter(EntityTagTable::tag))
                 .apply(instance, EntityTagTable::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return TagTableCache.entityTables(this.tag).contains(id);
@@ -145,16 +118,13 @@ public sealed interface TableCondition {
 
     /** 匹配"某个方块标签下所有方块的战利品表"，同样有多对一的共享问题。 */
     record BlockTagTable(TagKey<Block> tag) implements TableCondition {
-        public static final String TYPE = "block_tag";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_BLOCK_TAG.get();
+        }
         public static final MapCodec<BlockTagTable> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(BlockTagTable::tag))
                 .apply(instance, BlockTagTable::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return TagTableCache.blockTables(this.tag).contains(id);
@@ -163,15 +133,12 @@ public sealed interface TableCondition {
 
     /** 取反。 */
     record Not(TableCondition child) implements TableCondition {
-        public static final String TYPE = "not";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_NOT.get();
+        }
         public static final MapCodec<Not> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 TableCondition.CODEC.fieldOf("condition").forGetter(Not::child)).apply(instance, Not::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return !this.child.test(id, table);
@@ -180,15 +147,12 @@ public sealed interface TableCondition {
 
     /** 任一满足；JSON 里写成数组时等价于 {@link AllOf}。 */
     record AnyOf(List<TableCondition> children) implements TableCondition {
-        public static final String TYPE = "any_of";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_ANY_OF.get();
+        }
         public static final MapCodec<AnyOf> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 TableCondition.CODEC.listOf().fieldOf("conditions").forGetter(AnyOf::children)).apply(instance, AnyOf::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return this.children.stream().anyMatch(child -> child.test(id, table));
@@ -197,15 +161,12 @@ public sealed interface TableCondition {
 
     /** 全部满足。 */
     record AllOf(List<TableCondition> children) implements TableCondition {
-        public static final String TYPE = "all_of";
+        @Override
+        public TableConditionType getType() {
+            return LRLootInjectorOps.TABLE_ALL_OF.get();
+        }
         public static final MapCodec<AllOf> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 TableCondition.CODEC.listOf().fieldOf("conditions").forGetter(AllOf::children)).apply(instance, AllOf::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public boolean test(ResourceLocation id, LootTable table) {
             return this.children.stream().allMatch(child -> child.test(id, table));

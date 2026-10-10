@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifier;
 import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifierCondition;
+import com.chen1335.legendaryRelics.common.lootCondition.lootEntry.AllOfEntry;
 import com.chen1335.legendaryRelics.common.lootInjecter.LootInjector;
 import com.chen1335.legendaryRelics.common.lootInjecter.LootInjectorOp;
 import com.chen1335.legendaryRelics.common.lootInjecter.condition.TableCondition;
@@ -31,6 +32,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 /**
  * 本模组的战利品注入器清单，由旧版战利品系统迁移而来。
@@ -47,7 +49,7 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
                     ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.3D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D)),
-            LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
+            () -> LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
 
     // 基础 30%，开箱玩家每点幸运 +1%，先钳到 40% 再按难度放大
     private static final Drop ANCIENT_FRAGMENT_HIGH = new Drop(0.3D, 0.0D, List.of(
@@ -55,21 +57,21 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
                     ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.4D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D)),
-            LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
+            () -> LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
     // 基础 20%，开箱玩家每点幸运 +1%，先钳到 30% 再按难度放大（暗金难度加成比其他碎片高）
     private static final Drop DARK_GOLD_FRAGMENT_NORMAL = new Drop(0.2D, 0.0D, List.of(
             ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
                     ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.3D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
-            LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
+            () -> LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
     // 基础 30%，开箱玩家每点幸运 +1%，先钳到 40% 再按难度放大
     private static final Drop DARK_GOLD_FRAGMENT_HIGH = new Drop(0.3D, 0.0D, List.of(
             ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
                     ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.4D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
-            LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
+            () -> LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
 
 
     private static final Drop NETHER_RING = drop(0.25D, LRItems.NETHER_RING);
@@ -92,9 +94,15 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
      *
      * <p>加工器按顺序作用：基础概率 → 每级抢夺 → extra 里的依次执行（extra 内部顺序就是 json 里的顺序）。
      */
+    /**
+     * 一条掉落：基础概率 + 可选每级抢夺加成 + 额外加工器 + 【条目工厂】。
+     *
+     * <p>entry 必须是工厂而不是 Builder 实例：Builder 上的 when() 是往自己身上追加条件，
+     * 而下面的常量会被多张表复用，共享一个实例会让条件越积越多。
+     */
     private record Drop(double chance, double perLooting, List<ChanceModifier> extra,
-                        LootPoolEntryContainer.Builder<?> entry) {
-        Drop(double chance, double perLooting, LootPoolEntryContainer.Builder<?> entry) {
+                        Supplier<LootPoolEntryContainer.Builder<?>> entry) {
+        Drop(double chance, double perLooting, Supplier<LootPoolEntryContainer.Builder<?>> entry) {
             this(chance, perLooting, List.of(), entry);
         }
     }
@@ -140,15 +148,17 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
 
         // Boss：龙鳞与凋灵之魂必掉，数量受抢夺影响
         list.add(boss("elder_guardian", EntityType.ELDER_GUARDIAN,
-                new Drop(0.3D, 0.05D, LootItem.lootTableItem(LRItems.THUNDERBOLT_NECKLACE.get()))));
+                new Drop(0.3D, 0.05D,
+                        () -> LootItem.lootTableItem(LRItems.THUNDERBOLT_NECKLACE.get()))));
         list.add(boss("piglin_brute", EntityType.PIGLIN_BRUTE,
-                new Drop(0.1D, 0.02D, LootItem.lootTableItem(LRItems.TYRANNICAL_ESSENCE.get()))));
+                new Drop(0.1D, 0.02D,
+                        () -> LootItem.lootTableItem(LRItems.TYRANNICAL_ESSENCE.get()))));
         list.add(boss("ender_dragon", EntityType.ENDER_DRAGON,
-                new Drop(1.0D, 0.0D, LootItem.lootTableItem(LRItems.DRAGON_SCALE.get())
+                new Drop(1.0D, 0.0D, () -> LootItem.lootTableItem(LRItems.DRAGON_SCALE.get())
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F)))
                         .apply(lootingCount(provider)))));
         list.add(boss("wither", EntityType.WITHER,
-                new Drop(1.0D, 0.0D, LootItem.lootTableItem(LRItems.WITHER_SPIRIT.get())
+                new Drop(1.0D, 0.0D, () -> LootItem.lootTableItem(LRItems.WITHER_SPIRIT.get())
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F)))
                         .apply(lootingCount(provider)))));
 
@@ -156,7 +166,7 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     }
 
     private static Drop drop(double chance, DeferredItem<? extends Item> item) {
-        return new Drop(chance, 0.0D, LootItem.lootTableItem(item.get()));
+        return new Drop(chance, 0.0D, () -> LootItem.lootTableItem(item.get()));
     }
 
     private static LootInjector merged(String path, ResourceKey<LootTable> table, Drop... drops) {
@@ -170,24 +180,25 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     }
 
     /**
-     * 一个条目一个池：池掷一次、池里唯一条目，权重占比恒为 1，概率条件直接决定它是否产出，
-     * 所以每个条目都是各自独立判定。ALI 里每个池占一行，条目多时看起来是一列，这是池语义决定的。
+     * 一个池 + 一个 AllOfEntry：池掷一次必中它，它被抽中后把所有孩子都产出去。
      *
-     * <p>不能用 minecraft:group 合并：group 只是把孩子的权重摊平进池的候选列表，
+     * <p>概率条件挂在【孩子】上，所以每个孩子都是各自独立判定，而且孩子之间不抢权重。
+     * 池里只有一个条目，所以权重占比恒为 1，界面里也只占一格。
+     *
+     * <p>不能用 minecraft:group：group 只是把孩子的权重摊平进池的候选列表，
      * LootPool.addRandomItem 随后仍然按权重抽一个，"N 个条目"会变成"每次只出 1 个"。
      */
     private static List<LootInjectorOp> pools(Drop... drops) {
-        List<LootInjectorOp> ops = new ArrayList<>();
+        List<LootPoolEntryContainer.Builder<?>> children = new ArrayList<>();
 
         for (Drop drop : drops) {
-            ops.add(new LootInjectorOp.AddPool(LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1.0F))
-                    .add(drop.entry())
-                    .when(chanceCondition(drop.chance(), drop.perLooting(), drop.extra()))
-                    .build()));
+            children.add(drop.entry().get().when(chanceCondition(drop.chance(), drop.perLooting(), drop.extra())));
         }
 
-        return ops;
+        return List.of(new LootInjectorOp.AddPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .add(AllOfEntry.allOf(children))
+                .build()));
     }
 
     /** 概率统一由 ChanceModifierCondition 表达：基础概率走字段，链里只放抢夺加成。 */

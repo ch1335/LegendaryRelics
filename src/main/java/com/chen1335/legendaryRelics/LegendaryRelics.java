@@ -38,6 +38,7 @@ import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforgespi.Environment;
 import org.slf4j.Logger;
 
@@ -88,6 +89,18 @@ public class LegendaryRelics {
         LRMenus.register(modEventBus);
         LRSounds.register(modEventBus);
         LRLootConditions.register(modEventBus);
+        LRLootPoolEntries.ENTRY_TYPES.register(modEventBus);
+        LRLootInjectorOps.OP_TYPES.register(modEventBus);
+        LRLootInjectorOps.TABLE_CONDITION_TYPES.register(modEventBus);
+        LRLootInjectorOps.POOL_CONDITION_TYPES.register(modEventBus);
+        LRLootInjectorOps.ENTRY_CONDITION_TYPES.register(modEventBus);
+        // 自定义注册表要先 create 再注册内容，NewRegistryEvent 早于 RegisterEvent
+        modEventBus.addListener(NewRegistryEvent.class, event -> {
+            event.register(LRLootInjectorOps.REGISTRY);
+            event.register(LRLootInjectorOps.TABLE_CONDITIONS);
+            event.register(LRLootInjectorOps.POOL_CONDITIONS);
+            event.register(LRLootInjectorOps.ENTRY_CONDITIONS);
+        });
         modEventBus.addListener(ClientExtensionsRegister::register);
         modEventBus.addListener(EntityRendererRegister::registerLayerDefinitions);
         modEventBus.addListener(EntityRendererRegister::addLayers);

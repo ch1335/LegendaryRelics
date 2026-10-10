@@ -2,17 +2,24 @@ package com.chen1335.legendaryRelics.compat.ali;
 
 import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifier;
 import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifierCondition;
+import com.chen1335.legendaryRelics.common.lootCondition.lootEntry.AllOfEntry;
 import com.yanny.aci.api.NumberExpr;
 import com.yanny.aci.tooltip.TooltipBuilder;
+import com.yanny.ali.api.IDataNode;
 import com.yanny.aci.tooltip.TooltipNode;
 import com.yanny.aci.tooltip.TooltipNode;
 import com.yanny.ali.api.AliEntrypoint;
 import com.yanny.ali.api.IPlugin;
 import com.yanny.ali.api.IServerRegistry;
 import com.yanny.ali.api.IServerUtils;
+import com.yanny.ali.plugin.common.nodes.GroupNode;
+import com.yanny.ali.plugin.server.TooltipUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,6 +47,22 @@ public class AliLootPlugin implements IPlugin {
         // 只按基础概率修正（链上的修正如约定不参与）；返回 NumberExpr 而非绝对值，和原版 chance modifier 保持同一约定。
         registry.registerChanceModifier(ChanceModifierCondition.class,
                 (utils, condition, chance, extra) -> NumberExpr.mul(chance, NumberExpr.constant(condition.baseChance())));
+        // 用【池节点】而不是组节点：池节点把子条目横向铺开，正是要的"一行多个格子"。
+        // 概率条件本来就挂在这些孩子上，所以直接让它们各自算自己的概率。
+        registry.registerEntry(AllOfEntry.class, (utils, entry, rawChance, sumWeight, chanceConditions,
+                                                  functions, conditions) -> {
+            List<TooltipNode> shared = List.copyOf(chanceConditions);
+            List<IDataNode> children = new ArrayList<>();
+
+            for (LootPoolEntryContainer child : entry.children()) {
+                NumberExpr childWeight = utils.getEntryWeight(utils, child, new ArrayList<>());
+                children.add(utils.getEntryFactory(utils, child)
+                        .create(utils, child, rawChance, childWeight, shared, functions, conditions));
+            }
+
+            // 用 GroupNode：图标和文案都跟着它走，正好是选择所有条目那一套
+            return new GroupNode(children, TooltipUtils.getGroupTooltip().build());
+        });
     }
 
     /** 返回的是未构建的 builder：注册接口要的就是它，标题用 key 设置。 */

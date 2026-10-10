@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common.lootInjecter;
 
+import com.chen1335.legendaryRelics.API.objects.LRLootInjectorOps;
 import com.chen1335.legendaryRelics.common.lootInjecter.condition.EntryCondition;
 import com.chen1335.legendaryRelics.common.lootInjecter.condition.PoolCondition;
 import com.mojang.serialization.Codec;
@@ -27,36 +28,24 @@ import java.util.List;
  *
  * <p>{@code entries} 没有复合体（掷骰时直接遍历），所以只要先换成可变列表就能安全增删。
  */
-public sealed interface LootInjectorOp {
+public interface LootInjectorOp {
 
-    Codec<LootInjectorOp> CODEC = Codec.STRING.dispatch("type", LootInjectorOp::type, LootInjectorOp::codecFor);
+    /** 按注册表名分发，所以别的模组注册进 LRLootInjectorOps.REGISTRY_KEY 就能加自己的类型。 */
+    Codec<LootInjectorOp> CODEC = LRLootInjectorOps.REGISTRY.byNameCodec()
+            .dispatch("type", LootInjectorOp::getType, LootInjectorOpType::codec);
 
-    String type();
+    LootInjectorOpType getType();
 
     void apply(LootTable table);
 
-    private static MapCodec<? extends LootInjectorOp> codecFor(String type) {
-        return switch (type) {
-            case AddPool.TYPE -> AddPool.CODEC;
-            case RemovePool.TYPE -> RemovePool.CODEC;
-            case AddEntry.TYPE -> AddEntry.CODEC;
-            case RemoveEntry.TYPE -> RemoveEntry.CODEC;
-            case ModifyEntry.TYPE -> ModifyEntry.CODEC;
-            default -> throw new IllegalArgumentException("Unknown loot injector op: " + type);
-        };
-    }
-
     /** 新增一个池，追加在最后。 */
     record AddPool(LootPool pool) implements LootInjectorOp {
-        public static final String TYPE = "add_pool";
+        @Override
+        public LootInjectorOpType getType() {
+            return LRLootInjectorOps.ADD_POOL.get();
+        }
         public static final MapCodec<AddPool> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 LootPool.CODEC.fieldOf("pool").forGetter(AddPool::pool)).apply(instance, AddPool::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public void apply(LootTable table) {
             table.pools.add(this.pool);
@@ -65,16 +54,13 @@ public sealed interface LootInjectorOp {
 
     /** 删除所有命中的池。 */
     record RemovePool(PoolCondition poolCondition) implements LootInjectorOp {
-        public static final String TYPE = "remove_pool";
+        @Override
+        public LootInjectorOpType getType() {
+            return LRLootInjectorOps.REMOVE_POOL.get();
+        }
         public static final MapCodec<RemovePool> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 PoolCondition.CODEC.optionalFieldOf("poolCondition", new PoolCondition.Any())
                         .forGetter(RemovePool::poolCondition)).apply(instance, RemovePool::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public void apply(LootTable table) {
             for (int i = table.pools.size() - 1; i >= 0; i--) {
@@ -87,18 +73,15 @@ public sealed interface LootInjectorOp {
 
     /** 往所有命中的池里追加一个条目。 */
     record AddEntry(PoolCondition poolCondition, LootPoolEntryContainer entry) implements LootInjectorOp {
-        public static final String TYPE = "add_entry";
+        @Override
+        public LootInjectorOpType getType() {
+            return LRLootInjectorOps.ADD_ENTRY.get();
+        }
         public static final MapCodec<AddEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 PoolCondition.CODEC.optionalFieldOf("poolCondition", new PoolCondition.Any())
                         .forGetter(AddEntry::poolCondition),
                 LootPoolEntries.CODEC.fieldOf("entry").forGetter(AddEntry::entry))
                 .apply(instance, AddEntry::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public void apply(LootTable table) {
             // 用下标循环：indexOf 是 O(n²)，而且同一个池实例出现两次时会拿错下标
@@ -113,19 +96,16 @@ public sealed interface LootInjectorOp {
 
     /** 删除所有命中的条目。 */
     record RemoveEntry(PoolCondition poolCondition, EntryCondition entryCondition) implements LootInjectorOp {
-        public static final String TYPE = "remove_entry";
+        @Override
+        public LootInjectorOpType getType() {
+            return LRLootInjectorOps.REMOVE_ENTRY.get();
+        }
         public static final MapCodec<RemoveEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 PoolCondition.CODEC.optionalFieldOf("poolCondition", new PoolCondition.Any())
                         .forGetter(RemoveEntry::poolCondition),
                 EntryCondition.CODEC.optionalFieldOf("entryCondition", new EntryCondition.Any())
                         .forGetter(RemoveEntry::entryCondition))
                 .apply(instance, RemoveEntry::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public void apply(LootTable table) {
             for (int p = 0; p < table.pools.size(); p++) {
@@ -155,7 +135,10 @@ public sealed interface LootInjectorOp {
                        List<LootItemFunction> addFunctions,
                        int setWeight,
                        int setQuality) implements LootInjectorOp {
-        public static final String TYPE = "modify_entry";
+        @Override
+        public LootInjectorOpType getType() {
+            return LRLootInjectorOps.MODIFY_ENTRY.get();
+        }
         public static final MapCodec<ModifyEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 PoolCondition.CODEC.optionalFieldOf("poolCondition", new PoolCondition.Any())
                         .forGetter(ModifyEntry::poolCondition),
@@ -168,12 +151,6 @@ public sealed interface LootInjectorOp {
                 Codec.INT.optionalFieldOf("set_weight", -1).forGetter(ModifyEntry::setWeight),
                 Codec.INT.optionalFieldOf("set_quality", -1).forGetter(ModifyEntry::setQuality)
         ).apply(instance, ModifyEntry::new));
-
-        @Override
-        public String type() {
-            return TYPE;
-        }
-
         @Override
         public void apply(LootTable table) {
             for (int p = 0; p < table.pools.size(); p++) {
