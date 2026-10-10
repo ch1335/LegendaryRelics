@@ -4,28 +4,23 @@
       "type": "add_pool",
       "pool": {
         "bonus_rolls": 0.0,
+        "conditions": [
+          {
+            "base_chance": 0.3,
+            "chance_modifiers": [
+              {
+                "type": "tool_enchantment_level",
+                "enchantment": "minecraft:looting",
+                "operation": "add"
+              }
+            ],
+            "condition": "legendary_relics:chance_modifiers"
+          }
+        ],
         "entries": [
           {
-            "type": "minecraft:group",
-            "children": [
-              {
-                "type": "minecraft:item",
-                "conditions": [
-                  {
-                    "base_chance": 0.3,
-                    "chance_modifiers": [
-                      {
-                        "type": "tool_enchantment_level",
-                        "enchantment": "minecraft:looting",
-                        "operation": "add"
-                      }
-                    ],
-                    "condition": "legendary_relics:chance_modifiers"
-                  }
-                ],
-                "name": "legendary_relics:thunderbolt_necklace"
-              }
-            ]
+            "type": "minecraft:item",
+            "name": "legendary_relics:thunderbolt_necklace"
           }
         ],
         "rolls": 1.0

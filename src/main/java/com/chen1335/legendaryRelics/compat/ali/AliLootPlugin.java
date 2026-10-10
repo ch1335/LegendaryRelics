@@ -5,6 +5,7 @@ import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifierCondition
 import com.yanny.aci.api.NumberExpr;
 import com.yanny.aci.tooltip.TooltipBuilder;
 import com.yanny.aci.tooltip.TooltipNode;
+import com.yanny.aci.tooltip.TooltipNode;
 import com.yanny.ali.api.AliEntrypoint;
 import com.yanny.ali.api.IPlugin;
 import com.yanny.ali.api.IServerRegistry;
@@ -36,9 +37,9 @@ public class AliLootPlugin implements IPlugin {
     public void registerServer(IServerRegistry registry) {
         registry.registerConditionTooltip(ChanceModifierCondition.class, AliLootPlugin::conditionTooltip);
 
-        // 只把基础概率填进 ALI 的概率栏（显示在数量上方）；链上的修正按"只显示基础值"的约定不参与。
+        // 只按基础概率修正（链上的修正如约定不参与）；返回 NumberExpr 而非绝对值，和原版 chance modifier 保持同一约定。
         registry.registerChanceModifier(ChanceModifierCondition.class,
-                (utils, condition, chance, extra) -> NumberExpr.constant(condition.baseChance()));
+                (utils, condition, chance, extra) -> NumberExpr.mul(chance, NumberExpr.constant(condition.baseChance())));
     }
 
     /** 返回的是未构建的 builder：注册接口要的就是它，标题用 key 设置。 */

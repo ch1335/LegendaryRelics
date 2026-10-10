@@ -16,7 +16,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.EntryGroup;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
@@ -143,29 +142,33 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     private static LootInjector merged(String path, net.minecraft.resources.ResourceKey<LootTable> table, Drop... drops) {
         return new LootInjector(LegendaryRelics.id(path),
                 new TableCondition.ById(table.location()), 1000,
-                List.of(new LootInjectorOp.AddPool(pool(drops))));
+                pools(drops));
     }
 
     private static LootInjector boss(String path, EntityType<?> type, Drop... drops) {
         return new LootInjector(LegendaryRelics.id(path),
                 new TableCondition.ById(type.getDefaultLootTable().location()), 1000,
-                List.of(new LootInjectorOp.AddPool(pool(drops))));
+                pools(drops));
     }
 
     /**
-     * 一个池承载全部条目：池掷一次必中 group，group 展开后每个条目各自过概率条件。
-     * 概率条件必须挂在条目上，挂在池上会让"一个不过就整组不掷"。
+     * 一个条目一个池：池掷一次、池里唯一条目，权重占比恒为 1，概率条件直接决定它是否产出。
+     *
+     * <p>不能用 minecraft:group 合并：group 只是把孩子的权重摊平进池的候选列表，
+     * LootPool.addRandomItem 随后仍然按权重抽一个，所以合并会让"N 个条目"变成"每次只出 1 个"。
      */
-    private static LootPool pool(Drop... drops) {
-        LootPoolEntryContainer.Builder<?>[] children = new LootPoolEntryContainer.Builder<?>[drops.length];
-        for (int i = 0; i < drops.length; i++) {
-            children[i] = drops[i].entry().when(chanceCondition(drops[i].chance(), drops[i].perLooting()));
+    private static List<LootInjectorOp> pools(Drop... drops) {
+        List<LootInjectorOp> ops = new ArrayList<>();
+
+        for (Drop drop : drops) {
+            ops.add(new LootInjectorOp.AddPool(LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1.0F))
+                    .add(drop.entry())
+                    .when(chanceCondition(drop.chance(), drop.perLooting()))
+                    .build()));
         }
 
-        return LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1.0F))
-                .add(EntryGroup.list(children))
-                .build();
+        return ops;
     }
 
     /**
