@@ -1,7 +1,8 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet;
 
-import com.chen1335.damageController.API.DamageControllerAPI;
-import com.chen1335.damageController.API.IDamageContainerGetter;
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -10,10 +11,11 @@ import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -47,10 +49,11 @@ public class BlackDragonLeggings extends BlackDragonArmor {
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.2", HEAL_INCREASE.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 
+
     @Override
-    public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
-        if (event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
-            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -PROJECTILE_DAMAGE_REDUCE.getValue(arg));
+    protected void handleDamageReduce(LivingGetAttributeAdjustmentEvent event, CalculatorArg arg, ItemStack armorSlot, LivingEntity target, DamageSource source) {
+        if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+            event.getAdjustment(target, ArcanumAttributes.DAMAGE_TAKEN_MULTIPLIER).add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, -PROJECTILE_DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

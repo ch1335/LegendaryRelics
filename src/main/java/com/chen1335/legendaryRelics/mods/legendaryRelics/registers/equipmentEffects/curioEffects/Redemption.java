@@ -1,7 +1,9 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
-import com.chen1335.damageController.API.DamageControllerAPI;
-import com.chen1335.damageController.API.IDamageContainerGetter;
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LivingHurtContext;
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
@@ -20,12 +22,14 @@ import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
@@ -102,13 +106,13 @@ public class Redemption extends LRCurioEffect {
         }
     }
 
-    public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-            LivingEntity livingEntity = event.getEntity();
-            EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.REDEMPTION.get()).ifPresent(pair -> {
+    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source, LivingEntity target, LivingEntity attacker) {
+        if (attacker.getType().is(EntityTypeTags.UNDEAD)) {
+            EquipmentEffectAPI.findBestEffect(target, LREquipmentEffectTypes.REDEMPTION.get()).ifPresent(pair -> {
                 if (attacker.getType().is(EntityTypeTags.UNDEAD)) {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
-                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -UNDEAD_REDUCE.getValue(args));
+                    CalculatorArg args = CalculatorArg.simpleArg(target, pair.infoHolder().itemStack(), pair.infoHolder().effect());
+                    event.getAdjustment(target, ArcanumAttributes.DAMAGE_TAKEN_MULTIPLIER)
+                            .add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, -UNDEAD_REDUCE.getValue(args));
                 }
             });
         }

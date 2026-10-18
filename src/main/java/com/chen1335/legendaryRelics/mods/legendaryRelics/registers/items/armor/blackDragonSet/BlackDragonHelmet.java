@@ -1,20 +1,22 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet;
 
-import com.chen1335.damageController.API.DamageControllerAPI;
-import com.chen1335.damageController.API.IDamageContainerGetter;
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
-import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -22,8 +24,9 @@ import java.util.List;
 public class BlackDragonHelmet extends BlackDragonArmor {
 
     public BlackDragonHelmet() {
-        super( Type.HELMET, new Properties().rarity(Rarity.EPIC));
+        super(Type.HELMET, new Properties().rarity(Rarity.EPIC));
     }
+
     @Calculator
     public static FinalCalculator MAGIC_DAMAGE_REDUCE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
@@ -56,10 +59,11 @@ public class BlackDragonHelmet extends BlackDragonArmor {
 
     }
 
+
     @Override
-    public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
-        if (event.getSource().is(Tags.DamageTypes.IS_MAGIC)) {
-            DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event,1 -MAGIC_DAMAGE_REDUCE.getValue(arg));
+    protected void handleDamageReduce(LivingGetAttributeAdjustmentEvent event, CalculatorArg arg, ItemStack armorSlot, LivingEntity target, DamageSource source) {
+        if (source.is(Tags.DamageTypes.IS_MAGIC)) {
+            event.getAdjustment(target, ArcanumAttributes.DAMAGE_TAKEN_MULTIPLIER).add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, -MAGIC_DAMAGE_REDUCE.getValue(arg));
         }
     }
 }

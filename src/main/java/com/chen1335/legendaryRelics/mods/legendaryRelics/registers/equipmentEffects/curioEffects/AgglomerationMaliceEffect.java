@@ -1,10 +1,11 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
-import com.chen1335.damageController.API.DamageControllerAPI;
-import com.chen1335.damageController.API.IDamageContainerGetter;
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
-import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -13,6 +14,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -20,7 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.List;
 
@@ -42,16 +45,6 @@ public class AgglomerationMaliceEffect extends LRCurioEffect {
             Constant.of(3F)
     ));
 
-    @Override
-    public int modifyLootingLevel(ItemStack itemStack, LivingEntity livingTarget, LivingEntity livingAttacker, int lootingLevel) {
-        if (livingTarget instanceof Mob mob && mob.getSpawnType() == MobSpawnType.SPAWNER) {
-            CalculatorArg args = CalculatorArg.simpleArg(livingAttacker, itemStack, this);
-            int lootingLevelAddition = (int) LOOTING_LEVEL_ADD.getValue(args);
-            return lootingLevel + lootingLevelAddition;
-        }
-
-        return lootingLevel;
-    }
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
@@ -68,15 +61,27 @@ public class AgglomerationMaliceEffect extends LRCurioEffect {
         return 1;
     }
 
-    public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof Mob attacker) {
-            LivingEntity livingEntity = event.getEntity();
-            if (attacker.getSpawnType() == MobSpawnType.SPAWNER) {
-                EquipmentEffectAPI.findBestEffect(livingEntity, LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value()).ifPresent(pair -> {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
-                    DamageControllerAPI.addMultipliedBase((IDamageContainerGetter) event, DAMAGE_MULTIPLIER.getValue(args));
+
+    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source, LivingEntity target, LivingEntity attacker) {
+        if (attacker instanceof Mob) {
+            if (((Mob) attacker).getSpawnType() == MobSpawnType.SPAWNER) {
+                EquipmentEffectAPI.findBestEffect(target, LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value()).ifPresent(pair -> {
+                    CalculatorArg args = CalculatorArg.simpleArg(target, pair.infoHolder().itemStack(), pair.infoHolder().effect());
+                    float value = DAMAGE_MULTIPLIER.getValue(args);
+                    event.getAdjustment(target, ArcanumAttributes.DAMAGE_TAKEN_MULTIPLIER).add(AttributeAdjustment.Operation.ADD_VALUE, value);
                 });
             }
+        }
+    }
+
+
+    public static void getLootingAdjustment(LivingGetAttributeAdjustmentEvent event, LootContext lootContext, LivingEntity attacker) {
+        if (lootContext.getParam(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getSpawnType() == MobSpawnType.SPAWNER) {
+            EquipmentEffectAPI.findBestEffect(attacker, LREquipmentEffectTypes.AGGLOMERATION_MALICE_EFFECT.value()).ifPresent(pair -> {
+                CalculatorArg args = CalculatorArg.simpleArg(attacker, pair.infoHolder().itemStack(), pair.infoHolder().effect());
+                int lootingLevelAddition = (int) LOOTING_LEVEL_ADD.getValue(args);
+                event.getAdjustment(attacker, ArcanumAttributes.LOOTING).add(AttributeAdjustment.Operation.ADD_VALUE, lootingLevelAddition);
+            });
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LivingHurtContext;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LootInfoContext;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
@@ -10,7 +12,14 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffe
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Backstab;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
 import com.chen1335.specialEffectLib.API.SpecialEffectAddedEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -39,20 +48,33 @@ public class GamePlayEventHandler {
         TwistedArmorSetEffect.LivingIncomingDamageEvent(event);
 
         ShieldRegeneratorEffect.LivingIncomingDamageEvent(event);
-        InFireTargetDamageIncrease.LivingIncomingDamageEvent(event);
-        FireDamageReduce.LivingIncomingDamageEvent(event);
-        AgglomerationMaliceEffect.LivingIncomingDamageEvent(event);
         FallImmunity.LivingIncomingDamageEvent(event);
         HardenedEffect.LivingIncomingDamageEvent(event);
         FrostHeartEffect.LivingIncomingDamageEvent(event);
 
 
-        Redemption.LivingIncomingDamageEvent(event);
     }
 
     @SubscribeEvent
     public static void LivingGetAttributeAdjustmentEvent(LivingGetAttributeAdjustmentEvent event) {
-        BlackDragonChestPlateEffect.getAttributeAdjustment(event);
+        if (event.getContext() instanceof LivingHurtContext(LivingEntity target, DamageSource source, float damage)) {
+            if (source.getEntity() instanceof LivingEntity attacker) {
+                BlackDragonChestPlateEffect.getAttributeAdjustment(event, source, target, attacker);
+                Redemption.getAttributeAdjustment(event, source, target, attacker);
+                InFireTargetDamageIncrease.getAttributeAdjustment(event, source, target, attacker);
+                AgglomerationMaliceEffect.getAttributeAdjustment(event, source, target, attacker);
+            }
+            LRArmorBase.handleAttributeAdjustment(event, target,  source,  damage);
+            FireDamageReduce.getAttributeAdjustment(event, source, target);
+        } else if (event.getContext() instanceof LootInfoContext(
+                LootContext lootContext, LootContextParamSet paramSet
+        )) {
+            if (paramSet == LootContextParamSets.ENTITY) {
+                if (lootContext.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity attacker) {
+                    AgglomerationMaliceEffect.getLootingAdjustment(event, lootContext, attacker);
+                }
+            }
+        }
     }
 
     @SubscribeEvent

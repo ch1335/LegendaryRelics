@@ -1,10 +1,10 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect;
 
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
-import com.chen1335.damageController.API.DamageControllerAPI;
-import com.chen1335.damageController.API.IDamageContainerGetter;
-import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
@@ -20,6 +20,7 @@ import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -116,8 +117,14 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
 
     }
 
-    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event) {
-
+    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source, LivingEntity target, LivingEntity attacker) {
+        if (source.is(Tags.DamageTypes.IS_PHYSICAL)) {
+            LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value().findBestEffect(target).ifPresent(pair -> {
+                CalculatorArg args = CalculatorArg.simpleArg(target, pair.infoHolder().itemStack(), pair.infoHolder().effect());
+                event.getAdjustment(target, ArcanumAttributes.DAMAGE_TAKEN_MULTIPLIER)
+                        .add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, -PHYSICAL_DAMAGE_REDUCE.getValue(args));
+            });
+        }
     }
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
@@ -127,20 +134,13 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
             if (effectType.isNotInCooldown(attacker)) {
                 effectType.findBestEffect(attacker).ifPresent(pair -> {
                     CalculatorArg args = CalculatorArg.simpleArg(attacker, pair.infoHolder().itemStack(), pair.infoHolder().effect());
-                    DamageControllerAPI.addValue((IDamageContainerGetter) event, DAMAGE_INCREASE.getValue(args));
+                    event.setAmount(event.getAmount() + DAMAGE_INCREASE.getValue(args));
                     ShieldAPI.addCommonDecayShield(attacker, SHIELD_AMOUNT.getValue(args), SHIELD_LAST_TIME.getInt(args) * 20);
                     EquipmentEffectCooldownManager.addCooldown(attacker, effectType, COOL_DOWN.getInt(args) * 20);
                 });
             }
         }
 
-        if (event.getEntity() instanceof LivingEntity livingEntity) {
-            effectType.findBestEffect(livingEntity).ifPresent(pair -> {
-                if (event.getSource().is(Tags.DamageTypes.IS_PHYSICAL)) {
-                    CalculatorArg args = CalculatorArg.simpleArg(livingEntity, pair.infoHolder().itemStack(), pair.infoHolder().effect());
-                    DamageControllerAPI.addMultipliedTotal((IDamageContainerGetter) event, 1 - PHYSICAL_DAMAGE_REDUCE.getValue(args));
-                }
-            });
-        }
+
     }
 }

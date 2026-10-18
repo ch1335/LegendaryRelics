@@ -235,7 +235,6 @@ dependencies {
 
     implementation "curse.maven:advanced-loot-info-1205426:9083071"
     implementation "curse.maven:advanced-core-info-1661923:9083066"
-    implementation "curse.maven:arcanumlib-1742801:9239224"
     runtimeOnly 'net.covers1624:DevLogin:0.1.0.5'
 
 //    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")

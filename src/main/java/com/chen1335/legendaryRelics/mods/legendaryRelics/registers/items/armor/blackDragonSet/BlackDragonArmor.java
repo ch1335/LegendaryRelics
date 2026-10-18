@@ -50,8 +50,6 @@ public class BlackDragonArmor extends LRArmorBase {
         return true;
     }
 
-    public void handleDamageReduce(LivingIncomingDamageEvent event, CalculatorArg arg, ItemStack armorSlot) {
 
-    }
 
 }

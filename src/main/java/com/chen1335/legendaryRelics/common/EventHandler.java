@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
@@ -169,22 +170,17 @@ public class EventHandler {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void LivingIncomingDamageEventLowest(LivingIncomingDamageEvent event) {
-            LivingEntity entity = event.getEntity();
-            CalculatorArg args = CalculatorArg.simpleArg(entity);
-            for (ItemStack armorSlot : entity.getArmorSlots()) {
-                if (armorSlot.getItem() instanceof BlackDragonArmor blackDragonArmor) {
-                    CalculatorArg args1 = args.copy();
-                    CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(args1, armorSlot);
-                    blackDragonArmor.handleDamageReduce(event, args1, armorSlot);
-                }
-            }
-
             if (event.getSource().getDirectEntity() instanceof Projectile projectile) {
                 LRProjectileData data = LRProjectileData.getData(projectile);
                 if (data.damageMul != 1) {
                     event.setAmount(event.getAmount() * data.damageMul);
                 }
             }
+        }
+
+        @SubscribeEvent
+        public static void LivingGetAttributeAdjustmentEvent(LivingGetAttributeAdjustmentEvent event) {
+
         }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
