@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect;
 
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.damageController.API.DamageControllerAPI;
 import com.chen1335.damageController.API.IDamageContainerGetter;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
@@ -99,6 +100,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
         super(effectType, level, equipmentType);
     }
 
+
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
@@ -114,6 +116,9 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
 
     }
 
+    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event) {
+
+    }
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         EffectType<BlackDragonChestPlateEffect> effectType = LREquipmentEffectTypes.BLACK_DRAGON_CHESTPLATE_EFFECT.value();

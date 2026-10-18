@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
@@ -47,6 +48,11 @@ public class GamePlayEventHandler {
 
 
         Redemption.LivingIncomingDamageEvent(event);
+    }
+
+    @SubscribeEvent
+    public static void LivingGetAttributeAdjustmentEvent(LivingGetAttributeAdjustmentEvent event) {
+        BlackDragonChestPlateEffect.getAttributeAdjustment(event);
     }
 
     @SubscribeEvent

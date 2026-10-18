@@ -193,7 +193,6 @@ repositories {
 
 dependencies {
     implementation fileTree("libs")
-    jarJar(implementation("blank:damage_controller:2101.1.3"))
     jarJar(implementation("blank:shield_system:2101.1.4"))
 
     implementation "curse.maven:patchouli-306770:6164617"
@@ -236,7 +235,7 @@ dependencies {
 
     implementation "curse.maven:advanced-loot-info-1205426:9083071"
     implementation "curse.maven:advanced-core-info-1661923:9083066"
-
+    implementation "curse.maven:arcanumlib-1742801:9239224"
     runtimeOnly 'net.covers1624:DevLogin:0.1.0.5'
 
 //    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
