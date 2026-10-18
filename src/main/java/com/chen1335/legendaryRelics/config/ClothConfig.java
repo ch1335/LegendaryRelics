@@ -76,19 +76,6 @@ public class ClothConfig {
             zenithIceChancePerRadius.setEditable(editable);
             serverConfig.addEntry(zenithIceChancePerRadius);
 
-            DoubleListEntry rareSpawnWeightThreshold = entryBuilder.startDoubleField(
-                            Component.translatable("legendary_relics.config.rare_spawn_weight_threshold"),
-                            serverConfigsLoaded ? LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.get()
-                                    : LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.getDefault())
-                    .setDefaultValue(0.02D)
-                    .setMin(0.0D)
-                    .setMax(1.0D)
-                    .setTooltip(Component.translatable("legendary_relics.config.rare_spawn_weight_threshold.tooltip"))
-                    .build();
-            rareSpawnWeightThreshold.setEditable(editable);
-            serverConfig.addEntry(rareSpawnWeightThreshold);
-
-
             configBuilder.setSavingRunnable(() -> {
                 LRClientConfig.CONFIG_SPEC.save();
                 LocalPlayer player = parent.getMinecraft().player;
@@ -97,7 +84,6 @@ public class ClothConfig {
                         // 单人游戏里本地就是服务端，直接写入并落盘
                         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.set(zenithIceSpikeChance.getValue());
                         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.set(zenithIceChancePerRadius.getValue());
-                        LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.set(rareSpawnWeightThreshold.getValue());
                         LRServerConfig.CONFIG_SPEC.save();
                         if (ModList.get().isLoaded("ali")) {
                             player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.info.ali"));
@@ -106,7 +92,7 @@ public class ClothConfig {
                         player.sendSystemMessage(Component.translatable("legendary_relics.loot_config.request_update"));
                         // 多人游戏：服务端配置由服务端写入，这里只把值发过去
                         player.sendSystemMessage(Component.translatable("legendary_relics.config.request_update"));
-                        PacketDistributor.sendToServer(new ServerConfigPack(zenithIceSpikeChance.getValue(), zenithIceChancePerRadius.getValue(), rareSpawnWeightThreshold.getValue()));
+                        PacketDistributor.sendToServer(new ServerConfigPack(zenithIceSpikeChance.getValue(), zenithIceChancePerRadius.getValue()));
                     }
                 }
 

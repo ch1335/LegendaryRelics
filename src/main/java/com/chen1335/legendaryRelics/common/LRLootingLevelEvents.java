@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.arcanumlib.events.EnchantedLootEvent;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.API.objects.EEAttachmentTypes;
 import com.chen1335.equipmentEffectLib.common.InfoHolder;
@@ -7,7 +8,6 @@ import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.legendaryRelics.API.objects.LRDataComponentTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.events.EnchantedLootEvent;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.dataComponentTypes.CollectedMinerals;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.OreCollectorEffect;

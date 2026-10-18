@@ -23,7 +23,6 @@ public class LRAttributeEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void EntityAttributeModification(EntityAttributeModificationEvent event) {
         event.add(EntityType.PLAYER, LRAttributes.POWDER_SNOW_WALKING);
-        event.add(EntityType.PLAYER, LRAttributes.SEEKING);
         // 冰川骷髅的投射物伤害基础值 1.5（神化默认 1.0）
         event.add(LREntityTypes.GLACITE_SKELETON.get(), AttributesGetter.projectDamage(), 1.5D);
     }

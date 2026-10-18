@@ -1,19 +1,19 @@
 {
   "ops": [
     {
-      "type": "legendary_relics:add_pool",
+      "type": "arcanumlib:add_pool",
       "pool": {
         "bonus_rolls": 0.0,
         "entries": [
           {
-            "type": "legendary_relics:all_of",
+            "type": "arcanumlib:all_of",
             "children": [
               {
                 "type": "minecraft:item",
                 "conditions": [
                   {
                     "base_chance": 0.2,
-                    "condition": "legendary_relics:chance_modifiers"
+                    "condition": "arcanumlib:chance_modifiers"
                   }
                 ],
                 "name": "legendary_relics:healing_talisman"
@@ -25,8 +25,8 @@
       }
     }
   ],
-  "tableCondition": {
-    "type": "legendary_relics:id",
+  "tableSelector": {
+    "type": "arcanumlib:id",
     "id": "minecraft:chests/jungle_temple"
   }
 }

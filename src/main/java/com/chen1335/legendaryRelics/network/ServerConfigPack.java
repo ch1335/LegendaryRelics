@@ -21,8 +21,7 @@ import org.jetbrains.annotations.NotNull;
  * </ul>
  */
 public record ServerConfigPack(double zenithIceSpikeChance,
-                               double zenithIceSpikeChancePerRadius,
-                               double rareSpawnWeightThreshold) implements CustomPacketPayload {
+                               double zenithIceSpikeChancePerRadius) implements CustomPacketPayload {
 
     public static final Type<ServerConfigPack> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(LegendaryRelics.MODID, "server_config"));
@@ -30,7 +29,6 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     public static final StreamCodec<? super RegistryFriendlyByteBuf, ServerConfigPack> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.DOUBLE, ServerConfigPack::zenithIceSpikeChance,
             ByteBufCodecs.DOUBLE, ServerConfigPack::zenithIceSpikeChancePerRadius,
-            ByteBufCodecs.DOUBLE, ServerConfigPack::rareSpawnWeightThreshold,
             ServerConfigPack::new
     );
 
@@ -38,8 +36,7 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     public static ServerConfigPack ofCurrent() {
         return new ServerConfigPack(
                 LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.get(),
-                LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.get(),
-                LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.get());
+                LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.get());
     }
 
     @Override
@@ -71,6 +68,5 @@ public record ServerConfigPack(double zenithIceSpikeChance,
     private void apply() {
         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE.set(zenithIceSpikeChance);
         LRServerConfig.ZENITH_ICE_SPIKE_CHANCE_PER_RADIUS.set(zenithIceSpikeChancePerRadius);
-        LRServerConfig.RARE_SPAWN_WEIGHT_THRESHOLD.set(rareSpawnWeightThreshold);
     }
 }

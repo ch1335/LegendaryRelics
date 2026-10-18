@@ -5,7 +5,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.BooleanAttribute;
-import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -36,15 +35,6 @@ public class LRAttributes {
             () -> new BooleanAttribute("attribute.name.legendary_relics.powder_snow_walking", false)
                     .setSyncable(true)
                     .setSentiment(Attribute.Sentiment.NEUTRAL));
-
-    /**
-     * 寻觅（Seeking）：提高稀有生物的刷怪权重。权重占比低于阈值（服务端配置）的生物，
-     * 最终权重 = 基础权重 ×（1 + 该值），不封顶。基础值 0，默认不生效。
-     */
-    public static final DeferredHolder<Attribute, Attribute> SEEKING = ATTRIBUTES.register(
-            "seeking",
-            () -> new PercentageAttribute("attribute.name.legendary_relics.seeking", 0.0D, 0.0D, 10000.0D)
-                    .setSyncable(true));
 
     public static void register(IEventBus modEventBus) {
         ATTRIBUTES.register(modEventBus);

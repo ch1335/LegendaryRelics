@@ -1,14 +1,14 @@
 package com.chen1335.legendaryRelics.data;
 
+import com.chen1335.arcanumlib.modules.loot.lootCondition.ChanceModifier;
+import com.chen1335.arcanumlib.modules.loot.lootCondition.ChanceModifierCondition;
+import com.chen1335.arcanumlib.modules.loot.lootEntry.AllOfEntry;
+import com.chen1335.arcanumlib.modules.loot.lootInjector.LootInjector;
+import com.chen1335.arcanumlib.modules.loot.lootInjector.data.LootInjectorProvider;
+import com.chen1335.arcanumlib.modules.loot.lootInjector.operator.TableOperator;
+import com.chen1335.arcanumlib.modules.loot.lootInjector.selector.TableSelector;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifier;
-import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifierCondition;
-import com.chen1335.legendaryRelics.common.lootCondition.lootEntry.AllOfEntry;
-import com.chen1335.legendaryRelics.common.lootInjecter.LootInjector;
-import com.chen1335.legendaryRelics.common.lootInjecter.LootInjectorOp;
-import com.chen1335.legendaryRelics.common.lootInjecter.condition.TableCondition;
-import com.chen1335.legendaryRelics.common.lootInjecter.datagen.LootInjectorProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -90,11 +90,6 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     }
 
     /**
-     * 一条掉落：基础概率 + 可选每级抢夺加成 + 额外加工器 + 条目本身。
-     *
-     * <p>加工器按顺序作用：基础概率 → 每级抢夺 → extra 里的依次执行（extra 内部顺序就是 json 里的顺序）。
-     */
-    /**
      * 一条掉落：基础概率 + 可选每级抢夺加成 + 额外加工器 + 【条目工厂】。
      *
      * <p>entry 必须是工厂而不是 Builder 实例：Builder 上的 when() 是往自己身上追加条件，
@@ -171,12 +166,12 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
 
     private static LootInjector merged(String path, ResourceKey<LootTable> table, Drop... drops) {
         return new LootInjector(LegendaryRelics.id(path),
-                new TableCondition.ById(table.location()), 1000, pools(drops));
+                new TableSelector.ById(table.location()), 1000, pools(drops));
     }
 
     private static LootInjector boss(String path, EntityType<?> type, Drop... drops) {
         return new LootInjector(LegendaryRelics.id(path),
-                new TableCondition.ById(type.getDefaultLootTable().location()), 1000, pools(drops));
+                new TableSelector.ById(type.getDefaultLootTable().location()), 1000, pools(drops));
     }
 
     /**
@@ -188,14 +183,14 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
      * <p>不能用 minecraft:group：group 只是把孩子的权重摊平进池的候选列表，
      * LootPool.addRandomItem 随后仍然按权重抽一个，"N 个条目"会变成"每次只出 1 个"。
      */
-    private static List<LootInjectorOp> pools(Drop... drops) {
+    private static List<TableOperator> pools(Drop... drops) {
         List<LootPoolEntryContainer.Builder<?>> children = new ArrayList<>();
 
         for (Drop drop : drops) {
             children.add(drop.entry().get().when(chanceCondition(drop.chance(), drop.perLooting(), drop.extra())));
         }
 
-        return List.of(new LootInjectorOp.AddPool(LootPool.lootPool()
+        return List.of(new TableOperator.AddPool(LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F))
                 .add(AllOfEntry.allOf(children))
                 .build()));

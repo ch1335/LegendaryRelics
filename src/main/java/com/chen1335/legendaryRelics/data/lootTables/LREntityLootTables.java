@@ -1,9 +1,9 @@
 package com.chen1335.legendaryRelics.data.lootTables;
 
+import com.chen1335.arcanumlib.modules.loot.lootCondition.ChanceModifier;
+import com.chen1335.arcanumlib.modules.loot.lootCondition.ChanceModifierCondition;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.API.objects.LRItems;
-import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifier;
-import com.chen1335.legendaryRelics.common.lootCondition.ChanceModifierCondition;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;

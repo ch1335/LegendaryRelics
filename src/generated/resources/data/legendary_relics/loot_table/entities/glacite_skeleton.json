@@ -71,26 +71,27 @@
               "base_chance": 0.05,
               "chance_modifiers": [
                 {
-                  "type": "tool_enchantment_level",
+                  "type": "arcanumlib:tool_enchantment_level",
                   "enchantment": "minecraft:looting",
                   "operation": "add",
                   "per_level": 0.005
                 },
                 {
-                  "type": "entity_attribute",
+                  "type": "arcanumlib:entity_attribute",
                   "attribute": "minecraft:generic.luck",
                   "operation": "add",
                   "per_point": 0.005
                 },
                 {
-                  "type": "difficulty_factor",
+                  "type": "arcanumlib:difficulty_factor",
                   "easy": 1.0,
                   "hard": 1.3,
                   "normal": 1.15,
+                  "operation": "mul",
                   "peaceful": 1.0
                 }
               ],
-              "condition": "legendary_relics:chance_modifiers"
+              "condition": "arcanumlib:chance_modifiers"
             }
           ],
           "name": "legendary_relics:frost_shard"

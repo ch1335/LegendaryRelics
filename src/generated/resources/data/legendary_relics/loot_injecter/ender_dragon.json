@@ -1,18 +1,18 @@
 {
   "ops": [
     {
-      "type": "legendary_relics:add_pool",
+      "type": "arcanumlib:add_pool",
       "pool": {
         "bonus_rolls": 0.0,
         "entries": [
           {
-            "type": "legendary_relics:all_of",
+            "type": "arcanumlib:all_of",
             "children": [
               {
                 "type": "minecraft:item",
                 "conditions": [
                   {
-                    "condition": "legendary_relics:chance_modifiers"
+                    "condition": "arcanumlib:chance_modifiers"
                   }
                 ],
                 "functions": [
@@ -40,8 +40,8 @@
       }
     }
   ],
-  "tableCondition": {
-    "type": "legendary_relics:id",
+  "tableSelector": {
+    "type": "arcanumlib:id",
     "id": "minecraft:entities/ender_dragon"
   }
 }
