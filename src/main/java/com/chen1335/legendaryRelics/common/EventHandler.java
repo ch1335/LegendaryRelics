@@ -12,17 +12,17 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorsHolder;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.compat.jei.network.TransferItem;
 import com.chen1335.legendaryRelics.mixins.legendary_relics.CurioAttributeModifierEventInvoker;
-import com.chen1335.legendaryRelics.network.*;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.dataComponentTypes.BowUsingArrow;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.FrostBloomEffect;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonArmor;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonHelmet;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet.BlackDragonLeggings;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc.AncientFragment;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc.DarkGoldForgingTool;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.EnderSuppression;
+import com.chen1335.legendaryRelics.network.*;
 import com.chen1335.shieldSystem.events.RegisterShieldPriorityEvent;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -35,6 +35,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
@@ -50,6 +51,7 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -70,7 +72,7 @@ public class EventHandler {
         @SubscribeEvent
         public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
             if (ModList.get().isLoaded("patchouli")) {
-                LREntityData entityData = LREntityData.getData(event.getEntity());
+                LRPlayerData entityData = LRPlayerData.getData(event.getEntity());
                 if (!entityData.hasGiveBook) {
                     event.getEntity().addItem(ItemModBook.forBook(LegendaryRelics.id("legendary_relics_book")));
                     entityData.hasGiveBook = true;
@@ -164,28 +166,28 @@ public class EventHandler {
         }
 
         @SubscribeEvent
+        public static void PlayerTickPre(PlayerTickEvent.Pre event) {
+            LRPlayerData.getData(event.getEntity()).tick(event.getEntity());
+        }
+
+        @SubscribeEvent
         public static void RegisterShieldPriorityEvent(RegisterShieldPriorityEvent event) {
             event.addShieldType(LRShieldType.SHIELD_REGENERATOR_SHIELD.get());
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void LivingIncomingDamageEventLowest(LivingIncomingDamageEvent event) {
+            if (event.getSource().getEntity() instanceof Player player) {
+                if (!player.isAlliedTo(event.getEntity())) {
+                    LRPlayerData.getData(player).addAttacking(event.getEntity());
+                }
+            }
             if (event.getSource().getDirectEntity() instanceof Projectile projectile) {
                 LRProjectileData data = LRProjectileData.getData(projectile);
                 if (data.damageMul != 1) {
                     event.setAmount(event.getAmount() * data.damageMul);
                 }
             }
-        }
-
-        @SubscribeEvent
-        public static void LivingGetAttributeAdjustmentEvent(LivingGetAttributeAdjustmentEvent event) {
-
-        }
-
-        @SubscribeEvent(priority = EventPriority.HIGHEST)
-        public static void LivingIncomingDamageEventHighest(LivingIncomingDamageEvent event) {
-
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -304,10 +306,10 @@ public class EventHandler {
             ItemStack from = event.getFrom();
             ItemStack eventTo = event.getTo();
             if (from.getItem() instanceof ILRItemExtension extension) {
-                extension.onEquipmentChangeFrom(from,eventTo,event.getEntity());
+                extension.onEquipmentChangeFrom(from, eventTo, event.getEntity());
             }
             if (eventTo.getItem() instanceof ILRItemExtension extension) {
-                extension.onEquipmentChangeTo(from,eventTo,event.getEntity());
+                extension.onEquipmentChangeTo(from, eventTo, event.getEntity());
             }
         }
 

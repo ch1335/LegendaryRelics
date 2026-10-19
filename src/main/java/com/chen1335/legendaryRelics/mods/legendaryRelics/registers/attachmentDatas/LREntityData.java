@@ -19,26 +19,18 @@ public class LREntityData implements INBTSerializable<CompoundTag> {
 
     private final EquipmentEffectCooldownManager equipmentEffectCooldownManager = new EquipmentEffectCooldownManager();
 
-    public boolean hasGiveBook = false;
-
-    public boolean hasGiveCharmOfFreshStart = false;
-
     /** 神圣斗篷的飘扬状态。纯客户端渲染数据，不参与 NBT 序列化。 */
     public final CloakRenderData cloakRender = new CloakRenderData();
 
     @Override
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
         CompoundTag compoundTag = new CompoundTag();
-        compoundTag.putBoolean("HasGiveBook", hasGiveBook);
-        compoundTag.putBoolean("HasGiveCharmOfFreshStart", hasGiveCharmOfFreshStart);
         compoundTag.put("AttributeBonusData", timeLimitedAttributeBonusManager.serializeNBT(provider));
         return compoundTag;
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull CompoundTag nbt) {
-        hasGiveBook = nbt.getBoolean("HasGiveBook");
-        hasGiveCharmOfFreshStart = nbt.getBoolean("HasGiveCharmOfFreshStart");
+    public void deserializeNBT(HolderLookup.@NotNull Provider provider, CompoundTag nbt) {
         timeLimitedAttributeBonusManager.deserializeNBT(provider, nbt.getCompound("AttributeBonusData"));
     }
 

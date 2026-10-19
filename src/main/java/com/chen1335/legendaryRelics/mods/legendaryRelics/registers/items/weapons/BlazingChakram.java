@@ -17,12 +17,10 @@ import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -32,14 +30,18 @@ import java.util.List;
  * 装备效果没有单独注册类型，具体行为直接写在本物品上；环绕调度也由飞轮实体自己完成。
  */
 public class BlazingChakram extends LRSwordItem {
-    /** 生成冷却（秒）：暗金品质从 4 秒降到 3 秒。 */
+    /**
+     * 生成冷却（秒）：暗金品质从 4 秒降到 3 秒。
+     */
     @Calculator
     public static final FinalCalculator GENERATION_COOLDOWN = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(4),
             Constant.of(3)
     ), 2);
 
-    /** 飞轮每秒攻击次数，等于玩家攻速。 */
+    /**
+     * 飞轮每秒攻击次数，等于玩家攻速。
+     */
     @Calculator
     public static final FinalCalculator ATTACK_INTERVAL = FinalCalculator.of(EntityAttributeValue.of(Attributes.ATTACK_SPEED), 1);
 
@@ -47,7 +49,7 @@ public class BlazingChakram extends LRSwordItem {
     public static final FinalCalculator DAMAGE = FinalCalculator.of(Add.of(
             Constant.of(1),
             Mul.of(
-                    Constant.of(0.25F),
+                    Constant.of(0.15F),
                     EntityAttributeValue.of(Attributes.ATTACK_DAMAGE)
             )
     ));
@@ -63,8 +65,7 @@ public class BlazingChakram extends LRSwordItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context,
-                                @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg arg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
@@ -81,7 +82,9 @@ public class BlazingChakram extends LRSwordItem {
         }
     }
 
-    /** 近战命中：把最新数值与一次生成请求交给特殊效果，已有实例会被合并（保留飞轮列表与冷却）。 */
+    /**
+     * 近战命中：把最新数值与一次生成请求交给特殊效果，已有实例会被合并（保留飞轮列表与冷却）。
+     */
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         // hurtEnemy 只在服务端、且命中真正生效时被调用，这里不需要额外判端

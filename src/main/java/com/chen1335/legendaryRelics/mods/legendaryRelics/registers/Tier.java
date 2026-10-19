@@ -99,7 +99,7 @@ public class Tier {
                 2031,
                 9.0F,
                 7.0F,
-                -1.8F,
+                -2F,
                 15,
                 () -> Ingredient.of(Items.BLAZE_ROD)
         );

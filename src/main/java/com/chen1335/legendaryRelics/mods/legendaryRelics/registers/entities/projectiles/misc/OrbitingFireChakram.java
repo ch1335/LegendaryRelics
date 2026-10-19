@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.pro
 
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -308,16 +310,27 @@ public class OrbitingFireChakram extends Entity {
             return null;
         }
         AABB box = owner.getBoundingBox().inflate(12.0D);
-        List<LivingEntity> candidates = level().getEntitiesOfClass(LivingEntity.class, box, e ->
-                e != owner
-                        && e instanceof Enemy
-                        && e.isAlive()
-                        && !e.isSpectator()
-                        && !e.isAlliedTo(owner)
-                        && owner.canAttack(e));
+        List<LivingEntity> candidates = level().getEntitiesOfClass(LivingEntity.class, box,this::isAvailableTarget);
         return candidates.stream()
                 .min(Comparator.comparingDouble(e -> e.distanceToSqr(this)))
                 .orElse(null);
+    }
+
+    private boolean isAvailableTarget(LivingEntity target) {
+        if (owner == null) {
+            return false;
+        }
+
+        boolean canAttack = target != owner
+                && target instanceof Enemy
+                && target.isAlive()
+                && !target.isSpectator()
+                && !target.isAlliedTo(owner)
+                && owner.canAttack(target);
+        if (owner instanceof Player player) {
+            return canAttack || LRPlayerData.getData(player).isAttacking(target);
+        }
+        return canAttack;
     }
 
     private void dealDamage(LivingEntity victim) {

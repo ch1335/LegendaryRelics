@@ -1,11 +1,7 @@
 package com.chen1335.legendaryRelics.client;
 
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
-import com.chen1335.legendaryRelics.API.objects.LRBlockEntities;
-import com.chen1335.legendaryRelics.API.objects.LRBlocks;
-import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
-import com.chen1335.legendaryRelics.API.objects.LRItems;
-import com.chen1335.legendaryRelics.API.objects.LRMenus;
+import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
 import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEncasementRenderer;
@@ -80,7 +76,9 @@ public class ClientEventHandler {
         @SubscribeEvent
         public static void EntityTickEvent(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity living) {
-                LREntityData.getData(living).cloakRender.tick(living);
+                if (living.hasData(LRAttachmentTypes.ENTITY_DATA.get())) {
+                    LREntityData.getData(living).cloakRender.tick(living);
+                }
             }
         }
 

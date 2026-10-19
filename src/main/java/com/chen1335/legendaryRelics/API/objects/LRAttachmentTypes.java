@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRProjectileData;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -15,6 +16,10 @@ public class LRAttachmentTypes {
 
     public static final Supplier<AttachmentType<LREntityData>> ENTITY_DATA = ATTACHMENT_TYPES.register(
             "entity_data", () -> AttachmentType.serializable((holder) -> new LREntityData()).build()
+    );
+
+    public static final Supplier<AttachmentType<LRPlayerData>> PLAYER_DATA = ATTACHMENT_TYPES.register(
+            "player_data", () -> AttachmentType.serializable((holder) -> new LRPlayerData()).build()
     );
 
     public static final Supplier<AttachmentType<LRProjectileData>> PROJECTILE_DATA = ATTACHMENT_TYPES.register(
