@@ -84,6 +84,7 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     private static final Drop DARK_STEEL_CLAW = drop(0.25D, LRItems.DARK_STEEL_CLAW);
     private static final Drop SACRED_TALISMAN = drop(0.25D, LRItems.SACRED_TALISMAN);
     private static final Drop AGGLOMERATION_MALICE = drop(0.5D, LRItems.AGGLOMERATION_MALICE);
+    private static final Drop SHADOW_DAGGER = drop(0.5D, LRItems.SHADOW_DAGGER);
 
     public LRLootInjectorProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, "loot_injecter", "Loot Injectors");
@@ -130,7 +131,7 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
         list.add(merged("abandoned_mineshaft", BuiltInLootTables.ABANDONED_MINESHAFT,
                 ORE_COLLECTORS_RING, ANCIENT_FRAGMENT_NORMAL));
         list.add(merged("ancient_city", BuiltInLootTables.ANCIENT_CITY,
-                DARK_STEEL_CLAW, ANCIENT_FRAGMENT_HIGH));
+                DARK_STEEL_CLAW, ANCIENT_FRAGMENT_HIGH,SHADOW_DAGGER));
         list.add(merged("ancient_city_ice_box", BuiltInLootTables.ANCIENT_CITY_ICE_BOX,
                 DARK_STEEL_CLAW, ANCIENT_FRAGMENT_HIGH));
         list.add(merged("buried_treasure", BuiltInLootTables.BURIED_TREASURE, ANCIENT_FRAGMENT_HIGH));

@@ -1,8 +1,11 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
+import com.chen1335.arcanumlib.registry.ArcanumAttachments;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -18,8 +21,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -34,12 +35,10 @@ import net.minecraft.world.phys.HitResult;
 import java.util.List;
 
 public class Ambush extends LRWeaponEffect {
-    public static ResourceLocation BONUS_DAMAGE_ID = LegendaryRelics.id("dagger_charge");
-
     @Calculator
-    public static final FinalCalculator DAMAGE_GAIN = FinalCalculator.of(
+    public static final FinalCalculator DAMAGE_MUL = FinalCalculator.of(
             Add.of(
-                    EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(2F, 0.25F)),
+                    EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(3F, 0.25F)),
                     Mul.of(
                             Constant.of(0.5F),
                             EntityAttributeValue.of(ALObjects.Attributes.CRIT_DAMAGE)
@@ -58,8 +57,11 @@ public class Ambush extends LRWeaponEffect {
                 tooltipComponents,
                 Component.translatable("equipment_effect.legendary_relics.ambush",
                         FinalCalculator.format((float) getMaxChargeTick(itemStack, player) / 20, 1),
-                        DAMAGE_GAIN.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this), Style.EMPTY, 100, "%s%%"),
-                        Component.translatable(Attributes.ATTACK_DAMAGE.value().getDescriptionId()).withColor(5592575)
+                        ComponentHolders.Attributes.attribute(
+                                Attributes.ATTACK_DAMAGE,
+                                DAMAGE_MUL.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this), Style.EMPTY, 100, "%s%%"),
+                                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                        )
                 ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack)
         );
         tooltipComponents.add(Component.translatable("legendary_relics.max_charge_time_affected_by_attack_speed").withStyle(ChatFormatting.DARK_GRAY));
@@ -74,14 +76,13 @@ public class Ambush extends LRWeaponEffect {
             float chargePercent = getChargePercent(stack, livingEntity);
             HitResult pick = LRUtil.pick(livingEntity, 0, entityInteractionRange);
             if (pick instanceof EntityHitResult entityHitResult && chargePercent >= 0.25) {
-                AttributeMap attributes = player.getAttributes();
-                AttributeInstance instance = attributes.getInstance(Attributes.ATTACK_DAMAGE);
-                if (instance != null) {
-                    instance.addTransientModifier(new AttributeModifier(Ambush.BONUS_DAMAGE_ID, Ambush.DAMAGE_GAIN.getValue(arg) * chargePercent, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-                    entityHitResult.getEntity().invulnerableTime = 0;
-                    player.attack(entityHitResult.getEntity());
-                    instance.removeModifier(Ambush.BONUS_DAMAGE_ID);
-                }
+                AttributeAdjustment attributeAdjustment = new AttributeAdjustment();
+                attributeAdjustment.add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL,  DAMAGE_MUL.getValue(arg)-1);
+                List<AttributeAdjustment> modifier = player.getData(ArcanumAttachments.ENTITY_DATA.get()).adjustmentData.getModifier(Attributes.ATTACK_DAMAGE);
+                modifier.add(attributeAdjustment);
+                entityHitResult.getEntity().invulnerableTime = 0;
+                player.attack(entityHitResult.getEntity());
+                modifier.remove(attributeAdjustment);
             }
         }
     }

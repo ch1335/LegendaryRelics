@@ -1,23 +1,25 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
-import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -49,30 +51,46 @@ public class AttributeBoostInNether extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.attribute_boost_in_nether", ATTRIBUTE_BOOST.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        Component boost = ComponentHolders.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
+                ATTRIBUTE_BOOST.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
+                AttributeModifier.Operation.ADD_VALUE);
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.attribute_boost_in_nether", boost)
+                .withColor(0xaeaeae));
     }
 
     private void addAttribute(ISlotContext slotContext, LivingEntity living, ItemStack itemStack) {
         CalculatorArg arg = CalculatorArg.simpleArg(living, itemStack, this);
-        AttributeModifyHelper.addAllPositive(living, slotContext.pathRL(MODIFIER_ID), ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        AttributeInstance attribute = living.getAttribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER);
+        if (attribute == null) {
+            return;
+        }
 
+        attribute.removeModifier(slotContext.pathRL(MODIFIER_ID));
+        float boost = ATTRIBUTE_BOOST.getValue(arg);
+        if (boost > 0) {
+            attribute.addTransientModifier(new AttributeModifier(slotContext.pathRL(MODIFIER_ID), boost,
+                    AttributeModifier.Operation.ADD_VALUE));
+        }
     }
 
-    private void removeAttribute(ISlotContext slotContext, LivingEntity living, ItemStack itemStack) {
-        AttributeModifyHelper.removeAllPositive(living, slotContext.pathRL(MODIFIER_ID));
+    private void removeAttribute(ISlotContext slotContext, LivingEntity living) {
+        AttributeInstance attribute = living.getAttribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER);
+        if (attribute != null) {
+            attribute.removeModifier(slotContext.pathRL(MODIFIER_ID));
+        }
     }
 
     @Override
     public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (entity.level().dimension().equals(ServerLevel.NETHER)) {
-            removeAttribute(slotContext,entity, itemStack);
+            removeAttribute(slotContext, entity);
         }
     }
 
     @Override
     public void onActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
         if (entity.level().dimension().equals(ServerLevel.NETHER)) {
-            addAttribute(slotContext,entity, itemStack);
+            addAttribute(slotContext, entity, itemStack);
         }
     }
 
@@ -84,7 +102,7 @@ public class AttributeBoostInNether extends LRCurioEffect {
                 if (event.getDimension().equals(ServerLevel.NETHER)) {
                     effect.addAttribute(pair.context(), livingEntity, pair.infoHolder().itemStack());
                 } else {
-                    effect.removeAttribute(pair.context(), livingEntity, pair.infoHolder().itemStack());
+                    effect.removeAttribute(pair.context(), livingEntity);
                 }
             });
         }

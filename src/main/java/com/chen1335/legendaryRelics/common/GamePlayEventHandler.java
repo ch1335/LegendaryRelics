@@ -26,7 +26,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
-import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -63,6 +62,7 @@ public class GamePlayEventHandler {
                 Redemption.getAttributeAdjustment(event, source, target, attacker);
                 InFireTargetDamageIncrease.getAttributeAdjustment(event, source, target, attacker);
                 AgglomerationMaliceEffect.getAttributeAdjustment(event, source, target, attacker);
+                Backstab.getAttributeAdjustment(event, source, target, attacker);
             }
             LRArmorBase.handleAttributeAdjustment(event, target,  source,  damage);
             FireDamageReduce.getAttributeAdjustment(event, source, target);
@@ -77,10 +77,6 @@ public class GamePlayEventHandler {
         }
     }
 
-    @SubscribeEvent
-    public static void CriticalHitEvent(CriticalHitEvent event) {
-        Backstab.CriticalHitEvent(event);
-    }
 
     @SubscribeEvent
     public static void LivingEntityUseItemEvent$Stop(LivingEntityUseItemEvent.Stop event) {

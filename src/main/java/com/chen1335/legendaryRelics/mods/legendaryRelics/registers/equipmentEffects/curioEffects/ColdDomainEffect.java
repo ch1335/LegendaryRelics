@@ -1,16 +1,17 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
-import com.chen1335.legendaryRelics.utils.AttributeModifyHelper;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -18,6 +19,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,7 +43,7 @@ public class ColdDomainEffect extends LRCurioEffect {
 
     /** 寒冷群系下的属性提升比例。 */
     @Calculator
-    public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(Constant.of(0.1F));
+    public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(Constant.of(0.05F));
 
     /** 周期性检查间隔（tick）。 */
     private static final int CHECK_INTERVAL = 20;
@@ -53,18 +55,26 @@ public class ColdDomainEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.cold_domain",
-                ATTRIBUTE_BOOST.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")
-        ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
+        Component boost = ComponentHolders.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
+                ATTRIBUTE_BOOST.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
+                AttributeModifier.Operation.ADD_VALUE);
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.cold_domain", boost)
+                .withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     private static void addAttribute(ISlotContext slotContext, LivingEntity living, ItemStack itemStack, ColdDomainEffect effect) {
         CalculatorArg arg = CalculatorArg.simpleArg(living, itemStack, effect);
-        AttributeModifyHelper.addAllPositive(living, slotContext.pathRL(MODIFIER_ID), ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        AttributeInstance attribute = living.getAttribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER);
+        if (attribute != null) {
+            attribute.addTransientModifier(new AttributeModifier(slotContext.pathRL(MODIFIER_ID),ATTRIBUTE_BOOST.getValue(arg), AttributeModifier.Operation.ADD_VALUE));
+        }
     }
 
     private static void removeAttribute(ISlotContext slotContext, LivingEntity living) {
-        AttributeModifyHelper.removeAllPositive(living, slotContext.pathRL(MODIFIER_ID));
+        AttributeInstance attribute = living.getAttribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER);
+        if (attribute != null) {
+            attribute.removeModifier(slotContext.pathRL(MODIFIER_ID));
+        }
     }
 
     private static boolean isInColdBiome(LivingEntity living) {

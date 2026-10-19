@@ -1,12 +1,12 @@
 package com.chen1335.legendaryRelics.effectInstances;
 
+import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.BlackDragonArmorSetEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.BlackDragonArmorSetEffect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
@@ -33,18 +33,21 @@ public class BlackDragonEffectInstance extends EffectInstance {
     }
 
     private void updateAttribute(LivingEntity living, int piece) {
-        CalculatorArg args = buildArgs(living);
-        for (AttributeInstance value : living.getAttributes().supplier.instances.values()) {
-            AttributeInstance instance = living.getAttribute(value.getAttribute());
-            if (instance != null && instance.getAttribute().value().sentiment == Attribute.Sentiment.POSITIVE) {
-                instance.removeModifier(BLACK_DRAGON_ATTRIBUTE_MULTIPLIER);
-                if (piece >= 1) {
-                    float multiplier = BlackDragonArmorSetEffect.ATTRIBUTE_MULTIPLIER.getValue(args);
-                    if (multiplier > 0) {
-                        instance.addTransientModifier(new AttributeModifier(BLACK_DRAGON_ATTRIBUTE_MULTIPLIER, multiplier, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-                    }
-                }
-            }
+        AttributeInstance instance = living.getAttribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER);
+        if (instance == null) {
+            return;
+        }
+
+        instance.removeModifier(BLACK_DRAGON_ATTRIBUTE_MULTIPLIER);
+        // piece = 0 是卸下套装：只清 modifier，不能再算一次加成（TieredBonus 会把 0 钳到第 1 档）
+        if (piece < 1) {
+            return;
+        }
+
+        float multiplier = BlackDragonArmorSetEffect.ATTRIBUTE_MULTIPLIER.getValue(buildArgs(living));
+        if (multiplier > 0) {
+            instance.addTransientModifier(new AttributeModifier(BLACK_DRAGON_ATTRIBUTE_MULTIPLIER, multiplier,
+                    AttributeModifier.Operation.ADD_VALUE));
         }
     }
 

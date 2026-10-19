@@ -90,6 +90,19 @@ public class Tier {
                 15,
                 () -> Ingredient.of(Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE)
         );
+
+        /**
+         * 烈焰飞轮的武器 tier：轮刃手感，攻速比剑快、单次伤害略低。
+         */
+        public static final LRSimpleTier BLAZING_CHAKRAM = new LRSimpleTier(
+                BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+                2031,
+                9.0F,
+                7.0F,
+                -1.8F,
+                15,
+                () -> Ingredient.of(Items.BLAZE_ROD)
+        );
     }
 
     public static class Armor {

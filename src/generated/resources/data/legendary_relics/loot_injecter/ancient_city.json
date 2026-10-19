@@ -48,6 +48,16 @@
                   }
                 ],
                 "name": "legendary_relics:ancient_fragment"
+              },
+              {
+                "type": "minecraft:item",
+                "conditions": [
+                  {
+                    "base_chance": 0.5,
+                    "condition": "arcanumlib:chance_modifiers"
+                  }
+                ],
+                "name": "legendary_relics:shadow_dagger"
               }
             ]
           }

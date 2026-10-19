@@ -111,6 +111,7 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.SKELETON_THROWING_KNIFE.asItem(),
                 LRItems.SHADOW_DAGGER.value(),
                 LRItems.FROST_SHARD.value(),
+                LRItems.BLAZING_CHAKRAM.value(),
                 ISSRegisters.Item.MAGIC_BREAKER.value()
         );
 
