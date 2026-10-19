@@ -30,6 +30,7 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.CHAIN_LIGHTNING,
                         LRDamageTypes.FROST_SHARD,
                         LRDamageTypes.ICICLE,
+                        LRDamageTypes.ORBITING_FIRE_CHAKRAM,
                         IRSDamageTypes.SOUL_MISSILE
                 );
 
@@ -51,6 +52,7 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.FLYING_KNIFE,
                         LRDamageTypes.FROST_SHARD,
                         LRDamageTypes.ICICLE,
+                        LRDamageTypes.ORBITING_FIRE_CHAKRAM,
                         IRSDamageTypes.SOUL_MISSILE
                 );
 
@@ -66,12 +68,14 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
         this.tag(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS)
                 .add(
                         LRDamageTypes.FROST_SHARD,
+                        LRDamageTypes.ORBITING_FIRE_CHAKRAM,
                         LRDamageTypes.ICICLE
                 );
 
         this.tag(DamageTypeTags.PANIC_CAUSES)
                 .add(
                         LRDamageTypes.FROST_SHARD,
+                        LRDamageTypes.ORBITING_FIRE_CHAKRAM,
                         LRDamageTypes.ICICLE
                 );
 
@@ -82,6 +86,7 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.FLYING_REAPER,
                         LRDamageTypes.INFERNO_SCORCH,
                         LRDamageTypes.CHAIN_LIGHTNING,
+                        LRDamageTypes.ORBITING_FIRE_CHAKRAM,
                         IRSDamageTypes.SOUL_MISSILE
                 );
     }

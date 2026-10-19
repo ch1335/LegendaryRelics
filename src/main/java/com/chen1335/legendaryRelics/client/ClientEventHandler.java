@@ -15,6 +15,7 @@ import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReape
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FrostswornRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.GlaciteSkeletonRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IcicleRenderer;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.OrbitingFireChakramRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.TreatmentBallRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.ThrownFrostShardRender;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
@@ -103,6 +104,7 @@ public class ClientEventHandler {
             event.registerEntityRenderer(LREntityTypes.FLYING_KNIFE.value(), FlyingKnifeRender::new);
             event.registerEntityRenderer(LREntityTypes.THROWN_FROST_SHARD.value(), ThrownFrostShardRender::new);
             event.registerEntityRenderer(LREntityTypes.ICICLE.value(), IcicleRenderer::new);
+            event.registerEntityRenderer(LREntityTypes.ORBITING_FIRE_CHAKRAM.value(), OrbitingFireChakramRenderer::new);
             event.registerEntityRenderer(LREntityTypes.GLACITE_SKELETON.value(), GlaciteSkeletonRenderer::new);
             event.registerEntityRenderer(LREntityTypes.FROSTSWORN.value(), FrostswornRenderer::new);
             event.registerBlockEntityRenderer(LRBlockEntities.ICE_ENCASEMENT.get(), IceEncasementRenderer::new);

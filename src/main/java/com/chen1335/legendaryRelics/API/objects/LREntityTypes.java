@@ -6,6 +6,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.mons
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingKnife;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.Icicle;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.OrbitingFireChakram;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.ThrownFrostShard;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.TreatmentBall;
 import net.minecraft.core.registries.Registries;
@@ -31,6 +32,9 @@ public class LREntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownFrostShard>> THROWN_FROST_SHARD = ENTITY_TYPES.register("thrown_frost_shard", () -> EntityType.Builder.<ThrownFrostShard>of(ThrownFrostShard::new, MobCategory.MISC).sized(0.5F, 0.5F).eyeHeight(0.13F).clientTrackingRange(4).updateInterval(20).build("thrown_frost_shard"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Icicle>> ICICLE = ENTITY_TYPES.register("icicle", () -> EntityType.Builder.<Icicle>of(Icicle::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(1).build("icicle"));
+
+    /** 烈焰飞轮的环绕实体：位置每 tick 变，所以同步间隔要小。 */
+    public static final DeferredHolder<EntityType<?>, EntityType<OrbitingFireChakram>> ORBITING_FIRE_CHAKRAM = ENTITY_TYPES.register("orbiting_fire_chakram", () -> EntityType.Builder.<OrbitingFireChakram>of(OrbitingFireChakram::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(64).updateInterval(1).build("orbiting_fire_chakram"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<GlaciteSkeleton>> GLACITE_SKELETON = ENTITY_TYPES.register("glacite_skeleton", () -> EntityType.Builder.<GlaciteSkeleton>of(GlaciteSkeleton::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).clientTrackingRange(8).build("glacite_skeleton"));
 

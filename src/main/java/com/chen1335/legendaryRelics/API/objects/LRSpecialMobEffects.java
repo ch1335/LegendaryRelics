@@ -6,6 +6,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Erosion;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.InfernoScorch;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Invincibility;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.OrbitingFireChakramsEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
@@ -59,5 +60,11 @@ public class LRSpecialMobEffects {
             .factory(Slowness::new)
             .renderIcon()
             .category(MobEffectCategory.HARMFUL)
+            .build());
+
+    /** 烈焰飞轮的环绕调度效果：HUD 图标上显示当前飞轮数量，扇形显示剩余时间。 */
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<OrbitingFireChakramsEffect>> ORBITING_FIRE_CHAKRAMS = SPECIAL_MOB_EFFECT_TYPES.register("orbiting_fire_chakrams", MobEffectType.Builder.<OrbitingFireChakramsEffect>builder()
+            .factory(OrbitingFireChakramsEffect::new)
+            .renderIcon()
             .build());
 }
