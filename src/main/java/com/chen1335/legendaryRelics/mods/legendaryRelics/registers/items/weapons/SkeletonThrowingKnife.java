@@ -12,7 +12,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingKnife;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -21,12 +21,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class SkeletonThrowingKnife extends LRSwordItem {
+public class SkeletonThrowingKnife extends LRMeleeWeaponBase {
 
     @Calculator
     public static final FinalCalculator DAMAGE = FinalCalculator.of(

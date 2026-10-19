@@ -135,6 +135,9 @@ public class LRItems {
     /** 烈焰飞轮：暂无行为。 */
     public static final DeferredItem<BlazingChakram> BLAZING_CHAKRAM = ITEM_DEFERRED_REGISTER.register("blazing_chakram", BlazingChakram::new);
 
+    /** 破冰者：暂无行为。 */
+    public static final DeferredItem<Icebreaker> ICEBREAKER = ITEM_DEFERRED_REGISTER.register("icebreaker", Icebreaker::new);
+
     /** 冰川骷髅刷怪蛋：颜色取自臻冰那套冰蓝配色。 */
     public static final DeferredItem<DeferredSpawnEggItem> GLACITE_SKELETON_SPAWN_EGG = ITEM_DEFERRED_REGISTER.register("glacite_skeleton_spawn_egg",
             () -> new DeferredSpawnEggItem(LREntityTypes.GLACITE_SKELETON, 0x82CDF0, 0x174263, new Item.Properties()));

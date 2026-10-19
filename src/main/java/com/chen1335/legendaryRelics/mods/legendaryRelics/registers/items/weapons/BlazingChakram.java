@@ -11,7 +11,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.OrbitingFireChakramsEffect;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
@@ -29,7 +29,7 @@ import java.util.List;
  * <p>
  * 装备效果没有单独注册类型，具体行为直接写在本物品上；环绕调度也由飞轮实体自己完成。
  */
-public class BlazingChakram extends LRSwordItem {
+public class BlazingChakram extends LRMeleeWeaponBase {
     /**
      * 生成冷却（秒）：暗金品质从 4 秒降到 3 秒。
      */

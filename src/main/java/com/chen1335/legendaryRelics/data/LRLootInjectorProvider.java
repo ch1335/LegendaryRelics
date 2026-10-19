@@ -73,6 +73,13 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
             () -> LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
 
+    // 基础 1%，抢夺每级 +0.2%，每点幸运 +0.1%，先按难度放大再封顶 15%（15% 是硬上限）
+    private static final Drop BLAZING_CHAKRAM = new Drop(0.015D, 0.002D, List.of(
+            ChanceModifier.Luck.of(ChanceModifier.Operation.ADD, 0.001D),
+            ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D),
+            ChanceModifier.Clamp.of(0.0D, 0.15D)),
+            () -> LootItem.lootTableItem(LRItems.BLAZING_CHAKRAM.get()));
+
 
     private static final Drop NETHER_RING = drop(0.25D, LRItems.NETHER_RING);
     private static final Drop NETHER_TALISMAN = drop(0.25D, LRItems.NETHER_TALISMAN);
@@ -142,18 +149,21 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
         list.add(merged("stronghold_corridor", BuiltInLootTables.STRONGHOLD_CORRIDOR, ANCIENT_FRAGMENT_NORMAL));
         list.add(merged("stronghold_crossing", BuiltInLootTables.STRONGHOLD_CROSSING, ANCIENT_FRAGMENT_NORMAL));
 
+        // 普通怪：烈焱人的实体掉落表
+        list.add(entity("blaze", EntityType.BLAZE, BLAZING_CHAKRAM));
+
         // Boss：龙鳞与凋灵之魂必掉，数量受抢夺影响
-        list.add(boss("elder_guardian", EntityType.ELDER_GUARDIAN,
+        list.add(entity("elder_guardian", EntityType.ELDER_GUARDIAN,
                 new Drop(0.3D, 0.05D,
                         () -> LootItem.lootTableItem(LRItems.THUNDERBOLT_NECKLACE.get()))));
-        list.add(boss("piglin_brute", EntityType.PIGLIN_BRUTE,
+        list.add(entity("piglin_brute", EntityType.PIGLIN_BRUTE,
                 new Drop(0.1D, 0.02D,
                         () -> LootItem.lootTableItem(LRItems.TYRANNICAL_ESSENCE.get()))));
-        list.add(boss("ender_dragon", EntityType.ENDER_DRAGON,
+        list.add(entity("ender_dragon", EntityType.ENDER_DRAGON,
                 new Drop(1.0D, 0.0D, () -> LootItem.lootTableItem(LRItems.DRAGON_SCALE.get())
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F)))
                         .apply(lootingCount(provider)))));
-        list.add(boss("wither", EntityType.WITHER,
+        list.add(entity("wither", EntityType.WITHER,
                 new Drop(1.0D, 0.0D, () -> LootItem.lootTableItem(LRItems.WITHER_SPIRIT.get())
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F)))
                         .apply(lootingCount(provider)))));
@@ -170,7 +180,7 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
                 new TableSelector.ById(table.location()), 1000, pools(drops));
     }
 
-    private static LootInjector boss(String path, EntityType<?> type, Drop... drops) {
+    private static LootInjector entity(String path, EntityType<?> type, Drop... drops) {
         return new LootInjector(LegendaryRelics.id(path),
                 new TableSelector.ById(type.getDefaultLootTable().location()), 1000, pools(drops));
     }

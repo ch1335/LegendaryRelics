@@ -7,7 +7,7 @@ import com.chen1335.legendaryRelics.API.IChargeAbleItem;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Ambush;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.ItemAbility;
 
 import java.util.List;
 
-public class ShadowDagger extends LRSwordItem implements IChargeAbleItem {
+public class ShadowDagger extends LRMeleeWeaponBase implements IChargeAbleItem {
 
     public ShadowDagger() {
         super(Tier.Weapon.SHADOW_DAGGER, new Item.Properties().rarity(Rarity.RARE));

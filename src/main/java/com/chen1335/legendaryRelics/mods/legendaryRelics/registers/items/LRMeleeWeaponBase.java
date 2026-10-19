@@ -5,8 +5,8 @@ import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.common.LRSimpleTier;
 import net.minecraft.world.item.SwordItem;
 
-public abstract class LRSwordItem extends SwordItem implements IEffectEquipment, ILRItemExtension {
-    public LRSwordItem(LRSimpleTier tier, Properties properties) {
+public abstract class LRMeleeWeaponBase extends SwordItem implements IEffectEquipment, ILRItemExtension {
+    public LRMeleeWeaponBase(LRSimpleTier tier, Properties properties) {
         super(tier, properties.attributes(SwordItem.createAttributes(tier, 0, tier.getAttackSpeed())));
     }
 }

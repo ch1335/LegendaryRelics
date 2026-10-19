@@ -15,7 +15,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -29,7 +29,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class Reaper extends LRSwordItem {
+public class Reaper extends LRMeleeWeaponBase {
     public Reaper() {
         super(Tier.Weapon.REAPER, new Properties().stacksTo(1).rarity(Rarity.EPIC));
     }

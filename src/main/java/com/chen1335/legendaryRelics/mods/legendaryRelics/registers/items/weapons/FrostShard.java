@@ -13,7 +13,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.MultiMul;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.ThrownFrostShard;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRSwordItem;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.sounds.SoundEvents;
@@ -42,7 +42,7 @@ import java.util.List;
  * <p>与三叉戟的区别在于投掷代价：投掷**不消耗物品**，只扣 1 点耐久并进入 10 秒冷却，
  * 因此投出的实体也没有拾取机制（见 {@link ThrownFrostShard}）。
  */
-public class FrostShard extends LRSwordItem implements IChargeAbleItem {
+public class FrostShard extends LRMeleeWeaponBase implements IChargeAbleItem {
 
     /**
      * 蓄力到可以投掷所需的最短时间（tick），与三叉戟一致。

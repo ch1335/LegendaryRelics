@@ -112,6 +112,7 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.SHADOW_DAGGER.value(),
                 LRItems.FROST_SHARD.value(),
                 LRItems.BLAZING_CHAKRAM.value(),
+                LRItems.ICEBREAKER.value(),
                 ISSRegisters.Item.MAGIC_BREAKER.value()
         );
 

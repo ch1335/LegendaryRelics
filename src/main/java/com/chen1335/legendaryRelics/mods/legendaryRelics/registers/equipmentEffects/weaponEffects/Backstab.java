@@ -15,8 +15,8 @@ import com.chen1335.legendaryRelics.utils.LRUtil;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +27,9 @@ import net.minecraft.world.item.TooltipFlag;
 import java.util.List;
 
 public class Backstab extends LRWeaponEffect {
-    /** 暴击率加成 1.0 = 100%，即必定暴击。 */
+    /**
+     * 暴击率加成 1.0 = 100%，即必定暴击。
+     */
     @Calculator
     public static final FinalCalculator CRIT_CHANCE_BONUS = FinalCalculator.of(
             Constant.of(1.0F)
@@ -55,7 +57,7 @@ public class Backstab extends LRWeaponEffect {
     }
 
     public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source, LivingEntity target, LivingEntity attacker) {
-        if (source.is(DamageTypeTags.IS_PLAYER_ATTACK)) {
+        if (source.is(DamageTypes.PLAYER_ATTACK)) {
             double dot = attacker.getLookAngle().dot(target.calculateViewVector(target.getXRot(), target.yBodyRot));
             if (dot >= 0) {
                 Backstab effect = EquipmentEffectAPI.getEffect(attacker.getWeaponItem(), LREquipmentEffectTypes.BACKSTAB.value());

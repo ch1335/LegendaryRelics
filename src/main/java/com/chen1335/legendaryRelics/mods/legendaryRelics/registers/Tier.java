@@ -103,6 +103,19 @@ public class Tier {
                 15,
                 () -> Ingredient.of(Items.BLAZE_ROD)
         );
+
+        /**
+         * 破冰者的武器 tier（占位数值）：重武器手感，单次伤害更高、攻速更慢。
+         */
+        public static final LRSimpleTier ICEBREAKER = new LRSimpleTier(
+                BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+                2031,
+                8.0F,
+                11.0F,
+                -3.1F,
+                15,
+                () -> Ingredient.of(Items.PACKED_ICE, Items.BLUE_ICE)
+        );
     }
 
     public static class Armor {

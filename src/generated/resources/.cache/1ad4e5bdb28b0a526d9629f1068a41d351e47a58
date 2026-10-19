@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-19T17:38:46.9911907	Loot Injectors
+// 1.21.1	2026-10-20T00:04:05.7532877	Loot Injectors
 d685c232930b22ef3ebc87d7c01ec051f35ab9b4 data/legendary_relics/loot_injecter/abandoned_mineshaft.json
 2dfffaddd1fcc7d0ceb1c1ee8159ae012afdc5ad data/legendary_relics/loot_injecter/ancient_city.json
 1b713fa463b961adfd398852e186cb864aaf01a6 data/legendary_relics/loot_injecter/ancient_city_ice_box.json
@@ -6,6 +6,7 @@ d685c232930b22ef3ebc87d7c01ec051f35ab9b4 data/legendary_relics/loot_injecter/aba
 b6ef74738ed9a17026d9f8d8803a2f2baa72ff55 data/legendary_relics/loot_injecter/bastion_hoglin_stable.json
 e8df3e542905784aacd633aa5ac6793cbc59b109 data/legendary_relics/loot_injecter/bastion_other.json
 1c0f5d68f0aaf788e8c58e7f92dbcc4d5559addf data/legendary_relics/loot_injecter/bastion_treasure.json
+7bfaa30c8878430f2a8aee218fda3c47c67b7b0d data/legendary_relics/loot_injecter/blaze.json
 df0c8169311ce2acbce36e094375b31d5ef48f76 data/legendary_relics/loot_injecter/buried_treasure.json
 1b36c130c5f7f21dc40b60344262edd57f2a2051 data/legendary_relics/loot_injecter/desert_pyramid.json
 dea5bc0f97cdc9d1bdc5f67084154a2bdca0b1ce data/legendary_relics/loot_injecter/elder_guardian.json
