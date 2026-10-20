@@ -1,0 +1,23 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "gui_light": "front",
+  "textures": {
+    "particle": "legendary_relics:item/frost_steel_sword"
+  },
+  "base": {
+    "parent": "legendary_relics:item/greatsword_base",
+    "textures": {
+      "particle": "legendary_relics:item/frost_steel_sword",
+      "layer0": "legendary_relics:item/frost_steel_sword"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/handheld",
+      "textures": {
+        "particle": "legendary_relics:item/frost_steel_sword_gui",
+        "layer0": "legendary_relics:item/frost_steel_sword_gui"
+      }
+    }
+  }
+}

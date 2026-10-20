@@ -322,7 +322,7 @@
 				}
 			},
 			"sound_effects": {
-				"0.26": {
+				"0.25": {
 					"effect": "legendary_relics:swing"
 				}
 			}
@@ -455,8 +455,7 @@
 			},
 			"sound_effects": {
 				"0.2083": {
-					"effect": "legendary_relics:swing",
-					"bind_to_actor": false
+					"effect": "legendary_relics:swing"
 				}
 			}
 		},
@@ -596,10 +595,12 @@
 			},
 			"sound_effects": {
 				"0.2917": {
-					"effect": "legendary_relics:swing",
-					"bind_to_actor": false
+					"effect": "legendary_relics:swing"
 				}
 			}
+		},
+		"animation": {
+			"loop": true
 		}
 	}
 }

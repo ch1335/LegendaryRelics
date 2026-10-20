@@ -116,6 +116,19 @@ public class Tier {
                 15,
                 () -> Ingredient.of(Items.PACKED_ICE, Items.BLUE_ICE)
         );
+
+        /**
+         * 霜钢剑的武器 tier（占位数值）：标准单手剑手感，对齐下界合金剑的攻速。
+         */
+        public static final LRSimpleTier FROST_STEEL_SWORD = new LRSimpleTier(
+                BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+                2031,
+                9.0F,
+                8.0F,
+                -2.4F,
+                15,
+                () -> Ingredient.of(Items.BLUE_ICE)
+        );
     }
 
     public static class Armor {

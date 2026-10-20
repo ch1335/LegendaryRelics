@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters;
 
+import com.chen1335.legendaryRelics.API.objects.LRItems;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.ai.LRPathNavigation;
@@ -60,6 +61,8 @@ public class Frostsworn extends Monster implements GeoEntity {
     public Frostsworn(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 50;
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(LRItems.FROST_STEEL_SWORD.get()));
+        this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -135,18 +138,6 @@ public class Frostsworn extends Monster implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
-    }
-
-    @Override
-    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
-        // 放在 super 之后，避免被原版装备逻辑覆盖；该物品属于联动模块，未加载时注册项不存在
-        if (ISSModProxy.INSTANCE.shouldLoad()) {
-            this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ISSRegisters.Item.MAGIC_BREAKER.get()));
-            // 手上这把永不掉落
-            this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
-        }
-        return data;
     }
 
     @Override
