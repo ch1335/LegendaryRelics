@@ -17,6 +17,8 @@ import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,6 +29,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
@@ -38,8 +41,17 @@ import java.util.List;
  */
 public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleItem {
     public static final ResourceLocation THRUST_CHARGE = LegendaryRelics.id("thrust_charge");
+    public static final ResourceLocation THRUST_SPRINT = LegendaryRelics.id("thrust_sprint");
+    /** 蓄力低于这个比例松开不冲刺。 */
+    private static final float MIN_CHARGE_PERCENT = 0.25F;
     @Calculator
     public static final FinalCalculator MAX_CHARGE_TICKS = FinalCalculator.of(Constant.of(40F));
+    /** 冲刺水平速度（格/tick）。 */
+    @Calculator
+    public static final FinalCalculator DASH_POWER = FinalCalculator.of(Constant.of(2F));
+    /** 释放后的物品冷却（秒）。 */
+    @Calculator
+    public static final FinalCalculator RELEASE_COOLDOWN = FinalCalculator.of(Constant.of(0.4F));
 
     public FrostSteelSword() {
         super(Tier.Weapon.FROST_STEEL_SWORD, new Properties().stacksTo(1).rarity(Rarity.EPIC));
@@ -71,6 +83,36 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.NONE;
+    }
+
+    @Override
+    public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
+        if (level.isClientSide || !(livingEntity instanceof Player player)) {
+            return;
+        }
+        if (getChargePercent(stack, player) < MIN_CHARGE_PERCENT) {
+            return;
+        }
+        Vec3 look = player.getLookAngle();
+        Vec3 horizontal = new Vec3(look.x, 0.0, look.z);
+        if (horizontal.lengthSqr() < 1.0E-4) {
+            return;
+        }
+        CalculatorArg arg = CalculatorArg.simpleArg(player, stack);
+        Vec3 dash = horizontal.normalize().scale(DASH_POWER.getValue(arg));
+        player.setDeltaMovement(dash.x, 0.1, dash.z);
+        player.hurtMarked = true;   // 让客户端收到速度同步
+        player.setSprinting(true);
+        player.resetFallDistance();
+
+        // 蓄力动画的 checker 会在松开后清空动画层，这里先手动清掉状态，避免它把冲刺动画一起清掉
+        LRPlayerData.getData(player).playerAnimationState = null;
+        PlayerAnimationHandler.play(player, THRUST_SPRINT, 2);
+
+        int cooldown = Math.max(1, Math.round(RELEASE_COOLDOWN.getValue(arg) * 20.0F));
+        player.getCooldowns().addCooldown(this, cooldown);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.TRIDENT_RIPTIDE_1.value(), SoundSource.PLAYERS, 1.0F, 1.2F);
     }
 
     /**

@@ -19,10 +19,12 @@ import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.client.SoulMissileRenderer;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.screens.EquipmentWorkbenchCraftScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -81,6 +83,18 @@ public class ClientEventHandler {
                     LREntityData.getData(living).cloakRender.tick(living);
                 }
             }
+        }
+
+        /** 蓄力霜钢剑时让整个身体跟随头部朝向，避免身体和视角错开。 */
+        @SubscribeEvent
+        public static void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
+            Player player = event.getEntity();
+            if (LRPlayerData.getData(player).playerAnimationState == null) {
+                return;
+            }
+            float bodyRot = Mth.rotLerp(event.getPartialTick(), player.yHeadRotO, player.yHeadRot);
+            player.yBodyRot = bodyRot;
+            player.yBodyRotO = bodyRot;
         }
 
         @SubscribeEvent

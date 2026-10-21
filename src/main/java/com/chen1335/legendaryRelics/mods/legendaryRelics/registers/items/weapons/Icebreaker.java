@@ -16,7 +16,6 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.misc.IceThorn;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
-import com.chen1335.legendaryRelics.network.PlayPlayerAnimationPack;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.legendaryRelics.utils.SimpleSchedule;
 import net.minecraft.core.BlockPos;
@@ -38,7 +37,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbility;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 
@@ -81,20 +79,22 @@ public class Icebreaker extends LRMeleeWeaponBase {
         if (player.getCooldowns().isOnCooldown(this) || hand == InteractionHand.OFF_HAND) {
             return InteractionResultHolder.pass(stack);
         }
-        // 客户端也必须返回成功，原版才会把这次右键发给服务端
-        if (level.isClientSide) {
-            return InteractionResultHolder.sidedSuccess(stack, true);
-        }
+
         int cooldown = Math.max(1, Math.round(SWING_COOLDOWN.getValue(CalculatorArg.simpleArg(player, stack)) * 20.0F));
         player.getCooldowns().addCooldown(this, cooldown);
         PlayerAnimationHandler.play(player, SWING_ANIMATION, 2);
         LRPlayerData.getData(player).playerAnimationState = PlayerAnimationState.start(22)
                 .checker(() -> player.getMainHandItem().is(this))
-                .addKeyframeAction(15, new KeyframeAction.Run((state) -> {
-                    PlayerAnimationHandler.playFrom(player, SWING_ANIMATION, 7, 2);
-                    state.setTime(7);
+                .addKeyframeAction(15, new KeyframeAction.Run(state -> {
+                    if (player.level() instanceof ServerLevel serverLevel) {
+                        serverLevel.playSound(null, player.blockPosition(), SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 1, 1);
+                        doIceWaves(player, stack);
+                    }
                 }));
-
+        // 客户端也必须返回成功，原版才会把这次右键发给服务端
+        if (level.isClientSide) {
+            return InteractionResultHolder.sidedSuccess(stack, true);
+        }
 
         return InteractionResultHolder.sidedSuccess(stack, false);
     }
