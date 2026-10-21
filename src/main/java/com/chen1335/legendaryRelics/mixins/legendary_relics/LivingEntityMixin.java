@@ -1,8 +1,10 @@
 package com.chen1335.legendaryRelics.mixins.legendary_relics;
 
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.TreadingSnowEffect;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -16,10 +18,20 @@ import org.spongepowered.asm.mixin.injection.At;
  * <p>判据是<b>已同步的属性</b>，见 {@link TreadingSnowEffect#canWalkOnPowderSnow}.
  */
 @Mixin(LivingEntity.class)
-public class LivingEntityCanFreezeMixin {
+public class LivingEntityMixin {
 
     @ModifyReturnValue(method = "canFreeze", at = @At("RETURN"))
-    private boolean legendary_relics$preventFreezing(boolean original) {
-        return original && !TreadingSnowEffect.canWalkOnPowderSnow((LivingEntity) (Object) this);
+    private boolean canFreeze(boolean original) {
+        return original && !TreadingSnowEffect.canWalkOnPowderSnow(LivingEntity.class.cast(this));
+    }
+
+
+    @ModifyReturnValue(method = "isPushable", at = @At("RETURN"))
+    private boolean isPushable(boolean original) {
+        if (original && LivingEntity.class.cast(this) instanceof Player player) {
+            LRPlayerData data = LRPlayerData.getData(player);
+            return data.isInvinciblePush();
+        }
+        return original;
     }
 }

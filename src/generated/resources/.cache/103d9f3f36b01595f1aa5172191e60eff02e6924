@@ -1,9 +1,10 @@
-// 1.21.1	2026-10-21T17:42:47.00997	Registries
+// 1.21.1	2026-10-22T01:58:50.0916745	Registries
 3fc7f6e350b074892c8344083340a54faf8c1866 data/legendary_relics/damage_type/chain_lightning.json
 313c2f2d3db396067a4d7c4d854b3c7848884e1e data/legendary_relics/damage_type/erosion.json
 5b802efac8f033812aa6fe601f2afc130238aa56 data/legendary_relics/damage_type/flying_knife.json
 c5fccf27e82d2bbba497baefa33d2b6ac3e4604a data/legendary_relics/damage_type/flying_reaper.json
 ac96b1cef57e329026f59e9d6a472257d9722ed1 data/legendary_relics/damage_type/frost_shard.json
+41dc171c5e26e9f0694adbd75643c5f6207d8d4e data/legendary_relics/damage_type/frost_steel_thrust.json
 f100e7455d977c8c9c98364caab6a832516745bd data/legendary_relics/damage_type/ice_thorn.json
 56d234d7eb89b6ec492f6d8d87f63d5c1cbefe9d data/legendary_relics/damage_type/icicle.json
 78ec0f889c24aa15e158727b6064fb4ce7152771 data/legendary_relics/damage_type/inferno_scorch.json

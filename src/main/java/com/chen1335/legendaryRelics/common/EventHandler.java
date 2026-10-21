@@ -1,6 +1,5 @@
 package com.chen1335.legendaryRelics.common;
 
-import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.equipmentEffectLib.API.objects.EquipmentTypes;
 import com.chen1335.equipmentEffectLib.events.SetItemSetsEffectEvent;
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
@@ -178,8 +177,9 @@ public class EventHandler {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void LivingIncomingDamageEventLowest(LivingIncomingDamageEvent event) {
             if (event.getSource().getEntity() instanceof Player player) {
+                LRPlayerData data = LRPlayerData.getData(player);
                 if (!player.isAlliedTo(event.getEntity())) {
-                    LRPlayerData.getData(player).addAttacking(event.getEntity());
+                    data.addAttacking(event.getEntity());
                 }
             }
             if (event.getSource().getDirectEntity() instanceof Projectile projectile) {

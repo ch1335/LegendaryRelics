@@ -29,6 +29,8 @@
   "death.attack.icicle.player": "%1$s was impaled by an icicle whilst fighting %2$s",
   "death.attack.ice_thorn": "%1$s was impaled by an ice thorn",
   "death.attack.ice_thorn.player": "%1$s was impaled by an ice thorn whilst fighting %2$s",
+  "death.attack.frost_steel_thrust": "%1$s was run through by a Frost Steel thrust",
+  "death.attack.frost_steel_thrust.player": "%1$s was run through by %2$s's Frost Steel thrust",
   "death.attack.orbiting_fire_chakram": "%1$s was sliced apart by orbiting fire chakrams",
   "death.attack.orbiting_fire_chakram.player": "%1$s was sliced apart by orbiting fire chakrams whilst fighting %2$s",
   "equipment_effect.legendary_relics.chain_lightning": "§6Chain Lightning§r:Melee or ranged hits trigger a chain lightning that jumps to the nearest target within %s blocks, dealing %s of the original damage, chaining up to %s targets. Each target can only be shocked once",

@@ -32,6 +32,7 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.ICICLE,
                         LRDamageTypes.ORBITING_FIRE_CHAKRAM,
                         LRDamageTypes.ICE_THORN,
+                        LRDamageTypes.FROST_STEEL_THRUST,
                         IRSDamageTypes.SOUL_MISSILE
                 );
 
@@ -55,6 +56,7 @@ public class LRDamageTypeTagsProvider extends DamageTypeTagsProvider {
                         LRDamageTypes.ICICLE,
                         LRDamageTypes.ORBITING_FIRE_CHAKRAM,
                         LRDamageTypes.ICE_THORN,
+                        LRDamageTypes.FROST_STEEL_THRUST,
                         IRSDamageTypes.SOUL_MISSILE
                 );
 

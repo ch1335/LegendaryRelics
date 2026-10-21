@@ -32,7 +32,7 @@ import java.util.List;
  * 细雪判定在客户端也会跑（本地玩家的移动预测），客户端查不到饰品就会按"要下沉"预测，
  * 与服务端结算互相纠正 —— 表现为站在细雪上抽搐。属性会同步给客户端，两端结论一致。
  *
- * <p>两个 mixin（{@code LivingEntityCanFreezeMixin} 拦冻结、{@code PowderSnowBlockMixin} 拦陷入）
+ * <p>两个 mixin（{@code LivingEntityMixin} 拦冻结、{@code PowderSnowBlockMixin} 拦陷入）
  * 都只读这个属性，见 {@link #canWalkOnPowderSnow(Entity)}。
  */
 public class TreadingSnowEffect extends LRCurioEffect {

@@ -10,6 +10,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LRPlayerData implements INBTSerializable<CompoundTag> {
     public boolean hasGiveBook = false;
 
@@ -21,6 +24,8 @@ public class LRPlayerData implements INBTSerializable<CompoundTag> {
 
     public PlayerAnimationState playerAnimationState = null;
 
+    public final List<Object> invincibleSource = new ArrayList<>();
+    public final List<Object> invinciblePushSource = new ArrayList<>();
     public static LRPlayerData getData(Player living) {
         return living.getData(LRAttachmentTypes.PLAYER_DATA.get());
     }
@@ -57,5 +62,28 @@ public class LRPlayerData implements INBTSerializable<CompoundTag> {
         if (playerAnimationState != null) {
             playerAnimationState.tick(player);
         }
+    }
+
+    public void addInvincibleSource(Object o) {
+        invincibleSource.add(o);
+    }
+
+    public boolean isInvincible() {
+        return !invincibleSource.isEmpty();
+    }
+
+    public void removeInvincibleSource(Object o) {
+        invincibleSource.remove(o);
+    }
+
+    public void addInvinciblePushSource(Object o) {
+        invinciblePushSource.add(o);
+    }
+
+    public boolean isInvinciblePush() {
+        return !invinciblePushSource.isEmpty();
+    }
+    public void removeInvinciblePushSource(Object o) {
+        invinciblePushSource.remove(o);
     }
 }

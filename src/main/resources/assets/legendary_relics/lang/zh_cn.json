@@ -11,6 +11,8 @@
   "death.attack.icicle.player": "%1$s在与%2$s战斗时被冰锥刺穿了",
   "death.attack.ice_thorn": "%1$s被冰刺刺穿了",
   "death.attack.ice_thorn.player": "%1$s在与%2$s战斗时被冰刺刺穿了",
+  "death.attack.frost_steel_thrust": "%1$s被霜钢剑突刺贯穿了",
+  "death.attack.frost_steel_thrust.player": "%1$s在与%2$s战斗时被霜钢剑突刺贯穿了",
   "death.attack.orbiting_fire_chakram": "%1$s被烈焰飞轮切碎了",
   "death.attack.orbiting_fire_chakram.player": "%1$s在与%2$s战斗时被烈焰飞轮切碎了",
   "entity.legendary_relics.frostsworn": "冰誓骑士",

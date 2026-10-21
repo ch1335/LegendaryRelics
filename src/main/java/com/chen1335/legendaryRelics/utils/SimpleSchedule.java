@@ -10,7 +10,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
@@ -32,32 +31,32 @@ public class SimpleSchedule {
     }
 
 
-    private static final Map<Dist, List<Schedule>> DIST_SCHEDULES = ImmutableMap.of(
+    private static final Map<Dist, List<ISchedule>> DIST_SCHEDULES = ImmutableMap.of(
             Dist.CLIENT, new ArrayList<>(),
             Dist.DEDICATED_SERVER, new ArrayList<>()
     );
 
-    private static final Map<Dist, List<Schedule>> DIST_SCHEDULES_TO_ADD = ImmutableMap.of(
+    private static final Map<Dist, List<ISchedule>> DIST_SCHEDULES_TO_ADD = ImmutableMap.of(
             Dist.CLIENT, new ArrayList<>(),
             Dist.DEDICATED_SERVER, new ArrayList<>()
     );
 
-    public static void addSchedule(Level level, Schedule schedule) {
+    public static void addSchedule(Level level, ISchedule schedule) {
 
         if (level.isClientSide) {
-            LRClient.submitTask(()-> DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule));
+            LRClient.submitTask(() -> DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule));
         } else {
-            ((ServerLevel) level).getServer().submit(()->DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule));
+            ((ServerLevel) level).getServer().submit(() -> DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule));
         }
     }
 
-    public static void addSchedule(Dist dist, Schedule schedule) {
+    public static void addSchedule(Dist dist, ISchedule schedule) {
         if (dist == Dist.CLIENT) {
-            LRClient.submitTask(()-> DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule));
+            LRClient.submitTask(() -> DIST_SCHEDULES_TO_ADD.get(Dist.CLIENT).add(schedule));
         } else {
             MinecraftServer currentServer = ServerLifecycleHooks.getCurrentServer();
             if (currentServer != null) {
-                currentServer.submit(()->DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule));
+                currentServer.submit(() -> DIST_SCHEDULES_TO_ADD.get(Dist.DEDICATED_SERVER).add(schedule));
             }
         }
         DIST_SCHEDULES_TO_ADD.get(dist).add(schedule);
@@ -66,27 +65,33 @@ public class SimpleSchedule {
     private static void update(Dist dist) {
         DIST_SCHEDULES.get(dist).addAll(DIST_SCHEDULES_TO_ADD.get(dist));
         DIST_SCHEDULES_TO_ADD.get(dist).clear();
-        Iterator<Schedule> iterator = DIST_SCHEDULES.get(dist).iterator();
+        Iterator<ISchedule> iterator = DIST_SCHEDULES.get(dist).iterator();
         while (iterator.hasNext()) {
-            Schedule schedule = iterator.next();
+            ISchedule schedule = iterator.next();
             schedule.tick();
             if (schedule.finished()) {
-                schedule.run();
+                schedule.onFinished();
                 iterator.remove();
             }
         }
     }
 
-    public abstract static class Schedule {
+    public interface ISchedule {
+        boolean finished();
+
+        void tick();
+
+        default void onFinished() {
+        }
+    }
+
+    public abstract static class Schedule implements ISchedule {
         public int time = 0;
 
-        public abstract boolean finished();
-
+        @Override
         public void tick() {
             time++;
         }
-
-        public abstract void run();
     }
 
     public static class Wait extends Schedule {
@@ -111,7 +116,7 @@ public class SimpleSchedule {
         }
 
         @Override
-        public void run() {
+        public void onFinished() {
             runnable.run();
         }
     }
@@ -146,7 +151,7 @@ public class SimpleSchedule {
         }
 
         @Override
-        public void run() {
+        public void onFinished() {
 
         }
     }
