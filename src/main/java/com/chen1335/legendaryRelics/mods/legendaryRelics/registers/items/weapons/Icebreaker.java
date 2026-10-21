@@ -1,9 +1,11 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
+import com.chen1335.legendaryRelics.animation.KeyframeAction;
 import com.chen1335.legendaryRelics.animation.PlayerAnimationState;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
+import com.chen1335.legendaryRelics.common.PlayerAnimationHandler;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -19,11 +21,11 @@ import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.legendaryRelics.utils.SimpleSchedule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -55,7 +57,9 @@ public class Icebreaker extends LRMeleeWeaponBase {
     public static final FinalCalculator SWING_COOLDOWN = FinalCalculator.of(Constant.of(3.1F));
 
     private static final int RING_INTERVAL = 3;
-    /** 冰刺波中心相对玩家前移的距离（格）。 */
+    /**
+     * 冰刺波中心相对玩家前移的距离（格）。
+     */
     private static final float WAVE_OFFSET = 1.0F;
     /**
      * 单根冰刺的伤害：7 + 玩家攻击力。
@@ -74,7 +78,7 @@ public class Icebreaker extends LRMeleeWeaponBase {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         // 冷却中直接吞掉这次右键：客户端返回 pass 就不会给服务端发包，省得按住右键刷包
-        if (player.getCooldowns().isOnCooldown(this)) {
+        if (player.getCooldowns().isOnCooldown(this) || hand == InteractionHand.OFF_HAND) {
             return InteractionResultHolder.pass(stack);
         }
         // 客户端也必须返回成功，原版才会把这次右键发给服务端
@@ -83,15 +87,13 @@ public class Icebreaker extends LRMeleeWeaponBase {
         }
         int cooldown = Math.max(1, Math.round(SWING_COOLDOWN.getValue(CalculatorArg.simpleArg(player, stack)) * 20.0F));
         player.getCooldowns().addCooldown(this, cooldown);
+        PlayerAnimationHandler.play(player, SWING_ANIMATION, 2);
         LRPlayerData.getData(player).playerAnimationState = PlayerAnimationState.start(22)
-                .addKeyframeAction(0, (player1) -> PacketDistributor.sendToPlayersTrackingEntityAndSelf(player,
-                        new PlayPlayerAnimationPack(player1.getUUID(), SWING_ANIMATION, 2)))
-                .addKeyframeAction(15, (player1) -> {
-                    if (player1.level() instanceof ServerLevel serverLevel) {
-                        serverLevel.playSound(null, player1.blockPosition(), SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 1, 1);
-                        doIceWaves(player1, stack);
-                    }
-                });
+                .checker(() -> player.getMainHandItem().is(this))
+                .addKeyframeAction(15, new KeyframeAction.Run((state) -> {
+                    PlayerAnimationHandler.playFrom(player, SWING_ANIMATION, 7, 2);
+                    state.setTime(7);
+                }));
 
 
         return InteractionResultHolder.sidedSuccess(stack, false);
@@ -106,7 +108,7 @@ public class Icebreaker extends LRMeleeWeaponBase {
             boolean shift = tooltipFlag.hasShiftDown();
             // 物理伤害由 ComponentHolders 统一拼上"物理伤害"字样，所以语言文件里只留 %s
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.icebreaker.desc.1",
-                    ComponentHolders.Combat.physicalDamage(ICE_WAVE_DAMAGE.toComponent(shift, arg))).withColor(0xaeaeae),
+                            ComponentHolders.Combat.physicalDamage(ICE_WAVE_DAMAGE.toComponent(shift, arg))).withColor(0xaeaeae),
                     maxToolTipWidth(stack));
             // 补充说明用更暗的颜色，与收割者、霜锥的背景行一致
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.icebreaker.desc.2",
@@ -146,7 +148,9 @@ public class Icebreaker extends LRMeleeWeaponBase {
         }
     }
 
-    /** 玩家视角的水平方向单位向量；垂直俯仰时返回零向量，避免 normalize 出 NaN。 */
+    /**
+     * 玩家视角的水平方向单位向量；垂直俯仰时返回零向量，避免 normalize 出 NaN。
+     */
     private static Vec3 horizontalLook(Player player) {
         Vec3 look = player.getLookAngle();
         Vec3 horizontal = new Vec3(look.x, 0.0, look.z);
