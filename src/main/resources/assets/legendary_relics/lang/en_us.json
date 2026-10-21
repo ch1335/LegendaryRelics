@@ -4,6 +4,7 @@
   "block.legendary_relics.ice_encasement": "Ice Encasement",
   "entity.legendary_relics.frostsworn": "Frostsworn",
   "entity.legendary_relics.glacite_skeleton": "Glacite Skeleton",
+  "entity.legendary_relics.ice_thorn": "Ice Thorn",
   "equipment_effect.legendary_relics.all_attribute_boost": "Gain %s",
   "equipment_effect.legendary_relics.ambush": "§6Ambush§r:Hold down the right button to charge for up to %s seconds, and when released, attack the target once, and this attack will gain up to %s based on the charge time",
   "equipment_effect.legendary_relics.attribute_boost_in_nether": "While in the Nether, gain %s",

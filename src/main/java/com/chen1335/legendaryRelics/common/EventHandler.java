@@ -332,6 +332,7 @@ public class EventHandler {
             registrar.playToClient(EffectCooldownPack.TYPE, EffectCooldownPack.STREAM_CODEC, EffectCooldownPack::handler);
             registrar.playToClient(SetsInfoPack.TYPE, SetsInfoPack.STREAM_CODEC, SetsInfoPack::handler);
             registrar.playToClient(PlayClientParticlePack.TYPE, PlayClientParticlePack.STREAM_CODEC, PlayClientParticlePack::handler);
+            registrar.playToClient(PlayPlayerAnimationPack.TYPE, PlayPlayerAnimationPack.STREAM_CODEC, PlayPlayerAnimationPack::handler);
 
 
             registrar.playBidirectional(ServerConfigPack.TYPE, ServerConfigPack.STREAM_CODEC, ServerConfigPack::handler);

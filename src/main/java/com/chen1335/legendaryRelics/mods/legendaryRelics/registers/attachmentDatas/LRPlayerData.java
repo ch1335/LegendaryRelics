@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas;
 
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
+import com.chen1335.legendaryRelics.animation.PlayerAnimationState;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.HolderLookup;
@@ -17,6 +18,8 @@ public class LRPlayerData implements INBTSerializable<CompoundTag> {
     public int inCombatTime = 0;
 
     public IntSet attackingTarget = new IntArraySet();
+
+    public PlayerAnimationState playerAnimationState = null;
 
     public static LRPlayerData getData(Player living) {
         return living.getData(LRAttachmentTypes.PLAYER_DATA.get());
@@ -50,6 +53,9 @@ public class LRPlayerData implements INBTSerializable<CompoundTag> {
             attackingTarget.clear();
         } else if (inCombatTime > 0) {
             inCombatTime--;
+        }
+        if (playerAnimationState != null) {
+            playerAnimationState.tick(player);
         }
     }
 }
