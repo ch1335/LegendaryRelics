@@ -25,6 +25,9 @@ public interface LRDamageTypes {
     /** 烈焰飞轮环绕体的伤害类型。 */
     ResourceKey<DamageType> ORBITING_FIRE_CHAKRAM = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("orbiting_fire_chakram"));
 
+    /** 冰刺（破冰者冰刺波）的伤害类型。 */
+    ResourceKey<DamageType> ICE_THORN = ResourceKey.create(Registries.DAMAGE_TYPE, LegendaryRelics.id("ice_thorn"));
+
     static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(EROSION, new DamageType("erosion", 0.1F));
         context.register(FLYING_REAPER, new DamageType("flying_reaper", 0.1F));
@@ -34,6 +37,7 @@ public interface LRDamageTypes {
         context.register(FROST_SHARD, new DamageType("frost_shard", 0.1F));
         context.register(ICICLE, new DamageType("icicle", 0.1F));
         context.register(ORBITING_FIRE_CHAKRAM, new DamageType("orbiting_fire_chakram", 0.1F));
+        context.register(ICE_THORN, new DamageType("ice_thorn", 0.1F));
 
     }
 }

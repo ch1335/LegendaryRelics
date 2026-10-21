@@ -25,14 +25,14 @@ public class IceThornRenderer extends EntityRenderer<IceThorn> {
     private static final float U1 = 22.0F / 32.0F;
     /** 贴图顶部是尖，底部是宽端。 */
     private static final float V_TIP = 3.0F / 32.0F;
-    private static final float V_BASE = 32.0F / 32.0F;
+    private static final float V_BASE = 1.0f;
 
     private static final float HALF_WIDTH = IceThorn.WIDTH / 2.0F;
     private static final float HEIGHT = IceThorn.HEIGHT;
 
     public IceThornRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.shadowRadius = 0.3F;
+        this.shadowRadius = 0F;
     }
 
     @Override

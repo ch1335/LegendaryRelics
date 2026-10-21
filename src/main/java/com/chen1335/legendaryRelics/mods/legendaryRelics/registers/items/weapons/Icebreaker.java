@@ -2,6 +2,8 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapon
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.animation.PlayerAnimationState;
+import com.chen1335.legendaryRelics.client.LRClient;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -13,6 +15,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDat
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.misc.IceThorn;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import com.chen1335.legendaryRelics.network.PlayPlayerAnimationPack;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.legendaryRelics.utils.SimpleSchedule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,6 +23,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -27,11 +31,14 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.util.List;
 
 /**
  * 破冰者：右键播放挥砍动画。
@@ -40,7 +47,7 @@ public class Icebreaker extends LRMeleeWeaponBase {
     /**
      * 挥砍动画 id（= player_animations 里动画的 name，不是文件名）。
      */
-    public static final ResourceLocation SWING_ANIMATION = LegendaryRelics.id("name");
+    public static final ResourceLocation SWING_ANIMATION = LegendaryRelics.id("icebreaker_swing");
     /**
      * 右键间隔（秒），同时用作物品冷却：略长于动画时长（emote.json 61 tick ≈ 3.05s），避免连点把收招截断。
      */
@@ -88,6 +95,23 @@ public class Icebreaker extends LRMeleeWeaponBase {
 
 
         return InteractionResultHolder.sidedSuccess(stack, false);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context,
+                                List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        Level level = context.level();
+        if (level != null && level.isClientSide) {
+            CalculatorArg arg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
+            boolean shift = tooltipFlag.hasShiftDown();
+            // 物理伤害由 ComponentHolders 统一拼上"物理伤害"字样，所以语言文件里只留 %s
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.icebreaker.desc.1",
+                    ComponentHolders.Combat.physicalDamage(ICE_WAVE_DAMAGE.toComponent(shift, arg))).withColor(0xaeaeae),
+                    maxToolTipWidth(stack));
+            // 补充说明用更暗的颜色，与收割者、霜锥的背景行一致
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.icebreaker.desc.2",
+                    (int) (IceThorn.Wave.REPEAT_MULTIPLIER * 100)).withColor(5592405), maxToolTipWidth(stack));
+        }
     }
 
     /**
