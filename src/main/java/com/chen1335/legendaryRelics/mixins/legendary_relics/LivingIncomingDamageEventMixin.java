@@ -17,15 +17,15 @@ public class LivingIncomingDamageEventMixin {
 
     @Inject(method = "<init>(Lnet/minecraft/world/entity/LivingEntity;Lnet/neoforged/neoforge/common/damagesource/DamageContainer;)V", at = @At("TAIL"))
     private void lr$cancelIfInvincible(LivingEntity entity, DamageContainer container, CallbackInfo ci) {
+        LivingIncomingDamageEvent event = (LivingIncomingDamageEvent) (Object) this;
         if (!entity.level().isClientSide && Invincibility.isInvincible(entity)) {
-            LivingIncomingDamageEvent event = (LivingIncomingDamageEvent) (Object) this;
-            if (entity instanceof Player player) {
-                LRPlayerData data = LRPlayerData.getData(player);
-                if (data.isInvincible()) {
-                    event.setCanceled(true);
-                }
-            }
             event.setCanceled(true);
+        }
+        if (entity instanceof Player player) {
+            LRPlayerData data = LRPlayerData.getData(player);
+            if (data.isInvincible()) {
+                event.setCanceled(true);
+            }
         }
     }
 }
