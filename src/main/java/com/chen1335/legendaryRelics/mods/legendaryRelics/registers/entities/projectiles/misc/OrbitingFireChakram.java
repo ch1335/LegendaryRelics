@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc;
 
+import com.chen1335.equipmentEffectLib.utils.CombatUtil;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
@@ -310,27 +311,10 @@ public class OrbitingFireChakram extends Entity {
             return null;
         }
         AABB box = owner.getBoundingBox().inflate(12.0D);
-        List<LivingEntity> candidates = level().getEntitiesOfClass(LivingEntity.class, box,this::isAvailableTarget);
+        List<LivingEntity> candidates = level().getEntitiesOfClass(LivingEntity.class, box, living -> CombatUtil.isAvailableTarget(owner, living));
         return candidates.stream()
                 .min(Comparator.comparingDouble(e -> e.distanceToSqr(this)))
                 .orElse(null);
-    }
-
-    private boolean isAvailableTarget(LivingEntity target) {
-        if (owner == null) {
-            return false;
-        }
-
-        boolean canAttack = target != owner
-                && target instanceof Enemy
-                && target.isAlive()
-                && !target.isSpectator()
-                && !target.isAlliedTo(owner)
-                && owner.canAttack(target);
-        if (owner instanceof Player player) {
-            return canAttack || LRPlayerData.getData(player).isAttacking(target);
-        }
-        return canAttack;
     }
 
     private void dealDamage(LivingEntity victim) {

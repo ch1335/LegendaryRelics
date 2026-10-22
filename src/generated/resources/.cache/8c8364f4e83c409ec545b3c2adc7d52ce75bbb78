@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-20T18:39:58.2975224	Tags for minecraft:item mod id vanilla
+// 1.21.1	2026-10-22T16:02:34.6808435	Tags for minecraft:item mod id vanilla
 85cd9a647ded970699c816a8596daf10b014af58 data/curios/tags/item/back.json
 a3150a97326d85500aad6a14885d6d99ad2f8ad5 data/curios/tags/item/belt.json
 ca85f5a54a0563a4163d64e3fb3b2b9ac5e3df54 data/curios/tags/item/charm.json
@@ -10,11 +10,11 @@ cca7751b2e032cb72882927d79f15e9e5990acbd data/c/tags/item/scales/ender_dragon.js
 dee111014b97882a21d200b15347fea206aad9e5 data/c/tags/item/tools/bow.json
 dee111014b97882a21d200b15347fea206aad9e5 data/c/tags/item/tools/ranged_weapon.json
 dab1170af8cfdb1f4984363024f689183fc38726 data/legendary_relics/tags/item/can_only_wear_one.json
-e25bdfe0f386a36a540a80983ef1a1f1fc4d721f data/minecraft/tags/item/chest_armor.json
+8e54a8458ded5857a437364b5c47d29a420da2ec data/minecraft/tags/item/chest_armor.json
 dee111014b97882a21d200b15347fea206aad9e5 data/minecraft/tags/item/enchantable/bow.json
 dee111014b97882a21d200b15347fea206aad9e5 data/minecraft/tags/item/enchantable/durability.json
 dee111014b97882a21d200b15347fea206aad9e5 data/minecraft/tags/item/enchantable/vanishing.json
-4f9728716ee45e7769fe69bd73b07af08bd9a0f5 data/minecraft/tags/item/foot_armor.json
-5b478f25e9d053e4d306d2ecadb9e1d92f75d9b8 data/minecraft/tags/item/head_armor.json
-d70cccca31c6205d5f9ec83b8f22a21769aaacd2 data/minecraft/tags/item/leg_armor.json
-2254c1a54047804a99bb1f439771506a3d348873 data/minecraft/tags/item/swords.json
+9ab9317e79a6716701236338d76d9d7b0f636dad data/minecraft/tags/item/foot_armor.json
+e4de1aa1fcca5b3db78d87b08d305af6b12651a4 data/minecraft/tags/item/head_armor.json
+635a645e5231334272b33c1c4ef6553606391083 data/minecraft/tags/item/leg_armor.json
+b5125d53e48a48db8dbe158bc301ce2ccaba3238 data/minecraft/tags/item/swords.json

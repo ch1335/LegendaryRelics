@@ -12,7 +12,7 @@ import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.misc.gameTask.taskTypes.*;
-import com.chen1335.legendaryRelics.utils.SimpleSchedule;
+import com.chen1335.arcanumlib.util.SimpleSchedule;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;

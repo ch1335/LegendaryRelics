@@ -10,7 +10,7 @@ import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.utils.LRUtil;
-import com.chen1335.legendaryRelics.utils.SimpleSchedule;
+import com.chen1335.arcanumlib.util.SimpleSchedule;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;

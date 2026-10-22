@@ -7,6 +7,7 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.animation.KeyframeAction;
 import com.chen1335.legendaryRelics.animation.PlayerAnimationState;
 import com.chen1335.legendaryRelics.client.LRClient;
+import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.PlayerAnimationHandler;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -19,7 +20,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import com.chen1335.legendaryRelics.utils.LRUtil;
-import com.chen1335.legendaryRelics.utils.SimpleSchedule;
+import com.chen1335.arcanumlib.util.SimpleSchedule;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -52,11 +53,9 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
     public static final ResourceLocation THRUST_CHARGE = LegendaryRelics.id("thrust_charge");
     public static final ResourceLocation THRUST_SPRINT = LegendaryRelics.id("thrust_sprint");
     /**
-     * 蓄力低于这个比例松开不冲刺。
+     * 最低蓄力比例：低于这个比例松开不冲刺。
      */
     private static final float MIN_CHARGE_PERCENT = 0.25F;
-    @Calculator
-    public static final FinalCalculator MAX_CHARGE_TICKS = FinalCalculator.of(Constant.of(40F));
     /**
      * 释放后的物品冷却（秒）。
      */
@@ -150,9 +149,7 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
 
     @Override
     public int getMaxChargeTick(ItemStack stack, LivingEntity user) {
-        float base = MAX_CHARGE_TICKS.getValue(CalculatorArg.simpleArg(user, stack));
-        double attackSpeed = user.getAttributeValue(Attributes.ATTACK_SPEED);
-        return Math.max(1, (int) (base * 2.0 / Math.max(0.01, attackSpeed)));
+        return 20;
     }
 
     @Override
@@ -173,11 +170,17 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
         if (level == null || !level.isClientSide || player == null) {
             return;
         }
+        boolean shift = tooltipFlag.hasShiftDown();
+        CalculatorArg arg = CalculatorArg.simpleArg(player, stack);
+        // 最低蓄力时间：最大蓄力 tick × 阈值比例
+        float minSeconds = MIN_CHARGE_PERCENT * getMaxChargeTick(stack, player) / 20.0F;
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.frost_steel_sword.desc.1",
-                FinalCalculator.format((float) getMaxChargeTick(stack, player) / 20.0F, 1)
+                FinalCalculator.format(minSeconds, 2),
+                ComponentHolders.Combat.physicalDamage(THRUST_DAMAGE.toComponent(shift, arg))
         ).withColor(0xaeaeae), maxToolTipWidth(stack));
-        tooltipComponents.add(Component.translatable("legendary_relics.max_charge_time_affected_by_attack_speed")
-                .withStyle(ChatFormatting.DARK_GRAY));
+        LRUtil.splitAndAdd(tooltipComponents,
+                Component.translatable("item.legendary_relics.frost_steel_sword.desc.2").withColor(0xaeaeae),
+                maxToolTipWidth(stack));
     }
 
     /**

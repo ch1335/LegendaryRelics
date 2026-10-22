@@ -20,7 +20,7 @@ import com.chen1335.legendaryRelics.effectInstances.InfernoEffectInstance;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Doom;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.InfernoScorch;
 import com.chen1335.legendaryRelics.utils.LRColors;
-import com.chen1335.legendaryRelics.utils.SimpleSchedule;
+import com.chen1335.arcanumlib.util.SimpleSchedule;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;

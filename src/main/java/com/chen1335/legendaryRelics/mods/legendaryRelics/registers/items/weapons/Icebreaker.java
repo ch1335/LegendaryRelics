@@ -17,7 +17,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDat
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.misc.IceThorn;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import com.chen1335.legendaryRelics.utils.LRUtil;
-import com.chen1335.legendaryRelics.utils.SimpleSchedule;
+import com.chen1335.arcanumlib.util.SimpleSchedule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

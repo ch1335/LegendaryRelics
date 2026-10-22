@@ -1,7 +1,9 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.arcanumlib.util.SimpleSchedule;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
+import com.chen1335.equipmentEffectLib.utils.CombatUtil;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSounds;
@@ -9,12 +11,11 @@ import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
-import com.chen1335.legendaryRelics.network.PlayClientParticlePack;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.LRBaseEffect;
-import com.chen1335.legendaryRelics.utils.SimpleSchedule;
+import com.chen1335.legendaryRelics.network.PlayClientParticlePack;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +26,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -117,12 +117,7 @@ public class ChainLightningEffect extends LRBaseEffect {
     @Nullable
     private static LivingEntity findNearestTarget(ServerLevel level, LivingEntity attacker, LivingEntity from, Set<Integer> shockedTargets) {
         List<LivingEntity> candidates = level.getEntitiesOfClass(LivingEntity.class, from.getBoundingBox().inflate(CHAIN_RANGE), living ->
-                living != from
-                        && living instanceof Enemy
-                        && living != attacker
-                        && living.isAlive()
-                        && living.isAttackable()
-                        && !living.isAlliedTo(attacker)
+                CombatUtil.isAvailableTarget(attacker, living)
                         && !shockedTargets.contains(living.getId())
                         && from.distanceTo(living) <= CHAIN_RANGE
         );

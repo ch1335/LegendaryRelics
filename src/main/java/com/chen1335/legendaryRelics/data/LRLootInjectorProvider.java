@@ -13,7 +13,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -45,30 +44,26 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     // 多张表共用的条目，写一次省得逐处重复；Drop 只是数据，被多个池复用是安全的
     // 基础 20%，开箱玩家每点幸运 +1%，先钳到 30% 再按难度放大
     private static final Drop ANCIENT_FRAGMENT_NORMAL = new Drop(0.2D, 0.0D, List.of(
-            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
-                    ChanceModifier.Operation.ADD, 0.01D),
+            ChanceModifier.Luck.of(ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.3D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D)),
             () -> LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
 
     // 基础 30%，开箱玩家每点幸运 +1%，先钳到 40% 再按难度放大
     private static final Drop ANCIENT_FRAGMENT_HIGH = new Drop(0.3D, 0.0D, List.of(
-            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
-                    ChanceModifier.Operation.ADD, 0.01D),
+            ChanceModifier.Luck.of(ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.4D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D)),
             () -> LootItem.lootTableItem(LRItems.ANCIENT_FRAGMENT.get()));
     // 基础 20%，开箱玩家每点幸运 +1%，先钳到 30% 再按难度放大（暗金难度加成比其他碎片高）
     private static final Drop DARK_GOLD_FRAGMENT_NORMAL = new Drop(0.2D, 0.0D, List.of(
-            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
-                    ChanceModifier.Operation.ADD, 0.01D),
+            ChanceModifier.Luck.of(ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.3D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
             () -> LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
     // 基础 30%，开箱玩家每点幸运 +1%，先钳到 40% 再按难度放大
     private static final Drop DARK_GOLD_FRAGMENT_HIGH = new Drop(0.3D, 0.0D, List.of(
-            ChanceModifier.EntityAttribute.of(Attributes.LUCK, ChanceModifier.EntitySource.THIS_ENTITY,
-                    ChanceModifier.Operation.ADD, 0.01D),
+            ChanceModifier.Luck.of(ChanceModifier.Operation.ADD, 0.01D),
             ChanceModifier.Clamp.of(0.0D, 0.4D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
             () -> LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));

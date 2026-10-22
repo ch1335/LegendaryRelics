@@ -1,11 +1,11 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
+import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -43,9 +43,9 @@ public class AllAttributeBoost extends LRBaseEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        Component boost = ComponentHolders.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
+        Component boost = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
                 AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
-                AttributeModifier.Operation.ADD_VALUE);
+                "+");
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.all_attribute_boost", boost)
                 .withStyle(ChatFormatting.GOLD));
     }

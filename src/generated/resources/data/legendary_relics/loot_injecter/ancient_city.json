@@ -25,11 +25,9 @@
                     "base_chance": 0.3,
                     "chance_modifiers": [
                       {
-                        "type": "arcanumlib:entity_attribute",
-                        "attribute": "minecraft:generic.luck",
+                        "type": "arcanumlib:luck",
                         "operation": "add",
-                        "per_point": 0.01,
-                        "target": "this_entity"
+                        "per_point": 0.01
                       },
                       {
                         "type": "arcanumlib:clamp",

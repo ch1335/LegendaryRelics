@@ -7,7 +7,6 @@ import com.chen1335.legendaryRelics.API.objects.LRItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -57,8 +56,7 @@ public class LREntityLootTables extends EntityLootSubProvider {
                                 .when(ChanceModifierCondition.builder(0.05D,
                                         ChanceModifier.ToolEnchantmentLevel.of(Enchantments.LOOTING,
                                                 ChanceModifier.Operation.ADD, 0.005D),
-                                        ChanceModifier.EntityAttribute.of(Attributes.LUCK,
-                                                ChanceModifier.EntitySource.ATTACKING_ENTITY,
+                                        ChanceModifier.Luck.of(
                                                 ChanceModifier.Operation.ADD, 0.005D),
                                         ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D))))));
     }

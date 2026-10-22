@@ -1,9 +1,9 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect;
 
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
+import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
-import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -16,7 +16,6 @@ import com.chen1335.legendaryRelics.effectInstances.BlackDragonEffectInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -47,7 +46,7 @@ public class BlackDragonArmorSetEffect extends SetEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = buildArg(player);
         tooltipComponents.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.excellence.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
-        Component append = ComponentHolders.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,ATTRIBUTE_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"), AttributeModifier.Operation.ADD_VALUE);
+        Component append = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,ATTRIBUTE_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"), "+");
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.1", append).withColor(16733695));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.2",
                 HEALTH_REGAIN.toComponent(tooltipFlag.hasShiftDown(), args)

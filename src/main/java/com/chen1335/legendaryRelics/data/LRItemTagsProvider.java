@@ -76,34 +76,30 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.SNOWFEATHER_CLOAK.asItem()
         );
 
+        // ISS 物品只在装有时才注册，必须用 optional 条目，否则缺失时标签解析失败
         tag(ItemTags.HEAD_ARMOR).add(
                 LRItems.BLACK_DRAGON_HELMET.value(),
                 LRItems.INFERNO_HELMET.value(),
-                LRItems.TWISTED_HELMET.value(),
-                ISSRegisters.Item.SOUL_HELMET.value()
-        );
+                LRItems.TWISTED_HELMET.value()
+        ).addOptional(ISSRegisters.Item.SOUL_HELMET.getId());
 
         tag(ItemTags.CHEST_ARMOR).add(
                 LRItems.BLACK_DRAGON_CHEST_PLATE.value(),
                 LRItems.INFERNO_CHEST_PLATE.value(),
-                LRItems.TWISTED_CHEST_PLATE.value(),
-                ISSRegisters.Item.SOUL_CHEST_PLATE.value()
-
-        );
+                LRItems.TWISTED_CHEST_PLATE.value()
+        ).addOptional(ISSRegisters.Item.SOUL_CHEST_PLATE.getId());
 
         tag(ItemTags.LEG_ARMOR).add(
                 LRItems.BLACK_DRAGON_LEGGINGS.value(),
                 LRItems.INFERNO_LEGGINGS.value(),
-                LRItems.TWISTED_LEGGINGS.value(),
-                ISSRegisters.Item.SOUL_LEGGINGS.value()
-        );
+                LRItems.TWISTED_LEGGINGS.value()
+        ).addOptional(ISSRegisters.Item.SOUL_LEGGINGS.getId());
 
         tag(ItemTags.FOOT_ARMOR).add(
                 LRItems.BLACK_DRAGON_BOOTS.value(),
                 LRItems.INFERNO_BOOTS.value(),
-                LRItems.TWISTED_BOOTS.value(),
-                ISSRegisters.Item.SOUL_BOOTS.value()
-        );
+                LRItems.TWISTED_BOOTS.value()
+        ).addOptional(ISSRegisters.Item.SOUL_BOOTS.getId());
 
         tag(ItemTags.SWORDS).add(
                 LRItems.WITHERING_BLADE.value(),
@@ -113,9 +109,8 @@ public class LRItemTagsProvider extends ItemTagsProvider {
                 LRItems.FROST_SHARD.value(),
                 LRItems.BLAZING_CHAKRAM.value(),
                 LRItems.ICEBREAKER.value(),
-                LRItems.FROST_STEEL_SWORD.value(),
-                ISSRegisters.Item.MAGIC_BREAKER.value()
-        );
+                LRItems.FROST_STEEL_SWORD.value()
+        ).addOptional(ISSRegisters.Item.MAGIC_BREAKER.getId());
 
         tag(Tags.Items.TOOLS_BOW).add(
                 LRItems.LAST_WHISPER.asItem()

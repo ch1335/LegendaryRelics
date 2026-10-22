@@ -1,11 +1,10 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AdjustmentHelper;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
-import com.chen1335.arcanumlib.registry.ArcanumAttachments;
+import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
-import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -19,9 +18,7 @@ import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -57,10 +54,10 @@ public class Ambush extends LRWeaponEffect {
                 tooltipComponents,
                 Component.translatable("equipment_effect.legendary_relics.ambush",
                         FinalCalculator.format((float) getMaxChargeTick(itemStack, player) / 20, 1),
-                        ComponentHolders.Attributes.attribute(
+                        ComponentUtil.Attributes.attribute(
                                 Attributes.ATTACK_DAMAGE,
                                 DAMAGE_MUL.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this), Style.EMPTY, 100, "%s%%"),
-                                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                                "×"
                         )
                 ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack)
         );
@@ -76,13 +73,10 @@ public class Ambush extends LRWeaponEffect {
             float chargePercent = getChargePercent(stack, livingEntity);
             HitResult pick = LRUtil.pick(livingEntity, 0, entityInteractionRange);
             if (pick instanceof EntityHitResult entityHitResult && chargePercent >= 0.25) {
-                AttributeAdjustment attributeAdjustment = new AttributeAdjustment();
-                attributeAdjustment.add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL,  DAMAGE_MUL.getValue(arg)-1);
-                List<AttributeAdjustment> modifier = player.getData(ArcanumAttachments.ENTITY_DATA.get()).adjustmentData.getModifier(Attributes.ATTACK_DAMAGE);
-                modifier.add(attributeAdjustment);
-                entityHitResult.getEntity().invulnerableTime = 0;
-                player.attack(entityHitResult.getEntity());
-                modifier.remove(attributeAdjustment);
+                AdjustmentHelper.runWhileInnerAdjusted(player, Attributes.ATTACK_DAMAGE, () -> {
+                    entityHitResult.getEntity().invulnerableTime = 0;
+                    player.attack(entityHitResult.getEntity());
+                }, AttributeAdjustment.simple(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, DAMAGE_MUL.getValue(arg) - 1));
             }
         }
     }

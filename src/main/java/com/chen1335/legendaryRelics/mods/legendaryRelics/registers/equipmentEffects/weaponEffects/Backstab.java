@@ -2,11 +2,11 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEff
 
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
+import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
-import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -18,7 +18,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,12 +45,12 @@ public class Backstab extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        Component critChance = ComponentHolders.Attributes.attribute(ALObjects.Attributes.CRIT_CHANCE,
+        Component critChance = ComponentUtil.Attributes.attribute(ALObjects.Attributes.CRIT_CHANCE,
                 CRIT_CHANCE_BONUS.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
-                AttributeModifier.Operation.ADD_VALUE);
-        Component critDamage = ComponentHolders.Attributes.attribute(ALObjects.Attributes.CRIT_DAMAGE,
+                "+");
+        Component critDamage = ComponentUtil.Attributes.attribute(ALObjects.Attributes.CRIT_DAMAGE,
                 CRIT_DAMAGE_BONUS.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
-                AttributeModifier.Operation.ADD_VALUE);
+                "+");
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.backstab",
                 critChance, critDamage).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }

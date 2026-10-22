@@ -77,8 +77,7 @@
                   "per_level": 0.005
                 },
                 {
-                  "type": "arcanumlib:entity_attribute",
-                  "attribute": "minecraft:generic.luck",
+                  "type": "arcanumlib:luck",
                   "operation": "add",
                   "per_point": 0.005
                 },
