@@ -4,6 +4,7 @@ import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
+import com.chen1335.legendaryRelics.client.particles.WaveIceParticle;
 import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEncasementRenderer;
 import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
@@ -105,6 +106,13 @@ public class ClientEventHandler {
 
     @EventBusSubscriber(value = {Dist.CLIENT})
     public static class Mod {
+        @SubscribeEvent
+        public static void RegisterParticleProviders(RegisterParticleProvidersEvent event) {
+            event.registerSpriteSet(LRParticles.WAVE_ICE.get(), sprites ->
+                    (options, level, x, y, z, xSpeed, ySpeed, zSpeed) ->
+                            new WaveIceParticle(level, x, y, z, options, sprites));
+        }
+
         @SubscribeEvent
         public static void RegisterGuiLayersEvent(RegisterGuiLayersEvent event) {
             event.registerAboveAll(LegendaryRelics.id("effect_cooldown"), new EffectCooldownRender());

@@ -2,6 +2,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapon
 
 import com.chen1335.legendaryRelics.API.IChargeAbleItem;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
+import com.chen1335.legendaryRelics.API.objects.LRParticles;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.animation.KeyframeAction;
 import com.chen1335.legendaryRelics.animation.PlayerAnimationState;
@@ -10,7 +11,10 @@ import com.chen1335.legendaryRelics.common.PlayerAnimationHandler;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.normal.Add;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
+import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
+import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
@@ -36,12 +40,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * 霜钢剑：右键蓄力，蓄力时长受攻击速度影响；具体效果留给后续设计。
@@ -59,7 +61,16 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
      * 释放后的物品冷却（秒）。
      */
     @Calculator
-    public static final FinalCalculator RELEASE_COOLDOWN = FinalCalculator.of(Constant.of(0.4F));
+    public static final FinalCalculator RELEASE_COOLDOWN = FinalCalculator.of(Constant.of(1F));
+
+    /**
+     * 突刺命中伤害：4 + 1.2 × 攻击力。
+     */
+    @Calculator
+    public static final FinalCalculator THRUST_DAMAGE = FinalCalculator.of(Add.of(
+            Constant.of(4F),
+            Mul.of(Constant.of(1.2F), EntityAttributeValue.of(Attributes.ATTACK_DAMAGE))
+    ));
 
     public FrostSteelSword() {
         super(Tier.Weapon.FROST_STEEL_SWORD, new Properties().stacksTo(1).rarity(Rarity.EPIC));
@@ -118,14 +129,14 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
         LRPlayerData data = LRPlayerData.getData(player);
         data.playerAnimationState = null;
         PlayerAnimationHandler.play(player, THRUST_SPRINT, 2);
-        ThrustSchedule schedule = new ThrustSchedule(player, dashDirection);
+        ThrustSchedule schedule = new ThrustSchedule(player, dashDirection, THRUST_DAMAGE.getValue(arg));
         data.addInvincibleSource(schedule);
         data.addInvinciblePushSource(schedule);
         SimpleSchedule.addSchedule(player.level(), schedule);
         int cooldown = Math.max(1, Math.round(RELEASE_COOLDOWN.getValue(arg) * 20.0F));
         player.getCooldowns().addCooldown(this, cooldown);
-        level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.TRIDENT_RIPTIDE_1.value(), SoundSource.PLAYERS, 1.0F, 1.2F);
+//        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+//                SoundEvents.TRIDENT_RIPTIDE_1.value(), SoundSource.PLAYERS, 1.0F, 1.2F);
     }
 
     /**
@@ -155,8 +166,8 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, TooltipContext context,
-                                @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context,
+                                List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         Level level = context.level();
         Player player = LRClient.getClientPlayer();
         if (level == null || !level.isClientSide || player == null) {
@@ -171,36 +182,31 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
 
     /**
      * 冲刺过程：释放瞬间给速度，之后靠玩家自身动量衰减，低于阈值即视为冲刺结束。
-     * <p>冲刺期间对前方生物造成一次固定伤害。
+     * <p>冲刺期间对前方生物造成一次伤害。
      */
     public static class ThrustSchedule extends SimpleSchedule.Schedule {
-        /**
-         * 冲刺命中伤害（固定值）。
-         */
-        public static final float HIT_DAMAGE = 5.0F;
         /**
          * 冲刺方向额外够到的距离（格）。
          */
         private static final double REACH = 2.0;
-        /**
-         * 左右两侧额外加宽的距离（格）。
-         */
+
+        private static final double PARTICLE_OFFSET = 2.0;
+
         private static final double SIDE_REACH = 1.0;
-        /**
-         * 与 ProjectileUtil 一致的判定膨胀。
-         */
+
         private static final float HIT_INFLATE = 0.3F;
 
         private final Player player;
         private final Vec3 direction;
-        /**
-         * 已命中的目标，同一次冲刺只打一次。
-         */
-        private final Set<UUID> hitTargets = new HashSet<>();
 
-        public ThrustSchedule(Player player, Vec3 direction) {
+        private final float damage;
+
+        private final Set<Integer> hitTargets = new HashSet<>();
+
+        public ThrustSchedule(Player player, Vec3 direction, float damage) {
             this.player = player;
             this.direction = direction;
+            this.damage = damage;
         }
 
         @Override
@@ -211,17 +217,34 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
             Vec3 movement = this.player.getDeltaMovement();
             double horizontalSqr = movement.x * movement.x + movement.z * movement.z;
 
-            double endSpeed = this.player.getAttributeValue(Attributes.MOVEMENT_SPEED)*1.2;
+            double endSpeed = this.player.getAttributeValue(Attributes.MOVEMENT_SPEED) * 1.2;
             return horizontalSqr < endSpeed * endSpeed;
         }
 
         @Override
         public void tick() {
-            super.tick();
             if (this.player.level().isClientSide) {
+                super.tick();
                 return;
             }
+            // 每 4 tick 在玩家位置放一圈朝向冲刺方向的冰波
+            if (this.time % 2 == 0) {
+                this.spawnWaveParticle();
+            }
             this.hurtTargetsInFront();
+            super.tick();
+        }
+
+        private void spawnWaveParticle() {
+            // 冲刺方向的水平朝向（MC 的 yaw：0 = +Z，90 = -X）
+            float rollDegrees = (float) Math.toDegrees(Math.atan2(-this.direction.x, this.direction.z));
+            // 生成位置沿冲刺方向前移 2 格
+            double x = this.player.getX() + this.direction.x * PARTICLE_OFFSET;
+            double z = this.player.getZ() + this.direction.z * PARTICLE_OFFSET;
+            // 初始不透明度 1：生成即清晰，之后逐渐淡出
+            LRParticles.spawnWaveIce(this.player.level(),
+                    x, this.player.getY() + this.player.getEyeHeight() / 2, z,
+                    rollDegrees, 1.0F);
         }
 
         private void hurtTargetsInFront() {
@@ -239,10 +262,10 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
                 if (!searchBox.intersects(target.getBoundingBox().inflate(HIT_INFLATE))) {
                     continue;
                 }
-                if (!this.hitTargets.add(target.getUUID())) {
+                if (!this.hitTargets.add(target.getId())) {
                     continue;
                 }
-                if (!target.hurt(source, HIT_DAMAGE)) {
+                if (!target.hurt(source, this.damage)) {
                     continue;
                 }
                 target.level().playSound(null, target.getX(), target.getY(), target.getZ(),

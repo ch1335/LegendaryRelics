@@ -80,6 +80,7 @@ public class LegendaryRelics {
         LREquipmentEffectTypes.register(modEventBus);
         LRSpecialMobEffects.register(modEventBus);
         LREntityTypes.register(modEventBus);
+        LRParticles.register(modEventBus);
         LRSetsEffects.register(modEventBus);
         LREntityDataSerializers.register(modEventBus);
         LRBlocks.register(modEventBus);
