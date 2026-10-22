@@ -56,11 +56,6 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
     @Calculator
     public static final FinalCalculator MAX_CHARGE_TICKS = FinalCalculator.of(Constant.of(40F));
     /**
-     * 冲刺水平速度（格/tick）。
-     */
-    @Calculator
-    public static final FinalCalculator DASH_POWER = FinalCalculator.of(Constant.of(2F));
-    /**
      * 释放后的物品冷却（秒）。
      */
     @Calculator
@@ -113,7 +108,7 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
         }
         CalculatorArg arg = CalculatorArg.simpleArg(player, stack);
         Vec3 dashDirection = horizontal.normalize();
-        Vec3 dash = dashDirection.scale(DASH_POWER.getValue(arg));
+        Vec3 dash = dashDirection.scale(player.getAttributeValue(Attributes.MOVEMENT_SPEED) * 20);
         player.setDeltaMovement(dash.x, 0.1, dash.z);
         player.hurtMarked = true;   // 让客户端收到速度同步
         player.setSprinting(true);
@@ -195,14 +190,12 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
          * 与 ProjectileUtil 一致的判定膨胀。
          */
         private static final float HIT_INFLATE = 0.3F;
-        /**
-         * 兜底最大持续 tick，防止动量判定卡住。
-         */
-        private static final int MAX_TICKS = 60;
 
         private final Player player;
         private final Vec3 direction;
-        /** 已命中的目标，同一次冲刺只打一次。 */
+        /**
+         * 已命中的目标，同一次冲刺只打一次。
+         */
         private final Set<UUID> hitTargets = new HashSet<>();
 
         public ThrustSchedule(Player player, Vec3 direction) {
@@ -212,13 +205,13 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
 
         @Override
         public boolean finished() {
-            if (this.player.isRemoved() || this.time > MAX_TICKS) {
+            if (this.player.isRemoved() || this.time > 40) {
                 return true;
             }
             Vec3 movement = this.player.getDeltaMovement();
             double horizontalSqr = movement.x * movement.x + movement.z * movement.z;
-            // 正常移速 = 玩家的移动速度属性（含药水/装备修正）
-            double endSpeed = this.player.getAttributeValue(Attributes.MOVEMENT_SPEED) * 1;
+
+            double endSpeed = this.player.getAttributeValue(Attributes.MOVEMENT_SPEED)*1.2;
             return horizontalSqr < endSpeed * endSpeed;
         }
 
@@ -243,7 +236,6 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
                     .expandTowards(-side.x * SIDE_REACH, 0.0, -side.z * SIDE_REACH);
             DamageSource source = this.player.damageSources().source(LRDamageTypes.FROST_STEEL_THRUST, this.player);
             for (LivingEntity target : this.player.level().getEntitiesOfClass(LivingEntity.class, searchBox, this::canHit)) {
-                // 用体积相交而不是细线段，左右加宽出来的空间才能真正打到目标
                 if (!searchBox.intersects(target.getBoundingBox().inflate(HIT_INFLATE))) {
                     continue;
                 }
@@ -253,12 +245,15 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
                 if (!target.hurt(source, HIT_DAMAGE)) {
                     continue;
                 }
-                // 命中沿冲刺方向击退；走原版 knockback，能吃到击退抗性/事件
+                target.level().playSound(null, target.getX(), target.getY(), target.getZ(),
+                        SoundEvents.TRIDENT_HIT, SoundSource.PLAYERS, 1.0F, 1.2F);
                 target.knockback(1, this.direction.x, this.direction.z);
             }
         }
 
-        /** 参考投射物的目标筛选：排除自己、观众、友方，且需要视线。 */
+        /**
+         * 参考投射物的目标筛选：排除自己、观众、友方，且需要视线。
+         */
         private boolean canHit(LivingEntity target) {
             return target != this.player
                     && target.isAlive()

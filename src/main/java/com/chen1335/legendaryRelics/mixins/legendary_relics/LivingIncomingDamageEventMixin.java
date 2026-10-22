@@ -11,13 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * 无敌效果的最高优先级拦截。
- *
- * <p>在事件构造完成、发布到事件总线之前就把它标记为已取消，
- * 因此优先级高于任何 {@code @SubscribeEvent} 监听器，
- * 其它免伤 / 增伤逻辑不会看到这次伤害。
- */
+
 @Mixin(LivingIncomingDamageEvent.class)
 public class LivingIncomingDamageEventMixin {
 
