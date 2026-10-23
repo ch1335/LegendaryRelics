@@ -50,7 +50,7 @@ public class BlackDragonArmorSetEffect extends SetEffect {
         Component append = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,ATTRIBUTE_MULTIPLIER.toComponent(args, Style.EMPTY, 100, "%s%%"), "+");
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.1", append).withColor(16733695));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.2",
-                HEALTH_REGAIN.toComponent(args)
+                HEALTH_REGAIN.toComponent(args, Style.EMPTY)
         ).withColor(16733695));
     }
 

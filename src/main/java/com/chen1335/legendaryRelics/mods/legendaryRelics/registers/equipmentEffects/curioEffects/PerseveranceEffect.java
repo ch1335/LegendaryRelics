@@ -44,7 +44,7 @@ public class PerseveranceEffect extends LRCurioEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.perseverance_effect", TIME.toComponent(args), DAMAGE_PERCENTAGE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.perseverance_effect", TIME.toComponent(args, Style.EMPTY), DAMAGE_PERCENTAGE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     public static void LivingDamageEvent(LivingDamageEvent.Post event) {

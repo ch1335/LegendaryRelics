@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -50,8 +51,8 @@ public class HolyBarrierEffect extends LRCurioEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.holy_barrier",
-                INVINCIBLE_TIME.toComponent(args),
-                COOLDOWN.toComponent(args)
+                INVINCIBLE_TIME.toComponent(args, Style.EMPTY),
+                COOLDOWN.toComponent(args, Style.EMPTY)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

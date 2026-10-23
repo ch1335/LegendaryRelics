@@ -15,6 +15,7 @@ import com.chen1335.legendaryRelics.utils.LRColors;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -64,7 +65,7 @@ public class TwistedArmorSetEffect extends SetEffect {
 
 
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.2",
-                KEEP_TIME.toComponent(args),
+                KEEP_TIME.toComponent(args, Style.EMPTY),
                 phaseShootingComponent(),
                 phaseShootingComponent()
         ).withStyle(ChatFormatting.GRAY));

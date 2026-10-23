@@ -48,7 +48,7 @@ public class MagicSuppressionEffect extends LRWeaponEffect {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.magic_suppression.desc",
-                DURATION.toComponent(arg),
+                DURATION.toComponent(arg, Style.EMPTY),
                 ComponentHolders.Combat.magicDamage(),
                 DAMAGE_REDUCTION.toComponent(arg, Style.EMPTY, 100, "%s%%")
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));

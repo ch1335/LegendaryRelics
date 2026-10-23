@@ -117,7 +117,7 @@ public class InfernoArmorSetEffect extends SetEffect {
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.2",
-                KEEP_TIME.toComponent(args),
+                KEEP_TIME.toComponent(args, Style.EMPTY),
                 doomComponent(),
                 doomComponent()
         ).withStyle(ChatFormatting.GRAY));
@@ -131,14 +131,14 @@ public class InfernoArmorSetEffect extends SetEffect {
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.4",
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(args))
+                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(args, Style.EMPTY))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.5",
                 ComponentHolders.Effects.infernoScorch(),
-                INFERNO_SCORCH_DURATION.toComponent(args),
+                INFERNO_SCORCH_DURATION.toComponent(args, Style.EMPTY),
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(args))
+                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(args, Style.EMPTY))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"

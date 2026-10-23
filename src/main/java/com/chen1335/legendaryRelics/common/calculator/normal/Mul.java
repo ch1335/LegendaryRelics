@@ -44,7 +44,7 @@ public class Mul implements OperationUnit {
     public Component toComponent(CalculatorArg calculatorArg) {
         Component componentA = a.toComponent(calculatorArg);
         Component componentB = b.toComponent(calculatorArg);
-        return Component.empty().append(componentA).append("x").append(componentB);
+        return Component.empty().append(componentA).append("×").append(componentB);
     }
 
     @Override

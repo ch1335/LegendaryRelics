@@ -123,7 +123,7 @@ public class FrostShard extends LRMeleeWeaponBase implements IChargeAbleItem {
         if (level != null && level.isClientSide) {
             CalculatorArg arg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
             CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
-            Component slownessTime = SLOWNESS_TIME.toComponent(arg);
+            Component slownessTime = SLOWNESS_TIME.toComponent(arg, Style.EMPTY);
             Component thrownSlowness = THROWN_SLOWNESS.toComponent(arg, Style.EMPTY, 100, "%s%%");
             Component icicleSlowness = ICICLE_SLOWNESS.toComponent(arg, Style.EMPTY, 100, "%s%%");
 
@@ -135,10 +135,10 @@ public class FrostShard extends LRMeleeWeaponBase implements IChargeAbleItem {
 
             // 物理伤害由 ComponentHolders 统一拼上"物理伤害"字样，所以语言文件里只留 %s
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.frost_shard.desc.2",
-                    ComponentHolders.Combat.physicalDamage(THROW_DAMAGE.toComponent(arg)),
+                    ComponentHolders.Combat.physicalDamage(THROW_DAMAGE.toComponent(arg, Style.EMPTY)),
                     slownessTime,
                     thrownSlowness,
-                    ComponentHolders.Combat.physicalDamage(ICICLE_DAMAGE.toComponent(arg)),
+                    ComponentHolders.Combat.physicalDamage(ICICLE_DAMAGE.toComponent(arg, Style.EMPTY)),
                     slownessTime,
                     icicleSlowness
             ).withColor(0xaeaeae), maxToolTipWidth(stack));

@@ -110,10 +110,10 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
             tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
         }
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
-                DAMAGE_INCREASE.toComponent(args),
-                SHIELD_LAST_TIME.toComponent(args),
-                SHIELD_AMOUNT.toComponent(args),
-                COOL_DOWN.toComponent(args)
+                DAMAGE_INCREASE.toComponent(args, Style.EMPTY),
+                SHIELD_LAST_TIME.toComponent(args, Style.EMPTY),
+                SHIELD_AMOUNT.toComponent(args, Style.EMPTY),
+                COOL_DOWN.toComponent(args, Style.EMPTY)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
 
     }

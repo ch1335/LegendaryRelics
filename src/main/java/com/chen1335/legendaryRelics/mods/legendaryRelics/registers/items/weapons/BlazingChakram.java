@@ -15,6 +15,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMelee
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.OrbitingFireChakramsEffect;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
@@ -72,13 +73,13 @@ public class BlazingChakram extends LRMeleeWeaponBase {
             CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.1").withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.2",
-                    GENERATION_COOLDOWN.toComponent(arg)).withColor(0xaeaeae));
+                    GENERATION_COOLDOWN.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.3",
-                    ATTACK_INTERVAL.toComponent(arg)).withColor(0xaeaeae));
+                    ATTACK_INTERVAL.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.4",
-                    ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(arg))).withColor(0xaeaeae));
+                    ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(arg, Style.EMPTY))).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.5",
-                    MAX_CHAKRAM_COUNT.toComponent(arg)).withColor(0xaeaeae));
+                    MAX_CHAKRAM_COUNT.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
         }
     }
 

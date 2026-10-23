@@ -53,7 +53,7 @@ public class AgglomerationMaliceEffect extends LRCurioEffect {
         tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.desc").withColor(5592405));
         tooltipComponents.add(Component.empty());
         tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.bad_effect", DAMAGE_MULTIPLIER.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(16733525));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.good_effect", LOOTING_LEVEL_ADD.toComponent(args)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.good_effect", LOOTING_LEVEL_ADD.toComponent(args, Style.EMPTY)).withColor(0xaeaeae));
 
     }
 

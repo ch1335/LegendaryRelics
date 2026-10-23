@@ -23,6 +23,7 @@ import com.chen1335.legendaryRelics.utils.LRUtil;
 import com.chen1335.arcanumlib.util.SimpleSchedule;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -176,7 +177,7 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
         float minSeconds = MIN_CHARGE_PERCENT * getMaxChargeTick(stack, player) / 20.0F;
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.frost_steel_sword.desc.1",
                 FinalCalculator.format(minSeconds, 2),
-                ComponentHolders.Combat.physicalDamage(THRUST_DAMAGE.toComponent(arg))
+                ComponentHolders.Combat.physicalDamage(THRUST_DAMAGE.toComponent(arg, Style.EMPTY))
         ).withColor(0xaeaeae), maxToolTipWidth(stack));
         LRUtil.splitAndAdd(tooltipComponents,
                 Component.translatable("item.legendary_relics.frost_steel_sword.desc.2").withColor(0xaeaeae),

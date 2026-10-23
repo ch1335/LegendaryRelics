@@ -18,6 +18,7 @@ import com.chen1335.shieldSystem.API.shieldAPI.ShieldAPI;
 import com.chen1335.shieldSystem.shieldSystem.ShieldInstanceHolder;
 import com.chen1335.shieldSystem.shieldSystem.UnitShield;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -62,8 +63,8 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.shield_regenerator_effect",
-                COOLDOWN.toComponent(args),
-                MAX_SHIELD.toComponent(args)
+                COOLDOWN.toComponent(args, Style.EMPTY),
+                MAX_SHIELD.toComponent(args, Style.EMPTY)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

@@ -18,6 +18,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.LRMeleeWeaponBase;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -56,7 +57,7 @@ public class Reaper extends LRMeleeWeaponBase {
         if (level != null && level.isClientSide) {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
             CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(calculatorArg, tooltipFlag);
-            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(calculatorArg))).withColor(0xaeaeae), maxToolTipWidth(stack));
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(calculatorArg, Style.EMPTY))).withColor(0xaeaeae), maxToolTipWidth(stack));
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.2").withColor(5592405), maxToolTipWidth(stack));
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.3").withColor(5592405), maxToolTipWidth(stack));
 

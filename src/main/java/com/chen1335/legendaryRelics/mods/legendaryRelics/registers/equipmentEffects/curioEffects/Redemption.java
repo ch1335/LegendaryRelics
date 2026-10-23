@@ -83,8 +83,8 @@ public class Redemption extends LRCurioEffect {
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.undead_reduce", UNDEAD_REDUCE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.redemption.skill",
                 MAX_HEALTH_PERCENTAGE.toComponent(args, Style.EMPTY, 100, "%s%%"),
-                SHIELD_AMOUNT.toComponent(args),
-                SHIELD_LAST_TIME.toComponent(args)
+                SHIELD_AMOUNT.toComponent(args, Style.EMPTY),
+                SHIELD_LAST_TIME.toComponent(args, Style.EMPTY)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.skill.desc").withColor(5592405));
         tooltipComponents.add(Component.translatable("legendary_relics.cooldown", 120).withColor(5592405));

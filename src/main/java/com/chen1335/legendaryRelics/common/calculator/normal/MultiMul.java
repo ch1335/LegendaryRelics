@@ -49,7 +49,7 @@ public class MultiMul implements OperationUnit {
         for (OperationUnit unit : units) {
             component.append(unit.toComponent(calculatorArg));
             if (units.getLast() != unit) {
-                component.append("x");
+                component.append("×");
             }
         }
         component.append(")");

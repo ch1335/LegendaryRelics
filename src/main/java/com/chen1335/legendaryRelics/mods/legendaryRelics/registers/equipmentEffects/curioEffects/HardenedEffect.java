@@ -16,6 +16,7 @@ import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeVal
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -68,9 +69,9 @@ public class HardenedEffect extends LRCurioEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.hardened_effect",
-                ARMOR_AMOUNT.toComponent(args),
-                TIME_KEEP.toComponent(args),
-                COOLDOWN.toComponent(args)
+                ARMOR_AMOUNT.toComponent(args, Style.EMPTY),
+                TIME_KEEP.toComponent(args, Style.EMPTY),
+                COOLDOWN.toComponent(args, Style.EMPTY)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

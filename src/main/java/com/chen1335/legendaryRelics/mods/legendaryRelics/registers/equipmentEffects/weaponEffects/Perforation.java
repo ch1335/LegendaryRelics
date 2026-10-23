@@ -10,6 +10,7 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.LRBaseEffect;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -38,7 +39,7 @@ public class Perforation extends LRBaseEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.perforation", PIERCE_LEVEL.toComponent(arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.perforation", PIERCE_LEVEL.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
     }
 
 

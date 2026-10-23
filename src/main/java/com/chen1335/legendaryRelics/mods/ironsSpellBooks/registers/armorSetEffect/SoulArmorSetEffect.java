@@ -18,6 +18,7 @@ import com.chen1335.legendaryRelics.utils.LRColors;
 import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -110,7 +111,7 @@ public class SoulArmorSetEffect extends SetEffect {
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.2",
-                KEEP_TIME.toComponent(args),
+                KEEP_TIME.toComponent(args, Style.EMPTY),
                 soulGatherComponent(),
                 soulGatherComponent()
         ).withStyle(ChatFormatting.GRAY));

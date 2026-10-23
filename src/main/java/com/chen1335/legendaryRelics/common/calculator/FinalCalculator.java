@@ -10,7 +10,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-
 import net.minecraft.world.item.TooltipFlag;
 
 import java.math.BigDecimal;
@@ -21,31 +20,35 @@ public class FinalCalculator implements OperationUnit {
 
     public static final MapCodec<FinalCalculator> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             CalculatorRegister.DISPATCH_CODEC.fieldOf("unit").forGetter(calculator -> calculator.unit),
-            Codec.INT.optionalFieldOf("precision", 2).forGetter(calculator -> calculator.i)
+            Codec.INT.optionalFieldOf("precision", 2).forGetter(calculator -> calculator.precision)
     ).apply(instance, FinalCalculator::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FinalCalculator> STREAM_CODEC = StreamCodec.composite(
             CalculatorRegister.DISPATCH_STREAM_CODEC,
             value -> value.unit,
             ByteBufCodecs.INT,
-            value -> value.i,
+            value -> value.precision,
             FinalCalculator::new
     );
 
+    private final Style style = Style.EMPTY;
+
+    private final float scale = 1F;
+
+    private int precision;
 
     private final OperationUnit defaultUnit;
     private OperationUnit unit;
-    private int i;
 
-    private FinalCalculator(OperationUnit unit, int i) {
+    private FinalCalculator(OperationUnit unit, int precision) {
         this.unit = unit;
         this.defaultUnit = unit;
-        this.i = i;
+        this.precision = precision;
     }
 
     public FinalCalculator define(FinalCalculator finalCalculator) {
         this.unit = finalCalculator.unit;
-        this.i = finalCalculator.i;
+        this.precision = finalCalculator.precision;
         return this;
     }
 
@@ -54,9 +57,9 @@ public class FinalCalculator implements OperationUnit {
         return this;
     }
 
-    public FinalCalculator define(OperationUnit unit, int i) {
+    public FinalCalculator define(OperationUnit unit, int precision) {
         FinalCalculator calculator = define(unit);
-        calculator.i = i;
+        calculator.precision = precision;
         return calculator;
     }
 
@@ -78,22 +81,28 @@ public class FinalCalculator implements OperationUnit {
         return (int) getValue(calculatorArg);
     }
 
-    /** 未指定样式（即传 {@link Style#EMPTY}）时，展开态数值使用的默认样式。 */
+    /**
+     * 未指定样式（即传 {@link Style#EMPTY}）时，展开态数值使用的默认样式。
+     */
     public static final Style DEFAULT_STYLE = Style.EMPTY.withColor(16777215);
 
-    /** Style.EMPTY 表示"未指定样式"。 */
+    /**
+     * Style.EMPTY 表示"未指定样式"。
+     */
     private static boolean isUnstyled(Style style) {
         return Style.EMPTY.equals(style);
     }
 
-    /** 施加样式。传 Style.EMPTY 时是空操作，数值会继承上下文样式。 */
+    /**
+     * 施加样式。传 Style.EMPTY 时是空操作，数值会继承上下文样式。
+     */
     private static MutableComponent styled(MutableComponent component, Style style) {
         return component.withStyle(style);
     }
 
     @Override
     public MutableComponent toComponent(CalculatorArg calculatorArg) {
-        return Component.empty().append(styled(Component.literal(format(getValue(calculatorArg), i)), DEFAULT_STYLE)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+        return toComponent(calculatorArg, Style.EMPTY);
     }
 
     public MutableComponent toComponent(CalculatorArg calculatorArg, Style style) {
@@ -107,10 +116,10 @@ public class FinalCalculator implements OperationUnit {
     public MutableComponent toComponent(CalculatorArg calculatorArg, Style style, float scale, String format) {
         boolean hasShiftDown = CalculatorArg.ArgType.TOOLTIP_FLAG.getOrDefault(calculatorArg, TooltipFlag.NORMAL).hasShiftDown();
         if (hasShiftDown) {
-            MutableComponent value = styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), isUnstyled(style) ? DEFAULT_STYLE : style);
+            MutableComponent value = styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, precision))), isUnstyled(style) ? DEFAULT_STYLE : style);
             return Component.empty().append(value).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
         } else {
-            return styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), style);
+            return styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, precision))), style);
         }
     }
 
