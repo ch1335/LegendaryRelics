@@ -4,7 +4,7 @@ import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
 import com.chen1335.legendaryRelics.common.calculator.OperationType;
-import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation;
 import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -16,35 +16,39 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 
-public class EquipmentEffectLevelArg implements OperationUnit {
-    private final LevelBasedValue levelBasedValue;
-    private final int i;
+public class EquipmentEffectLevelArg extends FormatedOperation {
 
 
     public static final MapCodec<EquipmentEffectLevelArg> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             LevelBasedValue.CODEC.fieldOf("value").forGetter(arg -> arg.levelBasedValue),
-            Codec.INT.optionalFieldOf("precision", 2).forGetter(arg -> arg.i)
+            Format.CODEC.optionalFieldOf("format", Format.NORMAL).forGetter(arg -> arg.format)
     ).apply(instance, EquipmentEffectLevelArg::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, EquipmentEffectLevelArg> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.TAG,
             equipmentEffectLevelArg -> LevelBasedValue.CODEC.encodeStart(NbtOps.INSTANCE, equipmentEffectLevelArg.levelBasedValue).getOrThrow(),
-            (c) -> EquipmentEffectLevelArg.of(LevelBasedValue.CODEC.decode(NbtOps.INSTANCE, c).getOrThrow().getFirst())
+            Format.STREAM_CODEC,
+            equipmentEffectLevelArg -> equipmentEffectLevelArg.format,
+            (tag, format) -> new EquipmentEffectLevelArg(LevelBasedValue.CODEC.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst(), format)
     );
 
-    public EquipmentEffectLevelArg(LevelBasedValue floatFunction, int i) {
-        this.levelBasedValue = floatFunction;
-        this.i = i;
+    private final LevelBasedValue levelBasedValue;
 
-
+    public EquipmentEffectLevelArg(LevelBasedValue floatFunction) {
+        this(floatFunction, Format.NORMAL);
     }
 
-    public static EquipmentEffectLevelArg of(LevelBasedValue floatFunction, int i) {
-        return new EquipmentEffectLevelArg(floatFunction, i);
+    public EquipmentEffectLevelArg(LevelBasedValue floatFunction, Format format) {
+        this.levelBasedValue = floatFunction;
+        this.format = format;
     }
 
     public static EquipmentEffectLevelArg of(LevelBasedValue floatFunction) {
-        return of(floatFunction, 2);
+        return new EquipmentEffectLevelArg(floatFunction);
+    }
+
+    public static EquipmentEffectLevelArg of(LevelBasedValue floatFunction, Format format) {
+        return new EquipmentEffectLevelArg(floatFunction, format);
     }
 
     @Override
@@ -55,8 +59,8 @@ public class EquipmentEffectLevelArg implements OperationUnit {
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
-        return Component.literal(FinalCalculator.format(getValue(calculatorArg), i));
+    public Component expand(CalculatorArg calculatorArg) {
+        return formatValue(getValue(calculatorArg));
     }
 
     @Override

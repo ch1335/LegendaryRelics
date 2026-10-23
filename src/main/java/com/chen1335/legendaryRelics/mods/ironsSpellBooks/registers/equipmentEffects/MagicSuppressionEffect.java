@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.equipmentEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
@@ -37,7 +39,7 @@ public class MagicSuppressionEffect extends LRWeaponEffect {
     @Calculator
     public static final FinalCalculator DURATION = FinalCalculator.of(
             Constant.of(5F)
-    );
+    ).withFormat(Format.PERCENTAGE);
 
     public MagicSuppressionEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -48,9 +50,9 @@ public class MagicSuppressionEffect extends LRWeaponEffect {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.magic_suppression.desc",
-                DURATION.toComponent(arg, Style.EMPTY),
+                DURATION.toComponent(arg),
                 ComponentHolders.Combat.magicDamage(),
-                DAMAGE_REDUCTION.toComponent(arg, Style.EMPTY, 100, "%s%%")
+                DAMAGE_REDUCTION.toComponent(arg)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("legendary_relics.special.effect_source_no_stack").withColor(5592405));
     }

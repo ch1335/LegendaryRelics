@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LivingHurtContext;
@@ -53,7 +55,7 @@ public class Redemption extends LRCurioEffect {
     );
 
     @Calculator
-    public static final FinalCalculator MAX_HEALTH_PERCENTAGE = FinalCalculator.of(Constant.of(0.25F));
+    public static final FinalCalculator MAX_HEALTH_PERCENTAGE = FinalCalculator.of(Constant.of(0.25F)).withFormat(Format.PERCENTAGE);
 
     @Calculator
     public static final FinalCalculator SHIELD_LAST_TIME = FinalCalculator.of(
@@ -69,7 +71,7 @@ public class Redemption extends LRCurioEffect {
                     Constant.of(0.1F),
                     Constant.of(0.2F)
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
 
     public Redemption(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -80,11 +82,11 @@ public class Redemption extends LRCurioEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.undead_reduce", UNDEAD_REDUCE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.undead_reduce", UNDEAD_REDUCE.toComponent(args)).withColor(0xaeaeae));
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.redemption.skill",
-                MAX_HEALTH_PERCENTAGE.toComponent(args, Style.EMPTY, 100, "%s%%"),
-                SHIELD_AMOUNT.toComponent(args, Style.EMPTY),
-                SHIELD_LAST_TIME.toComponent(args, Style.EMPTY)
+                MAX_HEALTH_PERCENTAGE.toComponent(args),
+                SHIELD_AMOUNT.toComponent(args),
+                SHIELD_LAST_TIME.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.redemption.skill.desc").withColor(5592405));
         tooltipComponents.add(Component.translatable("legendary_relics.cooldown", 120).withColor(5592405));

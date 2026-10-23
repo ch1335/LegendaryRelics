@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AdjustmentHelper;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.util.ComponentUtil;
@@ -18,6 +20,7 @@ import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +44,7 @@ public class Ambush extends LRWeaponEffect {
                             EntityAttributeValue.of(ALObjects.Attributes.CRIT_DAMAGE)
                     )
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
 
 
     public Ambush(EffectType<?> effectType, int level, EquipmentType equipmentType) {
@@ -56,7 +59,7 @@ public class Ambush extends LRWeaponEffect {
                         FinalCalculator.format((float) getMaxChargeTick(itemStack, player) / 20, 1),
                         ComponentUtil.Attributes.attribute(
                                 Attributes.ATTACK_DAMAGE,
-                                DAMAGE_MUL.toComponent(CalculatorArg.simpleArg(player, itemStack, this).withTooltipFlag(tooltipFlag), Style.EMPTY, 100, "%s%%"),
+                                DAMAGE_MUL.toComponent(CalculatorArg.simpleArg(player, itemStack, this).withTooltipFlag(tooltipFlag)),
                                 "×"
                         )
                 ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack)
@@ -76,6 +79,7 @@ public class Ambush extends LRWeaponEffect {
                 AdjustmentHelper.runWhileInnerAdjusted(player, Attributes.ATTACK_DAMAGE, () -> {
                     entityHitResult.getEntity().invulnerableTime = 0;
                     player.attack(entityHitResult.getEntity());
+                    player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, player.getSoundSource(), 1.0F, 1.0F);
                 }, AttributeAdjustment.simple(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, DAMAGE_MUL.getValue(arg) - 1));
             }
         }

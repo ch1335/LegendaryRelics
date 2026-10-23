@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
@@ -33,7 +35,7 @@ public class BlackDragonHelmet extends BlackDragonArmor {
                     Constant.of(0.1F),
                     Constant.of(0.15F)
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
     @Calculator
     public static FinalCalculator GOOD_EFFECT_TIME_MULTIPLIER = FinalCalculator.of(
             DarkGoldUpdateArg.of(
@@ -54,9 +56,9 @@ public class BlackDragonHelmet extends BlackDragonArmor {
         CalculatorArg arg = new CalculatorArg();
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, stack);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.1", ComponentHolders.Combat.magicDamage(), MAGIC_DAMAGE_REDUCE.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.2", GOOD_EFFECT_TIME_MULTIPLIER.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.3", BAD_EFFECT_TIME_MULTIPLIER.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.1", ComponentHolders.Combat.magicDamage(), MAGIC_DAMAGE_REDUCE.toComponent(arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.2", GOOD_EFFECT_TIME_MULTIPLIER.toComponent(arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.3", BAD_EFFECT_TIME_MULTIPLIER.toComponent(arg)).withColor(0xaeaeae));
 
     }
 

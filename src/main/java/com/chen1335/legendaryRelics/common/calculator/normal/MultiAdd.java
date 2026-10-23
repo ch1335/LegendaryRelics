@@ -43,11 +43,11 @@ public class MultiAdd implements OperationUnit {
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
+    public Component expand(CalculatorArg calculatorArg) {
         MutableComponent component = Component.empty();
         component.append("(");
         for (OperationUnit unit : units) {
-            component.append(unit.toComponent(calculatorArg));
+            component.append(unit.expand(calculatorArg));
             if (units.getLast() != unit) {
                 component.append("+");
             }

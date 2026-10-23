@@ -49,12 +49,12 @@ public class DarkGoldUpdateArg implements OperationUnit {
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
+    public Component expand(CalculatorArg calculatorArg) {
         @Nullable ItemStack itemStack = CalculatorArg.ArgType.THIS_ITEMS_STACK.getArg(calculatorArg);
         if (itemStack != null && itemStack.getRarity() == LRRarities.DARK_GOLD.getValue()) {
-            return b.toComponent(calculatorArg).copy().withColor(0xff8c00);
+            return b.expand(calculatorArg).copy().withColor(0xff8c00);
         } else {
-            return a.toComponent(calculatorArg);
+            return a.expand(calculatorArg);
         }
     }
 

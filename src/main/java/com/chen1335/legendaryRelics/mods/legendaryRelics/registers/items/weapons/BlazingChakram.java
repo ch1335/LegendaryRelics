@@ -38,13 +38,13 @@ public class BlazingChakram extends LRMeleeWeaponBase {
     public static final FinalCalculator GENERATION_COOLDOWN = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(4),
             Constant.of(3)
-    ), 2);
+    ));
 
     /**
      * 飞轮每秒攻击次数，等于玩家攻速。
      */
     @Calculator
-    public static final FinalCalculator ATTACK_INTERVAL = FinalCalculator.of(EntityAttributeValue.of(Attributes.ATTACK_SPEED), 1);
+    public static final FinalCalculator ATTACK_INTERVAL = FinalCalculator.of(EntityAttributeValue.of(Attributes.ATTACK_SPEED));
 
     @Calculator
     public static final FinalCalculator DAMAGE = FinalCalculator.of(Add.of(
@@ -59,7 +59,7 @@ public class BlazingChakram extends LRMeleeWeaponBase {
     public static final FinalCalculator MAX_CHAKRAM_COUNT = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(6),
             Constant.of(8)
-    ), 0);
+    ));
 
     public BlazingChakram() {
         super(Tier.Weapon.BLAZING_CHAKRAM, new Properties().stacksTo(1).rarity(Rarity.EPIC));
@@ -73,13 +73,13 @@ public class BlazingChakram extends LRMeleeWeaponBase {
             CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.1").withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.2",
-                    GENERATION_COOLDOWN.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
+                    GENERATION_COOLDOWN.toComponent(arg)).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.3",
-                    ATTACK_INTERVAL.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
+                    ATTACK_INTERVAL.toComponent(arg)).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.4",
-                    ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(arg, Style.EMPTY))).withColor(0xaeaeae));
+                    ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(arg))).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.5",
-                    MAX_CHAKRAM_COUNT.toComponent(arg, Style.EMPTY)).withColor(0xaeaeae));
+                    MAX_CHAKRAM_COUNT.toComponent(arg)).withColor(0xaeaeae));
         }
     }
 

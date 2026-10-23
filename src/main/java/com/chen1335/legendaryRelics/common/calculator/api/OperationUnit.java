@@ -10,7 +10,7 @@ import net.minecraft.network.codec.StreamCodec;
 public interface OperationUnit {
     float getValue(CalculatorArg calculatorArg);
 
-    Component toComponent(CalculatorArg calculatorArg);
+    Component expand(CalculatorArg calculatorArg);
 
     StreamCodec<RegistryFriendlyByteBuf, ? extends OperationUnit> getStreamCodec();
 

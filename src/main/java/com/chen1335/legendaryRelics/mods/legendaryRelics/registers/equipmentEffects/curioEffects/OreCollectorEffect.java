@@ -11,6 +11,7 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.dataComponentTypes.CollectedMinerals;
@@ -31,15 +32,17 @@ import java.util.List;
 
 public class OreCollectorEffect extends LRCurioEffect {
 
+    private static final FormatedOperation.Format INTEGER_FORMAT = FormatedOperation.Format.builder().precision(0).build();
+
     @Calculator
     public static final FinalCalculator DEFAULT = FinalCalculator.of(DarkGoldUpdateArg.of(
-                    Constant.of(1, 0),
-                    Constant.of(2, 0)
+                    Constant.of(1, INTEGER_FORMAT),
+                    Constant.of(2, INTEGER_FORMAT)
             )
     );
 
     @Calculator
-    public static final FinalCalculator COLLECTED_MINERALS_REQUIRE = FinalCalculator.of(Constant.of(10, 0), 0);
+    public static final FinalCalculator COLLECTED_MINERALS_REQUIRE = FinalCalculator.of(Constant.of(10, INTEGER_FORMAT));
 
     public OreCollectorEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -50,7 +53,7 @@ public class OreCollectorEffect extends LRCurioEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.1", DEFAULT.toComponent(args, Style.EMPTY), COLLECTED_MINERALS_REQUIRE.toComponent(args, Style.EMPTY)).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.1", DEFAULT.toComponent(args), COLLECTED_MINERALS_REQUIRE.toComponent(args)).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.2", Component.literal(String.valueOf(itemStack.getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS, CollectedMinerals.empty()).getCollectedOresAmount()))).withColor(0xaeaeae));
     }
 

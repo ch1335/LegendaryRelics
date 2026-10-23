@@ -56,7 +56,7 @@ public class SingleCustomArg<T> implements OperationUnit {
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
+    public Component expand(CalculatorArg calculatorArg) {
         return component;
     }
 

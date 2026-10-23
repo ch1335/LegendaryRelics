@@ -33,8 +33,7 @@ public class HealPerSecondEffect extends LRCurioEffect {
                                     LevelBasedValue.perLevel(0.07F, 0.03F)
                             )
                     )
-            ),
-            1
+            )
     );
 
     public HealPerSecondEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
@@ -53,6 +52,6 @@ public class HealPerSecondEffect extends LRCurioEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_per_second_effect", HEAL_PER_5S.toComponent(args, Style.EMPTY)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_per_second_effect", HEAL_PER_5S.toComponent(args)).withColor(0xaeaeae));
     }
 }

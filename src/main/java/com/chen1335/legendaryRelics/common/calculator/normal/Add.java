@@ -41,8 +41,8 @@ public class Add implements OperationUnit {
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
-        return Component.empty().append(a.toComponent(calculatorArg)).append("+").append(b.toComponent(calculatorArg));
+    public Component expand(CalculatorArg calculatorArg) {
+        return Component.empty().append(a.expand(calculatorArg)).append("+").append(b.expand(calculatorArg));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
@@ -41,7 +43,7 @@ public class TreadingSnowEffect extends LRCurioEffect {
 
     /** 移动速度提升比例。 */
     @Calculator
-    public static final FinalCalculator MOVE_SPEED = FinalCalculator.of(Constant.of(0.1F));
+    public static final FinalCalculator MOVE_SPEED = FinalCalculator.of(Constant.of(0.1F)).withFormat(Format.PERCENTAGE);
 
     public TreadingSnowEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -52,7 +54,7 @@ public class TreadingSnowEffect extends LRCurioEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.treading_snow",
-                MOVE_SPEED.toComponent(args, Style.EMPTY, 100, "%s%%")
+                MOVE_SPEED.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

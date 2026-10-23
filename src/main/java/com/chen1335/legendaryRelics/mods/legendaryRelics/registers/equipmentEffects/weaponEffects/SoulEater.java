@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
@@ -36,7 +38,7 @@ public class SoulEater extends LRWeaponEffect {
                     Constant.of(0.1F),
                     Constant.of(0.15F)
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
 
     @Calculator
     public static final FinalCalculator GAIN_ATTACK_DAMAGE_PERCENT = FinalCalculator.of(
@@ -44,7 +46,7 @@ public class SoulEater extends LRWeaponEffect {
                     Constant.of(0.5F),
                     Constant.of(0.7F)
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
 
     public SoulEater(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -54,7 +56,7 @@ public class SoulEater extends LRWeaponEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.soul_eater", HEAL.toComponent(arg, Style.EMPTY, 100, "%s%%"), GAIN_ATTACK_DAMAGE_PERCENT.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.soul_eater", HEAL.toComponent(arg), GAIN_ATTACK_DAMAGE_PERCENT.toComponent(arg)).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     public static void LivingDeathEvent(LivingDeathEvent event) {

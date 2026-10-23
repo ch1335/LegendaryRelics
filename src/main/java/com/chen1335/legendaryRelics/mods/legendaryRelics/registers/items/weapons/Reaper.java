@@ -57,7 +57,7 @@ public class Reaper extends LRMeleeWeaponBase {
         if (level != null && level.isClientSide) {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
             CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(calculatorArg, tooltipFlag);
-            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(calculatorArg, Style.EMPTY))).withColor(0xaeaeae), maxToolTipWidth(stack));
+            LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(calculatorArg))).withColor(0xaeaeae), maxToolTipWidth(stack));
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.2").withColor(5592405), maxToolTipWidth(stack));
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.reaper.desc.3").withColor(5592405), maxToolTipWidth(stack));
 

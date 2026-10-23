@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.legendaryRelics.API.IChargeAbleItem;
 import com.chen1335.legendaryRelics.client.LRClient;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
@@ -86,15 +88,15 @@ public class FrostShard extends LRMeleeWeaponBase implements IChargeAbleItem {
 
     /** 近战直接命中的减速比例。 */
     @Calculator
-    public static final FinalCalculator MELEE_SLOWNESS = FinalCalculator.of(Constant.of(0.2F));
+    public static final FinalCalculator MELEE_SLOWNESS = FinalCalculator.of(Constant.of(0.2F)).withFormat(Format.PERCENTAGE);
 
     /** 投掷物命中目标的减速比例。 */
     @Calculator
-    public static final FinalCalculator THROWN_SLOWNESS = FinalCalculator.of(Constant.of(0.15F));
+    public static final FinalCalculator THROWN_SLOWNESS = FinalCalculator.of(Constant.of(0.15F)).withFormat(Format.PERCENTAGE);
 
     /** 冰锥命中目标的减速比例。 */
     @Calculator
-    public static final FinalCalculator ICICLE_SLOWNESS = FinalCalculator.of(Constant.of(0.1F));
+    public static final FinalCalculator ICICLE_SLOWNESS = FinalCalculator.of(Constant.of(0.1F)).withFormat(Format.PERCENTAGE);
 
     /** 减速持续时间（秒）。 */
     @Calculator
@@ -123,22 +125,22 @@ public class FrostShard extends LRMeleeWeaponBase implements IChargeAbleItem {
         if (level != null && level.isClientSide) {
             CalculatorArg arg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
             CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
-            Component slownessTime = SLOWNESS_TIME.toComponent(arg, Style.EMPTY);
-            Component thrownSlowness = THROWN_SLOWNESS.toComponent(arg, Style.EMPTY, 100, "%s%%");
-            Component icicleSlowness = ICICLE_SLOWNESS.toComponent(arg, Style.EMPTY, 100, "%s%%");
+            Component slownessTime = SLOWNESS_TIME.toComponent(arg);
+            Component thrownSlowness = THROWN_SLOWNESS.toComponent(arg);
+            Component icicleSlowness = ICICLE_SLOWNESS.toComponent(arg);
 
             // 两行都按像素宽度折行，避免在长行上被硬截断
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.frost_shard.desc.1",
                     slownessTime,
-                    MELEE_SLOWNESS.toComponent(arg, Style.EMPTY, 100, "%s%%")
+                    MELEE_SLOWNESS.toComponent(arg)
             ).withColor(0xaeaeae), maxToolTipWidth(stack));
 
             // 物理伤害由 ComponentHolders 统一拼上"物理伤害"字样，所以语言文件里只留 %s
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.frost_shard.desc.2",
-                    ComponentHolders.Combat.physicalDamage(THROW_DAMAGE.toComponent(arg, Style.EMPTY)),
+                    ComponentHolders.Combat.physicalDamage(THROW_DAMAGE.toComponent(arg)),
                     slownessTime,
                     thrownSlowness,
-                    ComponentHolders.Combat.physicalDamage(ICICLE_DAMAGE.toComponent(arg, Style.EMPTY)),
+                    ComponentHolders.Combat.physicalDamage(ICICLE_DAMAGE.toComponent(arg)),
                     slownessTime,
                     icicleSlowness
             ).withColor(0xaeaeae), maxToolTipWidth(stack));

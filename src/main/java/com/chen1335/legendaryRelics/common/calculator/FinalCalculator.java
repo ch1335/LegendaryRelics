@@ -1,14 +1,13 @@
 package com.chen1335.legendaryRelics.common.calculator;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation;
 import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -16,39 +15,38 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
 
-public class FinalCalculator implements OperationUnit {
+public class FinalCalculator extends FormatedOperation {
 
     public static final MapCodec<FinalCalculator> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             CalculatorRegister.DISPATCH_CODEC.fieldOf("unit").forGetter(calculator -> calculator.unit),
-            Codec.INT.optionalFieldOf("precision", 2).forGetter(calculator -> calculator.precision)
+            Format.CODEC.optionalFieldOf("format", Format.NORMAL).forGetter(calculator -> calculator.format)
     ).apply(instance, FinalCalculator::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FinalCalculator> STREAM_CODEC = StreamCodec.composite(
             CalculatorRegister.DISPATCH_STREAM_CODEC,
             value -> value.unit,
-            ByteBufCodecs.INT,
-            value -> value.precision,
+            Format.STREAM_CODEC,
+            value -> value.format,
             FinalCalculator::new
     );
 
-    private final Style style = Style.EMPTY;
-
-    private final float scale = 1F;
-
-    private int precision;
+    /**
+     * 未指定样式（即传 {@link Style#EMPTY}）时，展开态数值使用的默认样式。
+     */
+    public static final Style DEFAULT_STYLE = Style.EMPTY.withColor(16777215);
 
     private final OperationUnit defaultUnit;
     private OperationUnit unit;
 
-    private FinalCalculator(OperationUnit unit, int precision) {
+    private FinalCalculator(OperationUnit unit, Format format) {
         this.unit = unit;
         this.defaultUnit = unit;
-        this.precision = precision;
+        this.format = format;
     }
 
     public FinalCalculator define(FinalCalculator finalCalculator) {
         this.unit = finalCalculator.unit;
-        this.precision = finalCalculator.precision;
+        this.format = finalCalculator.format;
         return this;
     }
 
@@ -57,19 +55,18 @@ public class FinalCalculator implements OperationUnit {
         return this;
     }
 
-    public FinalCalculator define(OperationUnit unit, int precision) {
-        FinalCalculator calculator = define(unit);
-        calculator.precision = precision;
-        return calculator;
-    }
-
     public boolean changed() {
         return unit != defaultUnit;
     }
 
-
     public void reset() {
         unit = defaultUnit;
+    }
+
+    @Override
+    public FinalCalculator withFormat(Format format) {
+        super.withFormat(format);
+        return this;
     }
 
     @Override
@@ -81,32 +78,23 @@ public class FinalCalculator implements OperationUnit {
         return (int) getValue(calculatorArg);
     }
 
-    /**
-     * 未指定样式（即传 {@link Style#EMPTY}）时，展开态数值使用的默认样式。
-     */
-    public static final Style DEFAULT_STYLE = Style.EMPTY.withColor(16777215);
-
-    /**
-     * Style.EMPTY 表示"未指定样式"。
-     */
     private static boolean isUnstyled(Style style) {
         return Style.EMPTY.equals(style);
     }
 
-    /**
-     * 施加样式。传 Style.EMPTY 时是空操作，数值会继承上下文样式。
-     */
-    private static MutableComponent styled(MutableComponent component, Style style) {
-        return component.withStyle(style);
+    @Override
+    public MutableComponent expand(CalculatorArg calculatorArg) {
+        MutableComponent value = formatResult(calculatorArg, format, true);
+        return Component.empty().append(value).append("=(").append(unit.expand(calculatorArg)).append(")").withColor(5592405);
     }
 
-    @Override
     public MutableComponent toComponent(CalculatorArg calculatorArg) {
+
         return toComponent(calculatorArg, Style.EMPTY);
     }
 
     public MutableComponent toComponent(CalculatorArg calculatorArg, Style style) {
-        return toComponent(calculatorArg, style, 1);
+        return toComponent(calculatorArg, style, 1, "%s");
     }
 
     public MutableComponent toComponent(CalculatorArg calculatorArg, Style style, float scale) {
@@ -114,13 +102,36 @@ public class FinalCalculator implements OperationUnit {
     }
 
     public MutableComponent toComponent(CalculatorArg calculatorArg, Style style, float scale, String format) {
+        Format resultFormat = resolveFormat(style, scale, format);
         boolean hasShiftDown = CalculatorArg.ArgType.TOOLTIP_FLAG.getOrDefault(calculatorArg, TooltipFlag.NORMAL).hasShiftDown();
+        MutableComponent value = formatResult(calculatorArg, resultFormat, hasShiftDown);
         if (hasShiftDown) {
-            MutableComponent value = styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, precision))), isUnstyled(style) ? DEFAULT_STYLE : style);
-            return Component.empty().append(value).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
-        } else {
-            return styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, precision))), style);
+            return Component.empty().append(value).append("=(").append(unit.expand(calculatorArg)).append(")").withColor(5592405);
         }
+        return value;
+    }
+
+    private Format resolveFormat(Style style, float scale, String format) {
+        Format.Builder builder = this.format.unwrap();
+        if (!isUnstyled(style)) {
+            builder.style(style);
+        }
+        if (scale != 1F) {
+            builder.scale(scale);
+        }
+        if (!"%s".equals(format)) {
+            builder.format(format);
+        }
+        return builder.build();
+    }
+
+    private MutableComponent formatResult(CalculatorArg calculatorArg, Format resultFormat, boolean expanded) {
+        String text = String.format(Locale.ROOT, resultFormat.format(), format(getValue(calculatorArg) * resultFormat.scale(), resultFormat.precision()));
+        Style style = resultFormat.style();
+        if (expanded && isUnstyled(style)) {
+            style = DEFAULT_STYLE;
+        }
+        return Component.literal(text).withStyle(style);
     }
 
     @Override
@@ -139,20 +150,16 @@ public class FinalCalculator implements OperationUnit {
     }
 
     public Component toRawComponent() {
-        return Component.empty().append("(").append(unit.toComponent(CalculatorArg.emptyArg())).append(")").withColor(5592405);
+        return Component.empty().append("(").append(unit.expand(CalculatorArg.emptyArg())).append(")").withColor(5592405);
     }
 
 
     public Component toRawComponent(CalculatorArg calculatorArg) {
-        return Component.empty().append("(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+        return Component.empty().append("(").append(unit.expand(calculatorArg)).append(")").withColor(5592405);
     }
 
     public static FinalCalculator of(OperationUnit unit) {
-        return new FinalCalculator(unit, 2);
-    }
-
-    public static FinalCalculator of(OperationUnit unit, int i) {
-        return new FinalCalculator(unit, i);
+        return new FinalCalculator(unit, Format.NORMAL);
     }
 
     public static String format(float value, int i) {

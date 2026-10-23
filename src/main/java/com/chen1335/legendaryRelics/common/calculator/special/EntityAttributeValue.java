@@ -44,7 +44,7 @@ public class EntityAttributeValue implements OperationUnit {
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
+    public Component expand(CalculatorArg calculatorArg) {
         return Component.literal(String.format("%s", Component.translatable(attributeHolder.value().getDescriptionId()).getString())).withColor(5592575);
     }
 

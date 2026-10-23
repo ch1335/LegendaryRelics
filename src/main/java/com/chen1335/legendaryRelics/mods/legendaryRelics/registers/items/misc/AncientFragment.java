@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.misc;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
@@ -20,10 +22,10 @@ public class AncientFragment extends Item implements ILRItemExtension {
         super(new Properties().rarity(Rarity.EPIC));
     }
 
-    public static FinalCalculator ANCIENT_FRAGMENT_BOOST = FinalCalculator.of(Constant.of(0.1F));
+    public static FinalCalculator ANCIENT_FRAGMENT_BOOST = FinalCalculator.of(Constant.of(0.1F)).withFormat(Format.PERCENTAGE);
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toComponent(CalculatorArg.emptyArg().withTooltipFlag(tooltipFlag), Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), maxToolTipWidth(stack));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toComponent(CalculatorArg.emptyArg().withTooltipFlag(tooltipFlag))).withColor(0xaeaeae), maxToolTipWidth(stack));
     }
 }

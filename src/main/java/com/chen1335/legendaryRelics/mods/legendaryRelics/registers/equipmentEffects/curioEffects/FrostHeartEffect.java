@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
@@ -35,7 +37,7 @@ public class FrostHeartEffect extends LRCurioEffect {
 
     /** 减速持续时间（秒）。 */
     @Calculator
-    public static final FinalCalculator TIME = FinalCalculator.of(Constant.of(5F));
+    public static final FinalCalculator TIME = FinalCalculator.of(Constant.of(5F)).withFormat(Format.PERCENTAGE);
 
     public FrostHeartEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -46,8 +48,8 @@ public class FrostHeartEffect extends LRCurioEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.frost_heart",
-                TIME.toComponent(args, Style.EMPTY),
-                SLOWNESS.toComponent(args, Style.EMPTY, 100, "%s%%")
+                TIME.toComponent(args),
+                SLOWNESS.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

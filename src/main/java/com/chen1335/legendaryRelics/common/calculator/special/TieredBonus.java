@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.common.calculator.special;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
 import com.chen1335.legendaryRelics.common.calculator.OperationType;
-import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation;
 import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -17,25 +17,41 @@ import net.minecraft.network.codec.StreamCodec;
 
 import java.util.List;
 
-public record TieredBonus(List<Float> list) implements OperationUnit {
+public class TieredBonus extends FormatedOperation {
+
+
     public static final MapCodec<TieredBonus> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Codec.FLOAT.listOf().fieldOf("values").forGetter(TieredBonus::list)
+            Codec.FLOAT.listOf().fieldOf("values").forGetter(TieredBonus::list),
+            Format.CODEC.optionalFieldOf("format", Format.NORMAL).forGetter(bonus -> bonus.format)
     ).apply(instance, TieredBonus::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, TieredBonus> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.FLOAT.apply(ByteBufCodecs.list()),
             TieredBonus::list,
+            Format.STREAM_CODEC,
+            bonus -> bonus.format,
             TieredBonus::new
     );
 
+    public static final CalculatorArg.ArgType<Integer> TIER = new CalculatorArg.ArgType<>("tier");
 
-    public TieredBonus {
+    private final List<Float> list;
+
+    public TieredBonus(List<Float> list) {
+        this(list, Format.NORMAL);
+    }
+
+    public TieredBonus(List<Float> list, Format format) {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("The entered list cannot be empty!");
         }
+        this.list = list;
+        this.format = format;
     }
 
-    public static final CalculatorArg.ArgType<Integer> TIER = new CalculatorArg.ArgType<>("tier");
+    public List<Float> list() {
+        return list;
+    }
 
     public static OperationUnit of(List<Float> list) {
         return new TieredBonus(list);
@@ -44,20 +60,20 @@ public record TieredBonus(List<Float> list) implements OperationUnit {
     @Override
     public float getValue(CalculatorArg calculatorArg) {
         int tier = Math.max(calculatorArg.getArgElse(TIER, 1), 1);
-        if (tier >= list.size()+1) {
+        if (tier >= list.size() + 1) {
             return list.getLast();
         }
-        return list.get(tier-1);
+        return list.get(tier - 1);
     }
 
     @Override
-    public Component toComponent(CalculatorArg calculatorArg) {
+    public Component expand(CalculatorArg calculatorArg) {
         int tier = calculatorArg.getArgElse(TIER, 0);
 
         MutableComponent component = Component.empty();
         component.append("(");
         for (int i = 1; i <= list.size(); i++) {
-            MutableComponent component1 = Component.literal(FinalCalculator.format(list.get(i-1), 3));
+            MutableComponent component1 = formatValue(list.get(i - 1));
             if (i == tier) {
                 component1.withStyle(ChatFormatting.GRAY);
             }

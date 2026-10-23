@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
@@ -37,7 +39,7 @@ public class AgglomerationMaliceEffect extends LRCurioEffect {
     public static final FinalCalculator DAMAGE_MULTIPLIER = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(2),
             Constant.of(1.5F)
-    ));
+    )).withFormat(Format.PERCENTAGE);
 
     @Calculator
     public static final FinalCalculator LOOTING_LEVEL_ADD = FinalCalculator.of(DarkGoldUpdateArg.of(
@@ -52,8 +54,8 @@ public class AgglomerationMaliceEffect extends LRCurioEffect {
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.desc").withColor(5592405));
         tooltipComponents.add(Component.empty());
-        tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.bad_effect", DAMAGE_MULTIPLIER.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(16733525));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.good_effect", LOOTING_LEVEL_ADD.toComponent(args, Style.EMPTY)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.bad_effect", DAMAGE_MULTIPLIER.toComponent(args)).withColor(16733525));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.agglomeration_malice.good_effect", LOOTING_LEVEL_ADD.toComponent(args)).withColor(0xaeaeae));
 
     }
 

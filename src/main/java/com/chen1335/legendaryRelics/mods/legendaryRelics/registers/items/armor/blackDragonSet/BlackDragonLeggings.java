@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.blackDragonSet;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
@@ -31,14 +33,14 @@ public class BlackDragonLeggings extends BlackDragonArmor {
                     Constant.of(0.1F),
                     Constant.of(0.15F)
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
     @Calculator
     public static FinalCalculator HEAL_INCREASE = FinalCalculator.of(
             DarkGoldUpdateArg.of(
                     Constant.of(0.1F),
                     Constant.of(0.20F)
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
 
 
     @Override
@@ -46,8 +48,8 @@ public class BlackDragonLeggings extends BlackDragonArmor {
         CalculatorArg arg = new CalculatorArg();
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, stack);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.1", PROJECTILE_DAMAGE_REDUCE.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.2", HEAL_INCREASE.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.1", PROJECTILE_DAMAGE_REDUCE.toComponent(arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_leggings.desc.2", HEAL_INCREASE.toComponent(arg)).withColor(0xaeaeae));
     }
 
 

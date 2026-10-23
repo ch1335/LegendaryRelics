@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntitySetsEffectData;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
@@ -59,15 +61,15 @@ public class InfernoArmorSetEffect extends SetEffect {
     @Calculator
     public static final FinalCalculator GAIN_STACK_COOLDOWN = FinalCalculator.of(
             TieredBonus.of(List.of(1.5F, 1.5F, 0.75F, 0.5F))
-    );
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.YELLOW.getStyle()).build());
     @Calculator
     public static final FinalCalculator ATTACK_RANGE_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.05F, 0.05F, 0.1F, 0.1F))
-    );
+    ).withFormat(Format.NORMAL.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
     @Calculator
     public static final FinalCalculator DAMAGE_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
-    );
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
     @Calculator
     public static final FinalCalculator KEEP_TIME = FinalCalculator.of(
             TieredBonus.of(List.of(4F, 4F, 7F, 10F))
@@ -111,34 +113,34 @@ public class InfernoArmorSetEffect extends SetEffect {
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.inferno.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.1",
-                GAIN_STACK_COOLDOWN.toComponent(args, LRColors.Component.YELLOW.getStyle()),
+                GAIN_STACK_COOLDOWN.toComponent(args),
                 doomComponent()
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.2",
-                KEEP_TIME.toComponent(args, Style.EMPTY),
+                KEEP_TIME.toComponent(args),
                 doomComponent(),
                 doomComponent()
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.3",
-                ATTACK_RANGE_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle()),
-                DAMAGE_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
+                ATTACK_RANGE_PER_STACK.toComponent(args),
+                DAMAGE_PER_STACK.toComponent(args)
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.4",
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(args, Style.EMPTY))
+                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(args))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.5",
                 ComponentHolders.Effects.infernoScorch(),
-                INFERNO_SCORCH_DURATION.toComponent(args, Style.EMPTY),
+                INFERNO_SCORCH_DURATION.toComponent(args),
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(args, Style.EMPTY))
+                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(args))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"

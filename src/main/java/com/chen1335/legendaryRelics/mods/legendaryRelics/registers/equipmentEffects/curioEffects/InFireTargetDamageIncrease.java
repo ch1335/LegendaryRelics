@@ -1,5 +1,9 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation;
+
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
@@ -28,8 +32,8 @@ public class InFireTargetDamageIncrease extends LRCurioEffect {
 
     @Calculator
     public static final FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.1F, 0.05F), 3)
-    ));
+            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.1F, 0.05F), Format.builder().precision(3).build())
+    )).withFormat(Format.PERCENTAGE);
 
     public InFireTargetDamageIncrease(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -39,7 +43,7 @@ public class InFireTargetDamageIncrease extends LRCurioEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.in_fire_target_damage_increase", DAMAGE_INCREASE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.in_fire_target_damage_increase", DAMAGE_INCREASE.toComponent(args)).withColor(0xaeaeae));
     }
 
     public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source, LivingEntity target, LivingEntity attacker) {

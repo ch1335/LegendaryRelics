@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
@@ -43,7 +45,7 @@ public class ColdDomainEffect extends LRCurioEffect {
 
     /** 寒冷群系下的属性提升比例。 */
     @Calculator
-    public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(Constant.of(0.05F));
+    public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(Constant.of(0.05F)).withFormat(Format.PERCENTAGE);
 
     /** 周期性检查间隔（tick）。 */
     private static final int CHECK_INTERVAL = 20;
@@ -57,7 +59,7 @@ public class ColdDomainEffect extends LRCurioEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         Component boost = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
-                ATTRIBUTE_BOOST.toComponent(args, Style.EMPTY, 100, "%s%%"),
+                ATTRIBUTE_BOOST.toComponent(args),
                 "+");
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.cold_domain", boost)
                 .withColor(0xaeaeae), getMaxToolTipWidth(itemStack));

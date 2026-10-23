@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
@@ -33,7 +35,7 @@ public class AllAttributeBoost extends LRBaseEffect {
     public static final FinalCalculator AMOUNT = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(0.025F),
             Constant.of(0.035F)
-    ));
+    )).withFormat(Format.PERCENTAGE);
 
     public AllAttributeBoost(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -45,7 +47,7 @@ public class AllAttributeBoost extends LRBaseEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         Component boost = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
-                AMOUNT.toComponent(args, Style.EMPTY, 100, "%s%%"),
+                AMOUNT.toComponent(args),
                 "+");
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.all_attribute_boost", boost)
                 .withStyle(ChatFormatting.GOLD));

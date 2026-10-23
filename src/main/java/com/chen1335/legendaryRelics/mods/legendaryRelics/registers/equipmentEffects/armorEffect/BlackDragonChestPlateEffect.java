@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
@@ -40,7 +42,7 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
                     Constant.of(0.1F),
                     Constant.of(0.15F)
             )
-    );
+    ).withFormat(Format.PERCENTAGE);
 
     @Calculator
     public static final FinalCalculator DAMAGE_INCREASE = FinalCalculator.of(
@@ -107,13 +109,13 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         if (getRawEffectLevel() > 1) {
-            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toComponent(args)).withColor(0xaeaeae));
         }
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
-                DAMAGE_INCREASE.toComponent(args, Style.EMPTY),
-                SHIELD_LAST_TIME.toComponent(args, Style.EMPTY),
-                SHIELD_AMOUNT.toComponent(args, Style.EMPTY),
-                COOL_DOWN.toComponent(args, Style.EMPTY)
+                DAMAGE_INCREASE.toComponent(args),
+                SHIELD_LAST_TIME.toComponent(args),
+                SHIELD_AMOUNT.toComponent(args),
+                COOL_DOWN.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
 
     }

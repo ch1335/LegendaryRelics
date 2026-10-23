@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
@@ -30,7 +32,7 @@ public class BlackDragonArmorSetEffect extends SetEffect {
     @Calculator
     public static final FinalCalculator ATTRIBUTE_MULTIPLIER = FinalCalculator.of(
             TieredBonus.of(List.of(0.04F, 0.06F, 0.08F, 0.1F))
-    );
+    ).withFormat(Format.PERCENTAGE);
     @Calculator
     public static final FinalCalculator HEALTH_REGAIN = FinalCalculator.of(
             Add.of(
@@ -47,10 +49,10 @@ public class BlackDragonArmorSetEffect extends SetEffect {
         CalculatorArg args = buildArg(player);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         tooltipComponents.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.excellence.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
-        Component append = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,ATTRIBUTE_MULTIPLIER.toComponent(args, Style.EMPTY, 100, "%s%%"), "+");
+        Component append = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,ATTRIBUTE_MULTIPLIER.toComponent(args), "+");
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.1", append).withColor(16733695));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.2",
-                HEALTH_REGAIN.toComponent(args, Style.EMPTY)
+                HEALTH_REGAIN.toComponent(args)
         ).withColor(16733695));
     }
 

@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.armorSetEffect;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntitySetsEffectData;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
@@ -62,17 +64,17 @@ public class SoulArmorSetEffect extends SetEffect {
     @Calculator
     public static final FinalCalculator GAIN_STACK_COOLDOWN = FinalCalculator.of(
             TieredBonus.of(List.of(1.5F, 1.5F, 0.75F, 0.5F))
-    );
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.YELLOW.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator SPELL_POWER_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
-    );
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator COOLDOWN_REDUCTION_PER_STACK = FinalCalculator.of(
             TieredBonus.of(List.of(0.01F, 0.012F, 0.015F, 0.02F))
-    );
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator KEEP_TIME = FinalCalculator.of(
@@ -88,7 +90,7 @@ public class SoulArmorSetEffect extends SetEffect {
                     Constant.of(0.15F),
                     TieredBonus.of(List.of(0.64F, 0.64F, 0.81F, 1F))
             )
-    );
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.RED.getStyle()).build());
 
     /**
      * 目标不足时，多余飞弹打主目标时额外的伤害比例（在飞弹伤害基础上再乘）。
@@ -96,7 +98,7 @@ public class SoulArmorSetEffect extends SetEffect {
     @Calculator
     public static final FinalCalculator OVERFLOW_DAMAGE_PERCENT = FinalCalculator.of(
             Constant.of(0.5F)
-    );
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, List<Component> list) {
@@ -105,29 +107,29 @@ public class SoulArmorSetEffect extends SetEffect {
         list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus",
                 Component.translatable("set_effect.legendary_relics.soul.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.1",
-                GAIN_STACK_COOLDOWN.toComponent(args, LRColors.Component.YELLOW.getStyle()),
+                GAIN_STACK_COOLDOWN.toComponent(args),
                 ComponentHolders.Combat.magicDamage(),
                 soulGatherComponent()
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.2",
-                KEEP_TIME.toComponent(args, Style.EMPTY),
+                KEEP_TIME.toComponent(args),
                 soulGatherComponent(),
                 soulGatherComponent()
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.3",
-                SPELL_POWER_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle(), 100, "%s%%"),
-                COOLDOWN_REDUCTION_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
+                SPELL_POWER_PER_STACK.toComponent(args),
+                COOLDOWN_REDUCTION_PER_STACK.toComponent(args)
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.4",
                 ComponentHolders.Combat.magicDamage(),
-                MISSILE_DAMAGE_PERCENT.toComponent(args, LRColors.Component.RED.getStyle(), 100, "%s%%")
+                MISSILE_DAMAGE_PERCENT.toComponent(args)
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.soul.desc.5",
-                OVERFLOW_DAMAGE_PERCENT.toComponent(args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
+                OVERFLOW_DAMAGE_PERCENT.toComponent(args)
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"

@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.util.SimpleSchedule;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
@@ -51,7 +53,7 @@ public class ChainLightningEffect extends LRBaseEffect {
     public static final String PARTICLE_PLAYER_NAME = "chain_lightning";
 
     @Calculator
-    public static final FinalCalculator DAMAGE_RATIO = FinalCalculator.of(Constant.of(0.15F));
+    public static final FinalCalculator DAMAGE_RATIO = FinalCalculator.of(Constant.of(0.15F)).withFormat(Format.PERCENTAGE);
 
     public ChainLightningEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -63,7 +65,7 @@ public class ChainLightningEffect extends LRBaseEffect {
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.chain_lightning",
                 String.valueOf(CHAIN_RANGE),
-                DAMAGE_RATIO.toComponent(arg, Style.EMPTY, 100, "%s%%"),
+                DAMAGE_RATIO.toComponent(arg),
                 String.valueOf(MAX_CHAIN_TARGETS)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }

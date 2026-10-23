@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.common.SlotEffectHolder;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
@@ -28,7 +30,7 @@ public class HealIncreaseEffect extends LRCurioEffect {
     @Calculator
     public static final FinalCalculator HEAL_INCREASE = FinalCalculator.of(DarkGoldUpdateArg.of(
             EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.05f))
-    ));
+    )).withFormat(Format.PERCENTAGE);
 
     public HealIncreaseEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -39,7 +41,7 @@ public class HealIncreaseEffect extends LRCurioEffect {
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_increase_effect", HEAL_INCREASE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_increase_effect", HEAL_INCREASE.toComponent(args)).withColor(0xaeaeae));
     }
 
 

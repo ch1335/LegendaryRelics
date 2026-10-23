@@ -1,5 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.arcanumlib.util.ComponentUtil;
@@ -16,6 +18,7 @@ import com.chen1335.legendaryRelics.utils.LRUtil;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,11 +36,11 @@ public class Backstab extends LRWeaponEffect {
     @Calculator
     public static final FinalCalculator CRIT_CHANCE_BONUS = FinalCalculator.of(
             Constant.of(1.0F)
-    );
+    ).withFormat(Format.PERCENTAGE);
     @Calculator
     public static final FinalCalculator CRIT_DAMAGE_BONUS = FinalCalculator.of(
             Constant.of(1.5F)
-    );
+    ).withFormat(Format.PERCENTAGE);
 
     public Backstab(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -48,10 +51,10 @@ public class Backstab extends LRWeaponEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         Component critChance = ComponentUtil.Attributes.attribute(ALObjects.Attributes.CRIT_CHANCE,
-                CRIT_CHANCE_BONUS.toComponent(args, Style.EMPTY, 100, "%s%%"),
+                CRIT_CHANCE_BONUS.toComponent(args),
                 "+");
         Component critDamage = ComponentUtil.Attributes.attribute(ALObjects.Attributes.CRIT_DAMAGE,
-                CRIT_DAMAGE_BONUS.toComponent(args, Style.EMPTY, 100, "%s%%"),
+                CRIT_DAMAGE_BONUS.toComponent(args),
                 "+");
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.backstab",
                 critChance, critDamage).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
@@ -67,6 +70,8 @@ public class Backstab extends LRWeaponEffect {
                     CalculatorArg args = CalculatorArg.simpleArg(attacker, attacker.getWeaponItem(), effect);
                     event.getAdjustment(attacker, ALObjects.Attributes.CRIT_CHANCE).add(AttributeAdjustment.Operation.ADD_VALUE, CRIT_CHANCE_BONUS.getValue(args));
                     event.getAdjustment(attacker, ALObjects.Attributes.CRIT_DAMAGE).add(AttributeAdjustment.Operation.ADD_VALUE, CRIT_DAMAGE_BONUS.getValue(args));
+                    attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, attacker.getSoundSource(), 1.0F, 1.0F);
+
                 }
             }
         }

@@ -1,5 +1,9 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation;
+
+import com.chen1335.legendaryRelics.common.calculator.api.FormatedOperation.Format;
+
 
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.util.ComponentUtil;
@@ -35,8 +39,8 @@ public class AttributeBoostInNether extends LRCurioEffect {
 
     @Calculator
     public static final FinalCalculator ATTRIBUTE_BOOST = FinalCalculator.of(DarkGoldUpdateArg.of(
-            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.025F), 3)
-    ));
+            EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(0.025F), Format.builder().precision(3).build())
+    )).withFormat(Format.PERCENTAGE);
 
     public AttributeBoostInNether(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -53,7 +57,7 @@ public class AttributeBoostInNether extends LRCurioEffect {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
         CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         Component boost = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
-                ATTRIBUTE_BOOST.toComponent(args, Style.EMPTY, 100, "%s%%"),
+                ATTRIBUTE_BOOST.toComponent(args),
                 "+");
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.attribute_boost_in_nether", boost)
                 .withColor(0xaeaeae));

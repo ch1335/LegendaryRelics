@@ -177,7 +177,7 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
         float minSeconds = MIN_CHARGE_PERCENT * getMaxChargeTick(stack, player) / 20.0F;
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.frost_steel_sword.desc.1",
                 FinalCalculator.format(minSeconds, 2),
-                ComponentHolders.Combat.physicalDamage(THRUST_DAMAGE.toComponent(arg, Style.EMPTY))
+                ComponentHolders.Combat.physicalDamage(THRUST_DAMAGE.toComponent(arg))
         ).withColor(0xaeaeae), maxToolTipWidth(stack));
         LRUtil.splitAndAdd(tooltipComponents,
                 Component.translatable("item.legendary_relics.frost_steel_sword.desc.2").withColor(0xaeaeae),
