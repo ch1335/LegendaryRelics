@@ -1,6 +1,9 @@
 package com.chen1335.legendaryRelics.common.calculator;
 
-import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -9,9 +12,15 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Locale;
 
-public class FinalCalculator implements Unit {
+public class FinalCalculator implements OperationUnit {
+
+    public static final MapCodec<FinalCalculator> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            CalculatorRegister.DISPATCH_CODEC.fieldOf("unit").forGetter(calculator -> calculator.unit),
+            Codec.INT.optionalFieldOf("precision", 2).forGetter(calculator -> calculator.i)
+    ).apply(instance, FinalCalculator::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FinalCalculator> STREAM_CODEC = StreamCodec.composite(
             CalculatorRegister.DISPATCH_STREAM_CODEC,
@@ -22,11 +31,11 @@ public class FinalCalculator implements Unit {
     );
 
 
-    private final Unit defaultUnit;
-    private Unit unit;
+    private final OperationUnit defaultUnit;
+    private OperationUnit unit;
     private int i;
 
-    private FinalCalculator(Unit unit, int i) {
+    private FinalCalculator(OperationUnit unit, int i) {
         this.unit = unit;
         this.defaultUnit = unit;
         this.i = i;
@@ -38,12 +47,12 @@ public class FinalCalculator implements Unit {
         return this;
     }
 
-    public FinalCalculator define(Unit unit) {
+    public FinalCalculator define(OperationUnit unit) {
         this.unit = unit;
         return this;
     }
 
-    public FinalCalculator define(Unit unit, int i) {
+    public FinalCalculator define(OperationUnit unit, int i) {
         FinalCalculator calculator = define(unit);
         calculator.i = i;
         return calculator;
@@ -90,8 +99,18 @@ public class FinalCalculator implements Unit {
     }
 
     @Override
-    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends OperationUnit> getStreamCodec() {
         return STREAM_CODEC;
+    }
+
+    @Override
+    public MapCodec<? extends OperationUnit> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    public OperationType getType() {
+        throw new UnsupportedOperationException();
     }
 
     public Component toRawComponent() {
@@ -125,18 +144,22 @@ public class FinalCalculator implements Unit {
         }
     }
 
-    public static FinalCalculator of(Unit unit) {
+    public static FinalCalculator of(OperationUnit unit) {
         return new FinalCalculator(unit, 2);
     }
 
-    public static FinalCalculator of(Unit unit, int i) {
+    public static FinalCalculator of(OperationUnit unit, int i) {
         return new FinalCalculator(unit, i);
     }
 
     public static String format(float value, int i) {
-        // 必须显式指定 Locale.ROOT：否则法语等地区会把小数点写成逗号，
-        // 下面的 BigDecimal 解析会直接抛 NumberFormatException。
-        return new BigDecimal(String.format(Locale.ROOT, "%." + i + "f", value)).stripTrailingZeros().toPlainString();
+        if (!Float.isFinite(value)) {
+            return Float.toString(value);
+        }
+        return new BigDecimal(Float.toString(value))
+                .setScale(i, RoundingMode.HALF_UP)
+                .stripTrailingZeros()
+                .toPlainString();
     }
 
     public static double castToDoubleStrict(float f) {

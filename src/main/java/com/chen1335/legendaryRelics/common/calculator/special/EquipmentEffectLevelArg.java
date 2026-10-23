@@ -2,8 +2,13 @@ package com.chen1335.legendaryRelics.common.calculator.special;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
+import com.chen1335.legendaryRelics.common.calculator.OperationType;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
-import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -11,10 +16,15 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 
-public class EquipmentEffectLevelArg implements Unit {
+public class EquipmentEffectLevelArg implements OperationUnit {
     private final LevelBasedValue levelBasedValue;
     private final int i;
 
+
+    public static final MapCodec<EquipmentEffectLevelArg> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            LevelBasedValue.CODEC.fieldOf("value").forGetter(arg -> arg.levelBasedValue),
+            Codec.INT.optionalFieldOf("precision", 2).forGetter(arg -> arg.i)
+    ).apply(instance, EquipmentEffectLevelArg::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, EquipmentEffectLevelArg> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.TAG,
@@ -50,7 +60,17 @@ public class EquipmentEffectLevelArg implements Unit {
     }
 
     @Override
-    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends OperationUnit> getStreamCodec() {
         return STREAM_CODEC;
+    }
+
+    @Override
+    public MapCodec<? extends OperationUnit> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    public OperationType getType() {
+        return CalculatorRegister.EQUIPMENT_EFFECT_LEVEL.get();
     }
 }

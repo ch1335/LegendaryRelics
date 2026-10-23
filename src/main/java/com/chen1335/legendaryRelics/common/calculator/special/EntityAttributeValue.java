@@ -1,8 +1,13 @@
 package com.chen1335.legendaryRelics.common.calculator.special;
 
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
+import com.chen1335.legendaryRelics.common.calculator.OperationType;
+import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -11,7 +16,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
-public class EntityAttributeValue implements Unit {
+public class EntityAttributeValue implements OperationUnit {
+    public static final MapCodec<EntityAttributeValue> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            BuiltInRegistries.ATTRIBUTE.holderByNameCodec().fieldOf("attribute").forGetter(value -> value.attributeHolder)
+    ).apply(instance, EntityAttributeValue::new));
+
     public static final StreamCodec<RegistryFriendlyByteBuf, EntityAttributeValue> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.holderRegistry(Registries.ATTRIBUTE),
             entityAttributeValue -> entityAttributeValue.attributeHolder,
@@ -40,8 +49,18 @@ public class EntityAttributeValue implements Unit {
     }
 
     @Override
-    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends OperationUnit> getStreamCodec() {
         return STREAM_CODEC;
+    }
+
+    @Override
+    public MapCodec<? extends OperationUnit> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    public OperationType getType() {
+        return CalculatorRegister.ENTITY_ATTRIBUTE.get();
     }
 
     public static EntityAttributeValue of(Holder<Attribute> attributeHolder) {

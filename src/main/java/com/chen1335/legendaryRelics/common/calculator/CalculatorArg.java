@@ -1,14 +1,16 @@
 package com.chen1335.legendaryRelics.common.calculator;
 
 import com.chen1335.equipmentEffectLib.effectBase.BaseEffect;
+import com.chen1335.equipmentEffectLib.utils.Cast;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import com.chen1335.equipmentEffectLib.utils.Cast;
+import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class CalculatorArg {
     public static CalculatorArg emptyArg() {
@@ -60,6 +62,7 @@ public class CalculatorArg {
         public static final ArgType<LivingEntity> THIS_ENTITY = new ArgType<>("this_entity");
         public static final ArgType<ItemStack> THIS_ITEMS_STACK = new ArgType<>("this_items_stack");
         public static final ArgType<BaseEffect> THIS_EQUIPMENT_EFFECT = new ArgType<>("this_equipment_effect");
+        public static final ArgType<TooltipFlag> TOOLTIP_FLAG = new ArgType<>("tooltip_flag");
         private final String name;
 
         public ArgType(String name) {
@@ -75,6 +78,9 @@ public class CalculatorArg {
             return calculatorArg.getArg(this);
         }
 
+        public T getOrDefault(CalculatorArg calculatorArg, @NotNull T defaultValue) {
+            return Objects.requireNonNullElse(calculatorArg.getArg(this), defaultValue);
+        }
 
         public T getArgOrThrow(CalculatorArg calculatorArg) {
             T arg = calculatorArg.getArg(this);

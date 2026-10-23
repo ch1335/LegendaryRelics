@@ -3,14 +3,22 @@ package com.chen1335.legendaryRelics.common.calculator.special;
 import com.chen1335.legendaryRelics.API.objects.LRRarities;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
-import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import com.chen1335.legendaryRelics.common.calculator.OperationType;
+import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-public class DarkGoldUpdateArg implements Unit {
+public class DarkGoldUpdateArg implements OperationUnit {
+
+    public static final MapCodec<DarkGoldUpdateArg> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            CalculatorRegister.DISPATCH_CODEC.fieldOf("normal").forGetter(arg -> arg.a),
+            CalculatorRegister.DISPATCH_CODEC.fieldOf("dark_gold").forGetter(arg -> arg.b)
+    ).apply(instance, DarkGoldUpdateArg::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, DarkGoldUpdateArg> STREAM_CODEC = StreamCodec.composite(
             CalculatorRegister.DISPATCH_STREAM_CODEC,
@@ -21,10 +29,10 @@ public class DarkGoldUpdateArg implements Unit {
     );
 
 
-    private final Unit a;
-    private final Unit b;
+    private final OperationUnit a;
+    private final OperationUnit b;
 
-    private DarkGoldUpdateArg(Unit a, Unit b) {
+    private DarkGoldUpdateArg(OperationUnit a, OperationUnit b) {
         this.a = a;
         this.b = b;
     }
@@ -51,15 +59,25 @@ public class DarkGoldUpdateArg implements Unit {
     }
 
     @Override
-    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends OperationUnit> getStreamCodec() {
         return STREAM_CODEC;
     }
 
-    public static DarkGoldUpdateArg of(Unit a, Unit b) {
+    @Override
+    public MapCodec<? extends OperationUnit> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    public OperationType getType() {
+        return CalculatorRegister.DARK_GOLD_UPDATE.get();
+    }
+
+    public static DarkGoldUpdateArg of(OperationUnit a, OperationUnit b) {
         return new DarkGoldUpdateArg(a, b);
     }
 
-    public static DarkGoldUpdateArg of(Unit a) {
+    public static DarkGoldUpdateArg of(OperationUnit a) {
         return new DarkGoldUpdateArg(a, a);
     }
 

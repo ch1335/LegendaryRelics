@@ -110,7 +110,8 @@ public class LegendaryRelics {
             APOTHIC_ATTRIBUTES_EXTENSION_LOADED = true;
         }
 
-        CalculatorRegister.init();
+        modEventBus.addListener(CalculatorRegister::newRegistry);
+        CalculatorRegister.register(modEventBus);
         AutoRegister.init();
 
         CraftTypes.register(id("craft_item"), CraftItem.CODEC, CraftItem.STREAM_CODEC);

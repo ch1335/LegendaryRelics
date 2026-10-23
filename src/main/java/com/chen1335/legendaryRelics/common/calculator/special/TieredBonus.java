@@ -1,8 +1,13 @@
 package com.chen1335.legendaryRelics.common.calculator.special;
 
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
+import com.chen1335.legendaryRelics.common.calculator.OperationType;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
-import com.chen1335.legendaryRelics.common.calculator.api.Unit;
+import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -12,7 +17,11 @@ import net.minecraft.network.codec.StreamCodec;
 
 import java.util.List;
 
-public record TieredBonus(List<Float> list) implements Unit {
+public record TieredBonus(List<Float> list) implements OperationUnit {
+    public static final MapCodec<TieredBonus> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.FLOAT.listOf().fieldOf("values").forGetter(TieredBonus::list)
+    ).apply(instance, TieredBonus::new));
+
     public static final StreamCodec<RegistryFriendlyByteBuf, TieredBonus> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.FLOAT.apply(ByteBufCodecs.list()),
             TieredBonus::list,
@@ -28,7 +37,7 @@ public record TieredBonus(List<Float> list) implements Unit {
 
     public static final CalculatorArg.ArgType<Integer> TIER = new CalculatorArg.ArgType<>("tier");
 
-    public static Unit of(List<Float> list) {
+    public static OperationUnit of(List<Float> list) {
         return new TieredBonus(list);
     }
 
@@ -62,7 +71,17 @@ public record TieredBonus(List<Float> list) implements Unit {
     }
 
     @Override
-    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends OperationUnit> getStreamCodec() {
         return STREAM_CODEC;
+    }
+
+    @Override
+    public MapCodec<? extends OperationUnit> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    public OperationType getType() {
+        return CalculatorRegister.TIERED_BONUS.get();
     }
 }

@@ -2,17 +2,23 @@ package com.chen1335.legendaryRelics.common.calculator.normal;
 
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorRegister;
-import com.chen1335.legendaryRelics.common.calculator.api.IBracketsNeedUnit;
-import com.chen1335.legendaryRelics.common.calculator.api.Unit;
-import com.google.common.base.CaseFormat;
+import com.chen1335.legendaryRelics.common.calculator.OperationType;
+import com.chen1335.legendaryRelics.common.calculator.api.OperationUnit;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 
 
-public class Add implements IBracketsNeedUnit {
-    private final Unit a;
-    private final Unit b;
+public class Add implements OperationUnit {
+    private final OperationUnit a;
+    private final OperationUnit b;
+
+    public static final MapCodec<Add> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            CalculatorRegister.DISPATCH_CODEC.fieldOf("a").forGetter(add -> add.a),
+            CalculatorRegister.DISPATCH_CODEC.fieldOf("b").forGetter(add -> add.b)
+    ).apply(instance, Add::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, Add> STREAM_CODEC = StreamCodec.composite(
             CalculatorRegister.DISPATCH_STREAM_CODEC,
@@ -22,7 +28,7 @@ public class Add implements IBracketsNeedUnit {
             Add::new
     );
 
-    public Add(Unit a, Unit b) {
+    public Add(OperationUnit a, OperationUnit b) {
         this.a = a;
         this.b = b;
 //        CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, "aaa");
@@ -40,12 +46,22 @@ public class Add implements IBracketsNeedUnit {
     }
 
     @Override
-    public StreamCodec<RegistryFriendlyByteBuf, ? extends Unit> getStreamCodec() {
+    public StreamCodec<RegistryFriendlyByteBuf, ? extends OperationUnit> getStreamCodec() {
         return STREAM_CODEC;
     }
 
+    @Override
+    public MapCodec<? extends OperationUnit> getCodec() {
+        return CODEC;
+    }
 
-    public static Add of(Unit a, Unit b) {
+    @Override
+    public OperationType getType() {
+        return CalculatorRegister.ADD.get();
+    }
+
+
+    public static Add of(OperationUnit a, OperationUnit b) {
         return new Add(a, b);
     }
 }
