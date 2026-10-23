@@ -53,7 +53,8 @@ public class SoulEater extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.soul_eater", HEAL.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%"), GAIN_ATTACK_DAMAGE_PERCENT.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.soul_eater", HEAL.toComponent(arg, Style.EMPTY, 100, "%s%%"), GAIN_ATTACK_DAMAGE_PERCENT.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 
     public static void LivingDeathEvent(LivingDeathEvent event) {

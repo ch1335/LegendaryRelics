@@ -66,10 +66,11 @@ public class HardenedEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.hardened_effect",
-                ARMOR_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
-                TIME_KEEP.toComponent(tooltipFlag.hasShiftDown(), args),
-                COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args)
+                ARMOR_AMOUNT.toComponent(args),
+                TIME_KEEP.toComponent(args),
+                COOLDOWN.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

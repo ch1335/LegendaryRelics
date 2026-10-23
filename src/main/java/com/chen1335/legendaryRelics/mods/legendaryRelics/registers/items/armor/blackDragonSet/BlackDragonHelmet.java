@@ -52,10 +52,11 @@ public class BlackDragonHelmet extends BlackDragonArmor {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         CalculatorArg arg = new CalculatorArg();
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, stack);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.1", ComponentHolders.Combat.magicDamage(), MAGIC_DAMAGE_REDUCE.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.2", GOOD_EFFECT_TIME_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.3", BAD_EFFECT_TIME_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.1", ComponentHolders.Combat.magicDamage(), MAGIC_DAMAGE_REDUCE.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.2", GOOD_EFFECT_TIME_MULTIPLIER.toComponent(arg)).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_helmet.desc.3", BAD_EFFECT_TIME_MULTIPLIER.toComponent(arg)).withColor(0xaeaeae));
 
     }
 

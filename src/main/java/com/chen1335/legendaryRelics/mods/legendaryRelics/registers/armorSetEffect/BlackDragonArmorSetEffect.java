@@ -45,11 +45,12 @@ public class BlackDragonArmorSetEffect extends SetEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = buildArg(player);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         tooltipComponents.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.excellence.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
-        Component append = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,ATTRIBUTE_MULTIPLIER.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"), "+");
+        Component append = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,ATTRIBUTE_MULTIPLIER.toComponent(args, Style.EMPTY, 100, "%s%%"), "+");
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.1", append).withColor(16733695));
         tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon.desc.2",
-                HEALTH_REGAIN.toComponent(tooltipFlag.hasShiftDown(), args)
+                HEALTH_REGAIN.toComponent(args)
         ).withColor(16733695));
     }
 

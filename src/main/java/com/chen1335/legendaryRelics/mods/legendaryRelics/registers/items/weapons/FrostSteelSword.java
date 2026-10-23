@@ -170,13 +170,13 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
         if (level == null || !level.isClientSide || player == null) {
             return;
         }
-        boolean shift = tooltipFlag.hasShiftDown();
         CalculatorArg arg = CalculatorArg.simpleArg(player, stack);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         // 最低蓄力时间：最大蓄力 tick × 阈值比例
         float minSeconds = MIN_CHARGE_PERCENT * getMaxChargeTick(stack, player) / 20.0F;
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.frost_steel_sword.desc.1",
                 FinalCalculator.format(minSeconds, 2),
-                ComponentHolders.Combat.physicalDamage(THRUST_DAMAGE.toComponent(shift, arg))
+                ComponentHolders.Combat.physicalDamage(THRUST_DAMAGE.toComponent(arg))
         ).withColor(0xaeaeae), maxToolTipWidth(stack));
         LRUtil.splitAndAdd(tooltipComponents,
                 Component.translatable("item.legendary_relics.frost_steel_sword.desc.2").withColor(0xaeaeae),

@@ -38,7 +38,8 @@ public class HealIncreaseEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_increase_effect", HEAL_INCREASE.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_increase_effect", HEAL_INCREASE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 
 

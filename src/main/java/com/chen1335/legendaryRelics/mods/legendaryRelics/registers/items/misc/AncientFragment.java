@@ -24,6 +24,6 @@ public class AncientFragment extends Item implements ILRItemExtension {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.emptyArg(), Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), maxToolTipWidth(stack));
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.ancient_fragment.desc", ANCIENT_FRAGMENT_BOOST.toComponent(CalculatorArg.emptyArg().withTooltipFlag(tooltipFlag), Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae), maxToolTipWidth(stack));
     }
 }

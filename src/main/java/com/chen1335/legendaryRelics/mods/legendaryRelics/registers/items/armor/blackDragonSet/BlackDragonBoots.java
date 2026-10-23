@@ -62,9 +62,10 @@ public class BlackDragonBoots extends BlackDragonArmor {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         CalculatorArg arg = new CalculatorArg();
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         CalculatorArg.ArgType.THIS_ITEMS_STACK.putArg(arg, stack);
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_boots.desc.1", ENVIRONMENT_DAMAGE_REDUCE.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_boots.desc.2", HEALTH_THRESHOLD.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%"), DAMAGE_REDUCE.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_boots.desc.1", ENVIRONMENT_DAMAGE_REDUCE.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_boots.desc.2", HEALTH_THRESHOLD.toComponent(arg, Style.EMPTY, 100, "%s%%"), DAMAGE_REDUCE.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 
     @Override

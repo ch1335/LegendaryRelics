@@ -60,9 +60,10 @@ public class ShieldRegeneratorEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.shield_regenerator_effect",
-                COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args),
-                MAX_SHIELD.toComponent(tooltipFlag.hasShiftDown(), args)
+                COOLDOWN.toComponent(args),
+                MAX_SHIELD.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

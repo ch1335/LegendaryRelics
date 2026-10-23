@@ -48,7 +48,8 @@ public class OreCollectorEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.1", DEFAULT.toComponent(tooltipFlag.hasShiftDown(), args), COLLECTED_MINERALS_REQUIRE.toComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
+        LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.1", DEFAULT.toComponent(args), COLLECTED_MINERALS_REQUIRE.toComponent(args)).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("item.the_ore_collectors_ring.sacred_talisman.desc.2", Component.literal(String.valueOf(itemStack.getOrDefault(LRDataComponentTypes.COLLECTED_MINERALS, CollectedMinerals.empty()).getCollectedOresAmount()))).withColor(0xaeaeae));
     }
 

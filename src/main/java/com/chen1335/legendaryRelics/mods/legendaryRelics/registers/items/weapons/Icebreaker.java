@@ -105,10 +105,10 @@ public class Icebreaker extends LRMeleeWeaponBase {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg arg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
-            boolean shift = tooltipFlag.hasShiftDown();
+            CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
             // 物理伤害由 ComponentHolders 统一拼上"物理伤害"字样，所以语言文件里只留 %s
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.icebreaker.desc.1",
-                            ComponentHolders.Combat.physicalDamage(ICE_WAVE_DAMAGE.toComponent(shift, arg))).withColor(0xaeaeae),
+                            ComponentHolders.Combat.physicalDamage(ICE_WAVE_DAMAGE.toComponent(arg))).withColor(0xaeaeae),
                     maxToolTipWidth(stack));
             // 补充说明用更暗的颜色，与收割者、霜锥的背景行一致
             LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.icebreaker.desc.2",

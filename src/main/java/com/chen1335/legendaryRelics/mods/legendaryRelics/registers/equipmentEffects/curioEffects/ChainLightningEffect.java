@@ -60,9 +60,10 @@ public class ChainLightningEffect extends LRBaseEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.chain_lightning",
                 String.valueOf(CHAIN_RANGE),
-                DAMAGE_RATIO.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%"),
+                DAMAGE_RATIO.toComponent(arg, Style.EMPTY, 100, "%s%%"),
                 String.valueOf(MAX_CHAIN_TARGETS)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }

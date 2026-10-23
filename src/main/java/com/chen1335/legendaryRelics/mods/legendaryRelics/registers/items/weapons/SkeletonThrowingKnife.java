@@ -53,7 +53,8 @@ public class SkeletonThrowingKnife extends LRMeleeWeaponBase {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg calculatorArg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
-            tooltipComponents.add(Component.translatable("item.legendary_relics.skeleton_throwing_knife.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(tooltipFlag.hasShiftDown(), calculatorArg))).withStyle(ChatFormatting.GRAY));
+            CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(calculatorArg, tooltipFlag);
+            tooltipComponents.add(Component.translatable("item.legendary_relics.skeleton_throwing_knife.desc.1", ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(calculatorArg))).withStyle(ChatFormatting.GRAY));
             tooltipComponents.add(Component.translatable("legendary_relics.cooldown_affected_by_attack_speed").withStyle(ChatFormatting.DARK_GRAY));
         }
     }

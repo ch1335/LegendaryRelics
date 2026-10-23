@@ -37,7 +37,8 @@ public class Perforation extends LRBaseEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.perforation", PIERCE_LEVEL.toComponent(tooltipFlag.hasShiftDown(), arg)).withColor(0xaeaeae));
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.perforation", PIERCE_LEVEL.toComponent(arg)).withColor(0xaeaeae));
     }
 
 

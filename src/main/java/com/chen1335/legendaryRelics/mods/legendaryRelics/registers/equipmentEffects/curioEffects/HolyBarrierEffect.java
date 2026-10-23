@@ -48,9 +48,10 @@ public class HolyBarrierEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.holy_barrier",
-                INVINCIBLE_TIME.toComponent(tooltipFlag.hasShiftDown(), args),
-                COOLDOWN.toComponent(tooltipFlag.hasShiftDown(), args)
+                INVINCIBLE_TIME.toComponent(args),
+                COOLDOWN.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

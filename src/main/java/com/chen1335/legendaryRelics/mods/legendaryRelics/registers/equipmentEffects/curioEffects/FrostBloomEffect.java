@@ -48,8 +48,9 @@ public class FrostBloomEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.frost_bloom",
-                EXTEND_TIME.toComponent(tooltipFlag.hasShiftDown(), args)
+                EXTEND_TIME.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

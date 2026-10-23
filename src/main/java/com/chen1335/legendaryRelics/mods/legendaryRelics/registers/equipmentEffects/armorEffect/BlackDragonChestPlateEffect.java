@@ -105,14 +105,15 @@ public class BlackDragonChestPlateEffect extends LRArmorEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         if (getRawEffectLevel() > 1) {
-            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+            tooltipComponents.add(Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.1", ComponentHolders.Combat.physicalDamage(), PHYSICAL_DAMAGE_REDUCE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
         }
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("item.legendary_relics.black_dragon_chestplate.desc.2",
-                DAMAGE_INCREASE.toComponent(tooltipFlag.hasShiftDown(), args),
-                SHIELD_LAST_TIME.toComponent(tooltipFlag.hasShiftDown(), args),
-                SHIELD_AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args),
-                COOL_DOWN.toComponent(tooltipFlag.hasShiftDown(), args)
+                DAMAGE_INCREASE.toComponent(args),
+                SHIELD_LAST_TIME.toComponent(args),
+                SHIELD_AMOUNT.toComponent(args),
+                COOL_DOWN.toComponent(args)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
 
     }

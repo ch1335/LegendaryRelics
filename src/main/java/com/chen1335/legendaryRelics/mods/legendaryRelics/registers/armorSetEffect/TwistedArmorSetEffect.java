@@ -55,29 +55,29 @@ public class TwistedArmorSetEffect extends SetEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, List<Component> list) {
         CalculatorArg args = buildArg(player);
-        boolean shiftDown = tooltipFlag.hasShiftDown();
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.twisted.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.1",
-                GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, LRColors.Component.YELLOW.getStyle()),
+                GAIN_STACK_COOLDOWN.toComponent(args, LRColors.Component.YELLOW.getStyle()),
                 phaseShootingComponent()
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.2",
-                KEEP_TIME.toComponent(shiftDown, args),
+                KEEP_TIME.toComponent(args),
                 phaseShootingComponent(),
                 phaseShootingComponent()
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.3",
-                DRAW_SPEED_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle(), 100, "%s%%"),
-                ARROW_DAMAGE_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
+                DRAW_SPEED_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle(), 100, "%s%%"),
+                ARROW_DAMAGE_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.twisted.desc.4",
-                ADDITION_ARROW_BASE_DAMAGE.toComponent(shiftDown, args, LRColors.Component.RED.getStyle(), 100, "%s%%")
+                ADDITION_ARROW_BASE_DAMAGE.toComponent(args, LRColors.Component.RED.getStyle(), 100, "%s%%")
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"

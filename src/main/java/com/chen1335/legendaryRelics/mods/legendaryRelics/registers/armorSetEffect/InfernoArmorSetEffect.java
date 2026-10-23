@@ -108,37 +108,37 @@ public class InfernoArmorSetEffect extends SetEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, List<Component> list) {
         CalculatorArg args = buildArg(player);
-        boolean shiftDown = tooltipFlag.hasShiftDown();
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         list.add(Component.translatable("set_effect_type.legendary_relics.tiered_bonus", Component.translatable("set_effect.legendary_relics.inferno.name").append("(%s/4)".formatted(getPiece(player))).withColor(16733695)).withColor(16755200));
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.1",
-                GAIN_STACK_COOLDOWN.toComponent(shiftDown, args, LRColors.Component.YELLOW.getStyle()),
+                GAIN_STACK_COOLDOWN.toComponent(args, LRColors.Component.YELLOW.getStyle()),
                 doomComponent()
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.2",
-                KEEP_TIME.toComponent(shiftDown, args),
+                KEEP_TIME.toComponent(args),
                 doomComponent(),
                 doomComponent()
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.3",
-                ATTACK_RANGE_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle()),
-                DAMAGE_PER_STACK.toComponent(shiftDown, args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
+                ATTACK_RANGE_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle()),
+                DAMAGE_PER_STACK.toComponent(args, LRColors.Component.BLUE.getStyle(), 100, "%s%%")
         ).withStyle(ChatFormatting.GRAY));
 
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.4",
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(shiftDown, args))
+                ComponentHolders.Combat.physicalDamage(INFERNO_SCORCH_DAMAGE.toComponent(args))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.inferno.desc.5",
                 ComponentHolders.Effects.infernoScorch(),
-                INFERNO_SCORCH_DURATION.toComponent(shiftDown, args),
+                INFERNO_SCORCH_DURATION.toComponent(args),
                 ComponentHolders.Effects.infernoScorch(),
-                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(shiftDown, args))
+                ComponentHolders.Combat.physicalDamage(INFERNO_EXPLOSION_DAMAGE.toComponent(args))
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"

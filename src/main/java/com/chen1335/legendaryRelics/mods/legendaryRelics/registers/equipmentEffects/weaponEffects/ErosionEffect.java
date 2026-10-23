@@ -64,9 +64,10 @@ public class ErosionEffect extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.1").withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.2", ComponentHolders.Combat.magicDamage(DAMAGE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg))).withColor(0xaeaeae));
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.3", ARMOR_REDUCE_PER_LAYER.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.2", ComponentHolders.Combat.magicDamage(DAMAGE_PER_LAYER.toComponent(arg))).withColor(0xaeaeae));
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.erosion.3", ARMOR_REDUCE_PER_LAYER.toComponent(arg, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 
     @Override

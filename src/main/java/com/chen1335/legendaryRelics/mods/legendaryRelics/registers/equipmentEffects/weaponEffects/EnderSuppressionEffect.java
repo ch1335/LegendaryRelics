@@ -38,8 +38,9 @@ public class EnderSuppressionEffect extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.ender_suppression.desc",
-                DURATION.toComponent(tooltipFlag.hasShiftDown(), arg)
+                DURATION.toComponent(arg)
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
     }
 

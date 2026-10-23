@@ -51,6 +51,7 @@ public class HealPerSecondEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_per_second_effect", HEAL_PER_5S.toComponent(tooltipFlag.hasShiftDown(), args)).withColor(0xaeaeae));
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.heal_per_second_effect", HEAL_PER_5S.toComponent(args)).withColor(0xaeaeae));
     }
 }

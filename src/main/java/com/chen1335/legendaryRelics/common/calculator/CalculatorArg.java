@@ -58,6 +58,11 @@ public class CalculatorArg {
         return arg;
     }
 
+    public CalculatorArg withTooltipFlag(TooltipFlag flag) {
+        putArg(ArgType.TOOLTIP_FLAG, flag);
+        return this;
+    }
+
     public static class ArgType<T> {
         public static final ArgType<LivingEntity> THIS_ENTITY = new ArgType<>("this_entity");
         public static final ArgType<ItemStack> THIS_ITEMS_STACK = new ArgType<>("this_items_stack");

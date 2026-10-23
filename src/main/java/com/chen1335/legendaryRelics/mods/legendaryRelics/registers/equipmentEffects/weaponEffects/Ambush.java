@@ -56,7 +56,7 @@ public class Ambush extends LRWeaponEffect {
                         FinalCalculator.format((float) getMaxChargeTick(itemStack, player) / 20, 1),
                         ComponentUtil.Attributes.attribute(
                                 Attributes.ATTACK_DAMAGE,
-                                DAMAGE_MUL.toComponent(tooltipFlag.hasShiftDown(), CalculatorArg.simpleArg(player, itemStack, this), Style.EMPTY, 100, "%s%%"),
+                                DAMAGE_MUL.toComponent(CalculatorArg.simpleArg(player, itemStack, this).withTooltipFlag(tooltipFlag), Style.EMPTY, 100, "%s%%"),
                                 "×"
                         )
                 ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack)

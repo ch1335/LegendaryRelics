@@ -69,16 +69,16 @@ public class BlazingChakram extends LRMeleeWeaponBase {
         Level level = context.level();
         if (level != null && level.isClientSide) {
             CalculatorArg arg = CalculatorArg.simpleArg(LRClient.getClientPlayer(), stack);
-            boolean shift = tooltipFlag.hasShiftDown();
+            CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.1").withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.2",
-                    GENERATION_COOLDOWN.toComponent(shift, arg)).withColor(0xaeaeae));
+                    GENERATION_COOLDOWN.toComponent(arg)).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.3",
-                    ATTACK_INTERVAL.toComponent(shift, arg)).withColor(0xaeaeae));
+                    ATTACK_INTERVAL.toComponent(arg)).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.4",
-                    ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(shift, arg))).withColor(0xaeaeae));
+                    ComponentHolders.Combat.physicalDamage(DAMAGE.toComponent(arg))).withColor(0xaeaeae));
             tooltipComponents.add(Component.translatable("item.legendary_relics.blazing_chakram.desc.5",
-                    MAX_CHAKRAM_COUNT.toComponent(shift, arg)).withColor(0xaeaeae));
+                    MAX_CHAKRAM_COUNT.toComponent(arg)).withColor(0xaeaeae));
         }
     }
 

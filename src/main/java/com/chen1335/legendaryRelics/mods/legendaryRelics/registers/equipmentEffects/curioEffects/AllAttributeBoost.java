@@ -43,8 +43,9 @@ public class AllAttributeBoost extends LRBaseEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         Component boost = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
-                AMOUNT.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
+                AMOUNT.toComponent(args, Style.EMPTY, 100, "%s%%"),
                 "+");
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.all_attribute_boost", boost)
                 .withStyle(ChatFormatting.GOLD));

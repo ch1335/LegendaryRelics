@@ -55,8 +55,9 @@ public class ColdDomainEffect extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
         Component boost = ComponentUtil.Attributes.attribute(ArcanumAttributes.ALL_ATTRIBUTE_MULTIPLIER,
-                ATTRIBUTE_BOOST.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%"),
+                ATTRIBUTE_BOOST.toComponent(args, Style.EMPTY, 100, "%s%%"),
                 "+");
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.cold_domain", boost)
                 .withColor(0xaeaeae), getMaxToolTipWidth(itemStack));

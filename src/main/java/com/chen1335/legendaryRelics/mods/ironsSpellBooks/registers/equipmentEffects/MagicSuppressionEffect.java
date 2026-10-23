@@ -46,10 +46,11 @@ public class MagicSuppressionEffect extends LRWeaponEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg arg = CalculatorArg.simpleArg(player, itemStack, this);
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(arg, tooltipFlag);
         LRUtil.splitAndAdd(tooltipComponents, Component.translatable("equipment_effect.legendary_relics.magic_suppression.desc",
-                DURATION.toComponent(tooltipFlag.hasShiftDown(), arg),
+                DURATION.toComponent(arg),
                 ComponentHolders.Combat.magicDamage(),
-                DAMAGE_REDUCTION.toComponent(tooltipFlag.hasShiftDown(), arg, Style.EMPTY, 100, "%s%%")
+                DAMAGE_REDUCTION.toComponent(arg, Style.EMPTY, 100, "%s%%")
         ).withColor(0xaeaeae), getMaxToolTipWidth(itemStack));
         tooltipComponents.add(Component.translatable("legendary_relics.special.effect_source_no_stack").withColor(5592405));
     }

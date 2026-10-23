@@ -40,7 +40,8 @@ public class FireDamageReduce extends LRCurioEffect {
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
         CalculatorArg args = CalculatorArg.simpleArg(player, itemStack, this);
-        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.fire_damage_reduce", FIRE_DAMAGE_REDUCE.toComponent(tooltipFlag.hasShiftDown(), args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
+        CalculatorArg.ArgType.TOOLTIP_FLAG.putArg(args, tooltipFlag);
+        tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.fire_damage_reduce", FIRE_DAMAGE_REDUCE.toComponent(args, Style.EMPTY, 100, "%s%%")).withColor(0xaeaeae));
     }
 
     public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source, LivingEntity target) {

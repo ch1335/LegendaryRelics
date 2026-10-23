@@ -11,6 +11,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
+import net.minecraft.world.item.TooltipFlag;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
@@ -95,7 +97,21 @@ public class FinalCalculator implements OperationUnit {
     }
 
     public MutableComponent toComponent(CalculatorArg calculatorArg, Style style) {
-        return Component.empty().append(styled(Component.literal(format(getValue(calculatorArg), i)), isUnstyled(style) ? DEFAULT_STYLE : style)).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+        return toComponent(calculatorArg, style, 1);
+    }
+
+    public MutableComponent toComponent(CalculatorArg calculatorArg, Style style, float scale) {
+        return toComponent(calculatorArg, style, scale, "%s");
+    }
+
+    public MutableComponent toComponent(CalculatorArg calculatorArg, Style style, float scale, String format) {
+        boolean hasShiftDown = CalculatorArg.ArgType.TOOLTIP_FLAG.getOrDefault(calculatorArg, TooltipFlag.NORMAL).hasShiftDown();
+        if (hasShiftDown) {
+            MutableComponent value = styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), isUnstyled(style) ? DEFAULT_STYLE : style);
+            return Component.empty().append(value).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
+        } else {
+            return styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), style);
+        }
     }
 
     @Override
@@ -120,28 +136,6 @@ public class FinalCalculator implements OperationUnit {
 
     public Component toRawComponent(CalculatorArg calculatorArg) {
         return Component.empty().append("(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
-    }
-
-    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg) {
-        return toComponent(hasShiftDown, calculatorArg, Style.EMPTY);
-    }
-
-    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, Style style) {
-        return toComponent(hasShiftDown, calculatorArg, style, 1);
-    }
-
-    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, Style style, float scale) {
-        return toComponent(hasShiftDown, calculatorArg, style, scale, "%s");
-    }
-
-    public MutableComponent toComponent(boolean hasShiftDown, CalculatorArg calculatorArg, Style style, float scale, String format) {
-        // format 由调用方提供，可能含 %f 之类的数字占位符，所以同样固定用 Locale.ROOT
-        if (hasShiftDown) {
-            MutableComponent value = styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), isUnstyled(style) ? DEFAULT_STYLE : style);
-            return Component.empty().append(value).append("=(").append(unit.toComponent(calculatorArg)).append(")").withColor(5592405);
-        } else {
-            return styled(Component.literal(String.format(Locale.ROOT, format, format(getValue(calculatorArg) * scale, i))), style);
-        }
     }
 
     public static FinalCalculator of(OperationUnit unit) {
