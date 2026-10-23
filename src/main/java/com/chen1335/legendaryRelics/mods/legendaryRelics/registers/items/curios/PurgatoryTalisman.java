@@ -24,7 +24,7 @@ public class PurgatoryTalisman extends LRCuriosBase {
     public static Multimap<Holder<Attribute>, AttributeModifierHolder> ATTRIBUTE_MODIFIERS = ImmutableMultimap.of(
             Attributes.ATTACK_SPEED, new AttributeModifierHolder(0.1F, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
             Attributes.ATTACK_DAMAGE, new AttributeModifierHolder(0.2F, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-            Attributes.BURNING_TIME, new AttributeModifierHolder(-0.8F, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            Attributes.BURNING_TIME, new AttributeModifierHolder(-0.2F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
     );
 
 

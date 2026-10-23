@@ -30,13 +30,13 @@ public class PerseveranceEffect extends LRCurioEffect {
     public static final FinalCalculator TIME = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(10F),
             Constant.of(8F)
-    )).withFormat(Format.PERCENTAGE);
+    ));
 
     @Calculator
     public static final FinalCalculator DAMAGE_PERCENTAGE = FinalCalculator.of(DarkGoldUpdateArg.of(
             Constant.of(0.15F),
             Constant.of(0.20F)
-    ));
+    )).withFormat(Format.PERCENTAGE);
 
     public PerseveranceEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);

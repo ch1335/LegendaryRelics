@@ -33,11 +33,11 @@ public class FrostHeartEffect extends LRCurioEffect {
 
     /** 减速比例。 */
     @Calculator
-    public static final FinalCalculator SLOWNESS = FinalCalculator.of(Constant.of(0.25F));
+    public static final FinalCalculator SLOWNESS = FinalCalculator.of(Constant.of(0.25F)).withFormat(Format.PERCENTAGE);
 
     /** 减速持续时间（秒）。 */
     @Calculator
-    public static final FinalCalculator TIME = FinalCalculator.of(Constant.of(5F)).withFormat(Format.PERCENTAGE);
+    public static final FinalCalculator TIME = FinalCalculator.of(Constant.of(5F));
 
     public FrostHeartEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);

@@ -33,13 +33,13 @@ public class MagicSuppressionEffect extends LRWeaponEffect {
     @Calculator
     public static final FinalCalculator DAMAGE_REDUCTION = FinalCalculator.of(
             Constant.of(0.3F)
-    );
+    ).withFormat(Format.PERCENTAGE);
 
     /** 持续时间（秒）。 */
     @Calculator
     public static final FinalCalculator DURATION = FinalCalculator.of(
             Constant.of(5F)
-    ).withFormat(Format.PERCENTAGE);
+    );
 
     public MagicSuppressionEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);

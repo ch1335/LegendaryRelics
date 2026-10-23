@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-01T02:00:59.6934034	Recipes
+// 1.21.1	2026-10-24T00:44:47.4876327	Recipes
 798c652ecb971671ce69b3e6bda0e9a06f41c8a1 data/legendary_relics/advancement/recipes/misc/dark_gold.json
 281b8eb1be65bc35f174bf6ddb7126918f78ece9 data/legendary_relics/advancement/recipes/misc/dark_gold_forging_tool.json
 ecbba623ad13f7809342d86540af46284237cdfc data/legendary_relics/advancement/recipes/misc/equipment_workbench.json
@@ -11,7 +11,9 @@ aa2027825448bee67436da527e23d368e76528ed data/legendary_relics/recipe/dark_gold_
 4422b46a104c2e94a976f65d715ff4506f075442 data/legendary_relics/recipe/equipment_craft/black_dragon_chestplate.json
 0e40fc98bf321edc60a86b9ff78266a566eec41e data/legendary_relics/recipe/equipment_craft/black_dragon_helmet.json
 220dcdaf72156095371ede04f45a2ec6bb2c971c data/legendary_relics/recipe/equipment_craft/black_dragon_leggings.json
+23fe2d3fc535f52380b5f0257f177be82a198af6 data/legendary_relics/recipe/equipment_craft/frostheart_pendant.json
 ca1cd547bc69c5698ac32a6438b9ef5a42ea7c8b data/legendary_relics/recipe/equipment_craft/holy_cloak.json
+a735f73369b3adbae742da91312481938274e7bf data/legendary_relics/recipe/equipment_craft/icebreaker.json
 4a6ab42a552e1838d391d301ad3c6af3be0f697e data/legendary_relics/recipe/equipment_craft/inferno_boots.json
 3410e1bc35e49b227d51929a7fc735b9951570ec data/legendary_relics/recipe/equipment_craft/inferno_chest_plate.json
 e04515be09011cd55da4ab0e743c81bf4866430e data/legendary_relics/recipe/equipment_craft/inferno_helmet.json

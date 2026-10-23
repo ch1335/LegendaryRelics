@@ -68,12 +68,18 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.2D, 1.4D)),
             () -> LootItem.lootTableItem(LRItems.DARK_GOLD_FRAGMENT.get()));
 
-    // 基础 1%，抢夺每级 +0.2%，每点幸运 +0.1%，先按难度放大再封顶 15%（15% 是硬上限）
-    private static final Drop BLAZING_CHAKRAM = new Drop(0.015D, 0.002D, List.of(
+    // 稀有掉落（烈焰飞轮 / 雪羽毛斗篷）：基础 1.5%，抢夺每级 +0.2%，每点幸运 +0.1%，先按难度放大再封顶 15%
+    private static final List<ChanceModifier> RARE_DROP_PREDICATE = List.of(
             ChanceModifier.Luck.of(ChanceModifier.Operation.ADD, 0.001D),
             ChanceModifier.DifficultyFactor.multiply(1.0D, 1.0D, 1.15D, 1.3D),
-            ChanceModifier.Clamp.of(0.0D, 0.15D)),
+            ChanceModifier.Clamp.of(0.0D, 0.15D));
+
+    private static final Drop BLAZING_CHAKRAM = new Drop(0.015D, 0.002D, RARE_DROP_PREDICATE,
             () -> LootItem.lootTableItem(LRItems.BLAZING_CHAKRAM.get()));
+
+    // 流浪者（Stray）掉落，谓词与烈焰飞轮一致
+    private static final Drop SNOWFEATHER_CLOAK = new Drop(0.02D, 0.002D, RARE_DROP_PREDICATE,
+            () -> LootItem.lootTableItem(LRItems.SNOWFEATHER_CLOAK.get()));
 
 
     private static final Drop NETHER_RING = drop(0.25D, LRItems.NETHER_RING);
@@ -146,6 +152,8 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
 
         // 普通怪：烈焱人的实体掉落表
         list.add(entity("blaze", EntityType.BLAZE, BLAZING_CHAKRAM));
+        // 流浪者（Stray）
+        list.add(entity("stray", EntityType.STRAY, SNOWFEATHER_CLOAK));
 
         // Boss：龙鳞与凋灵之魂必掉，数量受抢夺影响
         list.add(entity("elder_guardian", EntityType.ELDER_GUARDIAN,

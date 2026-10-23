@@ -237,5 +237,19 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.WARPED_WART_BLOCK, 4)
                 .save(recipeOutput);
+
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.FROSTHEART_PENDANT, LRItems.ZENITH_ICE)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(Items.PACKED_ICE, 2)
+                .addSecondary(Items.DIAMOND, 2)
+                .addSecondary(Items.STRING, 1)
+                .save(recipeOutput);
+
+        EquipmentWorkbenchCraftBuilder.builder(LRItems.ICEBREAKER, LRItems.ZENITH_ICE)
+                .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
+                .addSecondary(Items.PACKED_ICE, 2)
+                .addSecondary(Items.IRON_BLOCK, 1)
+                .addSecondary(Items.STICK, 1)
+                .save(recipeOutput);
     }
 }

@@ -39,7 +39,6 @@ public class BlackDragonEffectInstance extends EffectInstance {
         }
 
         instance.removeModifier(BLACK_DRAGON_ATTRIBUTE_MULTIPLIER);
-        // piece = 0 是卸下套装：只清 modifier，不能再算一次加成（TieredBonus 会把 0 钳到第 1 档）
         if (piece < 1) {
             return;
         }
