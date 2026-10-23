@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 /**
- * 冰刺地物注入的实际逻辑。Mixin 只负责捕获局部变量后转交到这里，本身保持为薄壳。
+ * 冰刺内臻冰的实际逻辑，由 {@code LargeIceSpikeFeature} 在写底部根柱时直接调用。
  *
- * <p>落点选择：冰刺的"腰部中心"是原版 {@code place} 里的局部变量 {@code blockpos}，
+ * <p>落点选择：冰刺的"腰部中心"是生成里的局部变量 {@code blockpos}，
  * 原版以它为中心向上下同时展开形状。我们要放的位置是它的正下方一格。
  */
 public class IceSpikeFeatureHooks {

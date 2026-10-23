@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-24T00:32:45.1733315	Loot Injectors
+// 1.21.1	2026-10-24T00:51:36.8650678	Loot Injectors
 f65bece2381231ced423c69daae7e1e5eaf319a4 data/legendary_relics/loot_injecter/abandoned_mineshaft.json
 048da62fed1f2a0323da3f3b9858d18cd8ccd905 data/legendary_relics/loot_injecter/ancient_city.json
 72f0311493932f2a6ddab778131f3a7ef1987b9a data/legendary_relics/loot_injecter/ancient_city_ice_box.json
@@ -17,7 +17,7 @@ dea5bc0f97cdc9d1bdc5f67084154a2bdca0b1ce data/legendary_relics/loot_injecter/eld
 5816cceea710c3a779d136fc5b28d169df8c141e data/legendary_relics/loot_injecter/piglin_brute.json
 371c03bae16d4fdce343c600e03bbac16933a299 data/legendary_relics/loot_injecter/ruined_portal.json
 a7f1b1b9a1630b67efc87ba483e6bb4409f7d5da data/legendary_relics/loot_injecter/simple_dungeon.json
-45e790621b3253b782a9217f1ad002488301a671 data/legendary_relics/loot_injecter/stray.json
+e428040d692e0b42a3b36a2ab648dcab1f504e03 data/legendary_relics/loot_injecter/stray.json
 98b95bbb81aeb1c60d9ec2eab043860481662f25 data/legendary_relics/loot_injecter/stronghold_corridor.json
 e553b75f7f88fda112777f19c747fb2de875dea6 data/legendary_relics/loot_injecter/stronghold_crossing.json
 550ab24693772b81a91fc240f63b183f90a9c3d6 data/legendary_relics/loot_injecter/stronghold_library.json

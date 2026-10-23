@@ -140,6 +140,7 @@
   "item.legendary_relics.wither_spirit": "凋零精魄",
   "item.legendary_relics.withering_blade": "枯萎",
   "item.legendary_relics.zenith_ice": "臻冰",
+  "jei.legendary_relics.zenith_ice.desc": "生成于冰刺之地的大型冰刺中，封在冰封块里。",
   "item.the_ore_collectors_ring.sacred_talisman.desc.1": "提供%s时运等级，如果你收集的矿石达到了%s种，那么额外提供1时运等级。",
   "item.the_ore_collectors_ring.sacred_talisman.desc.2": "已收集的矿石种类:%s。",
   "itemGroup.legendary_relics": "传说遗物",

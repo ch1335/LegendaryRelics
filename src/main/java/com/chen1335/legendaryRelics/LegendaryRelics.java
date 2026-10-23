@@ -85,6 +85,7 @@ public class LegendaryRelics {
         LREntityDataSerializers.register(modEventBus);
         LRBlocks.register(modEventBus);
         LRBlockEntities.register(modEventBus);
+        LRFeatures.register(modEventBus);
         LRRecipe.register(modEventBus);
         LRMenus.register(modEventBus);
         LRSounds.register(modEventBus);

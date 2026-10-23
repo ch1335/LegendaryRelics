@@ -30,7 +30,12 @@ public class DataMain {
                             LRDamageTypes.bootstrap(context);
                             IRSDamageTypes.bootstrap(context);
                         })
-                        .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, LRSpawnDatagen::bootstrap)
+                        .add(Registries.CONFIGURED_FEATURE, LRWorldgenDatagen::bootstrapConfigured)
+                        .add(Registries.PLACED_FEATURE, LRWorldgenDatagen::bootstrapPlaced)
+                        .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, context -> {
+                            LRSpawnDatagen.bootstrap(context);
+                            LRWorldgenDatagen.bootstrapBiomeModifiers(context);
+                        })
                 ,
                 Map.of(),
                 Set.of(LegendaryRelics.MODID)
