@@ -215,7 +215,7 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
 
         @Override
         public boolean finished() {
-            if (this.player.isRemoved() || this.time > 40) {
+            if (this.player.isRemoved() || this.time > 30) {
                 return true;
             }
             Vec3 movement = this.player.getDeltaMovement();
@@ -274,7 +274,8 @@ public class FrostSteelSword extends LRMeleeWeaponBase implements IChargeAbleIte
                 }
                 target.level().playSound(null, target.getX(), target.getY(), target.getZ(),
                         SoundEvents.TRIDENT_HIT, SoundSource.PLAYERS, 1.0F, 1.2F);
-                target.knockback(1, this.direction.x, this.direction.z);
+                // knockback 的 (x,z) 要指向"从目标到玩家"，它会朝反方向推，所以这里取负
+                target.knockback(1, -this.direction.x, -this.direction.z);
             }
         }
 
