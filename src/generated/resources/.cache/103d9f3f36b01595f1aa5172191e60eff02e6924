@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-22T01:58:50.0916745	Registries
+// 1.21.1	2026-10-23T00:31:11.7877455	Registries
 3fc7f6e350b074892c8344083340a54faf8c1866 data/legendary_relics/damage_type/chain_lightning.json
 313c2f2d3db396067a4d7c4d854b3c7848884e1e data/legendary_relics/damage_type/erosion.json
 5b802efac8f033812aa6fe601f2afc130238aa56 data/legendary_relics/damage_type/flying_knife.json
@@ -10,4 +10,4 @@ f100e7455d977c8c9c98364caab6a832516745bd data/legendary_relics/damage_type/ice_t
 78ec0f889c24aa15e158727b6064fb4ce7152771 data/legendary_relics/damage_type/inferno_scorch.json
 52ea4f425c3ab31d087a82005f5be18ce55ba839 data/legendary_relics/damage_type/orbiting_fire_chakram.json
 ab8e5a14482d49665fffa069c2530a8416c2775b data/legendary_relics/damage_type/soul_missile.json
-c41bb0c131baef82922c8bef5dced45de8b09781 data/legendary_relics/neoforge/biome_modifier/glacite_skeleton_ice_spikes.json
+a73e512a23cad97a89308148f93265ccdefb47c2 data/legendary_relics/neoforge/biome_modifier/glacite_skeleton_ice_spikes.json

@@ -143,6 +143,6 @@ public class LRItems {
 
     /** 冰川骷髅刷怪蛋：颜色取自臻冰那套冰蓝配色。 */
     public static final DeferredItem<DeferredSpawnEggItem> GLACITE_SKELETON_SPAWN_EGG = ITEM_DEFERRED_REGISTER.register("glacite_skeleton_spawn_egg",
-            () -> new DeferredSpawnEggItem(LREntityTypes.GLACITE_SKELETON, 0x82CDF0, 0x174263, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(LREntityTypes.GLACIATE_SKELETON, 0x82CDF0, 0x174263, new Item.Properties()));
 
 }

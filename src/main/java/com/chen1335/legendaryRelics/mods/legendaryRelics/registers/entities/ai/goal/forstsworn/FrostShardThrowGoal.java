@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.ai.goal.forstsworn;
 
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.GlaciteSkeleton;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.GlaciateSkeleton;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.ThrownFrostShard;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.weapons.FrostShard;
 import net.minecraft.sounds.SoundEvents;
@@ -20,11 +20,11 @@ public class FrostShardThrowGoal extends Goal {
     /** 抬手蓄力时长（tick），蓄满后再投出。 */
     private static final int CHARGE_TICKS = 20;
 
-    private final GlaciteSkeleton mob;
+    private final GlaciateSkeleton mob;
     private int cooldown;
     private int chargeTicks;
 
-    public FrostShardThrowGoal(GlaciteSkeleton mob) {
+    public FrostShardThrowGoal(GlaciateSkeleton mob) {
         this.mob = mob;
         // 占用移动与朝向，避免和近战目标同时抢方向
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
@@ -40,13 +40,13 @@ public class FrostShardThrowGoal extends Goal {
             return false;
         }
         // 距离够远，或近战被地形挡住够不到 —— 都转为投掷
-        return this.mob.distanceTo(target) > GlaciteSkeleton.RANGED_DISTANCE || this.mob.isMeleeBlocked();
+        return this.mob.distanceTo(target) > GlaciateSkeleton.RANGED_DISTANCE || this.mob.isMeleeBlocked();
     }
 
     /** 是否处于近战回退模式：已在近战距离内，但够不到目标。 */
     private boolean meleeFallback() {
         LivingEntity target = this.mob.getTarget();
-        return target != null && this.mob.distanceTo(target) <= GlaciteSkeleton.RANGED_DISTANCE;
+        return target != null && this.mob.distanceTo(target) <= GlaciateSkeleton.RANGED_DISTANCE;
     }
 
     @Override

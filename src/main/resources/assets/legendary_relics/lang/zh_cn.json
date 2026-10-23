@@ -15,7 +15,7 @@
   "death.attack.frost_steel_thrust.player": "%1$s在与%2$s战斗时被霜钢剑突刺贯穿了",
   "death.attack.orbiting_fire_chakram": "%1$s被烈焰飞轮切碎了",
   "death.attack.orbiting_fire_chakram.player": "%1$s在与%2$s战斗时被烈焰飞轮切碎了",
-  "entity.legendary_relics.frostsworn": "冰誓骑士",
+  "entity.legendary_relics.frost_knight": "霜冻骑士",
   "entity.legendary_relics.glacite_skeleton": "冰川骷髅",
   "entity.legendary_relics.ice_thorn": "冰刺",
   "equipment_effect.legendary_relics.all_attribute_boost": "获得%s",

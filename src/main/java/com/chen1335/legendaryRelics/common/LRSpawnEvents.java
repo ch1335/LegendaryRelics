@@ -16,7 +16,7 @@ public class LRSpawnEvents {
     @SubscribeEvent
     public static void RegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         // 与原版骷髅一致：地面生成 + 通用怪物规则（够暗即可，不要求可见天空）
-        event.register(LREntityTypes.GLACITE_SKELETON.get(),
+        event.register(LREntityTypes.GLACIATE_SKELETON.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Monster::checkMonsterSpawnRules,

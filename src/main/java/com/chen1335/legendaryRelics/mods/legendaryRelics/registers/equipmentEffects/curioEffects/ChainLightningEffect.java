@@ -51,7 +51,7 @@ public class ChainLightningEffect extends LRBaseEffect {
     public static final String PARTICLE_PLAYER_NAME = "chain_lightning";
 
     @Calculator
-    public static final FinalCalculator DAMAGE_RATIO = FinalCalculator.of(Constant.of(0.25F));
+    public static final FinalCalculator DAMAGE_RATIO = FinalCalculator.of(Constant.of(0.15F));
 
     public ChainLightningEffect(EffectType<?> effectType, int level, EquipmentType equipmentType) {
         super(effectType, level, equipmentType);
@@ -74,7 +74,7 @@ public class ChainLightningEffect extends LRBaseEffect {
             return;
         }
         DamageSource source = event.getSource();
-        boolean melee = source.is(DamageTypeTags.IS_PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK);
+        boolean melee = CombatUtil.isLooseAttack(source);
         boolean ranged = source.is(DamageTypeTags.IS_PROJECTILE);
         if (!melee && !ranged) {
             return;

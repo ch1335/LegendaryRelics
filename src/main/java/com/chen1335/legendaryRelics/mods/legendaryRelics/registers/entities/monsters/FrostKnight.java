@@ -41,16 +41,14 @@ import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 /**
- * 冰誓骑士
+ * 霜冻骑士
  *
  * <p>{@code Monster#registerGoals} 是空实现，走路与攻击目标都得自己加。
  * 模型里 attack_1 会带动 hand_item 骨骼，主手武器由渲染层的 BlockAndItemGeoLayer 挂上。
  */
-public class Frostsworn extends Monster implements GeoEntity {
+public class FrostKnight extends Monster implements GeoEntity {
 
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
-    // thenPlay 转发给 json 的 loop 字段：hold_on_last_frame 会把控制器置为 PAUSED 而非 STOPPED，
-    // 姿势得以保留，不会在 getBoneResetTime（5 tick）后被重置回静止。
     private static final RawAnimation IDLE = RawAnimation.begin().thenPlay("idle");
     private static final RawAnimation ATTACK_1 = RawAnimation.begin().thenPlay("attack_1");
     private static final RawAnimation ATTACK_2 = RawAnimation.begin().thenPlay("attack_2");
@@ -58,7 +56,7 @@ public class Frostsworn extends Monster implements GeoEntity {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public Frostsworn(EntityType<? extends Monster> entityType, Level level) {
+    public FrostKnight(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 50;
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(LRItems.FROST_STEEL_SWORD.get()));
@@ -111,7 +109,7 @@ public class Frostsworn extends Monster implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        AnimationController<Frostsworn> attackController = new AnimationController<>(this, "attack", 1, state -> {
+        AnimationController<FrostKnight> attackController = new AnimationController<>(this, "attack", 1, state -> {
             state.resetCurrentAnimation();
             return PlayState.STOP;
         })
@@ -121,7 +119,7 @@ public class Frostsworn extends Monster implements GeoEntity {
                 .triggerableAnim("attack_2", ATTACK_2)
                 .triggerableAnim("jab", JAB);
 
-        AnimationController<Frostsworn> moveController = new AnimationController<>(this, "movement", 3,
+        AnimationController<FrostKnight> moveController = new AnimationController<>(this, "movement", 3,
                 state -> {
 
                     if (attackController.isPlayingTriggeredAnimation()) {

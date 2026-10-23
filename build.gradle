@@ -231,8 +231,6 @@ dependencies {
     implementation "curse.maven:irons-spells-n-spellbooks-855414:8680204"
     implementation "curse.maven:irons-lib-1492763:8940637"
 
-    implementation "curse.maven:ultimate-enchantment-1136743:8990706"
-
     implementation "curse.maven:advanced-loot-info-1205426:9083071"
     implementation "curse.maven:advanced-core-info-1661923:9083066"
 

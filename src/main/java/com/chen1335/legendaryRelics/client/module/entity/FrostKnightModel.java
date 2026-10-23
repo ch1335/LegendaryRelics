@@ -1,7 +1,7 @@
 package com.chen1335.legendaryRelics.client.module.entity;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.Frostsworn;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.FrostKnight;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.animation.AnimationState;
@@ -10,26 +10,26 @@ import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.GeoModel;
 
 /** GeckoLib 的资源定位是 assets/&lt;命名空间&gt;/ 下的绝对路径，不额外拼前缀。 */
-public class FrostswornModel extends GeoModel<Frostsworn> {
+public class FrostKnightModel extends GeoModel<FrostKnight> {
 
-    private static final ResourceLocation MODEL = LegendaryRelics.id("geo/frostsworn.geo.json");
-    private static final ResourceLocation TEXTURE = LegendaryRelics.id("textures/entity/frostsworn.png");
-    private static final ResourceLocation ANIMATION = LegendaryRelics.id("animations/frostsworn.animation.json");
+    private static final ResourceLocation MODEL = LegendaryRelics.id("geo/frost_knight.geo.json");
+    private static final ResourceLocation TEXTURE = LegendaryRelics.id("textures/entity/frost_knight.png");
+    private static final ResourceLocation ANIMATION = LegendaryRelics.id("animations/frost_knight.animation.json");
 
     private static final String HEAD_BONE = "head";
 
     @Override
-    public ResourceLocation getModelResource(Frostsworn animatable) {
+    public ResourceLocation getModelResource(FrostKnight animatable) {
         return MODEL;
     }
 
     @Override
-    public ResourceLocation getTextureResource(Frostsworn animatable) {
+    public ResourceLocation getTextureResource(FrostKnight animatable) {
         return TEXTURE;
     }
 
     @Override
-    public ResourceLocation getAnimationResource(Frostsworn animatable) {
+    public ResourceLocation getAnimationResource(FrostKnight animatable) {
         return ANIMATION;
     }
 
@@ -39,7 +39,7 @@ public class FrostswornModel extends GeoModel<Frostsworn> {
      * <p>移动与攻击动画完全由动画文件决定，这里不按移速缩放摆幅，也不叠加走路腿。
      */
     @Override
-    public void setCustomAnimations(Frostsworn animatable, long instanceId, AnimationState<Frostsworn> animationState) {
+    public void setCustomAnimations(FrostKnight animatable, long instanceId, AnimationState<FrostKnight> animationState) {
         super.setCustomAnimations(animatable, instanceId, animationState);
 
         // 动画自己写的 head 关键帧会被跟随覆盖，对本生物来说这是想要的效果。
@@ -60,7 +60,7 @@ public class FrostswornModel extends GeoModel<Frostsworn> {
      * GeckoLib 不会每帧重置这根骨骼（要等 getBoneResetTime 才复位），在当前值上累加会逐帧叠加、
      * 表现为头部不停旋转。代价是动画自带的 head 关键帧会被跟随覆盖，对本生物来说这正是想要的。
      */
-    private void applyHeadRotation(Frostsworn animatable, AnimationState<Frostsworn> animationState) {
+    private void applyHeadRotation(FrostKnight animatable, AnimationState<FrostKnight> animationState) {
         GeoBone head = this.getAnimationProcessor().getBone(HEAD_BONE);
         if (head == null) {
             return;

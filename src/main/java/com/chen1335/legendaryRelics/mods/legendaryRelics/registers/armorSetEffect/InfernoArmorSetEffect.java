@@ -3,6 +3,7 @@ package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffe
 import com.chen1335.equipmentEffectLib.attachmentDatas.EntitySetsEffectData;
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
 import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
+import com.chen1335.equipmentEffectLib.utils.CombatUtil;
 import com.chen1335.legendaryRelics.API.objects.LRDamageTypes;
 import com.chen1335.legendaryRelics.API.objects.LRSetsEffects;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
@@ -159,7 +160,7 @@ public class InfernoArmorSetEffect extends SetEffect {
 
     public static void LivingIncomingDamageEvent(LivingIncomingDamageEvent event) {
         DamageSource source = event.getSource();
-        if ((source.is(DamageTypeTags.IS_PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK)) && source.is(Tags.DamageTypes.IS_PHYSICAL) && source.getEntity() instanceof LivingEntity attacker) {
+        if (CombatUtil.isLooseAttack(source) && source.is(Tags.DamageTypes.IS_PHYSICAL) && source.getEntity() instanceof LivingEntity attacker) {
             InfernoEffectInstance instance = getEffectInstance(attacker);
             if (instance != null && instance.getPiece() >= 2) {
                 CalculatorArg args = instance.buildArgs(attacker);

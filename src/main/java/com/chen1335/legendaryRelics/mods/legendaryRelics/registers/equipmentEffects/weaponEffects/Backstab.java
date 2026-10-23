@@ -6,6 +6,7 @@ import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.API.EquipmentEffectAPI;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
+import com.chen1335.equipmentEffectLib.utils.CombatUtil;
 import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -56,7 +57,7 @@ public class Backstab extends LRWeaponEffect {
     }
 
     public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source, LivingEntity target, LivingEntity attacker) {
-        if (source.is(DamageTypes.PLAYER_ATTACK)) {
+        if (CombatUtil.isLooseAttack(source)) {
             double dot = attacker.getLookAngle().dot(target.calculateViewVector(target.getXRot(), target.yBodyRot));
             if (dot >= 0) {
                 Backstab effect = EquipmentEffectAPI.getEffect(attacker.getWeaponItem(), LREquipmentEffectTypes.BACKSTAB.value());

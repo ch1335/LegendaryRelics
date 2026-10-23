@@ -3,7 +3,7 @@ package com.chen1335.legendaryRelics.common;
 import com.chen1335.legendaryRelics.API.objects.LRAttributes;
 import com.chen1335.legendaryRelics.API.objects.LREntityTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.Frostsworn;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.FrostKnight;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.neoforged.bus.api.EventPriority;
@@ -24,13 +24,13 @@ public class LRAttributeEvents {
     public static void EntityAttributeModification(EntityAttributeModificationEvent event) {
         event.add(EntityType.PLAYER, LRAttributes.POWDER_SNOW_WALKING);
         // 冰川骷髅的投射物伤害基础值 1.5（神化默认 1.0）
-        event.add(LREntityTypes.GLACITE_SKELETON.get(), AttributesGetter.projectDamage(), 1.5D);
+        event.add(LREntityTypes.GLACIATE_SKELETON.get(), AttributesGetter.projectDamage(), 1.5D);
     }
 
     @SubscribeEvent
     public static void EntityAttributeCreation(EntityAttributeCreationEvent event) {
         // 与原版骷髅同属性
-        event.put(LREntityTypes.GLACITE_SKELETON.value(), AbstractSkeleton.createAttributes().build());
-        event.put(LREntityTypes.FROSTSWORN.value(), Frostsworn.createAttributes().build());
+        event.put(LREntityTypes.GLACIATE_SKELETON.value(), AbstractSkeleton.createAttributes().build());
+        event.put(LREntityTypes.FROST_KNIGHT.value(), FrostKnight.createAttributes().build());
     }
 }

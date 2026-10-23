@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>继承 {@code AbstractSkeleton} 而非 {@code Skeleton}：后者的弓相关逻辑用不上，
  * 而前者自带的近战目标正好作为近距离行为。
  */
-public class GlaciteSkeleton extends AbstractSkeleton {
+public class GlaciateSkeleton extends AbstractSkeleton {
 
     /** 超过这个距离改用投掷。 */
     public static final double RANGED_DISTANCE = 5.0D;
@@ -40,7 +40,7 @@ public class GlaciteSkeleton extends AbstractSkeleton {
     /** 连续近战够不到的时长，被地形挡住时靠它转入投掷。 */
     private int meleeBlockedTicks;
 
-    public GlaciteSkeleton(EntityType<? extends AbstractSkeleton> entityType, Level level) {
+    public GlaciateSkeleton(EntityType<? extends AbstractSkeleton> entityType, Level level) {
         super(entityType, level);
     }
 

@@ -26,6 +26,6 @@ public class LRSpawnDatagen {
                 ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, LegendaryRelics.id("glacite_skeleton_ice_spikes")),
                 BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
                         HolderSet.direct(context.lookup(Registries.BIOME).getOrThrow(Biomes.ICE_SPIKES)),
-                        new MobSpawnSettings.SpawnerData(LREntityTypes.GLACITE_SKELETON.get(), 20, 1, 2)));
+                        new MobSpawnSettings.SpawnerData(LREntityTypes.GLACIATE_SKELETON.get(), 20, 1, 2)));
     }
 }

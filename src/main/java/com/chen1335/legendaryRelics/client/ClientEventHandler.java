@@ -1,6 +1,5 @@
 package com.chen1335.legendaryRelics.client;
 
-import com.chen1335.legendaryRelics.API.ILRItemExtension;
 import com.chen1335.legendaryRelics.API.objects.*;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
@@ -9,7 +8,7 @@ import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEnc
 import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FrostswornRenderer;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FrostKnightRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.GlaciteSkeletonRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IcicleRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IceThornRenderer;
@@ -127,8 +126,8 @@ public class ClientEventHandler {
             event.registerEntityRenderer(LREntityTypes.ICICLE.value(), IcicleRenderer::new);
             event.registerEntityRenderer(LREntityTypes.ICE_THORN.value(), IceThornRenderer::new);
             event.registerEntityRenderer(LREntityTypes.ORBITING_FIRE_CHAKRAM.value(), OrbitingFireChakramRenderer::new);
-            event.registerEntityRenderer(LREntityTypes.GLACITE_SKELETON.value(), GlaciteSkeletonRenderer::new);
-            event.registerEntityRenderer(LREntityTypes.FROSTSWORN.value(), FrostswornRenderer::new);
+            event.registerEntityRenderer(LREntityTypes.GLACIATE_SKELETON.value(), GlaciteSkeletonRenderer::new);
+            event.registerEntityRenderer(LREntityTypes.FROST_KNIGHT.value(), FrostKnightRenderer::new);
             event.registerBlockEntityRenderer(LRBlockEntities.ICE_ENCASEMENT.get(), IceEncasementRenderer::new);
             if (ISSModProxy.INSTANCE.shouldLoad()) {
                 event.registerEntityRenderer(ISSRegisters.Entity.SOUL_MISSILE.value(), SoulMissileRenderer::new);

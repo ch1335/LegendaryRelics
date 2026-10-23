@@ -1,8 +1,8 @@
 package com.chen1335.legendaryRelics.API.objects;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.Frostsworn;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.GlaciteSkeleton;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.FrostKnight;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.monsters.GlaciateSkeleton;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.misc.IceThorn;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingKnife;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.entities.projectiles.misc.FlyingReaper;
@@ -40,9 +40,9 @@ public class LREntityTypes {
     /** 烈焰飞轮的环绕实体：位置每 tick 变，所以同步间隔要小。 */
     public static final DeferredHolder<EntityType<?>, EntityType<OrbitingFireChakram>> ORBITING_FIRE_CHAKRAM = ENTITY_TYPES.register("orbiting_fire_chakram", () -> EntityType.Builder.<OrbitingFireChakram>of(OrbitingFireChakram::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(64).updateInterval(1).build("orbiting_fire_chakram"));
 
-    public static final DeferredHolder<EntityType<?>, EntityType<GlaciteSkeleton>> GLACITE_SKELETON = ENTITY_TYPES.register("glacite_skeleton", () -> EntityType.Builder.<GlaciteSkeleton>of(GlaciteSkeleton::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).clientTrackingRange(8).build("glacite_skeleton"));
+    public static final DeferredHolder<EntityType<?>, EntityType<GlaciateSkeleton>> GLACIATE_SKELETON = ENTITY_TYPES.register("glaciate_skeleton", () -> EntityType.Builder.<GlaciateSkeleton>of(GlaciateSkeleton::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).clientTrackingRange(8).build("glacite_skeleton"));
 
-    public static final DeferredHolder<EntityType<?>, EntityType<Frostsworn>> FROSTSWORN = ENTITY_TYPES.register("frostsworn", () -> EntityType.Builder.<Frostsworn>of(Frostsworn::new, MobCategory.MONSTER).sized(0.7F, 2.4F).eyeHeight(2.1F).clientTrackingRange(10).fireImmune().build("frostsworn"));
+    public static final DeferredHolder<EntityType<?>, EntityType<FrostKnight>> FROST_KNIGHT = ENTITY_TYPES.register("frost_knight", () -> EntityType.Builder.<FrostKnight>of(FrostKnight::new, MobCategory.MONSTER).sized(0.7F, 2.4F).eyeHeight(2.1F).clientTrackingRange(10).fireImmune().build("frost_knight"));
 
 
 }

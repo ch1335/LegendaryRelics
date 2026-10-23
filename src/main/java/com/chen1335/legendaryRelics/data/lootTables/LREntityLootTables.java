@@ -26,7 +26,7 @@ import java.util.stream.Stream;
  *
  * <p>冰川骷髅：骨头沿用原版骷髅（0~2，每级抢夺再 +0~1）；冰 0~1，每级抢夺再 +0~1；
  * 霜锥单独一个池，基础 5%，抢夺每级 +0.5%，攻击者幸运每点 +0.5%，最后按难度 ×1/×1/×1.15/×1.3。
- * 手持那把永不掉落（见 {@code GlaciteSkeleton#finalizeSpawn}），所以霜锥只能从这里拿到。
+ * 手持那把永不掉落（见 {@code GlaciateSkeleton#finalizeSpawn}），所以霜锥只能从这里拿到。
  */
 public class LREntityLootTables extends EntityLootSubProvider {
 
@@ -36,7 +36,7 @@ public class LREntityLootTables extends EntityLootSubProvider {
 
     @Override
     public void generate() {
-        this.add(LREntityTypes.GLACITE_SKELETON.get(), LootTable.lootTable()
+        this.add(LREntityTypes.GLACIATE_SKELETON.get(), LootTable.lootTable()
                 // 骨头：数值与原版骷髅一致
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
@@ -64,6 +64,6 @@ public class LREntityLootTables extends EntityLootSubProvider {
     /** 只登记本模组的实体，否则会因原版实体缺表而报错。 */
     @Override
     protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
-        return Stream.of(LREntityTypes.GLACITE_SKELETON.get());
+        return Stream.of(LREntityTypes.GLACIATE_SKELETON.get());
     }
 }
