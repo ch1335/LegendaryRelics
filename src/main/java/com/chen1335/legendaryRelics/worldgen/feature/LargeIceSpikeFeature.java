@@ -17,9 +17,9 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  */
 public class LargeIceSpikeFeature extends Feature<NoneFeatureConfiguration> {
 
-    /** 主体高度 6~9，基准抬高最多 1 格，整体最高不超过 10。 */
-    private static final int MIN_HEIGHT = 6;
-    private static final int HEIGHT_RANGE = 4;
+    /** 主体高度 10~12，基准抬高最多 1 格。 */
+    private static final int MIN_HEIGHT = 10;
+    private static final int HEIGHT_RANGE = 3;
 
     public LargeIceSpikeFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
@@ -86,8 +86,8 @@ public class LargeIceSpikeFeature extends Feature<NoneFeatureConfiguration> {
                 }
             }
         }
-        // 根柱写完后再放臻冰：此时 3x3 根柱和中心都已就位，六个方向的实心判定才稳定
-        IceSpikeFeatureHooks.onBaseColumnSetBlock(worldgenlevel, blockpos.below(), blockpos, radius);
+        // 每根大冰刺固定生成一个臻冰，埋进底部根柱
+        IceSpikeFeatureHooks.placeZenithIce(worldgenlevel, blockpos);
         return true;
     }
 }

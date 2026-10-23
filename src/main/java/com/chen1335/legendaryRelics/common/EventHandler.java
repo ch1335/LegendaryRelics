@@ -82,9 +82,6 @@ public class EventHandler {
                 }
             }
             if (!event.getEntity().level().isClientSide) {
-                // 服务端配置不会自动同步，进服时把当前值发给玩家，供 Cloth Config 界面显示
-                PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), ServerConfigPack.ofCurrent());
-
                 CalculatorsHolder.getCalculators().forEach((locateInfo, finalCalculator) -> {
                     if (finalCalculator.changed()) {
                         PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new UpdateCalculatorPack(locateInfo, finalCalculator));
@@ -334,8 +331,6 @@ public class EventHandler {
             registrar.playToClient(PlayClientParticlePack.TYPE, PlayClientParticlePack.STREAM_CODEC, PlayClientParticlePack::handler);
             registrar.playToClient(PlayPlayerAnimationPack.TYPE, PlayPlayerAnimationPack.STREAM_CODEC, PlayPlayerAnimationPack::handler);
 
-
-            registrar.playBidirectional(ServerConfigPack.TYPE, ServerConfigPack.STREAM_CODEC, ServerConfigPack::handler);
 
             registrar.playBidirectional(UpdateCalculatorPack.TYPE, UpdateCalculatorPack.STREAM_CODEC, UpdateCalculatorPack::handler);
 
