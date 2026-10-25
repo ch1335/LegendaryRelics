@@ -204,7 +204,7 @@
   "set_effect.legendary_relics.soul.desc.4": "在10层时，造成%s会发射3枚灵魂飞弹，对主目标及其周围5格内最多2个生物造成该次伤害%s的伤害",
   "set_effect.legendary_relics.soul.desc.5": "目标不足3个时，多余的飞弹会转而攻击主目标，但只造成%s伤害",
   "set_effect.legendary_relics.shadow_assassin.name": "蓄势待发",
-  "set_effect.legendary_relics.shadow_assassin.desc.1": "停止%s3秒后，每%s获得一层%s，最多10层",
+  "set_effect.legendary_relics.shadow_assassin.desc.1": "停止%s3秒后，每%s秒获得一层%s，最多10层",
   "set_effect.legendary_relics.shadow_assassin.desc.2": "每层%s为你的下一次%s提供%s和%s",
   "set_effect.legendary_relics.shadow_assassin.desc.3": "满层时额外提供%s和%s",
   "set_effect.legendary_relics.shadow_assassin.desc.4": "攻击会消耗所有层数，并且此次%s获得%s",

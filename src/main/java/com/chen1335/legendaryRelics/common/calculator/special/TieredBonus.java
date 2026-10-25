@@ -53,7 +53,7 @@ public class TieredBonus extends FormatedOperation {
         return list;
     }
 
-    public static OperationUnit of(List<Float> list) {
+    public static TieredBonus of(List<Float> list) {
         return new TieredBonus(list);
     }
 

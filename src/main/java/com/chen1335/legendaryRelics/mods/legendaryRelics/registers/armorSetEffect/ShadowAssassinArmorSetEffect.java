@@ -74,7 +74,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
     public static final FinalCalculator ATTACK_DAMAGE_MULTIPLIER = FinalCalculator.of(
             Add.of(Constant.of(1),
                     Mul.of(
-                            TieredBonus.of(List.of(0.32F, 0.32F, 0.4F, 0.5F)),
+                            TieredBonus.of(List.of(0.032F, 0.032F, 0.04F, 0.05F)),
                             SpecialEffectStackArg.lurk()
                     )
             )
@@ -169,7 +169,8 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
         if (instance.getPiece() < 2) {
             return;
         }
-        // 同一次攻击会多次查询属性，只在第一次查询时结算层数，后续命中共用同一份加成
+        // 同一次攻击可能命中多个目标（每个目标各触发一次属性结算），只在第一次结算时消耗层数，
+        // 其余目标共用同一份加成；单目标的一次 hurt 只会结算一次。
         if (instance.lastAttackTick != attacker.tickCount) {
             instance.lastAttackTick = attacker.tickCount;
             instance.attackDamageBonus = 0;

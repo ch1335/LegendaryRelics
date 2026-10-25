@@ -204,7 +204,7 @@
   "set_effect.legendary_relics.soul.desc.4": "At 10 stacks, dealing %s fires 3 soul missiles at the main target and up to 2 creatures within 5 blocks, dealing %s of that damage",
   "set_effect.legendary_relics.soul.desc.5": "When there are fewer than 3 targets, the extra missiles hit the main target instead, dealing only %s damage",
   "set_effect.legendary_relics.shadow_assassin.name": "Charged Up",
-  "set_effect.legendary_relics.shadow_assassin.desc.1": "After 3 seconds without %s, every %s gain one stack of %s, up to 10 stacks.",
+  "set_effect.legendary_relics.shadow_assassin.desc.1": "After 3 seconds without %s, every %s seconds gain one stack of %s, up to 10 stacks.",
   "set_effect.legendary_relics.shadow_assassin.desc.2": "Each %s stack grants your next %s %s and %s.",
   "set_effect.legendary_relics.shadow_assassin.desc.3": "At max stacks, additionally grants %s and %s.",
   "set_effect.legendary_relics.shadow_assassin.desc.4": "Attacks consume all stacks, and this %s gains %s.",
