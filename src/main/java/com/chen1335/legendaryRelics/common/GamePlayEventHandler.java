@@ -21,6 +21,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -29,6 +30,8 @@ import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+
+import java.util.function.Consumer;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
 public class GamePlayEventHandler {
@@ -138,5 +141,12 @@ public class GamePlayEventHandler {
     @SubscribeEvent
     public static void LivingHealEvent(LivingHealEvent event) {
         HealIncreaseEffect.LivingHealEvent(event);
+    }
+
+    private static <T extends ICancellableEvent> void applyEvent(T event, Consumer<T> consumer){
+        if (event.isCanceled()) {
+            return;
+        }
+        consumer.accept(event);
     }
 }

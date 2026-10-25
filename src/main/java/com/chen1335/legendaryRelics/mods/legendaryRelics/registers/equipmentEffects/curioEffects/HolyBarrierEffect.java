@@ -81,7 +81,7 @@ public class HolyBarrierEffect extends LRCurioEffect {
                 SpecialEffectAPI.addEffectToEntity(living, barrier, Invincibility::getFinal);
 
                 // 进入冷却
-                EquipmentEffectCooldownManager.addCooldown(living, effectType, (int) (COOLDOWN.getValue(arg) * 20) * 0);
+                EquipmentEffectCooldownManager.addCooldown(living, effectType, (int) (COOLDOWN.getValue(arg) * 20));
             }
         });
     }

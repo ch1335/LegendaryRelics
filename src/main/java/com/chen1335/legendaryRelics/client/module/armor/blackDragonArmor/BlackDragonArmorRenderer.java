@@ -27,6 +27,15 @@ public class BlackDragonArmorRenderer extends GeoArmorRenderer<BlackDragonArmor>
     protected void applyBoneVisibilityBySlot(EquipmentSlot currentSlot) {
         super.applyBoneVisibilityBySlot(currentSlot);
         // belt 挂在 armorBody 下，属于护腿，只有 LEGS 时显示
-        setBoneVisible(this.belt, currentSlot == EquipmentSlot.LEGS);
+        boolean legs = currentSlot == EquipmentSlot.LEGS;
+        if (legs && this.belt != null) {
+            // GeoBone#setHidden 会级联隐藏子骨，LEGS 时 armorBody 是被隐藏的，
+            // 必须把它对子骨的隐藏关掉，否则 belt 即便 visible 也不会渲染
+            GeoBone parent = this.belt.getParent();
+            if (parent != null) {
+                parent.setChildrenHidden(false);
+            }
+        }
+        setBoneVisible(this.belt, legs);
     }
 }

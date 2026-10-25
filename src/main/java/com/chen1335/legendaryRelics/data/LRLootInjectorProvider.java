@@ -92,7 +92,7 @@ public class LRLootInjectorProvider extends LootInjectorProvider {
     private static final Drop DARK_STEEL_CLAW = drop(0.25D, LRItems.DARK_STEEL_CLAW);
     private static final Drop SACRED_TALISMAN = drop(0.25D, LRItems.SACRED_TALISMAN);
     private static final Drop AGGLOMERATION_MALICE = drop(0.5D, LRItems.AGGLOMERATION_MALICE);
-    private static final Drop SHADOW_DAGGER = drop(0.5D, LRItems.SHADOW_DAGGER);
+    private static final Drop SHADOW_DAGGER = drop(0.2D, LRItems.SHADOW_DAGGER);
 
     public LRLootInjectorProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, "loot_injecter", "Loot Injectors");

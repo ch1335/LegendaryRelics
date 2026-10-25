@@ -5,9 +5,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.TooltipFlag;
+
+import javax.annotation.Nullable;
 
 public class ComponentHolders {
     public static class Effects {
@@ -21,13 +23,18 @@ public class ComponentHolders {
     }
 
     public static class Attributes {
-        public static MutableComponent attribute(Holder<Attribute> attribute, Component value, AttributeModifier.Operation operation) {
+        public static MutableComponent attribute(Holder<Attribute> attribute, Component value, @Nullable Style style, AttributeModifier.Operation operation) {
             String op = operation == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL ? "×" : "+";
             MutableComponent component = Component.empty();
             component.append(op);
             component.append(value);
-            component.append(Component.translatable(attribute.value().getDescriptionId()).withStyle(attribute.value().getStyle(true)));
+            style = style != null ? Style.EMPTY : Style.EMPTY.withColor(attribute.value().getStyle(true));
+            component.append(Component.translatable(attribute.value().getDescriptionId()).withStyle(style));
             return component;
+        }
+
+        public static MutableComponent attribute(Holder<Attribute> attribute, Component value, AttributeModifier.Operation operation) {
+            return attribute(attribute, value, null, operation);
         }
     }
 
