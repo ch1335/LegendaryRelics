@@ -51,7 +51,7 @@
                 "type": "minecraft:item",
                 "conditions": [
                   {
-                    "base_chance": 0.5,
+                    "base_chance": 0.2,
                     "condition": "arcanumlib:chance_modifiers"
                   }
                 ],

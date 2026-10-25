@@ -13,13 +13,6 @@ public class ClientExtensionsRegister {
                 LRItems.INFERNO_BOOTS
         );
 
-        event.registerItem(new TwistedArmorExtension(),
-                LRItems.TWISTED_HELMET,
-                LRItems.TWISTED_CHEST_PLATE,
-                LRItems.TWISTED_LEGGINGS,
-                LRItems.TWISTED_BOOTS
-        );
-
         event.registerItem(new ShadowDaggerExtension(),
                 LRItems.SHADOW_DAGGER
         );

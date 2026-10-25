@@ -1,7 +1,6 @@
 package com.chen1335.legendaryRelics.mods.ironsSpellBooks;
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.client.clientExtensions.SoulArmorExtension;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSTiers;
 import com.chen1335.legendaryRelics.utils.ModProxy;
@@ -35,12 +34,6 @@ public class ISSModProxy extends ModProxy {
 
     @Override
     public void registerClientExtensions(RegisterClientExtensionsEvent event) {
-        event.registerItem(new SoulArmorExtension(),
-                ISSRegisters.Item.SOUL_HELMET,
-                ISSRegisters.Item.SOUL_CHEST_PLATE,
-                ISSRegisters.Item.SOUL_LEGGINGS,
-                ISSRegisters.Item.SOUL_BOOTS
-        );
     }
 
     private void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {

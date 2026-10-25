@@ -64,7 +64,7 @@ public class SoulArmorSetEffect extends SetEffect {
     @Calculator
     public static final FinalCalculator GAIN_STACK_COOLDOWN = FinalCalculator.of(
             TieredBonus.of(List.of(1.5F, 1.5F, 0.75F, 0.5F))
-    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.YELLOW.getStyle()).build());
+    ).withFormat(Format.NORMAL.unwrap().style(LRColors.Component.YELLOW.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator SPELL_POWER_PER_STACK = FinalCalculator.of(

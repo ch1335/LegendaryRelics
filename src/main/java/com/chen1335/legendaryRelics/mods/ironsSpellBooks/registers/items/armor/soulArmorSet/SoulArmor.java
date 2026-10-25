@@ -2,25 +2,28 @@ package com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.items.armor.
 
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSTiers;
-import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRGeoArmor;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import org.jetbrains.annotations.Nullable;
 
-public class SoulArmor extends LRArmorBase {
-    public static final ResourceLocation TEXTURE = LegendaryRelics.id("textures/armor/soul_armor_layer.png");
+/**
+ * 灵魂四件套共用一套 GeckoLib 模型，部位由骨骼名区分。
+ */
+public class SoulArmor extends LRGeoArmor {
 
     public SoulArmor(Type type, Properties properties) {
         super(ISSTiers.Armor.SOUL, type, properties.stacksTo(1).rarity(Rarity.EPIC));
+    }
+
+    @Override
+    protected String geoName() {
+        return "soul_armor";
     }
 
     @Override
@@ -41,10 +44,5 @@ public class SoulArmor extends LRArmorBase {
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return true;
-    }
-
-    @Override
-    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-        return TEXTURE;
     }
 }
