@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -44,7 +45,13 @@ public class ArrowInBowRender {
     private static void transform(ItemStack itemStack, ItemDisplayContext displayContext, PoseStack poseStack) {
         IRenderArrowBow renderArrowBow = (IRenderArrowBow) itemStack.getItem();
         float z;
-        float pull = ItemProperties.getProperty(itemStack, ResourceLocation.withDefaultNamespace("pull")).call(itemStack, Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+        ItemPropertyFunction pull1 = ItemProperties.getProperty(itemStack, ResourceLocation.withDefaultNamespace("pull"));
+        float pull;
+        if (pull1 == null){
+            pull = 0;
+        }else {
+            pull = pull1.call(itemStack, Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+        }
         if (pull >= renderArrowBow.pull2()) {
             z = 0.1F;
         } else if (pull >= renderArrowBow.pull1()) {
