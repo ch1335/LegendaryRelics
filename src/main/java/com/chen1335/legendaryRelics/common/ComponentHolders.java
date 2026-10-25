@@ -54,5 +54,9 @@ public class ComponentHolders {
         public static Component magicDamage() {
             return Component.translatable("legendary_relics.damage_type.magic_damage");
         }
+
+        public static Component attack() {
+            return Component.translatable("legendary_relics.damage_type.attack");
+        }
     }
 }

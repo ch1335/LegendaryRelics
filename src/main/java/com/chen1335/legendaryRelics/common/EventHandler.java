@@ -124,6 +124,12 @@ public class EventHandler {
                     LRItems.TWISTED_LEGGINGS.asItem(),
                     LRItems.TWISTED_BOOTS.asItem()
             );
+            event.sets(LRSetsEffects.SHADOW_ASSASSIN_ARMOR.value(), EquipmentTypes.HUMANOID_ARMOR,
+                    LRItems.SHADOW_ASSASSIN_HELMET.asItem(),
+                    LRItems.SHADOW_ASSASSIN_CHEST_PLATE.asItem(),
+                    LRItems.SHADOW_ASSASSIN_LEGGINGS.asItem(),
+                    LRItems.SHADOW_ASSASSIN_BOOTS.asItem()
+            );
         }
 
         @SubscribeEvent

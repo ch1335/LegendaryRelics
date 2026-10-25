@@ -5,6 +5,7 @@ import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.Lo
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.ShadowAssassinArmorSetEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
@@ -66,6 +67,7 @@ public class GamePlayEventHandler {
                 InFireTargetDamageIncrease.getAttributeAdjustment(event, source, target, attacker);
                 AgglomerationMaliceEffect.getAttributeAdjustment(event, source, target, attacker);
                 Backstab.getAttributeAdjustment(event, source, target, attacker);
+                ShadowAssassinArmorSetEffect.getAttributeAdjustment(event, source, target, attacker);
             }
             LRArmorBase.handleAttributeAdjustment(event, target,  source,  damage);
             FireDamageReduce.getAttributeAdjustment(event, source, target);

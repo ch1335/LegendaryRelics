@@ -46,6 +46,8 @@ public class CalculatorRegister {
             OPERATIONS.register("single_custom", () -> new OperationType(SingleCustomArg.CODEC, SingleCustomArg.STREAM_CODEC));
     public static final DeferredHolder<OperationType, OperationType> TIERED_BONUS =
             OPERATIONS.register("tiered_bonus", () -> new OperationType(TieredBonus.CODEC, TieredBonus.STREAM_CODEC));
+    public static final DeferredHolder<OperationType, OperationType> SPECIAL_EFFECT_STACK =
+            OPERATIONS.register("special_effect_stack", () -> new OperationType(SpecialEffectStackArg.CODEC, SpecialEffectStackArg.STREAM_CODEC));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, OperationType> STREAM_CODEC =
             StreamCodec.composite(ResourceLocation.STREAM_CODEC, REGISTRY::getKey, REGISTRY::get);

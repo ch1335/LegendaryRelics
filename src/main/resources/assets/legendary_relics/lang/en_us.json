@@ -203,6 +203,11 @@
   "set_effect.legendary_relics.soul.desc.3": "Each stack provides %s spell power and %s spell cooldown reduction",
   "set_effect.legendary_relics.soul.desc.4": "At 10 stacks, dealing %s fires 3 soul missiles at the main target and up to 2 creatures within 5 blocks, dealing %s of that damage",
   "set_effect.legendary_relics.soul.desc.5": "When there are fewer than 3 targets, the extra missiles hit the main target instead, dealing only %s damage",
+  "set_effect.legendary_relics.shadow_assassin.name": "Charged Up",
+  "set_effect.legendary_relics.shadow_assassin.desc.1": "After 3 seconds without %s, every %s gain one stack of %s, up to 10 stacks.",
+  "set_effect.legendary_relics.shadow_assassin.desc.2": "Each %s stack grants your next %s %s and %s.",
+  "set_effect.legendary_relics.shadow_assassin.desc.3": "At max stacks, additionally grants %s and %s.",
+  "set_effect.legendary_relics.shadow_assassin.desc.4": "Attacks consume all stacks, and this %s gains %s.",
   "set_effect.legendary_relics.soul.name": "Soul",
   "set_effect.legendary_relics.twisted.desc.1": "Every %s second, cause arrow damage to gain 1 stack of %s, up to 10 stacks",
   "set_effect.legendary_relics.twisted.desc.2": "If you don't get %2$s for more than %1$s seconds, you lose one stack of %3$s every second",
@@ -214,6 +219,7 @@
   "legendary_relics.damage_type.physical_damage": "§cPhysical Damage§r",
   "legendary_relics.damage_type.format": "%s %s",
   "legendary_relics.max_charge_time_affected_by_attack_speed": "Max charging time is affected by attack speed",
-  "legendary_relics.damage_type.magic_damage": "§9Magic Damage§r"
+  "legendary_relics.damage_type.magic_damage": "§9Magic Damage§r",
+  "legendary_relics.damage_type.attack": "§cAttack§r"
 
 }
