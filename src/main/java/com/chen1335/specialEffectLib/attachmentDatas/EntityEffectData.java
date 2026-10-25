@@ -83,6 +83,18 @@ public class EntityEffectData implements INBTSerializable<CompoundTag> {
         effects.computeIfAbsent(effect.getSourceEntityUUID(), uuid -> new HashMap<>()).put(mobEffectType, effect);
     }
 
+    public SpecialMobEffect removeEffect(UUID source, MobEffectType<?> type) {
+        Map<MobEffectType<?>, SpecialMobEffect> effectMap = effects.get(source);
+        if (effectMap == null) {
+            return null;
+        }
+        SpecialMobEffect removed = effectMap.remove(type);
+        if (effectMap.isEmpty()) {
+            effects.remove(source);
+        }
+        return removed;
+    }
+
     public boolean hasEffect(MobEffectType<?> mobEffectType) {
         for (Map<MobEffectType<?>, SpecialMobEffect> value : effects.values()) {
             if (value.containsKey(mobEffectType)) {

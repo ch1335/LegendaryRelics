@@ -8,6 +8,7 @@ import com.chen1335.specialEffectLib.API.objects.SEAttachmentTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
 import com.chen1335.specialEffectLib.network.AddOrUpdateEffectPack;
+import com.chen1335.specialEffectLib.network.RemoveEffectPack;
 import com.chen1335.specialEffectLib.network.SyncAllEffectPack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -89,6 +90,7 @@ public class EventHandler {
             final PayloadRegistrar registrar = event.registrar("1");
             registrar.playToClient(SyncAllEffectPack.TYPE, SyncAllEffectPack.STREAM_CODEC, SyncAllEffectPack::handler);
             registrar.playToClient(AddOrUpdateEffectPack.TYPE, AddOrUpdateEffectPack.STREAM_CODEC, AddOrUpdateEffectPack::handler);
+            registrar.playToClient(RemoveEffectPack.TYPE, RemoveEffectPack.STREAM_CODEC, RemoveEffectPack::handler);
         }
     }
 }

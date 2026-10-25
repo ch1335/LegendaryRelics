@@ -57,6 +57,10 @@ public class TieredBonus extends FormatedOperation {
         return new TieredBonus(list);
     }
 
+    public static TieredBonus of(List<Float> list, Format format) {
+        return new TieredBonus(list, format);
+    }
+
     @Override
     public float getValue(CalculatorArg calculatorArg) {
         int tier = Math.max(calculatorArg.getArgElse(TIER, 1), 1);

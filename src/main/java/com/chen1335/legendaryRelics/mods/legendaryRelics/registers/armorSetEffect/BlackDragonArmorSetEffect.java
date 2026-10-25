@@ -31,7 +31,7 @@ import static com.chen1335.legendaryRelics.effectInstances.BlackDragonEffectInst
 public class BlackDragonArmorSetEffect extends SetEffect {
     @Calculator
     public static final FinalCalculator ATTRIBUTE_MULTIPLIER = FinalCalculator.of(
-            TieredBonus.of(List.of(0.04F, 0.06F, 0.08F, 0.1F))
+            TieredBonus.of(List.of(0.04F, 0.06F, 0.08F, 0.1F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE);
     @Calculator
     public static final FinalCalculator HEALTH_REGAIN = FinalCalculator.of(
@@ -39,7 +39,7 @@ public class BlackDragonArmorSetEffect extends SetEffect {
                     Constant.of(1),
                     Mul.of(
                             EntityAttributeValue.of(Attributes.MAX_HEALTH),
-                            TieredBonus.of(List.of(0.02F, 0.03F, 0.04F, 0.05F))
+                            TieredBonus.of(List.of(0.02F, 0.03F, 0.04F, 0.05F), Format.PERCENTAGE)
                     )
             )
     );

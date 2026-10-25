@@ -6,6 +6,7 @@ import com.chen1335.specialEffectLib.attachmentDatas.EntityEffectData;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
 import com.chen1335.specialEffectLib.network.AddOrUpdateEffectPack;
+import com.chen1335.specialEffectLib.network.RemoveEffectPack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.common.NeoForge;
@@ -47,6 +48,25 @@ public class SpecialEffectAPI {
 
     public static EntityEffectData getEntityEffectData(LivingEntity livingEntity) {
         return livingEntity.getData(SEAttachmentTypes.ENTITY_EFFECT_DATA);
+    }
+
+    /**
+     * 移除指定来源施加的特殊效果，并把移除同步到客户端。
+     */
+    public static void removeEffect(LivingEntity target, UUID sourceUUID, MobEffectType<?> type) {
+        SpecialMobEffect removed = getEntityEffectData(target).removeEffect(sourceUUID, type);
+        if (removed == null) {
+            return;
+        }
+        removed.onRemove(target);
+        if (!target.level().isClientSide) {
+            RemoveEffectPack pack = new RemoveEffectPack(target.getId(), sourceUUID, type);
+            if (target instanceof ServerPlayer serverPlayer) {
+                PacketDistributor.sendToPlayer(serverPlayer, pack);
+            } else {
+                PacketDistributor.sendToPlayersTrackingEntity(target, pack);
+            }
+        }
     }
 
     public static <T extends SpecialMobEffect> Optional<T> getEffect(LivingEntity livingEntity, UUID uuid, MobEffectType<T> type) {

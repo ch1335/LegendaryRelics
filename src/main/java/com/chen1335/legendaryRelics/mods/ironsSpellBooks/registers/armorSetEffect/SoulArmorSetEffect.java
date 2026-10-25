@@ -68,12 +68,12 @@ public class SoulArmorSetEffect extends SetEffect {
 
     @Calculator
     public static final FinalCalculator SPELL_POWER_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
+            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator COOLDOWN_REDUCTION_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.01F, 0.012F, 0.015F, 0.02F))
+            TieredBonus.of(List.of(0.01F, 0.012F, 0.015F, 0.02F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
@@ -88,7 +88,7 @@ public class SoulArmorSetEffect extends SetEffect {
     public static final FinalCalculator MISSILE_DAMAGE_PERCENT = FinalCalculator.of(
             Mul.of(
                     Constant.of(0.15F),
-                    TieredBonus.of(List.of(0.64F, 0.64F, 0.81F, 1F))
+                    TieredBonus.of(List.of(0.64F, 0.64F, 0.81F, 1F), Format.PERCENTAGE)
             )
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.RED.getStyle()).build());
 

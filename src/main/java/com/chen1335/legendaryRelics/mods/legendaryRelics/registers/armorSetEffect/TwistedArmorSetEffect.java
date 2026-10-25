@@ -40,11 +40,11 @@ public class TwistedArmorSetEffect extends SetEffect {
     ).withFormat(Format.NORMAL.unwrap().style(LRColors.Component.YELLOW.getStyle()).build());
     @Calculator
     public static final FinalCalculator DRAW_SPEED_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.025F, 0.025F, 0.05F, 0.05F))
+            TieredBonus.of(List.of(0.025F, 0.025F, 0.05F, 0.05F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
     @Calculator
     public static final FinalCalculator ARROW_DAMAGE_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
+            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
     @Calculator
     public static final FinalCalculator KEEP_TIME = FinalCalculator.of(
@@ -52,7 +52,7 @@ public class TwistedArmorSetEffect extends SetEffect {
     );
     @Calculator
     public static final FinalCalculator ADDITION_ARROW_BASE_DAMAGE = FinalCalculator.of(
-            TieredBonus.of(List.of(0.3F, 0.3F, 0.4F, 0.5F))
+            TieredBonus.of(List.of(0.3F, 0.3F, 0.4F, 0.5F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.RED.getStyle()).build());
 
     @Override

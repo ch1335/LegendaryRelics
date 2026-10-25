@@ -64,11 +64,11 @@ public class InfernoArmorSetEffect extends SetEffect {
     ).withFormat(Format.NORMAL.unwrap().style(LRColors.Component.YELLOW.getStyle()).build());
     @Calculator
     public static final FinalCalculator ATTACK_RANGE_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.05F, 0.05F, 0.1F, 0.1F))
-    ).withFormat(Format.NORMAL.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
+            TieredBonus.of(List.of(0.05F, 0.05F, 0.1F, 0.1F), Format.PERCENTAGE)
+    ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
     @Calculator
     public static final FinalCalculator DAMAGE_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
+            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
     @Calculator
     public static final FinalCalculator KEEP_TIME = FinalCalculator.of(
@@ -85,7 +85,7 @@ public class InfernoArmorSetEffect extends SetEffect {
                                     EntityAttributeValue.of(Attributes.ATTACK_DAMAGE)
                             )
                     ),
-                    TieredBonus.of(List.of(0.64F, 0.64F, 0.81F, 1F))
+                    TieredBonus.of(List.of(0.64F, 0.64F, 0.81F, 1F), Format.PERCENTAGE)
             )
     );
 
@@ -102,7 +102,7 @@ public class InfernoArmorSetEffect extends SetEffect {
                             Constant.of(5F),
                             EntityAttributeValue.of(Attributes.ATTACK_DAMAGE)
                     ),
-                    TieredBonus.of(List.of(0.64F, 0.64F, 0.81F, 1F))
+                    TieredBonus.of(List.of(0.64F, 0.64F, 0.81F, 1F), Format.PERCENTAGE)
             )
     );
 

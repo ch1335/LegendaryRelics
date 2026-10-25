@@ -48,22 +48,22 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
 
     @Calculator
     public static final FinalCalculator CRIT_CHANCE_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.01F, 0.01F, 0.015F, 0.02F))
+            TieredBonus.of(List.of(0.01F, 0.01F, 0.015F, 0.02F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator CRIT_DAMAGE_PER_STACK = FinalCalculator.of(
-            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F))
+            TieredBonus.of(List.of(0.03F, 0.03F, 0.04F, 0.05F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator FULL_CRIT_CHANCE = FinalCalculator.of(
-            TieredBonus.of(List.of(0.05F, 0.1F, 0.15F, 0.2F))
+            TieredBonus.of(List.of(0.05F, 0.1F, 0.15F, 0.2F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator FULL_CRIT_DAMAGE = FinalCalculator.of(
-            TieredBonus.of(List.of(0.1F, 0.15F, 0.2F, 0.3F))
+            TieredBonus.of(List.of(0.1F, 0.15F, 0.2F, 0.3F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
 
@@ -72,9 +72,9 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
      */
     @Calculator
     public static final FinalCalculator ATTACK_DAMAGE_MULTIPLIER = FinalCalculator.of(
-            Add.of(Constant.of(1),
+            Add.of(Constant.of(1).withFormat(Format.PERCENTAGE),
                     Mul.of(
-                            TieredBonus.of(List.of(0.032F, 0.032F, 0.04F, 0.05F)),
+                            TieredBonus.of(List.of(0.032F, 0.032F, 0.04F, 0.05F), Format.PERCENTAGE),
                             SpecialEffectStackArg.lurk()
                     )
             )
@@ -106,7 +106,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
 
         list.add(Component.translatable("set_effect.legendary_relics.shadow_assassin.desc.4",
                 ComponentHolders.Combat.attack(),
-                ComponentUtil.Attributes.attribute(ArcanumAttributes.DAMAGE_MULTIPLIER, ATTACK_DAMAGE_MULTIPLIER.toComponent(args), "+")
+                ComponentUtil.Attributes.attribute(ArcanumAttributes.DAMAGE_MULTIPLIER, ATTACK_DAMAGE_MULTIPLIER.toComponent(args), "×")
         ).withStyle(ChatFormatting.GRAY));
 
         list.add(Component.translatable("set_effect.legendary_relics.armor_pieces_required", "2+"
@@ -186,7 +186,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
                 instance.attackCritDamage = CRIT_DAMAGE_PER_STACK.getValue(args) * stacks
                         + (full ? FULL_CRIT_DAMAGE.getValue(args) : 0);
                 instance.attackDamageBonus = ATTACK_DAMAGE_MULTIPLIER.getValue(args);
-                lurk.consume();
+                SpecialEffectAPI.removeEffect(attacker, attacker.getUUID(), LRSpecialMobEffects.LURK.value());
             }
         }
         if (instance.attackCritChance > 0) {
