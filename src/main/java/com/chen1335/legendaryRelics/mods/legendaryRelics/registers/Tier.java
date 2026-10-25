@@ -177,6 +177,19 @@ public class Tier {
                 () -> Ingredient.EMPTY
         );
 
+        public static final DeferredHolder<ArmorMaterial, ArmorMaterial> SHADOW_ASSASSIN = register("shadow_assassin", Util.make(new EnumMap<>(ArmorItem.Type.class), enumMap -> {
+                    enumMap.put(ArmorItem.Type.BOOTS, 3);
+                    enumMap.put(ArmorItem.Type.LEGGINGS, 5);
+                    enumMap.put(ArmorItem.Type.CHESTPLATE, 7);
+                    enumMap.put(ArmorItem.Type.HELMET, 3);
+                    enumMap.put(ArmorItem.Type.BODY, 11);
+                }), 15,
+                SoundEvents.ARMOR_EQUIP_LEATHER,
+                2.5F,
+                0.05F,
+                () -> Ingredient.EMPTY
+        );
+
         private static DeferredHolder<ArmorMaterial, ArmorMaterial> register(
                 String name,
                 EnumMap<ArmorItem.Type, Integer> defense,

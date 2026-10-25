@@ -80,25 +80,29 @@ public class LRItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.HEAD_ARMOR).add(
                 LRItems.BLACK_DRAGON_HELMET.value(),
                 LRItems.INFERNO_HELMET.value(),
-                LRItems.TWISTED_HELMET.value()
+                LRItems.TWISTED_HELMET.value(),
+                LRItems.SHADOW_ASSASSIN_HELMET.value()
         ).addOptional(ISSRegisters.Item.SOUL_HELMET.getId());
 
         tag(ItemTags.CHEST_ARMOR).add(
                 LRItems.BLACK_DRAGON_CHEST_PLATE.value(),
                 LRItems.INFERNO_CHEST_PLATE.value(),
-                LRItems.TWISTED_CHEST_PLATE.value()
+                LRItems.TWISTED_CHEST_PLATE.value(),
+                LRItems.SHADOW_ASSASSIN_CHEST_PLATE.value()
         ).addOptional(ISSRegisters.Item.SOUL_CHEST_PLATE.getId());
 
         tag(ItemTags.LEG_ARMOR).add(
                 LRItems.BLACK_DRAGON_LEGGINGS.value(),
                 LRItems.INFERNO_LEGGINGS.value(),
-                LRItems.TWISTED_LEGGINGS.value()
+                LRItems.TWISTED_LEGGINGS.value(),
+                LRItems.SHADOW_ASSASSIN_LEGGINGS.value()
         ).addOptional(ISSRegisters.Item.SOUL_LEGGINGS.getId());
 
         tag(ItemTags.FOOT_ARMOR).add(
                 LRItems.BLACK_DRAGON_BOOTS.value(),
                 LRItems.INFERNO_BOOTS.value(),
-                LRItems.TWISTED_BOOTS.value()
+                LRItems.TWISTED_BOOTS.value(),
+                LRItems.SHADOW_ASSASSIN_BOOTS.value()
         ).addOptional(ISSRegisters.Item.SOUL_BOOTS.getId());
 
         tag(ItemTags.SWORDS).add(

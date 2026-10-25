@@ -9,6 +9,10 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.i
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.infernoSet.InfernoChestPlate;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.infernoSet.InfernoHelmet;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.infernoSet.InfernoLeggings;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.shadowAssassinSet.ShadowAssassinBoots;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.shadowAssassinSet.ShadowAssassinChestPlate;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.shadowAssassinSet.ShadowAssassinHelmet;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.shadowAssassinSet.ShadowAssassinLeggings;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.twistedSet.TwistedBoots;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.twistedSet.TwistedChestPlate;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.twistedSet.TwistedHelmet;
@@ -102,6 +106,14 @@ public class LRItems {
     public static final DeferredItem<TwistedLeggings> TWISTED_LEGGINGS = ITEM_DEFERRED_REGISTER.register("twisted_leggings", TwistedLeggings::new);
 
     public static final DeferredItem<TwistedBoots> TWISTED_BOOTS = ITEM_DEFERRED_REGISTER.register("twisted_boots", TwistedBoots::new);
+
+    public static final DeferredItem<ShadowAssassinHelmet> SHADOW_ASSASSIN_HELMET = ITEM_DEFERRED_REGISTER.register("shadow_assassin_helmet", ShadowAssassinHelmet::new);
+
+    public static final DeferredItem<ShadowAssassinChestPlate> SHADOW_ASSASSIN_CHEST_PLATE = ITEM_DEFERRED_REGISTER.register("shadow_assassin_chest_plate", ShadowAssassinChestPlate::new);
+
+    public static final DeferredItem<ShadowAssassinLeggings> SHADOW_ASSASSIN_LEGGINGS = ITEM_DEFERRED_REGISTER.register("shadow_assassin_leggings", ShadowAssassinLeggings::new);
+
+    public static final DeferredItem<ShadowAssassinBoots> SHADOW_ASSASSIN_BOOTS = ITEM_DEFERRED_REGISTER.register("shadow_assassin_boots", ShadowAssassinBoots::new);
 
     public static final DeferredItem<CharmOfFreshStart> CHARM_OF_FRESH_START = ITEM_DEFERRED_REGISTER.register("charm_of_fresh_start", CharmOfFreshStart::new);
 

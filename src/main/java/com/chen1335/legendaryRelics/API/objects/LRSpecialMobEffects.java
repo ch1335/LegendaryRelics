@@ -6,6 +6,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Erosion;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.InfernoScorch;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Invincibility;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Lurk;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.OrbitingFireChakramsEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
@@ -60,6 +61,13 @@ public class LRSpecialMobEffects {
             .factory(Slowness::new)
             .renderIcon()
             .category(MobEffectCategory.HARMFUL)
+            .build());
+
+    /** 暗影刺客套装的隐匿状态。 */
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<Lurk>> LURK = SPECIAL_MOB_EFFECT_TYPES.register("lurk", MobEffectType.Builder.<Lurk>builder()
+            .factory(Lurk::new)
+            .renderIcon()
+            .category(MobEffectCategory.BENEFICIAL)
             .build());
 
     /** 烈焰飞轮的环绕调度效果：HUD 图标上显示当前飞轮数量，扇形显示剩余时间。 */

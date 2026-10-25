@@ -60,6 +60,11 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.TWISTED_LEGGINGS.asItem());
         basicItem(LRItems.TWISTED_BOOTS.asItem());
 
+        basicItem(LRItems.SHADOW_ASSASSIN_HELMET.asItem());
+        basicItem(LRItems.SHADOW_ASSASSIN_CHEST_PLATE.asItem());
+        basicItem(LRItems.SHADOW_ASSASSIN_LEGGINGS.asItem());
+        basicItem(LRItems.SHADOW_ASSASSIN_BOOTS.asItem());
+
         basicItem(ISSRegisters.Item.SOUL_HELMET.asItem());
         basicItem(ISSRegisters.Item.SOUL_CHEST_PLATE.asItem());
         basicItem(ISSRegisters.Item.SOUL_LEGGINGS.asItem());
