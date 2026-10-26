@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.utils.LRColors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -14,11 +15,7 @@ import javax.annotation.Nullable;
 public class ComponentHolders {
     public static class Effects {
         public static Component infernoScorch() {
-            return Component.translatable("legendary_relics.special_effect.inferno_scorch").withStyle(ChatFormatting.RED);
-        }
-
-        public static Component soulGather() {
-            return Component.translatable("legendary_relics.stack.soul_gather").withStyle(ChatFormatting.AQUA);
+            return LRSpecialMobEffects.INFERNO_SCORCH.value().getDisplayName();
         }
     }
 

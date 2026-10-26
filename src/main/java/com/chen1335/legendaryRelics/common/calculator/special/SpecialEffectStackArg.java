@@ -62,7 +62,7 @@ public class SpecialEffectStackArg implements OperationUnit {
 
     @Override
     public Component expand(CalculatorArg calculatorArg) {
-        return Component.literal(Integer.toString((int) getValue(calculatorArg)));
+        return type.value().getDisplayName();
     }
 
     @Override

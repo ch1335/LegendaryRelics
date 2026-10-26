@@ -92,7 +92,7 @@ public class TwistedArmorSetEffect extends SetEffect {
     }
 
     public static Component phaseShootingComponent() {
-        return Component.empty().append("").append(Component.translatable("legendary_relics.stack.phase_shooting").withStyle(ChatFormatting.DARK_AQUA));
+        return LRSpecialMobEffects.PHASE_SHOOTING.value().getDisplayName();
     }
 
 

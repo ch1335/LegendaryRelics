@@ -116,7 +116,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
     }
 
     public static Component lurkComponent() {
-        return Component.empty().append("").append(Component.translatable("legendary_relics.special_effect.lurk").withStyle(ChatFormatting.DARK_AQUA));
+        return LRSpecialMobEffects.LURK.value().getDisplayName();
     }
 
     public static ShadowAssassinEffectInstance getEffectInstance(LivingEntity living) {

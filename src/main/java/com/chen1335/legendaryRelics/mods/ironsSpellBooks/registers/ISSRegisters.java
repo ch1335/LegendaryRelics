@@ -92,6 +92,7 @@ public class ISSRegisters {
         public static final DeferredHolder<MobEffectType<?>, MobEffectType<SoulGather>> SOUL_GATHER = SPECIAL_MOB_EFFECT_TYPES.register("soul_gather", MobEffectType.Builder.<SoulGather>builder()
                 .factory(SoulGather::new)
                 .renderIcon()
+                .style(net.minecraft.network.chat.Style.EMPTY.withColor(net.minecraft.ChatFormatting.AQUA))
                 .build());
 
         public static final DeferredHolder<MobEffectType<?>, MobEffectType<MagicSuppression>> MAGIC_SUPPRESSION = SPECIAL_MOB_EFFECT_TYPES.register("magic_suppression", MobEffectType.Builder.<MagicSuppression>builder()

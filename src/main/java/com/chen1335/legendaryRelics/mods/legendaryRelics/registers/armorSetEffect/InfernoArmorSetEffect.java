@@ -148,7 +148,7 @@ public class InfernoArmorSetEffect extends SetEffect {
     }
 
     public static Component doomComponent() {
-        return Component.empty().append("").append(Component.translatable("legendary_relics.stack.doom").withStyle(ChatFormatting.DARK_RED));
+        return LRSpecialMobEffects.DOOM.value().getDisplayName();
     }
 
     @Override

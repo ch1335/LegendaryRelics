@@ -12,6 +12,8 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -34,16 +36,19 @@ public class LRSpecialMobEffects {
             .factory(InfernoScorch::new)
             .renderIcon()
             .category(MobEffectCategory.HARMFUL)
+            .style(Style.EMPTY.withColor(ChatFormatting.RED))
             .build());
 
     public static final DeferredHolder<MobEffectType<?>, MobEffectType<Doom>> DOOM = SPECIAL_MOB_EFFECT_TYPES.register("doom", MobEffectType.Builder.<Doom>builder()
             .factory(Doom::new)
             .renderIcon()
+            .style(Style.EMPTY.withColor(ChatFormatting.DARK_RED))
             .build());
 
     public static final DeferredHolder<MobEffectType<?>, MobEffectType<PhaseShooting>> PHASE_SHOOTING = SPECIAL_MOB_EFFECT_TYPES.register("phase_shooting", MobEffectType.Builder.<PhaseShooting>builder()
             .factory(PhaseShooting::new)
             .renderIcon()
+            .style(Style.EMPTY.withColor(ChatFormatting.DARK_AQUA))
             .build());
 
     public static final DeferredHolder<MobEffectType<?>, MobEffectType<EnderSuppression>> ENDER_SUPPRESSION = SPECIAL_MOB_EFFECT_TYPES.register("ender_suppression", MobEffectType.Builder.<EnderSuppression>builder()
@@ -68,6 +73,7 @@ public class LRSpecialMobEffects {
             .factory(Lurk::new)
             .renderIcon()
             .category(MobEffectCategory.BENEFICIAL)
+            .style(Style.EMPTY.withColor(ChatFormatting.DARK_AQUA))
             .build());
 
     /** 烈焰飞轮的环绕调度效果：HUD 图标上显示当前飞轮数量，扇形显示剩余时间。 */

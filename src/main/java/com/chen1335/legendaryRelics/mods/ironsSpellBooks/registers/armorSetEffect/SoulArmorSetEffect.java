@@ -137,7 +137,7 @@ public class SoulArmorSetEffect extends SetEffect {
     }
 
     public static Component soulGatherComponent() {
-        return ComponentHolders.Effects.soulGather();
+        return ISSRegisters.SpecialMobEffect.SOUL_GATHER.value().getDisplayName();
     }
 
     @Override
