@@ -14,6 +14,7 @@ import com.chen1335.legendaryRelics.config.LRClientConfig;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.Tier;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.GameTaskEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.ConvertItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftTypes;
 import com.chen1335.legendaryRelics.utils.ModProxy;
@@ -114,6 +115,7 @@ public class LegendaryRelics {
         AutoRegister.init();
 
         CraftTypes.register(id("craft_item"), CraftItem.CODEC, CraftItem.STREAM_CODEC);
+        CraftTypes.register(id("convert_item"), ConvertItem.CODEC, ConvertItem.STREAM_CODEC);
     }
 
     public static boolean isApothicAttributesExtensionLoaded() {

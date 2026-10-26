@@ -38,9 +38,7 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-/**
- * 蓄势待发：停止攻击后逐渐叠加隐匿层数，攻击时一次性释放。
- */
+
 public class ShadowAssassinArmorSetEffect extends SetEffect {
 
     @Calculator
@@ -69,9 +67,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
 
-    /**
-     * 本次攻击的伤害修正：每层倍率 × 当前隐匿层数。
-     */
+
     @Calculator
     public static final FinalCalculator ATTACK_DAMAGE_MULTIPLIER = FinalCalculator.of(
             Add.of(Constant.of(1).withFormat(Format.PERCENTAGE),

@@ -8,6 +8,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 
 public record ModifyItem() implements ICraftType{
+
     @Override
     public MapCodec<? extends ICraftType> codec() {
         return null;
@@ -22,5 +23,6 @@ public record ModifyItem() implements ICraftType{
     public ItemStack assemble(EquipmentWorkbenchCraftInput input, HolderLookup.Provider registries) {
         return null;
     }
+
 
 }

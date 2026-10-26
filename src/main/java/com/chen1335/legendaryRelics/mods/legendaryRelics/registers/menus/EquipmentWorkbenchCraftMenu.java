@@ -26,6 +26,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -100,13 +101,10 @@ public class EquipmentWorkbenchCraftMenu extends AbstractContainerMenu {
             EquipmentWorkbenchCraftInput input = new EquipmentWorkbenchCraftInput(items.getFirst(), secondary);
             Optional<RecipeHolder<EquipmentWorkbenchCraft>> recipeFor = level.getRecipeManager().getRecipeFor(LRRecipe.EQUIPMENT_CRAFT.value(), input, level);
             if (recipeFor.isPresent()) {
-                EquipmentWorkbenchCraft value = recipeFor.get().value();
-                ItemStack item = getSlot(1).getItem();
-                ItemStack result = value.result().assemble(input, level.registryAccess());
-                DataComponentPatch componentsPatch = item.getComponentsPatch();
-                ((PatchedDataComponentMap) result.getComponents()).applyPatch(componentsPatch);
+                ItemStack result = recipeFor.get().value().result().assemble(input, level.registryAccess());
                 PlayerCraftEvent post = NeoForge.EVENT_BUS.post(new PlayerCraftEvent(player, recipeFor.get(), result));
                 getSlot(0).set(post.getResult());
+                EventHooks.firePlayerCraftingEvent(player, post.getResult(), container);
                 resultSlot.currentRecipe = recipeFor.get();
             } else {
                 getSlot(0).set(ItemStack.EMPTY);

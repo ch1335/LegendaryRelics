@@ -1,7 +1,9 @@
 package com.chen1335.legendaryRelics.effectInstances;
 
 import com.chen1335.equipmentEffectLib.common.EffectInstance;
+import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.ShadowAssassinArmorSetEffect;
+import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
@@ -25,6 +27,27 @@ public class ShadowAssassinEffectInstance extends EffectInstance {
     @Override
     public void tick(LivingEntity living) {
         ShadowAssassinArmorSetEffect.tickStacks(living, this);
+    }
+
+    @Override
+    public void onPieceUpdate(LivingEntity living, int piece) {
+        if (piece < 2) {
+            clearStacks(living);
+        }
+    }
+
+    @Override
+    public void onRemove(LivingEntity living) {
+        clearStacks(living);
+    }
+
+    private void clearStacks(LivingEntity living) {
+        resetAttackTimer();
+        lastAttackTick = -1;
+        attackDamageMultiplier = 0;
+        attackCritChance = 0;
+        attackCritDamage = 0;
+        SpecialEffectAPI.removeEffect(living, living.getUUID(), LRSpecialMobEffects.LURK.value());
     }
 
     public void resetAttackTimer() {
