@@ -49,11 +49,10 @@ public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
     }
 
 
-
     public static EquipmentWorkbenchCraftBuilder convertItem(ItemStack result) {
-        EquipmentWorkbenchCraftBuilder equipmentWorkbenchCraftBuilder = new EquipmentWorkbenchCraftBuilder();
-        equipmentWorkbenchCraftBuilder.result = ConvertItem.of(result);
-        return equipmentWorkbenchCraftBuilder;
+        EquipmentWorkbenchCraftBuilder builder = new EquipmentWorkbenchCraftBuilder();
+        builder.result = ConvertItem.of(result);
+        return builder;
     }
 
     public static EquipmentWorkbenchCraftBuilder convertItem(ItemLike result, ItemLike mainItem) {
@@ -103,8 +102,10 @@ public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
 
     @Override
     public Item getResult() {
-        if (result instanceof CraftItem craftItem) {
-            return craftItem.itemStack().getItem();
+        if (result instanceof CraftItem(ItemStack itemStack)) {
+            return itemStack.getItem();
+        } else if (result instanceof ConvertItem(ItemStack itemStack)) {
+            return itemStack.getItem();
         }
         return Items.AIR;
     }
@@ -112,9 +113,7 @@ public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput) {
-        if (result instanceof CraftItem) {
-            RecipeBuilder.super.save(recipeOutput);
-        }
+        RecipeBuilder.super.save(recipeOutput);
     }
 
     @Override

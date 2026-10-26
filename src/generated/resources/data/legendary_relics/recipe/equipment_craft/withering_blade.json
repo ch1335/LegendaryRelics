@@ -4,7 +4,7 @@
     "item": "legendary_relics:wither_spirit"
   },
   "result": {
-    "type": "legendary_relics:craft_item",
+    "type": "legendary_relics:convert_item",
     "item": {
       "count": 1,
       "id": "legendary_relics:withering_blade"

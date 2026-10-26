@@ -4,7 +4,7 @@
     "item": "minecraft:netherite_leggings"
   },
   "result": {
-    "type": "legendary_relics:craft_item",
+    "type": "legendary_relics:convert_item",
     "item": {
       "count": 1,
       "id": "legendary_relics:twisted_leggings"
