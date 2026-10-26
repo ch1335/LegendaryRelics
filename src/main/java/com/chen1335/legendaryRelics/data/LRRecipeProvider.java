@@ -11,7 +11,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
@@ -28,7 +27,7 @@ public class LRRecipeProvider extends RecipeProvider {
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput, HolderLookup.@NotNull Provider holderLookup) {
         RecipeOutput issOutput = recipeOutput.withConditions(new ModLoadedCondition("irons_spellbooks"));
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.LAST_WHISPER, LRItems.WITHER_SPIRIT)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.LAST_WHISPER, LRItems.WITHER_SPIRIT)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT, 2)
                 .addSecondary(Items.OBSIDIAN, 2)
                 .addSecondary(Items.STRING, 3)
@@ -47,25 +46,25 @@ public class LRRecipeProvider extends RecipeProvider {
                 .showNotification(false)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.PURGATORY_TALISMAN, LRItems.NETHER_TALISMAN)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.PURGATORY_TALISMAN, LRItems.NETHER_TALISMAN)
                 .addSecondary(LRItems.LAVA_RING, LRItems.NETHER_RING, LRItems.ANCIENT_FRAGMENT)
                 .addSecondary(Items.GOLD_INGOT, 2)
                 .save(recipeOutput);
 
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.PERSEVERANCE_NECKLACE, LRItems.HEALING_TALISMAN)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.PERSEVERANCE_NECKLACE, LRItems.HEALING_TALISMAN)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT)
                 .addSecondary(Items.DIAMOND, 3)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_HELMET, Items.NETHERITE_HELMET)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.BLACK_DRAGON_HELMET, Items.NETHERITE_HELMET)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 3)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.BLACK_DRAGON_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
                 .addSecondary(Items.ELYTRA)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
@@ -74,47 +73,47 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(Items.PHANTOM_MEMBRANE, 4)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_LEGGINGS, Items.NETHERITE_LEGGINGS)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.BLACK_DRAGON_LEGGINGS, Items.NETHERITE_LEGGINGS)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 3)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.BLACK_DRAGON_BOOTS, Items.NETHERITE_BOOTS)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.BLACK_DRAGON_BOOTS, Items.NETHERITE_BOOTS)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(Ingredient.of(LRTags.Items.SCALES_ENDER_DRAGON), 3)
                 .addSecondary(Items.OBSIDIAN, 4)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_HELMET, ItemRegistry.NETHERITE_MAGE_HELMET.get())
+        EquipmentWorkbenchCraftBuilder.convertItem(ISSRegisters.Item.SOUL_HELMET, ItemRegistry.NETHERITE_MAGE_HELMET.get())
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
                 .save(issOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_CHEST_PLATE, ItemRegistry.NETHERITE_MAGE_CHESTPLATE.get())
+        EquipmentWorkbenchCraftBuilder.convertItem(ISSRegisters.Item.SOUL_CHEST_PLATE, ItemRegistry.NETHERITE_MAGE_CHESTPLATE.get())
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
                 .save(issOutput);
-        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_LEGGINGS, ItemRegistry.NETHERITE_MAGE_LEGGINGS.get())
+        EquipmentWorkbenchCraftBuilder.convertItem(ISSRegisters.Item.SOUL_LEGGINGS, ItemRegistry.NETHERITE_MAGE_LEGGINGS.get())
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
                 .save(issOutput);
-        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.SOUL_BOOTS, ItemRegistry.NETHERITE_MAGE_BOOTS.get())
+        EquipmentWorkbenchCraftBuilder.convertItem(ISSRegisters.Item.SOUL_BOOTS, ItemRegistry.NETHERITE_MAGE_BOOTS.get())
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.GHAST_TEAR, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.SOUL_SAND, 4)
                 .save(issOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(ISSRegisters.Item.MAGIC_BREAKER, ItemRegistry.SPELLBREAKER.get())
+        EquipmentWorkbenchCraftBuilder.convertItem(ISSRegisters.Item.MAGIC_BREAKER, ItemRegistry.SPELLBREAKER.get())
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(Items.CRYING_OBSIDIAN, 2)
@@ -123,7 +122,7 @@ public class LRRecipeProvider extends RecipeProvider {
                 .addSecondary(ItemRegistry.CINDER_ESSENCE.get(), 4)
                 .save(issOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.HOLY_CLOAK, Items.LEATHER_CHESTPLATE)
+        EquipmentWorkbenchCraftBuilder.craftItem(LRItems.HOLY_CLOAK, Items.LEATHER_CHESTPLATE)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(Items.WHITE_WOOL, 4)
@@ -154,12 +153,12 @@ public class LRRecipeProvider extends RecipeProvider {
                 .save(recipeOutput);
 
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.WITHERING_BLADE, LRItems.WITHER_SPIRIT)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.WITHERING_BLADE, LRItems.WITHER_SPIRIT)
                 .addSecondary(Items.CRYING_OBSIDIAN, Items.NETHERITE_INGOT)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT, 2)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.REAPER, LRItems.WITHER_SPIRIT)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.REAPER, LRItems.WITHER_SPIRIT)
                 .addSecondary(Items.NETHERITE_INGOT, 2)
                 .addSecondary(LRItems.DARK_GOLD_FRAGMENT, 2)
                 .addSecondary(Items.OBSIDIAN, 3)
@@ -187,25 +186,25 @@ public class LRRecipeProvider extends RecipeProvider {
                 .showNotification(true)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_HELMET, Items.NETHERITE_HELMET)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.INFERNO_HELMET, Items.NETHERITE_HELMET)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.BLAZE_ROD, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.NETHER_WART_BLOCK, 4)
                 .save(recipeOutput);
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.INFERNO_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.BLAZE_ROD, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.NETHER_WART_BLOCK, 4)
                 .save(recipeOutput);
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_LEGGINGS, Items.NETHERITE_LEGGINGS)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.INFERNO_LEGGINGS, Items.NETHERITE_LEGGINGS)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.BLAZE_ROD, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.NETHER_WART_BLOCK, 4)
                 .save(recipeOutput);
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.INFERNO_BOOTS, Items.NETHERITE_BOOTS)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.INFERNO_BOOTS, Items.NETHERITE_BOOTS)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.BLAZE_ROD, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
@@ -213,39 +212,39 @@ public class LRRecipeProvider extends RecipeProvider {
                 .save(recipeOutput);
 
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_HELMET, Items.NETHERITE_HELMET)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.TWISTED_HELMET, Items.NETHERITE_HELMET)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.ENDER_PEARL, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.WARPED_WART_BLOCK, 4)
                 .save(recipeOutput);
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.TWISTED_CHEST_PLATE, Items.NETHERITE_CHESTPLATE)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.ENDER_PEARL, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.WARPED_WART_BLOCK, 4)
                 .save(recipeOutput);
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_LEGGINGS, Items.NETHERITE_LEGGINGS)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.TWISTED_LEGGINGS, Items.NETHERITE_LEGGINGS)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.ENDER_PEARL, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.WARPED_WART_BLOCK, 4)
                 .save(recipeOutput);
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.TWISTED_BOOTS, Items.NETHERITE_BOOTS)
+        EquipmentWorkbenchCraftBuilder.convertItem(LRItems.TWISTED_BOOTS, Items.NETHERITE_BOOTS)
                 .addSecondary(LRItems.WITHER_SPIRIT, LRItems.TYRANNICAL_ESSENCE)
                 .addSecondary(Items.ENDER_PEARL, 2)
                 .addSecondary(Items.GOLD_INGOT, 4)
                 .addSecondary(Items.WARPED_WART_BLOCK, 4)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.FROSTHEART_PENDANT, LRItems.ZENITH_ICE)
+        EquipmentWorkbenchCraftBuilder.craftItem(LRItems.FROSTHEART_PENDANT, LRItems.ZENITH_ICE)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(Items.PACKED_ICE, 2)
                 .addSecondary(Items.DIAMOND, 2)
                 .addSecondary(Items.STRING, 1)
                 .save(recipeOutput);
 
-        EquipmentWorkbenchCraftBuilder.builder(LRItems.ICEBREAKER, LRItems.ZENITH_ICE)
+        EquipmentWorkbenchCraftBuilder.craftItem(LRItems.ICEBREAKER, LRItems.ZENITH_ICE)
                 .addSecondary(LRItems.ANCIENT_FRAGMENT, 2)
                 .addSecondary(Items.PACKED_ICE, 2)
                 .addSecondary(Items.IRON_BLOCK, 1)

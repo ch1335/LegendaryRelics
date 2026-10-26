@@ -7,6 +7,7 @@ import com.chen1335.legendaryRelics.compat.jei.LRJeiPlugin;
 import com.chen1335.legendaryRelics.events.CraftResultJeiTooltipEvent;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.blocks.EquipmentWorkbench;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.EquipmentWorkbenchCraftInput;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.ModifyItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.ingredients.IngredientWithSize;
@@ -28,6 +29,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.neoforge.common.NeoForge;
@@ -96,17 +98,6 @@ public class EquipmentCraftCategory implements IRecipeCategory<RecipeHolder<Equi
 
         EquipmentWorkbenchCraft craft = holder.value();
 
-        if (craft.result() instanceof CraftItem craftItem) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, x + 80, y + 4).addItemStack(craftItem.itemStack()).addRichTooltipCallback((iRecipeSlotView, iTooltipBuilder) -> {
-                iTooltipBuilder.add(Component.translatable("legendary_relics.keep_data"));
-                NeoForge.EVENT_BUS.post(new CraftResultJeiTooltipEvent(holder, iRecipeSlotView, iTooltipBuilder));
-            });
-        } else if (craft.result() instanceof ModifyItem modifyItem) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, x + 80, y + 4).addIngredients(craft.mainItem()).addRichTooltipCallback((iRecipeSlotView, iTooltipBuilder) -> {
-                iTooltipBuilder.add(Component.translatable("legendary_relics.keep_data"));
-                NeoForge.EVENT_BUS.post(new CraftResultJeiTooltipEvent(holder, iRecipeSlotView, iTooltipBuilder));
-            });
-        }
 
         builder.addSlot(RecipeIngredientRole.INPUT, x, y + 4).addIngredients(craft.mainItem());
 
@@ -120,6 +111,17 @@ public class EquipmentCraftCategory implements IRecipeCategory<RecipeHolder<Equi
             builder.addSlot(RecipeIngredientRole.INPUT, x1, y1).addIngredients(VanillaTypes.ITEM_STACK, ingredientWithSize.getItemStacks());
         }
 
+
+        if (craft.result() instanceof CraftItem(ItemStack itemStack)) {
+            builder.addSlot(RecipeIngredientRole.OUTPUT, x + 80, y + 4).addItemStack(itemStack).addRichTooltipCallback((iRecipeSlotView, iTooltipBuilder) -> {
+                NeoForge.EVENT_BUS.post(new CraftResultJeiTooltipEvent(holder, iRecipeSlotView, iTooltipBuilder));
+            });
+        } else if (craft.result() instanceof ModifyItem modifyItem) {
+            builder.addSlot(RecipeIngredientRole.OUTPUT, x + 80, y + 4).addIngredients(craft.mainItem()).addRichTooltipCallback((iRecipeSlotView, iTooltipBuilder) -> {
+                iTooltipBuilder.add(Component.translatable("legendary_relics.keep_data"));
+                NeoForge.EVENT_BUS.post(new CraftResultJeiTooltipEvent(holder, iRecipeSlotView, iTooltipBuilder));
+            });
+        }
     }
 
     @Override

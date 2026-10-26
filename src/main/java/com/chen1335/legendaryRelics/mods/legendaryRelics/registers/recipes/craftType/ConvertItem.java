@@ -20,6 +20,10 @@ public record ConvertItem(ItemStack itemStack) implements ICraftType {
             ConvertItem::new
     );
 
+    public static ICraftType of(ItemStack result) {
+        return new ConvertItem(result);
+    }
+
     @Override
     public MapCodec<? extends ICraftType> codec() {
         return CODEC;

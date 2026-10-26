@@ -1,6 +1,7 @@
 package com.chen1335.legendaryRelics.data.recipeBuilders;
 
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.EquipmentWorkbenchCraft;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.ConvertItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.CraftItem;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.craftType.ICraftType;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.recipes.ingredients.IngredientWithSize;
@@ -28,20 +29,41 @@ public class EquipmentWorkbenchCraftBuilder implements RecipeBuilder {
 
     }
 
-    public static EquipmentWorkbenchCraftBuilder builder(ItemStack result) {
+    public static EquipmentWorkbenchCraftBuilder craftItem(ItemStack result) {
         EquipmentWorkbenchCraftBuilder equipmentWorkbenchCraftBuilder = new EquipmentWorkbenchCraftBuilder();
         equipmentWorkbenchCraftBuilder.result = CraftItem.of(result);
         return equipmentWorkbenchCraftBuilder;
     }
 
-    public static EquipmentWorkbenchCraftBuilder builder(ItemLike result, ItemLike mainItem) {
-        EquipmentWorkbenchCraftBuilder builder = builder(result.asItem().getDefaultInstance());
+    public static EquipmentWorkbenchCraftBuilder craftItem(ItemLike result, ItemLike mainItem) {
+        EquipmentWorkbenchCraftBuilder builder = new EquipmentWorkbenchCraftBuilder();
+        builder.result = CraftItem.of(result.asItem().getDefaultInstance());
         builder.mainItem = Ingredient.of(mainItem);
         return builder;
     }
 
-    public static EquipmentWorkbenchCraftBuilder builder(ItemLike result, TagKey<Item> tagKey) {
-        EquipmentWorkbenchCraftBuilder builder = builder(result.asItem().getDefaultInstance());
+    public static EquipmentWorkbenchCraftBuilder convertItem(ICraftType result) {
+        EquipmentWorkbenchCraftBuilder equipmentWorkbenchCraftBuilder = new EquipmentWorkbenchCraftBuilder();
+        equipmentWorkbenchCraftBuilder.result = result;
+        return equipmentWorkbenchCraftBuilder;
+    }
+
+
+
+    public static EquipmentWorkbenchCraftBuilder convertItem(ItemStack result) {
+        EquipmentWorkbenchCraftBuilder equipmentWorkbenchCraftBuilder = new EquipmentWorkbenchCraftBuilder();
+        equipmentWorkbenchCraftBuilder.result = ConvertItem.of(result);
+        return equipmentWorkbenchCraftBuilder;
+    }
+
+    public static EquipmentWorkbenchCraftBuilder convertItem(ItemLike result, ItemLike mainItem) {
+        EquipmentWorkbenchCraftBuilder builder = convertItem(result.asItem().getDefaultInstance());
+        builder.mainItem = Ingredient.of(mainItem);
+        return builder;
+    }
+
+    public static EquipmentWorkbenchCraftBuilder convertItem(ItemLike result, TagKey<Item> tagKey) {
+        EquipmentWorkbenchCraftBuilder builder = convertItem(result.asItem().getDefaultInstance());
         builder.mainItem = Ingredient.of(tagKey);
         return builder;
     }
