@@ -37,7 +37,7 @@ public class ShadowDagger extends LRMeleeWeaponBase implements IChargeAbleItem {
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
         Ambush effect = EquipmentEffectAPI.getEffect(stack, LREquipmentEffectTypes.AMBUSH.value());
-        if (effect != null) {
+        if (effect != null && !livingEntity.level().isClientSide) {
             effect.handleReleaseUsing(stack, level, livingEntity, timeLeft);
         }
     }

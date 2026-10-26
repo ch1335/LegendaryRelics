@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas;
 
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.animation.PlayerAnimationState;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
@@ -12,9 +13,8 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.IdentityHashMap;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class LRPlayerData implements INBTSerializable<CompoundTag> {
     public boolean hasGiveBook = false;
@@ -45,6 +45,8 @@ public class LRPlayerData implements INBTSerializable<CompoundTag> {
     public boolean isAttacking(Entity entity) {
         return attackingTarget.contains(entity.getId());
     }
+
+
 
     public @Nullable Entity getLastedTarget(Level level) {
         Entity entity = lastedTargetId == -1 ? null : level.getEntity(lastedTargetId);

@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas;
 
+import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.API.objects.LRAttachmentTypes;
 import com.chen1335.legendaryRelics.common.EquipmentEffectCooldownManager;
 import com.chen1335.legendaryRelics.common.TimeLimitedAttributeBonusManager;
@@ -12,6 +13,10 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnknownNullability;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
 public class LREntityData implements INBTSerializable<CompoundTag> {
     public int reaperPickCooldown = 0;
 
@@ -21,6 +26,24 @@ public class LREntityData implements INBTSerializable<CompoundTag> {
 
     /** 神圣斗篷的飘扬状态。纯客户端渲染数据，不参与 NBT 序列化。 */
     public final CloakRenderData cloakRender = new CloakRenderData();
+
+
+    private final Map<Object, Consumer<LivingGetAttributeAdjustmentEvent>> map = new HashMap<>();
+
+    public void addAdjustmentConsumer(Object o, Consumer<LivingGetAttributeAdjustmentEvent> consumer) {
+        map.put(o, consumer);
+    }
+
+    public void removeAdjustmentConsumer(Object o) {
+        map.remove(o);
+    }
+
+    public void applyAdjustment(Object o, LivingGetAttributeAdjustmentEvent event) {
+        Consumer<LivingGetAttributeAdjustmentEvent> consumer = map.get(o);
+        if (consumer != null) {
+            consumer.accept(event);
+        }
+    }
 
     @Override
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {

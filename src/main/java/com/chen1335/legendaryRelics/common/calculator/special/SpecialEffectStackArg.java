@@ -12,11 +12,12 @@ import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import com.chen1335.specialEffectLib.mobEffect.SpecialMobEffect;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Optional;
 
@@ -26,23 +27,24 @@ import java.util.Optional;
 public class SpecialEffectStackArg implements OperationUnit {
 
     public static final MapCodec<SpecialEffectStackArg> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("effect").forGetter(arg -> arg.effectId)
+            RegisterTypes.SPECIAL_EFFECT_TYPE.holderByNameCodec().fieldOf("effect").forGetter(arg -> arg.type)
     ).apply(instance, SpecialEffectStackArg::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, SpecialEffectStackArg> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC,
-            arg -> arg.effectId,
+            ByteBufCodecs.holderRegistry(RegisterTypes.SPECIAL_EFFECT_KEY),
+            arg -> arg.type,
             SpecialEffectStackArg::new
     );
 
-    private final ResourceLocation effectId;
+    private final Holder<MobEffectType<?>> type;
 
-    public SpecialEffectStackArg(ResourceLocation effectId) {
-        this.effectId = effectId;
+    public SpecialEffectStackArg(Holder<MobEffectType<?>> type) {
+        this.type = type;
     }
 
-    public SpecialEffectStackArg(MobEffectType<?> effectType) {
-        this(RegisterTypes.SPECIAL_EFFECT_TYPE.getKey(effectType));
+
+    public static SpecialEffectStackArg of(Holder<MobEffectType<?>> type) {
+        return new SpecialEffectStackArg(type);
     }
 
     @Override
@@ -51,11 +53,7 @@ public class SpecialEffectStackArg implements OperationUnit {
         if (entity == null) {
             return 0;
         }
-        MobEffectType<?> effectType = RegisterTypes.SPECIAL_EFFECT_TYPE.get(this.effectId);
-        if (effectType == null) {
-            return 0;
-        }
-        Optional<? extends SpecialMobEffect> effect = SpecialEffectAPI.getEffect(entity, entity.getUUID(), effectType);
+        Optional<? extends SpecialMobEffect> effect = SpecialEffectAPI.getEffect(entity, entity.getUUID(), type.value());
         if (effect.isPresent() && effect.get() instanceof StackAbleEffect stackAble) {
             return stackAble.getStack();
         }
@@ -80,13 +78,5 @@ public class SpecialEffectStackArg implements OperationUnit {
     @Override
     public OperationType getType() {
         return CalculatorRegister.SPECIAL_EFFECT_STACK.get();
-    }
-
-    public static SpecialEffectStackArg of(MobEffectType<?> effectType) {
-        return new SpecialEffectStackArg(effectType);
-    }
-
-    public static SpecialEffectStackArg lurk() {
-        return new SpecialEffectStackArg(LRSpecialMobEffects.LURK.getId());
     }
 }

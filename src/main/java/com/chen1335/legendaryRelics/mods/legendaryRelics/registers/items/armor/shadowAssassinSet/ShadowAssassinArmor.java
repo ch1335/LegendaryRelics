@@ -32,9 +32,9 @@ public class ShadowAssassinArmor extends LRGeoArmor {
         ResourceLocation resourcelocation = LegendaryRelics.id("armor.shadow_assassin." + type.getName());
         EquipmentSlotGroup equipmentslotgroup = EquipmentSlotGroup.bySlot(type.getSlot());
         return this.getDefaultAttributeModifiers().withModifierAdded(
-                AttributesGetter.critChance(), new AttributeModifier(resourcelocation, 0.1, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup
+                AttributesGetter.critChance(), new AttributeModifier(resourcelocation, 0.025, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup
         ).withModifierAdded(
-                AttributesGetter.critChance(), new AttributeModifier(resourcelocation, 0.05, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup
+                AttributesGetter.critDamame(), new AttributeModifier(resourcelocation, 0.05, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup
 
         );
     }

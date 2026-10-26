@@ -1,5 +1,8 @@
 package com.chen1335.legendaryRelics.common;
 
+import com.chen1335.arcanumlib.common.attachmentTypes.EntityData;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
+import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.AttackingContext;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LivingHurtContext;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LootInfoContext;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
@@ -7,15 +10,18 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.ShadowAssassinArmorSetEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.TwistedArmorSetEffect;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.BlackDragonChestPlateEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.armorEffect.FallImmunity;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.*;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Ambush;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Backstab;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.Perforation;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects.SoulEater;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.items.armor.LRArmorBase;
 import com.chen1335.specialEffectLib.API.SpecialEffectAddedEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
@@ -32,6 +38,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
@@ -60,16 +67,24 @@ public class GamePlayEventHandler {
 
     @SubscribeEvent
     public static void LivingGetAttributeAdjustmentEvent(LivingGetAttributeAdjustmentEvent event) {
-        if (event.getContext() instanceof LivingHurtContext(LivingEntity target, DamageSource source, float damage)) {
+        if (event.getContext() instanceof AttackingContext(LivingEntity attacker, Entity entity)) {
+            if (entity instanceof LivingEntity target) {
+                ShadowAssassinArmorSetEffect.getAttributeAdjustment(event, target, attacker);
+                Backstab.getAttributeAdjustment(event, target, attacker);
+                LREntityData data = LREntityData.getData(attacker);
+                data.applyAdjustment(Ambush.AMBUSH, event);
+            }
+        } else if (event.getContext() instanceof LivingHurtContext(
+                LivingEntity target, DamageSource source, float damage
+        )) {
             if (source.getEntity() instanceof LivingEntity attacker) {
                 BlackDragonChestPlateEffect.getAttributeAdjustment(event, source, target, attacker);
                 Redemption.getAttributeAdjustment(event, source, target, attacker);
                 InFireTargetDamageIncrease.getAttributeAdjustment(event, source, target, attacker);
                 AgglomerationMaliceEffect.getAttributeAdjustment(event, source, target, attacker);
-                Backstab.getAttributeAdjustment(event, source, target, attacker);
-                ShadowAssassinArmorSetEffect.getAttributeAdjustment(event, source, target, attacker);
+
             }
-            LRArmorBase.handleAttributeAdjustment(event, target,  source,  damage);
+            LRArmorBase.handleAttributeAdjustment(event, target, source, damage);
             FireDamageReduce.getAttributeAdjustment(event, source, target);
         } else if (event.getContext() instanceof LootInfoContext(
                 LootContext lootContext, LootContextParamSet paramSet
@@ -145,7 +160,7 @@ public class GamePlayEventHandler {
         HealIncreaseEffect.LivingHealEvent(event);
     }
 
-    private static <T extends ICancellableEvent> void applyEvent(T event, Consumer<T> consumer){
+    private static <T extends ICancellableEvent> void applyEvent(T event, Consumer<T> consumer) {
         if (event.isCanceled()) {
             return;
         }

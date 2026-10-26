@@ -1,5 +1,6 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect;
 
+import com.chen1335.arcanumlib.common.attachmentTypes.EntityData;
 import com.chen1335.arcanumlib.modules.attribute.ArcanumAttributes;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
@@ -10,6 +11,7 @@ import com.chen1335.equipmentEffectLib.equipmentSetEffect.SetEffect;
 import com.chen1335.equipmentEffectLib.utils.CombatUtil;
 import com.chen1335.legendaryRelics.API.objects.LRSetsEffects;
 import com.chen1335.legendaryRelics.API.objects.LRSpecialMobEffects;
+import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.common.ComponentHolders;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
@@ -75,7 +77,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
             Add.of(Constant.of(1).withFormat(Format.PERCENTAGE),
                     Mul.of(
                             TieredBonus.of(List.of(0.032F, 0.032F, 0.04F, 0.05F), Format.PERCENTAGE),
-                            SpecialEffectStackArg.lurk()
+                            SpecialEffectStackArg.of(LRSpecialMobEffects.LURK)
                     )
             )
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.RED.getStyle()).build());
@@ -156,11 +158,9 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
     /**
      * 严格近战攻击会重置计时，并结算层数提供的暴击与伤害修正，随后清空层数。
      */
-    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, DamageSource source,
+    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event,
                                               LivingEntity target, LivingEntity attacker) {
-        if (!CombatUtil.isStrictAttack(source)) {
-            return;
-        }
+
         ShadowAssassinEffectInstance instance = getEffectInstance(attacker);
         if (instance == null) {
             return;
@@ -173,7 +173,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
         // 其余目标共用同一份加成；单目标的一次 hurt 只会结算一次。
         if (instance.lastAttackTick != attacker.tickCount) {
             instance.lastAttackTick = attacker.tickCount;
-            instance.attackDamageBonus = 0;
+            instance.attackDamageMultiplier = 0;
             instance.attackCritChance = 0;
             instance.attackCritDamage = 0;
             Lurk lurk = SpecialEffectAPI.getEffect(attacker, attacker.getUUID(), LRSpecialMobEffects.LURK.value()).orElse(null);
@@ -185,7 +185,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
                         + (full ? FULL_CRIT_CHANCE.getValue(args) : 0);
                 instance.attackCritDamage = CRIT_DAMAGE_PER_STACK.getValue(args) * stacks
                         + (full ? FULL_CRIT_DAMAGE.getValue(args) : 0);
-                instance.attackDamageBonus = ATTACK_DAMAGE_MULTIPLIER.getValue(args);
+                instance.attackDamageMultiplier = ATTACK_DAMAGE_MULTIPLIER.getValue(args);
                 SpecialEffectAPI.removeEffect(attacker, attacker.getUUID(), LRSpecialMobEffects.LURK.value());
             }
         }
@@ -197,9 +197,9 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
             event.getAdjustment(attacker, ALObjects.Attributes.CRIT_DAMAGE)
                     .add(AttributeAdjustment.Operation.ADD_VALUE, instance.attackCritDamage);
         }
-        if (instance.attackDamageBonus > 0) {
+        if (instance.attackDamageMultiplier > 0) {
             event.getAdjustment(attacker, ArcanumAttributes.DAMAGE_MULTIPLIER)
-                    .add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, instance.attackDamageBonus-1);
+                    .add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, instance.attackDamageMultiplier -1);
         }
     }
 }

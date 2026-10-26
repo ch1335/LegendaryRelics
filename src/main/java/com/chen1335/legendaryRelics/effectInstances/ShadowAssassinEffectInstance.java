@@ -14,7 +14,7 @@ public class ShadowAssassinEffectInstance extends EffectInstance {
     public int ticksSinceAttack = 0;
     public int stackTicks = 0;
     public int lastAttackTick = -1;
-    public float attackDamageBonus = 0;
+    public float attackDamageMultiplier = 0;
     public float attackCritChance = 0;
     public float attackCritDamage = 0;
 

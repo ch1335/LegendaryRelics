@@ -1,10 +1,11 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.weaponEffects;
 
-import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AdjustmentHelper;
+import com.chen1335.arcanumlib.common.attachmentTypes.EntityData;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.util.ComponentUtil;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
 import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
+import com.chen1335.legendaryRelics.common.AttributesGetter;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -14,6 +15,8 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Constant;
 import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import com.chen1335.legendaryRelics.common.calculator.special.EquipmentEffectLevelArg;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
 import com.chen1335.legendaryRelics.utils.LRUtil;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import net.minecraft.ChatFormatting;
@@ -33,10 +36,11 @@ import net.minecraft.world.phys.HitResult;
 import java.util.List;
 
 public class Ambush extends LRWeaponEffect {
+    public static final Object AMBUSH = new Object();
     @Calculator
     public static final FinalCalculator DAMAGE_MUL = FinalCalculator.of(
             Add.of(
-                    EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(3F, 0.25F)),
+                    EquipmentEffectLevelArg.of(LevelBasedValue.perLevel(2F, 0.25F)),
                     Mul.of(
                             Constant.of(0.5F),
                             EntityAttributeValue.of(ALObjects.Attributes.CRIT_DAMAGE)
@@ -74,11 +78,15 @@ public class Ambush extends LRWeaponEffect {
             float chargePercent = getChargePercent(stack, livingEntity);
             HitResult pick = LRUtil.pick(livingEntity, 0, entityInteractionRange);
             if (pick instanceof EntityHitResult entityHitResult && chargePercent >= 0.2) {
-                AdjustmentHelper.runWhileInnerAdjusted(player, Attributes.ATTACK_DAMAGE, () -> {
-                    entityHitResult.getEntity().invulnerableTime = 0;
-                    player.attack(entityHitResult.getEntity());
-                    player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, player.getSoundSource(), 1.0F, 1.0F);
-                }, AttributeAdjustment.simple(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, (DAMAGE_MUL.getValue(arg) - 1) * chargePercent));
+                LREntityData data = LREntityData.getData(player);
+                entityHitResult.getEntity().invulnerableTime = 0;
+                data.addAdjustmentConsumer(AMBUSH, event -> {
+                    float value = DAMAGE_MUL.getValue(arg);
+                    event.getAdjustment(player, Attributes.ATTACK_DAMAGE).add(AttributeAdjustment.Operation.ADD_MULTIPLIED_TOTAL, (value - 1) * chargePercent);
+                });
+                player.attack(entityHitResult.getEntity());
+                data.removeAdjustmentConsumer(AMBUSH);
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, player.getSoundSource(), 1.0F, 1.0F);
             }
         }
     }
