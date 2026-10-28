@@ -5,7 +5,7 @@ import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.client.gui.EffectCooldownRender;
 import com.chen1335.legendaryRelics.client.particles.WaveIceParticle;
 import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEncasementRenderer;
-import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakRenderer;
+import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakGeoRenderer;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
 import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FrostKnightRenderer;
@@ -148,7 +148,7 @@ public class ClientEventHandler {
          */
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void RegisterCurioRenderers(EntityRenderersEvent.AddLayers event) {
-            CuriosRendererRegistry.register(LRItems.HOLY_CLOAK.get(), HolyCloakRenderer::new);
+            CuriosRendererRegistry.register(LRItems.HOLY_CLOAK.get(), HolyCloakGeoRenderer::new);
         }
 
         /**

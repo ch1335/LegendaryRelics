@@ -23,11 +23,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.common.MutableDataComponentHolder;
+import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class BaseEffect implements DataComponentHolder, MutableDataComponentHolder, IEffectHelper {
 
@@ -187,5 +189,9 @@ public class BaseEffect implements DataComponentHolder, MutableDataComponentHold
 
     public EquipmentType getEquipmentType() {
         return equipmentType;
+    }
+
+    public void addAttributeTooltips(ItemStack stack, Consumer<Component> tooltip, AttributeTooltipContext ctx) {
+
     }
 }

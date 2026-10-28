@@ -5,6 +5,7 @@ import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAd
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.AttackingContext;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LivingHurtContext;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LootInfoContext;
+import com.chen1335.arcanumlib.modules.attribute.events.LivingAttributeChangeEvent;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
@@ -123,8 +124,8 @@ public class GamePlayEventHandler {
     }
 
     @SubscribeEvent
-    public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
-
+    public static void LivingAttributeChangeEvent(LivingAttributeChangeEvent event) {
+        DarkSteelClawEffect.LivingAttributeChangeEvent(event);
     }
 
     @SubscribeEvent

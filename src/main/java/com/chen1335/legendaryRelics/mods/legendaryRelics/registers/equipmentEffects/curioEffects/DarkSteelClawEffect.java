@@ -1,10 +1,11 @@
 package com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects;
 
-import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
+import com.chen1335.arcanumlib.modules.attribute.events.LivingAttributeChangeEvent;
 import com.chen1335.equipmentEffectLib.effectBase.EffectType;
+import com.chen1335.equipmentEffectLib.equipmentType.EquipmentType;
+import com.chen1335.equipmentEffectLib.slotEffectManagers.ISlotContext;
+import com.chen1335.legendaryRelics.API.objects.LREquipmentEffectTypes;
 import com.chen1335.legendaryRelics.LegendaryRelics;
-import com.chen1335.legendaryRelics.common.attributeFix.AttributeFixer;
-import com.chen1335.legendaryRelics.common.attributeFix.fixTypes.ConstantValueFix;
 import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.common.calculator.FinalCalculator;
 import com.chen1335.legendaryRelics.common.calculator.annotations.Calculator;
@@ -14,9 +15,9 @@ import com.chen1335.legendaryRelics.common.calculator.normal.Mul;
 import com.chen1335.legendaryRelics.common.calculator.special.DarkGoldUpdateArg;
 import com.chen1335.legendaryRelics.common.calculator.special.EntityAttributeValue;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -29,9 +30,6 @@ import java.util.List;
 
 public class DarkSteelClawEffect extends LRCurioEffect {
     public static final ResourceLocation ATTACK_MODIFIER_ID = LegendaryRelics.id("dark_steel_claw_effect");
-
-
-    public double oldArmor = 0;
 
 
     @Calculator
@@ -52,30 +50,6 @@ public class DarkSteelClawEffect extends LRCurioEffect {
         super(effectType, level, equipmentType);
     }
 
-    @Override
-    public void effectTick(ItemStack itemStack, LivingEntity wearer) {
-        double currentArmor = wearer.getAttributeValue(Attributes.ARMOR);
-        if (oldArmor != currentArmor) {
-            oldArmor = currentArmor;
-            markChanged(itemStack);
-        }
-    }
-
-
-    @Override
-    public void modifyCurioAttribute(CurioAttributeModifierEvent event) {
-        Runnable runnable = () -> {
-            double damage = DAMAGE_ADD.getValue(CalculatorArg.simpleArg(event.getSlotContext().entity(), event.getItemStack(), this));
-            event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_MODIFIER_ID, damage, AttributeModifier.Operation.ADD_VALUE));
-        };
-
-        if (event.getSlotContext().entity().level().isClientSide) {
-            runnable.run();
-        } else {
-            AttributeFixer.runWhileFix(event.getSlotContext().entity(), Attributes.ARMOR, new ConstantValueFix(oldArmor), runnable);
-        }
-
-    }
 
     @Override
     public void appendToolTip(ItemStack itemStack, Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, List<Component> tooltipComponents) {
@@ -84,4 +58,40 @@ public class DarkSteelClawEffect extends LRCurioEffect {
         tooltipComponents.add(Component.translatable("equipment_effect.legendary_relics.dark_steel_claw", DAMAGE_ADD.toComponent(args)).withColor(0xaeaeae));
         tooltipComponents.add(Component.translatable("legendary_relics.special.cannot_be_tacked").withColor(5592405));
     }
+
+    @Override
+    public void onDeActive(ISlotContext slotContext, LivingEntity entity, ItemStack itemStack) {
+        super.onDeActive(slotContext, entity, itemStack);
+        AttributeInstance attribute = entity.getAttribute(Attributes.ATTACK_DAMAGE);
+        if (attribute != null) {
+            attribute.removeModifier(ATTACK_MODIFIER_ID);
+        }
+    }
+
+    public static void LivingAttributeChangeEvent(LivingAttributeChangeEvent event) {
+        if (event.getAttributeInstance().getAttribute().value() == Attributes.ARMOR.value()) {
+            LivingEntity livingEntity = event.getLivingEntity();
+            LREquipmentEffectTypes.DARK_STEEL_CLAW_EFFECT.value().findBestEffect(livingEntity).ifPresent(holder -> {
+                CalculatorArg args = CalculatorArg.simpleArg(livingEntity, holder.infoHolder().itemStack(), holder.infoHolder().effect());
+                AttributeInstance attribute = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
+                if (attribute != null) {
+                    attribute.removeModifier(ATTACK_MODIFIER_ID);
+                    float value = DAMAGE_ADD.getValue(args);
+                    if (value > 0) {
+                        attribute.addTransientModifier(new AttributeModifier(ATTACK_MODIFIER_ID, DAMAGE_ADD.getValue(args), AttributeModifier.Operation.ADD_VALUE));
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void modifyCurioAttribute(CurioAttributeModifierEvent event) {
+        if (event.getSlotContext().entity().level().isClientSide) {
+            CalculatorArg args = CalculatorArg.simpleArg(event.getSlotContext().entity(), event.getItemStack(), this);
+            event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_MODIFIER_ID, DAMAGE_ADD.getValue(args), AttributeModifier.Operation.ADD_VALUE));
+        }
+    }
+
+
 }
