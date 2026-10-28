@@ -220,6 +220,11 @@
   "legendary_relics.damage_type.format": "%s %s",
   "legendary_relics.max_charge_time_affected_by_attack_speed": "Max charging time is affected by attack speed",
   "legendary_relics.damage_type.magic_damage": "§9Magic Damage§r",
-  "legendary_relics.damage_type.attack": "§cAttack§r"
+  "legendary_relics.damage_type.attack": "§cAttack§r",
+  "equipment_effect.legendary_relics.shadow_strike": "§6Shadow Strike§r: Press %s to teleport behind the creature you are aiming at within %s blocks, and your next %s gains %s.",
+  "key.legendary_relics.shadow_strike": "Shadow Strike",
+  "key.categories.legendary_relics": "Legendary Relics",
+  "special_effect.legendary_relics.shadow_strike": "Shadow Strike",
+  "curios.modifiers.cloak": "When on Cloak:"
 
 }

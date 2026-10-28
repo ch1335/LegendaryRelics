@@ -7,28 +7,27 @@ import com.chen1335.legendaryRelics.client.particles.WaveIceParticle;
 import com.chen1335.legendaryRelics.client.renderers.blockEntityRenderers.IceEncasementRenderer;
 import com.chen1335.legendaryRelics.client.renderers.curioRenderers.HolyCloakGeoRenderer;
 import com.chen1335.legendaryRelics.client.renderers.curioRenderers.ShadowCloakGeoRenderer;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingKnifeRender;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FlyingReaperRender;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.FrostKnightRenderer;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.GlaciteSkeletonRenderer;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IcicleRenderer;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.IceThornRenderer;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.OrbitingFireChakramRenderer;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.TreatmentBallRenderer;
-import com.chen1335.legendaryRelics.client.renderers.entityRenderers.ThrownFrostShardRender;
+import com.chen1335.legendaryRelics.client.renderers.entityRenderers.*;
+import com.chen1335.legendaryRelics.common.calculator.CalculatorArg;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.ISSModProxy;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.client.SoulMissileRenderer;
 import com.chen1335.legendaryRelics.mods.ironsSpellBooks.registers.ISSRegisters;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LREntityData;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.attachmentDatas.LRPlayerData;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.equipmentEffects.curioEffects.ShadowStrike;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.screens.EquipmentWorkbenchCraftScreen;
+import com.chen1335.legendaryRelics.network.ShadowStrikePack;
+import com.chen1335.legendaryRelics.utils.LRUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
@@ -36,8 +35,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.entity.PartEntity;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class ClientEventHandler {
@@ -56,6 +57,10 @@ public class ClientEventHandler {
             if (clientPlayer != null) {
                 if (!Minecraft.getInstance().isPaused()) {
                     LRClient.getClientCooldownManager().tick(clientPlayer);
+                }
+
+                while (LRKeyMappings.SHADOW_STRIKE.consumeClick()) {
+                    trySendShadowStrike(clientPlayer);
                 }
 
                 if (clientPlayer.getItemBySlot(EquipmentSlot.CHEST).getItem() == LRItems.BLACK_DRAGON_CHEST_PLATE.get() &&
@@ -77,6 +82,23 @@ public class ClientEventHandler {
             }
         }
 
+        private static void trySendShadowStrike(Player player) {
+            float range = ShadowStrike.RANGE.getValue(CalculatorArg.simpleArg(player));
+            HitResult hit = LRUtil.pick(player, range, range);
+            if (hit instanceof EntityHitResult entityHit) {
+                Entity entity = entityHit.getEntity();
+                LivingEntity target = null;
+                if (entity instanceof LivingEntity) {
+                    target = (LivingEntity) entity;
+                } else if (entity instanceof PartEntity<?> p && p.getParent() instanceof LivingEntity e) {
+                    target = e;
+                }
+                if (target != null && target != player && target.isAlive()) {
+                    PacketDistributor.sendToServer(new ShadowStrikePack(target.getId()));
+                }
+            }
+        }
+
         @SubscribeEvent
         public static void EntityTickEvent(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity living) {
@@ -86,7 +108,9 @@ public class ClientEventHandler {
             }
         }
 
-        /** 蓄力霜钢剑时让整个身体跟随头部朝向，避免身体和视角错开。 */
+        /**
+         * 蓄力霜钢剑时让整个身体跟随头部朝向，避免身体和视角错开。
+         */
         @SubscribeEvent
         public static void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
             Player player = event.getEntity();
@@ -106,6 +130,11 @@ public class ClientEventHandler {
 
     @EventBusSubscriber(value = {Dist.CLIENT})
     public static class Mod {
+        @SubscribeEvent
+        public static void RegisterKeyMappings(RegisterKeyMappingsEvent event) {
+            event.register(LRKeyMappings.SHADOW_STRIKE);
+        }
+
         @SubscribeEvent
         public static void RegisterParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(LRParticles.WAVE_ICE.get(), sprites ->
@@ -164,7 +193,9 @@ public class ClientEventHandler {
             event.enqueueWork(() -> ItemBlockRenderTypes.setRenderLayer(LRBlocks.ICE_ENCASEMENT.get(), RenderType.translucent()));
         }
 
-        /** 动画里用的 query.modified_move_speed 不是 GeckoLib 内置查询，不注册的话恒为 0。 */
+        /**
+         * 动画里用的 query.modified_move_speed 不是 GeckoLib 内置查询，不注册的话恒为 0。
+         */
         @SubscribeEvent
         public static void RegisterMolangQueries(FMLClientSetupEvent event) {
             LRMolangQueries.register();

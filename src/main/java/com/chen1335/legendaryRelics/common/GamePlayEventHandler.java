@@ -1,12 +1,11 @@
 package com.chen1335.legendaryRelics.common;
 
-import com.chen1335.arcanumlib.common.attachmentTypes.EntityData;
-import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.AttributeAdjustment;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.AttackingContext;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LivingHurtContext;
 import com.chen1335.arcanumlib.modules.attribute.AttributeAdjustment.contexts.LootInfoContext;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingAttributeChangeEvent;
 import com.chen1335.arcanumlib.modules.attribute.events.LivingGetAttributeAdjustmentEvent;
+import com.chen1335.equipmentEffectLib.utils.CombatUtil;
 import com.chen1335.legendaryRelics.LegendaryRelics;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.InfernoArmorSetEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.armorSetEffect.ShadowAssassinArmorSetEffect;
@@ -32,6 +31,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.entity.PartEntity;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.*;
@@ -39,7 +39,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 @EventBusSubscriber(modid = LegendaryRelics.MODID)
@@ -69,8 +68,14 @@ public class GamePlayEventHandler {
     @SubscribeEvent
     public static void LivingGetAttributeAdjustmentEvent(LivingGetAttributeAdjustmentEvent event) {
         if (event.getContext() instanceof AttackingContext(LivingEntity attacker, Entity entity)) {
-            if (entity instanceof LivingEntity target) {
-                ShadowAssassinArmorSetEffect.getAttributeAdjustment(event, target, attacker);
+            LivingEntity target = null;
+            if (entity instanceof LivingEntity) {
+                target = (LivingEntity) entity;
+            } else if (entity instanceof PartEntity<?> p && p.getParent() instanceof LivingEntity e) {
+                target = e;
+            }
+            if (target != null) {
+                ShadowAssassinArmorSetEffect.getAttributeAdjustment(event, attacker);
                 Backstab.getAttributeAdjustment(event, target, attacker);
                 LREntityData data = LREntityData.getData(attacker);
                 data.applyAdjustment(Ambush.AMBUSH, event);
@@ -83,6 +88,9 @@ public class GamePlayEventHandler {
                 Redemption.getAttributeAdjustment(event, source, target, attacker);
                 InFireTargetDamageIncrease.getAttributeAdjustment(event, source, target, attacker);
                 AgglomerationMaliceEffect.getAttributeAdjustment(event, source, target, attacker);
+                if (CombatUtil.isStrictAttack(source)) {
+                    ShadowStrike.getAttributeAdjustment(event, attacker);
+                }
 
             }
             LRArmorBase.handleAttributeAdjustment(event, target, source, damage);

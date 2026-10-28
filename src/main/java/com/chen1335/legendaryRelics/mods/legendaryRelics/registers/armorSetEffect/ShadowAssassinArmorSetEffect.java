@@ -58,21 +58,21 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
 
     @Calculator
     public static final FinalCalculator FULL_CRIT_CHANCE = FinalCalculator.of(
-            TieredBonus.of(List.of(0.05F, 0.1F, 0.15F, 0.2F), Format.PERCENTAGE)
+            TieredBonus.of(List.of(0.1F, 0.1F, 0.15F, 0.2F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
     @Calculator
     public static final FinalCalculator FULL_CRIT_DAMAGE = FinalCalculator.of(
-            TieredBonus.of(List.of(0.1F, 0.15F, 0.2F, 0.3F), Format.PERCENTAGE)
+            TieredBonus.of(List.of(0.15F, 0.15F, 0.2F, 0.3F), Format.PERCENTAGE)
     ).withFormat(Format.PERCENTAGE.unwrap().style(LRColors.Component.BLUE.getStyle()).build());
 
 
 
     @Calculator
     public static final FinalCalculator ATTACK_DAMAGE_MULTIPLIER = FinalCalculator.of(
-            Add.of(Constant.of(1).withFormat(Format.PERCENTAGE),
+            Add.of(Constant.of(1,Format.PERCENTAGE),
                     Mul.of(
-                            TieredBonus.of(List.of(0.032F, 0.032F, 0.04F, 0.05F), Format.PERCENTAGE),
+                            TieredBonus.of(List.of(0.03F, 0.03F, 0.06F, 0.1F), Format.PERCENTAGE),
                             SpecialEffectStackArg.of(LRSpecialMobEffects.LURK)
                     )
             )
@@ -154,8 +154,7 @@ public class ShadowAssassinArmorSetEffect extends SetEffect {
     /**
      * 严格近战攻击会重置计时，并结算层数提供的暴击与伤害修正，随后清空层数。
      */
-    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event,
-                                              LivingEntity target, LivingEntity attacker) {
+    public static void getAttributeAdjustment(LivingGetAttributeAdjustmentEvent event, LivingEntity attacker) {
 
         ShadowAssassinEffectInstance instance = getEffectInstance(attacker);
         if (instance == null) {

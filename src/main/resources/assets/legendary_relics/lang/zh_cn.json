@@ -190,7 +190,7 @@
   "legendary_relics.task.travel_to_dim": "前往%s",
   "legendary_relics.task.wear_curio": "穿上这个饰品",
   "legendary_relics.task_reward": "§6奖励:§r强化这件饰品",
-  "set_effect.legendary_relics.armor_pieces_required": "件数要求: %s",
+  "set_effect.legendary_relics.armor_pieces_required": "件数要求:%s",
   "set_effect.legendary_relics.excellence.name": "卓越",
   "set_effect.legendary_relics.inferno.desc.1": "每%s秒，攻击获得1层%s，最多10层",
   "set_effect.legendary_relics.inferno.desc.2": "超过%s秒没有获得%s后，每秒失去一层%s",
@@ -220,5 +220,10 @@
   "legendary_relics.damage_type.format": "%s%s",
   "legendary_relics.max_charge_time_affected_by_attack_speed": "最大蓄力时间受攻击速度影响",
   "legendary_relics.damage_type.magic_damage": "§9魔法伤害§r",
-  "legendary_relics.damage_type.attack": "§c攻击§r"
+  "legendary_relics.damage_type.attack": "§c攻击§r",
+  "equipment_effect.legendary_relics.shadow_strike": "§6暗影突袭§r:按下%s传送到%s格内准星所指生物背后，并使下一次%s获得%s。",
+  "key.legendary_relics.shadow_strike": "暗影突袭",
+  "key.categories.legendary_relics": "传说遗物",
+  "special_effect.legendary_relics.shadow_strike": "暗影突袭",
+  "curios.modifiers.cloak": "佩戴斗篷时："
 }

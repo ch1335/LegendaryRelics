@@ -9,6 +9,7 @@ import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEff
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Lurk;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.OrbitingFireChakramsEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.PhaseShooting;
+import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.ShadowStrikeEffect;
 import com.chen1335.legendaryRelics.mods.legendaryRelics.registers.specialMobEffects.Slowness;
 import com.chen1335.specialEffectLib.API.objects.RegisterTypes;
 import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
@@ -71,6 +72,14 @@ public class LRSpecialMobEffects {
     /** 暗影刺客套装的隐匿状态。 */
     public static final DeferredHolder<MobEffectType<?>, MobEffectType<Lurk>> LURK = SPECIAL_MOB_EFFECT_TYPES.register("lurk", MobEffectType.Builder.<Lurk>builder()
             .factory(Lurk::new)
+            .renderIcon()
+            .category(MobEffectCategory.BENEFICIAL)
+            .style(Style.EMPTY.withColor(ChatFormatting.DARK_AQUA))
+            .build());
+
+    /** 暗影突袭的待消耗状态：HUD 图标使用暗影斗篷纹理。 */
+    public static final DeferredHolder<MobEffectType<?>, MobEffectType<ShadowStrikeEffect>> SHADOW_STRIKE = SPECIAL_MOB_EFFECT_TYPES.register("shadow_strike", MobEffectType.Builder.<ShadowStrikeEffect>builder()
+            .factory(ShadowStrikeEffect::new)
             .renderIcon()
             .category(MobEffectCategory.BENEFICIAL)
             .style(Style.EMPTY.withColor(ChatFormatting.DARK_AQUA))

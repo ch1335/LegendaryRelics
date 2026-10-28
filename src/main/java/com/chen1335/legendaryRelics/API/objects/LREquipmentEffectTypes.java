@@ -86,4 +86,6 @@ public class LREquipmentEffectTypes {
     public static final DeferredHolder<EffectType<?>, EffectType<EnderSuppressionEffect>> ENDER_SUPPRESSION = register("ender_suppression_effect", () -> new EffectType<>(EnderSuppressionEffect::new));
 
     public static final DeferredHolder<EffectType<?>, EffectType<HolyBarrierEffect>> HOLY_BARRIER = register("holy_barrier_effect", () -> new EffectType<>(HolyBarrierEffect::new).cooldownIcon(LegendaryRelics.id("textures/cooldown_icons/holy_cloak.png")));
+
+    public static final DeferredHolder<EffectType<?>, EffectType<ShadowStrike>> SHADOW_STRIKE = register("shadow_strike", () -> new EffectType<>(ShadowStrike::new).cooldownIcon(LegendaryRelics.id("textures/icon/special_effects/shadow_strike.png")));
 }

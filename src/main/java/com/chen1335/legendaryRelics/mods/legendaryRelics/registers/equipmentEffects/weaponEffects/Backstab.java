@@ -30,11 +30,11 @@ public class Backstab extends LRWeaponEffect {
      */
     @Calculator
     public static final FinalCalculator CRIT_CHANCE_BONUS = FinalCalculator.of(
-            Constant.of(1.0F)
+            Constant.of(1F)
     ).withFormat(Format.PERCENTAGE);
     @Calculator
     public static final FinalCalculator CRIT_DAMAGE_BONUS = FinalCalculator.of(
-            Constant.of(1.5F)
+            Constant.of(1F)
     ).withFormat(Format.PERCENTAGE);
 
     public Backstab(EffectType<?> effectType, int level, EquipmentType equipmentType) {

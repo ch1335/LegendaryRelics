@@ -339,6 +339,7 @@ public class EventHandler {
 
 
             registrar.playBidirectional(UpdateCalculatorPack.TYPE, UpdateCalculatorPack.STREAM_CODEC, UpdateCalculatorPack::handler);
+            registrar.playToServer(ShadowStrikePack.TYPE, ShadowStrikePack.STREAM_CODEC, ShadowStrikePack::handler);
 
             PayloadRegistrar optional = registrar.optional();
             if (ModList.get().isLoaded("jei")) {
