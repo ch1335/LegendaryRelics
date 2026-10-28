@@ -48,6 +48,7 @@ public class LRItemModelProvider extends ItemModelProvider {
         basicItem(LRItems.FROSTHEART_PENDANT.asItem());
 
         basicItem(LRItems.HOLY_CLOAK.asItem());
+        basicItem(LRItems.SHADOW_CLOAK.asItem());
         basicItem(LRItems.SNOWFEATHER_CLOAK.asItem());
 
         basicItem(LRItems.INFERNO_HELMET.asItem());

@@ -5,7 +5,7 @@ import com.chen1335.specialEffectLib.mobEffect.MobEffectType;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
- * 隐匿：暗影刺客套装的蓄势待发层数，本身不提供任何属性；
+ * 隐匿：暗影刺客套装的潜伏层数，本身不提供任何属性；
  * 属性修正由 {@code ShadowAssassinArmorSetEffect} 在 LivingGetAttributeAdjustmentEvent 里按严格近战结算。
  */
 public class Lurk extends StackAbleEffect {

@@ -139,6 +139,9 @@ public class LRItems {
 
     public static final DeferredItem<HolyCloak> HOLY_CLOAK = ITEM_DEFERRED_REGISTER.register("holy_cloak", HolyCloak::new);
 
+    /** 暗影斗篷：目前只有物品本体。 */
+    public static final DeferredItem<ShadowCloak> SHADOW_CLOAK = ITEM_DEFERRED_REGISTER.register("shadow_cloak", ShadowCloak::new);
+
     /** 雪羽斗篷：细雪免疫 + 移速提升 + 延长自己造成的减速。 */
     public static final DeferredItem<SnowFeatherCloak> SNOWFEATHER_CLOAK = ITEM_DEFERRED_REGISTER.register("snowfeather_cloak", SnowFeatherCloak::new);
 

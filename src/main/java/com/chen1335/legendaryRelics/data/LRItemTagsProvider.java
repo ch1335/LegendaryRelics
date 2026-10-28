@@ -68,11 +68,13 @@ public class LRItemTagsProvider extends ItemTagsProvider {
 
         // 神圣斗篷同时占用背饰与斗篷两个槽位
         tag(CuriosTags.BACK).add(
-                LRItems.HOLY_CLOAK.asItem()
+                LRItems.HOLY_CLOAK.asItem(),
+                LRItems.SHADOW_CLOAK.asItem()
         );
 
         tag(CuriosTags.createItemTag("cloak")).add(
                 LRItems.HOLY_CLOAK.asItem(),
+                LRItems.SHADOW_CLOAK.asItem(),
                 LRItems.SNOWFEATHER_CLOAK.asItem()
         );
 

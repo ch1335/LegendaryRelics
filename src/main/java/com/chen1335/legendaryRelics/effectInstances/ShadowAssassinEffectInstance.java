@@ -7,7 +7,7 @@ import com.chen1335.specialEffectLib.API.SpecialEffectAPI;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
- * 蓄势待发：记录距离上次攻击的时间与叠层计时。
+ * 潜伏：记录距离上次攻击的时间与叠层计时。
  */
 public class ShadowAssassinEffectInstance extends EffectInstance {
 
